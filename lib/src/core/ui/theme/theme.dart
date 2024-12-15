@@ -7,15 +7,13 @@ import 'colors.dart';
 class AppTheme {
   static ThemeData customTheme = ThemeData(
       useMaterial3: true,
+   
       outlinedButtonTheme: OutlinedButtonThemeData(
-        style: ButtonStyle(
-          
-          foregroundColor: const WidgetStatePropertyAll(AppColors.white),
-          overlayColor: const WidgetStatePropertyAll(AppColors.white),
-
-          shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.lg)))
-        )
-      ),
+          style: ButtonStyle(
+              foregroundColor: const WidgetStatePropertyAll(AppColors.white),
+              overlayColor: const WidgetStatePropertyAll(AppColors.white),
+              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(AppRadii.lg))))),
       bottomSheetTheme: const BottomSheetThemeData(
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.only(
@@ -55,9 +53,8 @@ class AppTheme {
               elevation: const WidgetStatePropertyAll(0),
               backgroundColor:
                   const WidgetStatePropertyAll(AppColors.secondaryRefix))),
-      fontFamily:
-          GoogleFonts.alexandria(height: 18, fontWeight: FontWeight.w300)
-              .fontFamily,
+      fontFamily: GoogleFonts.alexandria(height: 18, fontWeight: FontWeight.w300)
+          .fontFamily,
       searchBarTheme: SearchBarThemeData(
           padding: const WidgetStatePropertyAll(EdgeInsets.all(AppSpacing.x)),
           hintStyle: WidgetStatePropertyAll(
@@ -68,8 +65,8 @@ class AppTheme {
               fontSize: AppTextSize.one.toDouble(),
               fontWeight: FontWeight.w300,
               color: AppColors.neutralRefix)),
-          shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(AppRadii.md)))),
+          shape:
+              WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.md)))),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: AppColors.primaryRefix,
           unselectedItemColor: AppColors.neutral400,

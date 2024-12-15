@@ -1,76 +1,78 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/navigation/routes.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/boarding/domain/boarding_domain.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class BoardingScreen extends StatefulWidget {
+class BoardingScreen extends ConsumerStatefulWidget {
   const BoardingScreen({super.key});
 
   @override
-  State<BoardingScreen> createState() => _BoardingScreenState();
+  ConsumerState<BoardingScreen> createState() => _BoardingScreenState();
 }
 
-class _BoardingScreenState extends State<BoardingScreen> {
+class _BoardingScreenState extends ConsumerState<BoardingScreen> {
   final controller = PageController();
   int currentIndex = 0;
-  final images = [
-    "assets/img/boarding/boarding1.jpg",
-    "assets/img/boarding/boarding2.jpg",
-    "assets/img/boarding/boarding3.jpg"
-  ];
+
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.white));
+    final boarding = ref.watch(getBoardingProvider);
     return Scaffold(
-        body: PageView.builder(
-            controller: controller,
-            itemCount: images.length,
-            onPageChanged: (value) {
-              setState(() {
-                currentIndex = value;
-              });
-            },
-            itemBuilder: (context, index) {
+        body: boarding.when(
+            data: (data) {
               return Stack(
-                alignment: Alignment.bottomCenter,
                 children: [
-                  Stack(
-                    alignment: Alignment.topRight,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                colorFilter: ColorFilter.mode(
-                                    AppColors.primaryRefix.withOpacity(0.8),
-                                    BlendMode.darken),
-                                image: AssetImage(images[index]),
-                                fit: BoxFit.cover)),
-                      ),
-                      currentIndex == 2
-                          ? SafeArea(
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: OutlinedButton(
-                                    onPressed: () {
-                                      context.go("/");
-                                    },
-                                    child: const Text("Skip")),
-                              ),
-                            )
-                          : const SizedBox.shrink()
-                    ],
-                  ),
+                  PageView.builder(
+                      controller: controller,
+                      itemCount: data.length,
+                      onPageChanged: (value) {
+                        setState(() {
+                          currentIndex = value;
+                        });
+                      },
+                      itemBuilder: (context, index) {
+                        return Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      colorFilter: ColorFilter.mode(
+                                          AppColors.primaryRefix
+                                              .withOpacity(0.8),
+                                          BlendMode.darken),
+                                      image: CachedNetworkImageProvider(
+                                          "https://refix-api.onrender.com/${data[index].image}"),
+                                      fit: BoxFit.cover)),
+                            ),
+                            currentIndex == data.length - 1
+                                ? SafeArea(
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: OutlinedButton(
+                                          onPressed: () {
+                                            context.go("/");
+                                          },
+                                          child: const Text("Skip")),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                          ],
+                        );
+                      }),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       AnimatedSmoothIndicator(
                         activeIndex: currentIndex,
-                        count: images.length,
+                        count: data.length,
                         effect: const ExpandingDotsEffect(
                             dotColor: AppColors.white,
                             dotWidth: 10,
@@ -81,7 +83,7 @@ class _BoardingScreenState extends State<BoardingScreen> {
                         height: 25,
                       ),
                       AnimatedContainer(
-                        height: currentIndex != 2 ? 230 : 280,
+                        height: currentIndex != data.length - 1 ? 230 : 280,
                         duration: const Duration(milliseconds: 300),
                         decoration: const BoxDecoration(
                             color: Colors.white,
@@ -93,24 +95,24 @@ class _BoardingScreenState extends State<BoardingScreen> {
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
                             children: [
-                              const Text(
-                                "Write Title Here",
-                                style: TextStyle(
+                              Text(
+                                data[currentIndex].heading,
+                                style: const TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: AppTextSize.six),
                               ),
                               const SizedBox(
                                 height: 24,
                               ),
-                              const Text(
-                                "This sentence is used as a substitute for real text in the fields of printing and design.",
+                              Text(
+                                data[currentIndex].details,
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: AppTextSize.two,
                                     color: AppColors.neutralRefix),
                               ),
                               const Spacer(),
-                              currentIndex == 2
+                              currentIndex == data.length - 1
                                   ? Column(
                                       children: [
                                         const SizedBox(
@@ -147,6 +149,11 @@ class _BoardingScreenState extends State<BoardingScreen> {
                   ),
                 ],
               );
-            }));
+            },
+            error: (e, s) {
+              debugPrint("Error $e");
+              return null;
+            },
+            loading: () => const Center(child: CircularProgressIndicator())));
   }
 }

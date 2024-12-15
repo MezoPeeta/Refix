@@ -4,6 +4,13 @@ import 'package:refix/src/screens/auth/need_login.dart';
 import 'package:refix/src/screens/auth/presentation/forget_password.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
 import 'package:refix/src/screens/auth/presentation/otp_verification.dart';
+import 'package:refix/src/screens/profile/presentation/about_refix.dart';
+import 'package:refix/src/screens/profile/presentation/new_phone.dart';
+import 'package:refix/src/screens/profile/presentation/payment_methods.dart';
+import 'package:refix/src/screens/profile/presentation/privacy.dart';
+import 'package:refix/src/screens/profile/presentation/switch_phone.dart';
+import 'package:refix/src/screens/profile/presentation/terms.dart';
+import 'package:refix/src/screens/profile/presentation/user_profile.dart';
 import 'package:refix/src/screens/auth/presentation/sign_up.dart';
 import 'package:refix/src/screens/boarding/presentation/boarding.dart';
 import 'package:refix/src/screens/booking/presentation/cancel_reason.dart';
@@ -64,4 +71,15 @@ final routes = GoRouter(initialLocation: "/boarding", routes: [
       builder: (context, state) => const ReportBooking()),
   GoRoute(
       path: "/boarding", builder: (context, state) => const BoardingScreen()),
+  GoRoute(path: "/profile", builder: (context, state) => const UserProfile()),
+  GoRoute(
+      path: "/switch_phone", builder: (context, state) => const SwitchPhone()),
+  GoRoute(path: "/new_phone", builder: (context, state) => const NewPhone()),
+  GoRoute(
+      path: "/payment_method",
+      builder: (context, state) => const PaymentMethods()),
+  GoRoute(path: "/privacy", builder: (context, state) => const Privacy()),
+  GoRoute(
+      path: "/terms", builder: (context, state) => const TermsAndConditions()),
+  GoRoute(path: "/about", builder: (context, state) => const AboutRefix()),
 ]);

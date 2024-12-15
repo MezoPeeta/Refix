@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
+import 'package:refix/src/screens/profile/presentation/profile.dart';
 import 'package:refix/src/screens/home/home.dart';
 import 'package:refix/src/screens/booking/presentation/booking.dart';
 import 'package:refix/src/screens/points/presentation/points.dart';
@@ -18,7 +19,8 @@ class _BaseWidgetState extends State<BaseWidget> {
   final List<Widget> children = <Widget>[
     HomeScreen(),
     const BookingScreen(),
-    const PointsScreen()
+    const PointsScreen(),
+    const ProfileScreen()
   ];
 
   @override
@@ -62,6 +64,16 @@ class _BaseWidgetState extends State<BaseWidget> {
                 "assets/img/points.svg",
                 colorFilter: ColorFilter.mode(
                     currentIndex == 2
+                        ? AppColors.primaryRefix
+                        : AppColors.neutral400,
+                    BlendMode.srcIn),
+              )),
+          BottomNavigationBarItem(
+              label: "Profile",
+              icon: SvgPicture.asset(
+                "assets/img/profile.svg",
+                colorFilter: ColorFilter.mode(
+                    currentIndex == 3
                         ? AppColors.primaryRefix
                         : AppColors.neutral400,
                     BlendMode.srcIn),
