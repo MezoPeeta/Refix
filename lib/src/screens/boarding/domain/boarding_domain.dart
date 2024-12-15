@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:refix/src/core/network/api.dart';
 import 'package:refix/src/screens/boarding/data/boarding_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

@@ -7,7 +7,6 @@ import 'colors.dart';
 class AppTheme {
   static ThemeData customTheme = ThemeData(
       useMaterial3: true,
-   
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
               foregroundColor: const WidgetStatePropertyAll(AppColors.white),
@@ -21,6 +20,7 @@ class AppTheme {
         topRight: Radius.circular(AppRadii.x1),
       ))),
       appBarTheme: const AppBarTheme(
+          scrolledUnderElevation: 0,
           centerTitle: true,
           backgroundColor: AppColors.white,
           foregroundColor: AppColors.black,
@@ -53,8 +53,9 @@ class AppTheme {
               elevation: const WidgetStatePropertyAll(0),
               backgroundColor:
                   const WidgetStatePropertyAll(AppColors.secondaryRefix))),
-      fontFamily: GoogleFonts.alexandria(height: 18, fontWeight: FontWeight.w300)
-          .fontFamily,
+      fontFamily:
+          GoogleFonts.alexandria(height: 18, fontWeight: FontWeight.w300)
+              .fontFamily,
       searchBarTheme: SearchBarThemeData(
           padding: const WidgetStatePropertyAll(EdgeInsets.all(AppSpacing.x)),
           hintStyle: WidgetStatePropertyAll(

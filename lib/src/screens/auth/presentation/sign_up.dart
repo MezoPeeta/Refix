@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
-import 'package:refix/src/core/navigation/routes.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
 
@@ -12,16 +11,21 @@ import '../domain/auth_domain.dart';
 import 'components/divider_text.dart';
 import 'components/social_btn.dart';
 
-
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
-  static final _formKey = GlobalKey<FormState>();
-  static final usernameController = TextEditingController();
-  static final passwordController = TextEditingController();
-  static final confirmPasswordController = TextEditingController();
-  static final emailController = TextEditingController();
-  static final phoneController = TextEditingController();
 
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  String? phoneNumber;
+  final _formKey = GlobalKey<FormState>();
+  final usernameController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +86,11 @@ class SignupScreen extends StatelessWidget {
                         hintStyle: const TextStyle(
                             color: AppColors.neutralRefix,
                             fontSize: AppTextSize.two)),
-                    onInputChanged: (value) {}),
+                    onInputChanged: (value) {
+                      setState(() {
+                        phoneNumber = value.phoneNumber;
+                      });
+                    }),
                 const SizedBox(
                   height: 16,
                 ),
@@ -100,13 +108,12 @@ class SignupScreen extends StatelessWidget {
                 const SizedBox(
                   height: 32,
                 ),
-                Consumer(
-                  builder: (context,ref,child) {
-                    return PrimaryButton(
-                        text: "Sign Up",
-                        onPressed: () async{
-                          if (_formKey.currentState!.validate()) {
-                                 final user = await ref.read(authProvider).signup(
+                Consumer(builder: (context, ref, child) {
+                  return PrimaryButton(
+                      text: "Sign Up",
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          final user = await ref.read(authProvider).signup(
                               email: emailController.text,
                               username: usernameController.text,
                               password: passwordController.text);
@@ -117,11 +124,9 @@ class SignupScreen extends StatelessWidget {
                             print(value);
                             context.go("/");
                           });
-                            
-                          }
-                        });
-                  }
-                ),
+                        }
+                      });
+                }),
                 const SizedBox(
                   height: 32,
                 ),
