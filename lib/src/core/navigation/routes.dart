@@ -33,11 +33,10 @@ final routes = GoRouter(
     redirect: (BuildContext context, GoRouterState state) async {
       final accessToken = await SecureStorage().read(key: "access_token");
       if (accessToken != null) {
-        // Explicitly handle different scenarios
         if (state.uri.toString() == '/boarding') {
-          return '/'; // Redirect from login to home if authenticated
+          return '/';
         }
-        return null; // Allow navigation
+        return null;
       }
 
       return '/boarding';
