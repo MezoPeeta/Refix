@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-
 
 final httpProvider = Provider<HttpAPI>(HttpAPI.new);
 
@@ -60,25 +60,21 @@ class HttpAPI {
     required String method,
     Map<String, dynamic>? body,
   }) async {
-    String? accessToken = await ref.read(authProvider).getAccessToken();
-
+    final accessToken = await ref.read(authProvider).getAccessToken();
     Map<String, String> headers = {
       'Authorization': 'Bearer $accessToken',
-      'Content-Type': 'application/json',
     };
+    var bUrl = Uri.parse("$baseAPI$url");
 
-    // Make request based on method
     switch (method.toUpperCase()) {
       case 'GET':
-        return await http.get(Uri.parse(url), headers: headers);
+        return await http.get(bUrl, headers: headers);
       case 'POST':
-        return await http.post(Uri.parse(url),
-            headers: headers, body: json.encode(body));
+        return await http.post(bUrl, headers: headers, body: json.encode(body));
       case 'PUT':
-        return await http.put(Uri.parse(url),
-            headers: headers, body: json.encode(body));
+        return await http.put(bUrl, headers: headers, body: json.encode(body));
       case 'DELETE':
-        return await http.delete(Uri.parse(url), headers: headers);
+        return await http.delete(bUrl, headers: headers);
       default:
         throw Exception('Unsupported HTTP method');
     }

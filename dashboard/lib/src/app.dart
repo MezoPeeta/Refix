@@ -2,8 +2,6 @@ import 'package:dashboard/src/core/navigation/routes.dart';
 import 'package:dashboard/src/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/base/base.dart';
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

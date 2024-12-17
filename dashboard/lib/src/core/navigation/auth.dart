@@ -100,11 +100,11 @@ class AuthDomain {
     required String password,
   }) async {
     final response =
-        await ref.read(httpProvider).post(apiName: "signin", body: {
+        await ref.read(httpProvider).post(apiName: "dashboard/signin", body: {
       "email": email,
       "password": password,
     });
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       var decodedResponse =
           jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
 
@@ -117,7 +117,7 @@ class AuthDomain {
     return left(response.body);
   }
 
-  Future<Either<String, UserAccount>> signup({
+  Future<Either<ErrorResponse, UserAccount>> signup({
     required String email,
     required String password,
     required String username,
@@ -137,6 +137,6 @@ class AuthDomain {
       return right(account);
     }
 
-    return left(response.body);
+    return left(ErrorResponse.fromJson(jsonDecode(response.body)));
   }
 }

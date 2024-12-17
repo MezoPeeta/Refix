@@ -1,45 +1,53 @@
+import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:dashboard/src/core/theme/radii.dart';
+import 'package:dashboard/src/screens/content/domain/onetime_domain.dart';
+import 'package:dashboard/src/screens/content/onetime_edit.dart';
 import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:http/http.dart' as http;
 
-class OnetimeScreen extends StatelessWidget {
+import 'data/boarding_data.dart';
+
+class OnetimeScreen extends ConsumerWidget {
   const OnetimeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
+  Widget build(BuildContext context, WidgetRef ref) {
+    final screens = ref.watch(getBoardingProvider);
+    return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(24.0),
-        child: Row(
-          spacing: 48,
-          children: [
-            BoardingInfo(
-              text: "Screen 1",
-              title: "Title",
-              description: "Description",
-              networkImage:
-                  "https://pettownsendvet.com/wp-content/uploads/2023/01/iStock-1052880600.jpg",
-            ),
-            BoardingInfo(
-              text: "Screen 1",
-              title: "Title",
-              description: "Description",
-              networkImage:
-                  "https://pettownsendvet.com/wp-content/uploads/2023/01/iStock-1052880600.jpg",
-            ),
-            BoardingInfo(
-              text: "Screen 1",
-              title: "Title",
-              description: "Description",
-              networkImage:
-                  "https://pettownsendvet.com/wp-content/uploads/2023/01/iStock-1052880600.jpg",
-            ),
-          ],
-        ),
-      ),
+          padding: const EdgeInsets.all(24.0),
+          // child: Row(
+          child: screens.when(
+              data: (data) {
+                return ListView.separated(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: data.length,
+                    separatorBuilder: (context, index) => const SizedBox(
+                          width: 48,
+                        ),
+                    itemBuilder: (context, index) {
+                      return SizedBox(
+                        height: 400,
+                        width: 408,
+                        child: BoardingInfo(
+                          id: data[index].id,
+                          title: data[index].heading,
+                          description: data[index].details,
+                          networkImage:
+                              "https://refix-api.onrender.com/${data[index].image}",
+                          text: "Screen ${index + 1}",
+                        ),
+                      );
+                    });
+              },
+              error: (e, s) => const Center(child: Text("Error")),
+              loading: () => const Center(child: CircularProgressIndicator()))),
     );
   }
 }
@@ -51,9 +59,10 @@ class BoardingInfo extends StatelessWidget {
     required this.networkImage,
     required this.title,
     required this.description,
+    required this.id,
   });
 
-  final String text, networkImage, title, description;
+  final String text, networkImage, title, description, id;
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +78,7 @@ class BoardingInfo extends StatelessWidget {
             height: 16,
           ),
           Container(
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(16)),
             child: Column(
@@ -79,6 +89,9 @@ class BoardingInfo extends StatelessWidget {
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16)),
                   child: Image.network(
+                    height: 270,
+                    width: 408,
+                    fit: BoxFit.cover,
                     networkImage,
                   ),
                 ),
@@ -99,8 +112,20 @@ class BoardingInfo extends StatelessWidget {
           Consumer(builder: (context, ref, child) {
             return PrimaryButton(
                 text: "Edit",
-                onPressed: () =>
-                    ref.read(currentIndexProvider.notifier).state = 5);
+                onPressed: () async {
+                  final imageN = await http.get(Uri.parse(networkImage));
+                  final bytesImage = imageN.bodyBytes;
+                  print(bytesImage);
+                  ref.read(boardingInfoProvider.notifier).state =
+                      BoardingUpdate(
+                          image: bytesImage,
+                          detailsEn: description,
+                          headingEn: title,
+                          id: id,
+                          detailsAr: description,
+                          headingAr: title);
+                  ref.read(currentIndexProvider.notifier).state = 5;
+                });
           })
         ],
       ),

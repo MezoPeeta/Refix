@@ -21,20 +21,20 @@ Map<String, dynamic> _$$UserAccountImplToJson(_$UserAccountImpl instance) =>
     };
 
 _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
+      notificationToken: json['notification_token'] as String?,
       id: json['_id'] as String,
       username: json['username'] as String,
       email: json['email'] as String,
-      type: json['type'] as String,
       role: Role.fromJson(json['role'] as Map<String, dynamic>),
       isVerified: json['is_verified'] as bool,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
     <String, dynamic>{
+      'notification_token': instance.notificationToken,
       '_id': instance.id,
       'username': instance.username,
       'email': instance.email,
-      'type': instance.type,
       'role': instance.role,
       'is_verified': instance.isVerified,
     };
@@ -48,4 +48,16 @@ Map<String, dynamic> _$$RoleImplToJson(_$RoleImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'name': instance.name,
+    };
+
+_$ErrorResponseImpl _$$ErrorResponseImplFromJson(Map<String, dynamic> json) =>
+    _$ErrorResponseImpl(
+      error: json['error'] as String,
+      message: json['message'] as String,
+    );
+
+Map<String, dynamic> _$$ErrorResponseImplToJson(_$ErrorResponseImpl instance) =>
+    <String, dynamic>{
+      'error': instance.error,
+      'message': instance.message,
     };

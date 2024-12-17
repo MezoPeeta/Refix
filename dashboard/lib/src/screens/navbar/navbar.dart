@@ -50,12 +50,23 @@ class Navbar extends ConsumerWidget {
                   onTap: () {
                     ref.read(currentIndexProvider.notifier).state = 1;
                   },
-                  child: const ListTile(
+                  child: ListTile(
+                    tileColor:
+                        currentIndex == 1 ? AppColors.primaryRefix : null,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(AppRadii.md)),
                     leading: CircleAvatar(
                       radius: 5,
-                      backgroundColor: AppColors.neutralRefix,
+                      backgroundColor: currentIndex == 1
+                          ? AppColors.white
+                          : AppColors.neutralRefix,
                     ),
-                    title: Text("Clients"),
+                    title: Text(
+                      
+                      "Clients",
+                      style: TextStyle(
+                          color: currentIndex == 1 ? Colors.white : null),
+                    ),
                   ),
                 ),
                 InkWell(

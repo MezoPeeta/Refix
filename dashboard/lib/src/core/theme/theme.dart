@@ -7,6 +7,8 @@ import 'colors.dart';
 class AppTheme {
   static ThemeData customTheme = ThemeData(
       useMaterial3: true,
+      progressIndicatorTheme:
+          const ProgressIndicatorThemeData(color: AppColors.primaryRefix),
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
               foregroundColor: const WidgetStatePropertyAll(AppColors.white),
@@ -66,8 +68,7 @@ class AppTheme {
               fontSize: AppTextSize.one.toDouble(),
               fontWeight: FontWeight.w300,
               color: AppColors.neutralRefix)),
-          shape:
-              WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.md)))),
+          shape: WidgetStatePropertyAll(RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.md)))),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           selectedItemColor: AppColors.primaryRefix,
           unselectedItemColor: AppColors.neutral400,

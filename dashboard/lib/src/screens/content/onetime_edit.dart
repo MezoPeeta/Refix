@@ -2,23 +2,47 @@ import 'dart:io';
 
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:dashboard/src/core/theme/colors.dart';
+import 'package:dashboard/src/screens/content/data/boarding_data.dart';
+import 'package:dashboard/src/screens/content/domain/onetime_domain.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class OnetimeEditScreen extends StatefulWidget {
+final boardingInfoProvider = StateProvider<BoardingUpdate?>((ref) => null);
+
+class OnetimeEditScreen extends ConsumerStatefulWidget {
   const OnetimeEditScreen({super.key});
 
   @override
-  State<OnetimeEditScreen> createState() => _OnetimeEditScreenState();
+  ConsumerState<OnetimeEditScreen> createState() => _OnetimeEditScreenState();
 }
 
-class _OnetimeEditScreenState extends State<OnetimeEditScreen> {
-  File? picture;
+class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
+  Uint8List? picture;
   late DropzoneViewController controller;
   final formKey = GlobalKey<FormState>();
   final headingController = TextEditingController();
+  final headingArController = TextEditingController();
   final descriptionController = TextEditingController();
+  final descriptionArController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    final data = ref.read(boardingInfoProvider);
+    if (data != null) {
+      headingArController.text = data.headingEn;
+      headingController.text = data.headingAr;
+      descriptionArController.text = data.detailsAr;
+      descriptionController.text = data.detailsEn;
+      setState(() {
+        picture = data.image;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +56,14 @@ class _OnetimeEditScreenState extends State<OnetimeEditScreen> {
               Center(
                 child: Container(
                   width: 925,
-                  height: 587,
+                  height: 820,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(16)),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 24,
                     children: [
                       Expanded(
@@ -47,14 +72,13 @@ class _OnetimeEditScreenState extends State<OnetimeEditScreen> {
                             DropzoneView(
                                 onCreated: (ctrl) => controller = ctrl,
                                 onDropFile: (file) async {
-                                  final a =
-                                      await controller.createFileUrl(file);
+                                  final a = await controller.getFileData(file);
                                   setState(() {
-                                    picture = File(a);
+                                    picture = a;
                                   });
                                 }),
                             Container(
-                                height: 202,
+                                height: 222,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                     color: AppColors.primaryRefix
@@ -62,6 +86,8 @@ class _OnetimeEditScreenState extends State<OnetimeEditScreen> {
                                     borderRadius: BorderRadius.circular(16)),
                                 child: picture == null
                                     ? Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           SvgPicture.asset(
                                             "assets/img/home/up_icon.svg",
@@ -77,7 +103,21 @@ class _OnetimeEditScreenState extends State<OnetimeEditScreen> {
                                                   "Drag & drop files or"),
                                               TextButton(
                                                 child: const Text("Button"),
-                                                onPressed: () {},
+                                                onPressed: () async {
+                                                  FilePickerResult? result =
+                                                      await FilePicker.platform
+                                                          .pickFiles(
+                                                              type: FileType
+                                                                  .image);
+                                                  if (result != null) {
+                                                    final file = result
+                                                        .files.single.bytes;
+
+                                                    setState(() {
+                                                      picture = file;
+                                                    });
+                                                  }
+                                                },
                                               ),
                                             ],
                                           ),
@@ -85,9 +125,9 @@ class _OnetimeEditScreenState extends State<OnetimeEditScreen> {
                                               "The image size must be 430 * 681."),
                                         ],
                                       )
-                                    : Image.network(
-                                        picture?.path ?? "",
-                                        width: 80,
+                                    : Image.memory(
+                                        picture!,
+                                        width: 100,
                                         fit: BoxFit.cover,
                                       ))
                           ],
@@ -97,30 +137,67 @@ class _OnetimeEditScreenState extends State<OnetimeEditScreen> {
                         controller: headingController,
                         validator: (v) {
                           if (v!.isEmpty) {
-                            return "Please enter heading";
+                            return "Please enter heading in english";
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(hintText: "Heading"),
+                        decoration: const InputDecoration(
+                            hintText: "Heading (English)"),
+                      ),
+                      TextFormField(
+                        controller: headingArController,
+                        validator: (v) {
+                          if (v!.isEmpty) {
+                            return "Please enter heading in arabic";
+                          }
+                          return null;
+                        },
+                        decoration:
+                            const InputDecoration(hintText: "Heading (Arabic)"),
                       ),
                       TextFormField(
                         controller: descriptionController,
                         validator: (v) {
                           if (v!.isEmpty) {
-                            return "Please enter details";
+                            return "Please enter details in english";
                           }
                           return null;
                         },
                         maxLines: 5,
                         maxLength: 200,
-                        decoration:
-                            const InputDecoration(hintText: "The details"),
+                        decoration: const InputDecoration(
+                            hintText: "The details (English)"),
                       ),
-                      PrimaryButton(
-                          text: "Save",
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {}
-                          }),
+                      TextFormField(
+                        controller: descriptionArController,
+                        validator: (v) {
+                          if (v!.isEmpty) {
+                            return "Please enter details in arabic";
+                          }
+                          return null;
+                        },
+                        maxLines: 5,
+                        maxLength: 200,
+                        decoration: const InputDecoration(
+                            hintText: "The details (Arabic)"),
+                      ),
+                      Consumer(builder: (context, ref, child) {
+                        return PrimaryButton(
+                            text: "Save",
+                            onPressed: () {
+                              if (formKey.currentState!.validate() &&
+                                  picture != null) {
+                                final info = ref.read(boardingInfoProvider);
+                                ref.read(updateBoardingProvider(
+                                    detailsAr: descriptionArController.text,
+                                    detailsEn: descriptionController.text,
+                                    headingAr: headingArController.text,
+                                    headingEn: descriptionController.text,
+                                    image: picture!,
+                                    id: info!.id));
+                              }
+                            });
+                      }),
                     ],
                   ),
                 ),
