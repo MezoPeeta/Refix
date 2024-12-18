@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dashboard/src/app.dart';
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:dashboard/src/core/theme/colors.dart';
 import 'package:dashboard/src/screens/content/data/boarding_data.dart';
@@ -184,17 +185,42 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                       Consumer(builder: (context, ref, child) {
                         return PrimaryButton(
                             text: "Save",
-                            onPressed: () {
+                            onPressed: () async {
                               if (formKey.currentState!.validate() &&
                                   picture != null) {
                                 final info = ref.read(boardingInfoProvider);
-                                ref.read(updateBoardingProvider(
-                                    detailsAr: descriptionArController.text,
-                                    detailsEn: descriptionController.text,
-                                    headingAr: headingArController.text,
-                                    headingEn: descriptionController.text,
-                                    image: picture!,
-                                    id: info!.id));
+                                if (descriptionArController.text !=
+                                        info?.detailsAr &&
+                                    descriptionController.text !=
+                                        info?.detailsEn &&
+                                    headingController.text != info?.headingEn &&
+                                    headingArController.text !=
+                                        info?.headingAr) {
+                                  final res = await ref.read(
+                                      updateBoardingProvider(
+                                              detailsAr:
+                                                  descriptionArController.text,
+                                              detailsEn:
+                                                  descriptionController.text,
+                                              headingAr:
+                                                  headingArController.text,
+                                              headingEn: headingController.text,
+                                              image: picture!,
+                                              id: info!.id)
+                                          .future);
+                                  res.fold((v) {
+                                    ref.read(scaffoldMessengerPod).showSnackBar(
+                                        SnackBar(content: Text(v)));
+                                  }, (v) {
+                                    ref.read(scaffoldMessengerPod).showSnackBar(
+                                        SnackBar(content: Text(v)));
+                                  });
+                                  return;
+                                }
+                                ref.read(scaffoldMessengerPod).showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            "You haven't changed anything")));
                               }
                             });
                       }),

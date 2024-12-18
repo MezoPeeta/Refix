@@ -44,8 +44,8 @@ class SecondaryButton extends StatelessWidget {
       height: size?.height ?? 52,
       child: ElevatedButton(
           style: const ButtonStyle(
-              foregroundColor: WidgetStatePropertyAll(AppColors.secondaryRefix),
-              backgroundColor: WidgetStatePropertyAll(AppColors.secondary100)),
+              foregroundColor: WidgetStatePropertyAll(AppColors.white),
+              backgroundColor: WidgetStatePropertyAll(AppColors.primaryRefix)),
           onPressed: onPressed,
           child: FittedBox(child: Text(text))),
     );

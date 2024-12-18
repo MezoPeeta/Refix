@@ -4,14 +4,18 @@ import 'dart:io';
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/auth.dart';
 import 'package:dashboard/src/screens/content/data/boarding_data.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart' as mime;
+
 part 'onetime_domain.g.dart';
 
 @riverpod
-Future<void> updateBoarding(Ref ref,
+Future<Either<String, String>> updateBoarding(Ref ref,
     {required String id,
     required String headingEn,
     required String headingAr,
@@ -22,31 +26,28 @@ Future<void> updateBoarding(Ref ref,
   final token = await ref.read(authProvider).getAccessToken();
   var request =
       http.MultipartRequest('PUT', Uri.parse('${baseAPI}onboarding/$id'));
-  request.fields['heading.en'] = headingEn;
-  request.fields['heading.ar'] = headingAr;
-  request.fields['details.en'] = detailsEn;
-  request.fields['details.ar'] = detailsAr;
+  request.fields['heading'] = jsonEncode({"en": headingEn, "ar": headingAr});
+  request.fields['details'] = jsonEncode({"en": detailsEn, "ar": detailsAr});
 
-  // Add the image file
-  request.files
-      .add(http.MultipartFile.fromBytes('image', image, filename: 'image.jpg'));
+  request.files.add(http.MultipartFile.fromBytes("image", image,
+      filename: "image.jpeg", contentType: mime.MediaType('image', 'jpeg')));
 
   request.headers['Authorization'] = 'Bearer $token';
-
+  debugPrint(request.fields.toString());
   try {
     var response = await request.send();
-    var responseBody = await response.stream.bytesToString();
-
+    final d = await response.stream.bytesToString();
+    print("Response: $response");
     if (response.statusCode == 200) {
       print('Upload successful');
-      print(responseBody);
+      return right("Upload successful");
     } else {
-      print('Upload failed');
-      print(responseBody);
+      return left("Upload Failed, try refreshing");
     }
   } catch (e) {
     print('Error uploading image: $e');
   }
+  return left("Upload Error");
 }
 
 @riverpod

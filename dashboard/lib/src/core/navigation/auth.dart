@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:dashboard/src/core/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 
+import '../../app.dart';
 import '../../screens/auth/data/auth_data.dart';
 import '../storage/storage.dart';
 import 'api.dart';
@@ -92,6 +94,11 @@ class AuthDomain {
     } finally {
       await storage.delete(key: 'access_token');
       await storage.delete(key: 'refresh_token');
+      final scaffoldMessenger = ref.read(scaffoldMessengerPod);
+
+      scaffoldMessenger.showSnackBar(
+          const SnackBar(content: Text("Session finished, Login again")));
+      ref.read(goRouterProvider).go("/login");
     }
   }
 
@@ -104,7 +111,7 @@ class AuthDomain {
       "email": email,
       "password": password,
     });
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       var decodedResponse =
           jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
 
@@ -114,7 +121,7 @@ class AuthDomain {
       return right(account);
     }
 
-    return left(response.body);
+    return left(jsonDecode(response.body)["message"].first);
   }
 
   Future<Either<ErrorResponse, UserAccount>> signup({

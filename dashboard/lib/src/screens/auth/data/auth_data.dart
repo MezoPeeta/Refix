@@ -16,16 +16,17 @@ class UserAccount with _$UserAccount {
       _$UserAccountFromJson(json);
 }
 
-@freezed
+@unfreezed
 class User with _$User {
-  const factory User({
-    @JsonKey(name: "notification_token") String? notificationToken,
-    @JsonKey(name: "_id") required String id,
-    @JsonKey(name: "username") required String username,
-    @JsonKey(name: "email") required String email,
-    @JsonKey(name: "role") required Role role,
-    @JsonKey(name: "is_verified") required bool isVerified,
-  }) = _User;
+  factory User(
+      {@JsonKey(name: "notification_token") String? notificationToken,
+      @JsonKey(name: "_id") required String id,
+      @JsonKey(name: "username") required String username,
+      @JsonKey(name: "email") required String email,
+      @JsonKey(name: "role") required Role role,
+      @JsonKey(name: "is_verified") required bool isVerified,
+      @JsonKey(name: "createdAt") required DateTime createdAt,
+      @Default(false) bool selected}) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }

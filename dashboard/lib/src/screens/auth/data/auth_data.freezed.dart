@@ -251,16 +251,34 @@ User _$UserFromJson(Map<String, dynamic> json) {
 mixin _$User {
   @JsonKey(name: "notification_token")
   String? get notificationToken => throw _privateConstructorUsedError;
+  @JsonKey(name: "notification_token")
+  set notificationToken(String? value) => throw _privateConstructorUsedError;
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "_id")
+  set id(String value) => throw _privateConstructorUsedError;
   @JsonKey(name: "username")
   String get username => throw _privateConstructorUsedError;
+  @JsonKey(name: "username")
+  set username(String value) => throw _privateConstructorUsedError;
   @JsonKey(name: "email")
   String get email => throw _privateConstructorUsedError;
+  @JsonKey(name: "email")
+  set email(String value) => throw _privateConstructorUsedError;
   @JsonKey(name: "role")
   Role get role => throw _privateConstructorUsedError;
+  @JsonKey(name: "role")
+  set role(Role value) => throw _privateConstructorUsedError;
   @JsonKey(name: "is_verified")
   bool get isVerified => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_verified")
+  set isVerified(bool value) => throw _privateConstructorUsedError;
+  @JsonKey(name: "createdAt")
+  DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: "createdAt")
+  set createdAt(DateTime value) => throw _privateConstructorUsedError;
+  bool get selected => throw _privateConstructorUsedError;
+  set selected(bool value) => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -282,7 +300,9 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "username") String username,
       @JsonKey(name: "email") String email,
       @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified") bool isVerified});
+      @JsonKey(name: "is_verified") bool isVerified,
+      @JsonKey(name: "createdAt") DateTime createdAt,
+      bool selected});
 
   $RoleCopyWith<$Res> get role;
 }
@@ -308,6 +328,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? email = null,
     Object? role = null,
     Object? isVerified = null,
+    Object? createdAt = null,
+    Object? selected = null,
   }) {
     return _then(_value.copyWith(
       notificationToken: freezed == notificationToken
@@ -333,6 +355,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       isVerified: null == isVerified
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      selected: null == selected
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
   }
@@ -361,7 +391,9 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "username") String username,
       @JsonKey(name: "email") String email,
       @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified") bool isVerified});
+      @JsonKey(name: "is_verified") bool isVerified,
+      @JsonKey(name: "createdAt") DateTime createdAt,
+      bool selected});
 
   @override
   $RoleCopyWith<$Res> get role;
@@ -385,6 +417,8 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? email = null,
     Object? role = null,
     Object? isVerified = null,
+    Object? createdAt = null,
+    Object? selected = null,
   }) {
     return _then(_$UserImpl(
       notificationToken: freezed == notificationToken
@@ -411,6 +445,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      selected: null == selected
+          ? _value.selected
+          : selected // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -418,39 +460,47 @@ class __$$UserImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$UserImpl with DiagnosticableTreeMixin implements _User {
-  const _$UserImpl(
+  _$UserImpl(
       {@JsonKey(name: "notification_token") this.notificationToken,
       @JsonKey(name: "_id") required this.id,
       @JsonKey(name: "username") required this.username,
       @JsonKey(name: "email") required this.email,
       @JsonKey(name: "role") required this.role,
-      @JsonKey(name: "is_verified") required this.isVerified});
+      @JsonKey(name: "is_verified") required this.isVerified,
+      @JsonKey(name: "createdAt") required this.createdAt,
+      this.selected = false});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
 
   @override
   @JsonKey(name: "notification_token")
-  final String? notificationToken;
+  String? notificationToken;
   @override
   @JsonKey(name: "_id")
-  final String id;
+  String id;
   @override
   @JsonKey(name: "username")
-  final String username;
+  String username;
   @override
   @JsonKey(name: "email")
-  final String email;
+  String email;
   @override
   @JsonKey(name: "role")
-  final Role role;
+  Role role;
   @override
   @JsonKey(name: "is_verified")
-  final bool isVerified;
+  bool isVerified;
+  @override
+  @JsonKey(name: "createdAt")
+  DateTime createdAt;
+  @override
+  @JsonKey()
+  bool selected;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(notificationToken: $notificationToken, id: $id, username: $username, email: $email, role: $role, isVerified: $isVerified)';
+    return 'User(notificationToken: $notificationToken, id: $id, username: $username, email: $email, role: $role, isVerified: $isVerified, createdAt: $createdAt, selected: $selected)';
   }
 
   @override
@@ -463,29 +513,10 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('username', username))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('role', role))
-      ..add(DiagnosticsProperty('isVerified', isVerified));
+      ..add(DiagnosticsProperty('isVerified', isVerified))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('selected', selected));
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$UserImpl &&
-            (identical(other.notificationToken, notificationToken) ||
-                other.notificationToken == notificationToken) &&
-            (identical(other.id, id) || other.id == id) &&
-            (identical(other.username, username) ||
-                other.username == username) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType, notificationToken, id, username, email, role, isVerified);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -504,35 +535,56 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 }
 
 abstract class _User implements User {
-  const factory _User(
-          {@JsonKey(name: "notification_token") final String? notificationToken,
-          @JsonKey(name: "_id") required final String id,
-          @JsonKey(name: "username") required final String username,
-          @JsonKey(name: "email") required final String email,
-          @JsonKey(name: "role") required final Role role,
-          @JsonKey(name: "is_verified") required final bool isVerified}) =
-      _$UserImpl;
+  factory _User(
+      {@JsonKey(name: "notification_token") String? notificationToken,
+      @JsonKey(name: "_id") required String id,
+      @JsonKey(name: "username") required String username,
+      @JsonKey(name: "email") required String email,
+      @JsonKey(name: "role") required Role role,
+      @JsonKey(name: "is_verified") required bool isVerified,
+      @JsonKey(name: "createdAt") required DateTime createdAt,
+      bool selected}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
   @override
   @JsonKey(name: "notification_token")
   String? get notificationToken;
+  @JsonKey(name: "notification_token")
+  set notificationToken(String? value);
   @override
   @JsonKey(name: "_id")
   String get id;
+  @JsonKey(name: "_id")
+  set id(String value);
   @override
   @JsonKey(name: "username")
   String get username;
+  @JsonKey(name: "username")
+  set username(String value);
   @override
   @JsonKey(name: "email")
   String get email;
+  @JsonKey(name: "email")
+  set email(String value);
   @override
   @JsonKey(name: "role")
   Role get role;
+  @JsonKey(name: "role")
+  set role(Role value);
   @override
   @JsonKey(name: "is_verified")
   bool get isVerified;
+  @JsonKey(name: "is_verified")
+  set isVerified(bool value);
+  @override
+  @JsonKey(name: "createdAt")
+  DateTime get createdAt;
+  @JsonKey(name: "createdAt")
+  set createdAt(DateTime value);
+  @override
+  bool get selected;
+  set selected(bool value);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

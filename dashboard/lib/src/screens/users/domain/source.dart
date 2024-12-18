@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/auth.dart';
-import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../auth/data/auth_data.dart';
@@ -15,13 +15,33 @@ class UsersDataSource extends DataTableSource {
   final List<User> data;
   UsersDataSource(this.data);
 
+  String formatTime(DateTime time) {
+    final formattedDate = DateFormat.yMd().format(time);
+    final formattedTime = DateFormat('jm').format(time);
+    return "$formattedTime $formattedDate";
+  }
+
   @override
   DataRow? getRow(int index) {
-    return DataRow(cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].username)),
-      DataCell(Text(data[index].email)),
-    ]);
+    if (index >= data.length) return null;
+
+    return DataRow.byIndex(
+        index: index,
+        selected: data[index].selected,
+        onSelectChanged: (value) {
+          data[index].selected = value!;
+          notifyListeners();
+        },
+        cells: [
+          DataCell(Text(data[index].id)),
+          DataCell(Text(data[index].username)),
+          DataCell(Text(data[index].email)),
+          DataCell(Text(formatTime(data[index].createdAt))),
+          DataCell(TextButton(
+            onPressed: () {},
+            child: const Text("Edit"),
+          )),
+        ]);
   }
 
   @override
@@ -31,17 +51,20 @@ class UsersDataSource extends DataTableSource {
   int get rowCount => data.length;
 
   @override
-  int get selectedRowCount => 20;
+  int get selectedRowCount => 5;
 }
 
 @riverpod
-Future<List<User>> getUsers(Ref ref) async {
+Future<List<User>> getCustomers(Ref ref,
+    {required int page, String? query}) async {
+  final url = query != null
+      ? "customer?page=$page&take=10&search=$query"
+      : "customer?page=$page&take=10";
   final response = await ref
       .read(httpProvider)
-      .authenticatedRequest(url: "customer?page=1&take=20", method: "GET");
-
+      .authenticatedRequest(url: url, method: "GET");
   if (response.statusCode == 200) {
-    final decoded = jsonDecode(response.body);
+    final decoded = jsonDecode(response.body)["customers"];
 
     return decoded.map<User>((e) => User.fromJson(e)).toList();
   }

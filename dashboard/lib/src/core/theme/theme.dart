@@ -7,6 +7,7 @@ import 'colors.dart';
 class AppTheme {
   static ThemeData customTheme = ThemeData(
       useMaterial3: true,
+      primaryColorLight: AppColors.primaryRefix,
       progressIndicatorTheme:
           const ProgressIndicatorThemeData(color: AppColors.primaryRefix),
       outlinedButtonTheme: OutlinedButtonThemeData(

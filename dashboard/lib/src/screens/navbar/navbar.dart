@@ -1,3 +1,4 @@
+import 'package:dashboard/src/core/navigation/auth.dart';
 import 'package:dashboard/src/core/theme/colors.dart';
 import 'package:dashboard/src/core/theme/radii.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,6 @@ class Navbar extends ConsumerWidget {
                           : AppColors.neutralRefix,
                     ),
                     title: Text(
-                      
                       "Clients",
                       style: TextStyle(
                           color: currentIndex == 1 ? Colors.white : null),
@@ -257,7 +257,9 @@ class Navbar extends ConsumerWidget {
                 ],
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    ref.read(authProvider).logout();
+                  },
                   child: const Text(
                     "Log Out",
                     style: TextStyle(

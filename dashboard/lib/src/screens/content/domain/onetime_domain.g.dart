@@ -6,7 +6,7 @@ part of 'onetime_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateBoardingHash() => r'002d4b09779ded4d8ec17542ca4712d8d3eaf9ca';
+String _$updateBoardingHash() => r'6c17d981495847098dbe3e863da0a90d968c70dc';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const updateBoardingProvider = UpdateBoardingFamily();
 
 /// See also [updateBoarding].
-class UpdateBoardingFamily extends Family<AsyncValue<void>> {
+class UpdateBoardingFamily extends Family<AsyncValue<Either<String, String>>> {
   /// See also [updateBoarding].
   const UpdateBoardingFamily();
 
@@ -87,7 +87,8 @@ class UpdateBoardingFamily extends Family<AsyncValue<void>> {
 }
 
 /// See also [updateBoarding].
-class UpdateBoardingProvider extends AutoDisposeFutureProvider<void> {
+class UpdateBoardingProvider
+    extends AutoDisposeFutureProvider<Either<String, String>> {
   /// See also [updateBoarding].
   UpdateBoardingProvider({
     required String id,
@@ -147,7 +148,8 @@ class UpdateBoardingProvider extends AutoDisposeFutureProvider<void> {
 
   @override
   Override overrideWith(
-    FutureOr<void> Function(UpdateBoardingRef provider) create,
+    FutureOr<Either<String, String>> Function(UpdateBoardingRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -169,7 +171,7 @@ class UpdateBoardingProvider extends AutoDisposeFutureProvider<void> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<void> createElement() {
+  AutoDisposeFutureProviderElement<Either<String, String>> createElement() {
     return _UpdateBoardingProviderElement(this);
   }
 
@@ -200,7 +202,8 @@ class UpdateBoardingProvider extends AutoDisposeFutureProvider<void> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin UpdateBoardingRef on AutoDisposeFutureProviderRef<void> {
+mixin UpdateBoardingRef
+    on AutoDisposeFutureProviderRef<Either<String, String>> {
   /// The parameter `id` of this provider.
   String get id;
 
@@ -221,7 +224,8 @@ mixin UpdateBoardingRef on AutoDisposeFutureProviderRef<void> {
 }
 
 class _UpdateBoardingProviderElement
-    extends AutoDisposeFutureProviderElement<void> with UpdateBoardingRef {
+    extends AutoDisposeFutureProviderElement<Either<String, String>>
+    with UpdateBoardingRef {
   _UpdateBoardingProviderElement(super.provider);
 
   @override

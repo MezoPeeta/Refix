@@ -113,9 +113,9 @@ class BoardingInfo extends StatelessWidget {
             return PrimaryButton(
                 text: "Edit",
                 onPressed: () async {
+                  
                   final imageN = await http.get(Uri.parse(networkImage));
                   final bytesImage = imageN.bodyBytes;
-                  print(bytesImage);
                   ref.read(boardingInfoProvider.notifier).state =
                       BoardingUpdate(
                           image: bytesImage,
