@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../auth/data/auth_data.dart';
+import 'package:http/http.dart' as http;
 
 part 'source.g.dart';
 
@@ -36,6 +37,7 @@ class UsersDataSource extends DataTableSource {
           DataCell(Text(data[index].id)),
           DataCell(Text(data[index].username)),
           DataCell(Text(data[index].email)),
+          DataCell(Text(data[index].role.name)),
           DataCell(Text(formatTime(data[index].createdAt))),
           DataCell(TextButton(
             onPressed: () {},
@@ -73,4 +75,40 @@ Future<List<User>> getCustomers(Ref ref,
     return [];
   }
   return [];
+}
+
+@riverpod
+Future<List<User>> getUsers(Ref ref, {required int page, String? query}) async {
+  final url = query != null
+      ? "user?page=$page&take=10&search=$query"
+      : "user?page=$page&take=10";
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: url, method: "GET");
+  if (response.statusCode == 200) {
+    final decoded = jsonDecode(response.body)["users"];
+
+    return decoded.map<User>((e) => User.fromJson(e)).toList();
+  }
+  if (response.statusCode == 401) {
+    await ref.read(authProvider).logout();
+    return [];
+  }
+  return [];
+}
+
+@riverpod
+Future<List<String>> getLocation(Ref ref, {required List<User> users}) async {
+  List<String> cities = [];
+  users.forEach((user) async {
+    final request = await http.get(Uri.parse(
+        "https://nominatim.openstreetmap.org/reverse?format=json&lat=${user.latitude}&lon=${user.longitude}"));
+    final data = jsonDecode(request.body);
+    if (request.statusCode == 200) {
+      // return data["address"]["city"];
+      cities.add(data["address"]["city"]);
+    }
+  });
+
+  return cities;
 }

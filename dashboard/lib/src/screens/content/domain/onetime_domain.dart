@@ -22,18 +22,15 @@ Future<Either<String, String>> updateBoarding(Ref ref,
     required String detailsEn,
     required String detailsAr,
     required Uint8List image}) async {
-  final baseAPI = ref.read(httpProvider).baseAPI;
-  final token = await ref.read(authProvider).getAccessToken();
-  var request =
-      http.MultipartRequest('PUT', Uri.parse('${baseAPI}onboarding/$id'));
-  request.fields['heading'] = jsonEncode({"en": headingEn, "ar": headingAr});
-  request.fields['details'] = jsonEncode({"en": detailsEn, "ar": detailsAr});
+  final request = await ref.read(httpProvider).uploadFile(
+      api: "onboarding/$id",
+      method: "PUT",
+      bytesFile: image,
+      body: {
+        "heading": jsonEncode({"en": headingEn, "ar": headingAr}),
+        "details": jsonEncode({"en": detailsEn, "ar": detailsAr}),
+      });
 
-  request.files.add(http.MultipartFile.fromBytes("image", image,
-      filename: "image.jpeg", contentType: mime.MediaType('image', 'jpeg')));
-
-  request.headers['Authorization'] = 'Bearer $token';
-  debugPrint(request.fields.toString());
   try {
     var response = await request.send();
     final d = await response.stream.bytesToString();
@@ -41,7 +38,10 @@ Future<Either<String, String>> updateBoarding(Ref ref,
     if (response.statusCode == 200) {
       print('Upload successful');
       return right("Upload successful");
+    } else if (response.statusCode == 401) {
+      ref.read(authProvider).logout();
     } else {
+      print(d);
       return left("Upload Failed, try refreshing");
     }
   } catch (e) {

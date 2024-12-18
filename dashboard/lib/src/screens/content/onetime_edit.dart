@@ -12,7 +12,10 @@ import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-final boardingInfoProvider = StateProvider<BoardingUpdate?>((ref) => null);
+import '../base/base.dart';
+
+final boardingInfoProvider =
+    StateProvider.autoDispose<BoardingUpdate?>((ref) => null);
 
 class OnetimeEditScreen extends ConsumerStatefulWidget {
   const OnetimeEditScreen({super.key});
@@ -53,7 +56,9 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
           key: formKey,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const PrevButton(),
               Center(
                 child: Container(
                   width: 925,
@@ -190,10 +195,10 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                                   picture != null) {
                                 final info = ref.read(boardingInfoProvider);
                                 if (descriptionArController.text !=
-                                        info?.detailsAr &&
+                                        info?.detailsAr ||
                                     descriptionController.text !=
-                                        info?.detailsEn &&
-                                    headingController.text != info?.headingEn &&
+                                        info?.detailsEn ||
+                                    headingController.text != info?.headingEn ||
                                     headingArController.text !=
                                         info?.headingAr) {
                                   final res = await ref.read(

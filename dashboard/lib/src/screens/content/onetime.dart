@@ -37,6 +37,20 @@ class OnetimeScreen extends ConsumerWidget {
                         width: 408,
                         child: BoardingInfo(
                           id: data[index].id,
+                          onPressed: () async {
+                            final imageN =
+                                await http.get(Uri.parse(data[index].image));
+                            final bytesImage = imageN.bodyBytes;
+                            ref.read(boardingInfoProvider.notifier).state =
+                                BoardingUpdate(
+                                    image: bytesImage,
+                                    detailsEn: data[index].details,
+                                    headingEn: data[index].heading,
+                                    id: data[index].id,
+                                    detailsAr: data[index].details,
+                                    headingAr: data[index].heading);
+                            ref.read(currentIndexProvider.notifier).state = 5;
+                          },
                           title: data[index].heading,
                           description: data[index].details,
                           networkImage:
@@ -53,16 +67,18 @@ class OnetimeScreen extends ConsumerWidget {
 }
 
 class BoardingInfo extends StatelessWidget {
-  const BoardingInfo({
-    super.key,
-    required this.text,
-    required this.networkImage,
-    required this.title,
-    required this.description,
-    required this.id,
-  });
+  const BoardingInfo(
+      {super.key,
+      required this.text,
+      required this.networkImage,
+      required this.title,
+      required this.description,
+      required this.id,
+      required this.onPressed});
 
-  final String text, networkImage, title, description, id;
+  final String text, title, description, id;
+  final String? networkImage;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -88,12 +104,14 @@ class BoardingInfo extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(16),
                       topRight: Radius.circular(16)),
-                  child: Image.network(
-                    height: 270,
-                    width: 408,
-                    fit: BoxFit.cover,
-                    networkImage,
-                  ),
+                  child: networkImage == null
+                      ? const Icon(Icons.broken_image)
+                      : Image.network(
+                          height: 270,
+                          width: 408,
+                          fit: BoxFit.cover,
+                          networkImage!,
+                        ),
                 ),
                 Text(title,
                     style: const TextStyle(
@@ -110,22 +128,7 @@ class BoardingInfo extends StatelessWidget {
             height: 16,
           ),
           Consumer(builder: (context, ref, child) {
-            return PrimaryButton(
-                text: "Edit",
-                onPressed: () async {
-                  
-                  final imageN = await http.get(Uri.parse(networkImage));
-                  final bytesImage = imageN.bodyBytes;
-                  ref.read(boardingInfoProvider.notifier).state =
-                      BoardingUpdate(
-                          image: bytesImage,
-                          detailsEn: description,
-                          headingEn: title,
-                          id: id,
-                          detailsAr: description,
-                          headingAr: title);
-                  ref.read(currentIndexProvider.notifier).state = 5;
-                });
+            return PrimaryButton(text: "Edit", onPressed: onPressed);
           })
         ],
       ),

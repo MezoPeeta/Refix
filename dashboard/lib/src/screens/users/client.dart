@@ -1,3 +1,4 @@
+import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
   @override
   Widget build(BuildContext context) {
     final users = ref.watch(getCustomersProvider(page: _page, query: query));
+    // final cities = ref.watch(getLocation())
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -77,6 +79,11 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
                         DataColumn(
                             label: Text(
                           "Email",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
+                        DataColumn(
+                            label: Text(
+                          "Phone Number",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(

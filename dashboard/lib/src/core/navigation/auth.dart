@@ -4,11 +4,14 @@ import 'package:dashboard/src/core/navigation/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../app.dart';
 import '../../screens/auth/data/auth_data.dart';
 import '../storage/storage.dart';
 import 'api.dart';
+
+part 'auth.g.dart';
 
 final authProvider = Provider<AuthDomain>(AuthDomain.new);
 
@@ -146,4 +149,15 @@ class AuthDomain {
 
     return left(ErrorResponse.fromJson(jsonDecode(response.body)));
   }
+}
+
+@riverpod
+Future<User?> getCurrentUser(Ref ref) async {
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(method: "GET", url: "me");
+  if (response.statusCode == 200) {
+    return User.fromJson(jsonDecode(response.body));
+  }
+  return null;
 }
