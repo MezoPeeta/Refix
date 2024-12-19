@@ -6,6 +6,9 @@ import 'package:fpdart/fpdart.dart';
 import 'package:refix/src/core/network/api.dart';
 import 'package:refix/src/core/storage/secure_storage.dart';
 import 'package:refix/src/screens/auth/data/auth_data.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'auth_domain.g.dart';
 
 final authProvider = Provider<AuthDomain>(AuthDomain.new);
 
@@ -112,19 +115,25 @@ class AuthDomain {
           accessToken: account.accessToken, refreshToken: account.refreshToken);
       return right(account);
     }
+    final errorMessage = jsonDecode(response.body)["message"];
+    if (errorMessage is List) {
+      return left(errorMessage.first);
+    }
 
-    return left(response.body);
+    return left(errorMessage);
   }
 
   Future<Either<String, UserAccount>> signup({
     required String email,
     required String password,
     required String username,
+    required String phone,
   }) async {
     final response =
         await ref.read(httpProvider).post(apiName: "signup", body: {
       "username": username,
       "email": email,
+      "phone": phone,
       "password": password,
     });
     if (response.statusCode == 201) {
@@ -136,6 +145,25 @@ class AuthDomain {
       return right(account);
     }
 
-    return left(response.body);
+    final errorMessage = jsonDecode(response.body)["message"];
+    if (errorMessage is List) {
+      return left(errorMessage.first);
+    }
+
+    return left(errorMessage);
   }
+}
+
+@riverpod
+Future<User?> getCurrentUser(Ref ref) async {
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(method: "GET", url: "me");
+  if (response.statusCode == 200) {
+    return User.fromJson(jsonDecode(response.body));
+  }
+  if (response.statusCode == 401) {
+    ref.read(authProvider).logout();
+  }
+  return null;
 }

@@ -132,6 +132,7 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                     Consumer(builder: (context, ref, child) {
                       return PrimaryButton(
                           text: "Save",
+                          loading: false,
                           onPressed: () async {
                             final info = ref.read(adInfoProvider);
                             print("Info: $info");

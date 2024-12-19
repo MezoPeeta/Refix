@@ -10,7 +10,16 @@ class AboutRefix extends StatelessWidget {
         title: const Text("About Refix"),
       ),
       body: Column(
-        children: [Container()],
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Image.asset("assets/img/home/logo.png"),
+          ),
+          const SizedBox(
+            height: 8,
+          ),
+          const Text("Refix 1.0.0")
+        ],
       ),
     );
   }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
+import 'package:refix/src/screens/auth/domain/auth_domain.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -19,15 +22,18 @@ class ProfileScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(AppRadii.lg)),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      ProfileOption(
-                        title: "Your Profile",
+                      GestureDetector(
+                        onTap: () => context.push("/profile"),
+                        child: const ProfileOption(
+                          title: "Your Profile",
+                        ),
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
+                      const ProfileOption(
                         title: "Payment Methods",
                       ),
                     ],
@@ -41,47 +47,61 @@ class ProfileScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(AppRadii.lg)),
-                  child: const Column(
+                  child: Column(
                     children: [
-                      ProfileOption(
+                      const ProfileOption(
                         title: "Application Language",
                         trailing: Text(
                           "English",
                           style: TextStyle(fontSize: AppTextSize.two),
                         ),
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
-                        title: "Privacy",
+                      GestureDetector(
+                        onTap: () => context.push("/privacy"),
+                        child: const ProfileOption(
+                          title: "Privacy",
+                        ),
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
+                      const ProfileOption(
                         title: "Terms And Conditions",
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
-                        title: "About Refix",
+                      GestureDetector(
+                        onTap: () => context.push("/about"),
+                        child: const ProfileOption(
+                          title: "About Refix",
+                        ),
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
+                      const ProfileOption(
                         title: "Be A Part Of Refix",
                       ),
-                      Divider(
+                      const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
-                        title: "Logout",
-                        titleColor: AppColors.errorRefix,
-                        trailing: SizedBox.shrink(),
-                      ),
+                      Consumer(builder: (context, ref, child) {
+                        return GestureDetector(
+                          onTap: () {
+                            ref.read(authProvider).logout();
+                            context.go("/login");
+                          },
+                          child: const ProfileOption(
+                            title: "Logout",
+                            titleColor: AppColors.errorRefix,
+                            trailing: SizedBox.shrink(),
+                          ),
+                        );
+                      }),
                     ],
                   ),
                 ),

@@ -9,8 +9,15 @@ import 'package:refix/src/screens/auth/presentation/components/divider_text.dart
 
 import 'components/social_btn.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool loading = false;
   static final passwordController = TextEditingController();
   static final emailController = TextEditingController();
   static final _formKey = GlobalKey<FormState>();
@@ -39,6 +46,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 TextFormField(
                     controller: emailController,
+                    autofillHints: const [AutofillHints.email],
                     validator: (email) {
                       if (email!.isEmpty) {
                         return "Please enter your email";
@@ -66,16 +74,25 @@ class LoginScreen extends StatelessWidget {
                 Consumer(builder: (context, ref, child) {
                   return PrimaryButton(
                       text: "Login",
+                      loading: loading,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            loading = true;
+                          });
                           final user = await ref.read(authProvider).signin(
                               email: emailController.text,
                               password: passwordController.text);
                           user.fold((value) {
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(content: Text(value)));
+                            setState(() {
+                              loading = false;
+                            });
                           }, (value) {
-                            print(value);
+                            setState(() {
+                              loading = false;
+                            });
                             context.go("/");
                           });
                         }
@@ -172,10 +189,12 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
           if (password!.isEmpty) {
             return "Please enter your password";
           }
-          // if (password.length <= 8 && widget.passwordControllerText == null) {
-          //   return "Password must be atleast 8 letters";
-          // }
+          if (password.length <= 8 && widget.passwordControllerText == null) {
+            return "Password must be atleast 8 letters";
+          }
           if (widget.passwordControllerText != null) {
+            print(widget.passwordControllerText);
+
             if (widget.passwordControllerText !=
                 widget.passwordController.text) {
               return "Confirm password must be exactly your password";

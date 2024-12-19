@@ -46,7 +46,7 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
                                   image: DecorationImage(
                                       colorFilter: ColorFilter.mode(
                                           AppColors.primaryRefix
-                                              .withOpacity(0.8),
+                                              .withValues(alpha: .8),
                                           BlendMode.darken),
                                       image: CachedNetworkImageProvider(
                                           "https://refix-api.onrender.com/${data[index].image}"),

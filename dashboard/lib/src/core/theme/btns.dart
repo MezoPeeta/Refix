@@ -7,18 +7,25 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    required this.loading,
   });
 
   final String text;
 
   final VoidCallback onPressed;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       height: 52,
-      child: ElevatedButton(onPressed: onPressed, child: Text(text)),
+      child: ElevatedButton(
+          onPressed: onPressed,
+          child: loading
+              ? const CircularProgressIndicator.adaptive(
+                  valueColor: AlwaysStoppedAnimation(Colors.white))
+              : Text(text)),
     );
   }
 }

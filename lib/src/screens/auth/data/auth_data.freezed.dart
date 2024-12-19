@@ -257,6 +257,8 @@ mixin _$User {
   String get email => throw _privateConstructorUsedError;
   @JsonKey(name: "type")
   String get type => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
+  int get points => throw _privateConstructorUsedError;
   @JsonKey(name: "role")
   Role get role => throw _privateConstructorUsedError;
   @JsonKey(name: "is_verified")
@@ -281,6 +283,8 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "username") String username,
       @JsonKey(name: "email") String email,
       @JsonKey(name: "type") String type,
+      String phone,
+      int points,
       @JsonKey(name: "role") Role role,
       @JsonKey(name: "is_verified") bool isVerified});
 
@@ -306,6 +310,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? username = null,
     Object? email = null,
     Object? type = null,
+    Object? phone = null,
+    Object? points = null,
     Object? role = null,
     Object? isVerified = null,
   }) {
@@ -326,6 +332,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      points: null == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as int,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -360,6 +374,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "username") String username,
       @JsonKey(name: "email") String email,
       @JsonKey(name: "type") String type,
+      String phone,
+      int points,
       @JsonKey(name: "role") Role role,
       @JsonKey(name: "is_verified") bool isVerified});
 
@@ -383,6 +399,8 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? username = null,
     Object? email = null,
     Object? type = null,
+    Object? phone = null,
+    Object? points = null,
     Object? role = null,
     Object? isVerified = null,
   }) {
@@ -403,6 +421,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as String,
+      points: null == points
+          ? _value.points
+          : points // ignore: cast_nullable_to_non_nullable
+              as int,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -423,6 +449,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       @JsonKey(name: "username") required this.username,
       @JsonKey(name: "email") required this.email,
       @JsonKey(name: "type") required this.type,
+      required this.phone,
+      required this.points,
       @JsonKey(name: "role") required this.role,
       @JsonKey(name: "is_verified") required this.isVerified});
 
@@ -442,6 +470,10 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
   @JsonKey(name: "type")
   final String type;
   @override
+  final String phone;
+  @override
+  final int points;
+  @override
   @JsonKey(name: "role")
   final Role role;
   @override
@@ -450,7 +482,7 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, username: $username, email: $email, type: $type, role: $role, isVerified: $isVerified)';
+    return 'User(id: $id, username: $username, email: $email, type: $type, phone: $phone, points: $points, role: $role, isVerified: $isVerified)';
   }
 
   @override
@@ -462,6 +494,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('username', username))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('type', type))
+      ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('points', points))
       ..add(DiagnosticsProperty('role', role))
       ..add(DiagnosticsProperty('isVerified', isVerified));
   }
@@ -476,6 +510,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
                 other.username == username) &&
             (identical(other.email, email) || other.email == email) &&
             (identical(other.type, type) || other.type == type) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.points, points) || other.points == points) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.isVerified, isVerified) ||
                 other.isVerified == isVerified));
@@ -483,8 +519,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, username, email, type, role, isVerified);
+  int get hashCode => Object.hash(
+      runtimeType, id, username, email, type, phone, points, role, isVerified);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -508,6 +544,8 @@ abstract class _User implements User {
           @JsonKey(name: "username") required final String username,
           @JsonKey(name: "email") required final String email,
           @JsonKey(name: "type") required final String type,
+          required final String phone,
+          required final int points,
           @JsonKey(name: "role") required final Role role,
           @JsonKey(name: "is_verified") required final bool isVerified}) =
       _$UserImpl;
@@ -526,6 +564,10 @@ abstract class _User implements User {
   @override
   @JsonKey(name: "type")
   String get type;
+  @override
+  String get phone;
+  @override
+  int get points;
   @override
   @JsonKey(name: "role")
   Role get role;
@@ -719,5 +761,217 @@ abstract class _Role implements Role {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RoleImplCopyWith<_$RoleImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Notification _$NotificationFromJson(Map<String, dynamic> json) {
+  return _Notification.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Notification {
+  @JsonKey(name: "title")
+  String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: "body")
+  String get body => throw _privateConstructorUsedError;
+  @JsonKey(name: "read")
+  bool get read => throw _privateConstructorUsedError;
+
+  /// Serializes this Notification to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Notification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $NotificationCopyWith<Notification> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NotificationCopyWith<$Res> {
+  factory $NotificationCopyWith(
+          Notification value, $Res Function(Notification) then) =
+      _$NotificationCopyWithImpl<$Res, Notification>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: "title") String title,
+      @JsonKey(name: "body") String body,
+      @JsonKey(name: "read") bool read});
+}
+
+/// @nodoc
+class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
+    implements $NotificationCopyWith<$Res> {
+  _$NotificationCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Notification
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? body = null,
+    Object? read = null,
+  }) {
+    return _then(_value.copyWith(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      body: null == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
+      read: null == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NotificationImplCopyWith<$Res>
+    implements $NotificationCopyWith<$Res> {
+  factory _$$NotificationImplCopyWith(
+          _$NotificationImpl value, $Res Function(_$NotificationImpl) then) =
+      __$$NotificationImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: "title") String title,
+      @JsonKey(name: "body") String body,
+      @JsonKey(name: "read") bool read});
+}
+
+/// @nodoc
+class __$$NotificationImplCopyWithImpl<$Res>
+    extends _$NotificationCopyWithImpl<$Res, _$NotificationImpl>
+    implements _$$NotificationImplCopyWith<$Res> {
+  __$$NotificationImplCopyWithImpl(
+      _$NotificationImpl _value, $Res Function(_$NotificationImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Notification
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? title = null,
+    Object? body = null,
+    Object? read = null,
+  }) {
+    return _then(_$NotificationImpl(
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String,
+      body: null == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
+              as String,
+      read: null == read
+          ? _value.read
+          : read // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
+  const _$NotificationImpl(
+      {@JsonKey(name: "title") required this.title,
+      @JsonKey(name: "body") required this.body,
+      @JsonKey(name: "read") required this.read});
+
+  factory _$NotificationImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NotificationImplFromJson(json);
+
+  @override
+  @JsonKey(name: "title")
+  final String title;
+  @override
+  @JsonKey(name: "body")
+  final String body;
+  @override
+  @JsonKey(name: "read")
+  final bool read;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Notification(title: $title, body: $body, read: $read)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Notification'))
+      ..add(DiagnosticsProperty('title', title))
+      ..add(DiagnosticsProperty('body', body))
+      ..add(DiagnosticsProperty('read', read));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NotificationImpl &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.body, body) || other.body == body) &&
+            (identical(other.read, read) || other.read == read));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, title, body, read);
+
+  /// Create a copy of Notification
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NotificationImplCopyWith<_$NotificationImpl> get copyWith =>
+      __$$NotificationImplCopyWithImpl<_$NotificationImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$NotificationImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Notification implements Notification {
+  const factory _Notification(
+      {@JsonKey(name: "title") required final String title,
+      @JsonKey(name: "body") required final String body,
+      @JsonKey(name: "read") required final bool read}) = _$NotificationImpl;
+
+  factory _Notification.fromJson(Map<String, dynamic> json) =
+      _$NotificationImpl.fromJson;
+
+  @override
+  @JsonKey(name: "title")
+  String get title;
+  @override
+  @JsonKey(name: "body")
+  String get body;
+  @override
+  @JsonKey(name: "read")
+  bool get read;
+
+  /// Create a copy of Notification
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$NotificationImplCopyWith<_$NotificationImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

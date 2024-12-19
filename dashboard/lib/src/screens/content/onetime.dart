@@ -128,7 +128,7 @@ class BoardingInfo extends StatelessWidget {
             height: 16,
           ),
           Consumer(builder: (context, ref, child) {
-            return PrimaryButton(text: "Edit", onPressed: onPressed);
+            return PrimaryButton(text: "Edit", onPressed: onPressed,loading: false,);
           })
         ],
       ),

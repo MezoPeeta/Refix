@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dashboard/src/app.dart';
@@ -14,8 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../base/base.dart';
 
-final boardingInfoProvider =
-    StateProvider.autoDispose<BoardingUpdate?>((ref) => null);
+final boardingInfoProvider = StateProvider<BoardingUpdate?>((ref) => null);
 
 class OnetimeEditScreen extends ConsumerStatefulWidget {
   const OnetimeEditScreen({super.key});
@@ -189,6 +189,7 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                       ),
                       Consumer(builder: (context, ref, child) {
                         return PrimaryButton(
+                            loading: false,
                             text: "Save",
                             onPressed: () async {
                               if (formKey.currentState!.validate() &&

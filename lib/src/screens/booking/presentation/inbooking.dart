@@ -46,7 +46,9 @@ class InbookingScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  const AddedImage(),
+                  const AddedImage(
+                    path: "",
+                  ),
                   const SizedBox(
                     width: 16,
                   ),

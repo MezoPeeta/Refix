@@ -92,6 +92,7 @@ class BookingScreen extends StatelessWidget {
                                             ),
                                           ),
                                           PrimaryButton(
+                                              loading: false,
                                               text: "Add Services",
                                               onPressed: () {})
                                         ],

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,6 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final confirmPasswordController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,9 +76,17 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 16,
                 ),
                 InternationalPhoneNumberInput(
-                    textFieldController: phoneController,
-                    selectorConfig: const SelectorConfig(
-                        showFlags: false, setSelectorButtonAsPrefixIcon: true),
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
+                    initialValue: PhoneNumber(isoCode: "SA"),
+                    selectorConfig: SelectorConfig(
+                        selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                        leadingPadding: 16,
+                        showFlags: false,
+                        useEmoji: true,
+                        countryComparator: (country1, country2) {
+                          return country1.name!.compareTo(country2.name!);
+                        },
+                        setSelectorButtonAsPrefixIcon: true),
                     inputDecoration: InputDecoration(
                         fillColor: AppColors.neutral50,
                         filled: true,
@@ -110,18 +121,32 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 Consumer(builder: (context, ref, child) {
                   return PrimaryButton(
+                    loading: loading,
                       text: "Sign Up",
                       onPressed: () async {
+                        print(phoneNumber);
                         if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            loading = true;
+                          });
                           final user = await ref.read(authProvider).signup(
                               email: emailController.text,
+                              phone: phoneNumber!,
                               username: usernameController.text,
-                              password: passwordController.text);
+                              password: confirmPasswordController.text);
+
                           user.fold((value) {
+                            print(value);
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(content: Text(value)));
+                            setState(() {
+                              loading = false;
+                            });
                           }, (value) {
                             print(value);
+                            setState(() {
+                              loading = false;
+                            });
                             context.go("/");
                           });
                         }

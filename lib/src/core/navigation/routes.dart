@@ -5,8 +5,11 @@ import 'package:refix/src/core/storage/secure_storage.dart';
 import 'package:refix/src/screens/auth/need_login.dart';
 import 'package:refix/src/screens/auth/presentation/forget_password.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
+import 'package:refix/src/screens/auth/presentation/notifications.dart';
 import 'package:refix/src/screens/auth/presentation/otp_verification.dart';
+import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/profile/presentation/about_refix.dart';
+import 'package:refix/src/screens/profile/presentation/new_email.dart';
 import 'package:refix/src/screens/profile/presentation/new_phone.dart';
 import 'package:refix/src/screens/profile/presentation/payment_methods.dart';
 import 'package:refix/src/screens/profile/presentation/privacy.dart';
@@ -26,8 +29,6 @@ import 'package:refix/src/screens/services/presentation/more_services.dart';
 import 'package:refix/src/screens/services/presentation/services.dart';
 import 'package:refix/src/screens/services/presentation/tackphoto.dart';
 
-import '../../screens/notifications/presentation/notifications.dart';
-
 final routes = GoRouter(
     initialLocation: "/boarding",
     redirect: (BuildContext context, GoRouterState state) async {
@@ -39,7 +40,7 @@ final routes = GoRouter(
         return null;
       }
 
-      return '/boarding';
+      return null;
     },
     routes: [
       GoRoute(path: "/", builder: (context, state) => const BaseWidget()),
@@ -48,9 +49,6 @@ final routes = GoRouter(
           builder: (context, state) => const ServicesScreen()),
       GoRoute(
           path: "/reviews", builder: (context, state) => const ReviewsScreen()),
-      GoRoute(
-          path: "/notifications",
-          builder: (context, state) => const NotifiationsScreen()),
       GoRoute(
           path: "/more_services",
           builder: (context, state) => const MoreServicesScreen()),
@@ -98,6 +96,11 @@ final routes = GoRouter(
       GoRoute(
           path: "/new_phone", builder: (context, state) => const NewPhone()),
       GoRoute(
+          path: "/new_email",
+          builder: (context, state) => NewEmail(
+                email: state.extra as String,
+              )),
+      GoRoute(
           path: "/payment_method",
           builder: (context, state) => const PaymentMethods()),
       GoRoute(path: "/privacy", builder: (context, state) => const Privacy()),
@@ -105,4 +108,7 @@ final routes = GoRouter(
           path: "/terms",
           builder: (context, state) => const TermsAndConditions()),
       GoRoute(path: "/about", builder: (context, state) => const AboutRefix()),
+      GoRoute(
+          path: "/notifications",
+          builder: (context, state) => const NotificationsScreen()),
     ]);

@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
+import 'package:refix/src/screens/home/data/home_data.dart';
+import 'package:refix/src/screens/services/presentation/final_step.dart';
+import 'package:refix/src/screens/services/presentation/more_services.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/ui/widgets/button.dart';
 
-class TackphotoScreen extends StatelessWidget {
+final serviceForPhotoProvider = StateProvider<Service?>((ref) => null);
+
+class TackphotoScreen extends ConsumerWidget {
   const TackphotoScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final service = ref.watch(choosenService);
     return Scaffold(
       appBar: AppBar(
         title: Column(
           children: [
-            const Text(
-              "Enter the name of the service here",
-              style: TextStyle(fontSize: AppTextSize.two),
+            Text(
+              service?.name ?? "Please enter service name",
+              style: const TextStyle(fontSize: AppTextSize.two),
             ),
             const SizedBox(
               height: 16,
@@ -55,10 +65,19 @@ class TackphotoScreen extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
-        child: PrimaryButton(
-          text: "Add/Track Photo",
-          onPressed: () {},
-        ),
+        child: Consumer(builder: (context, ref, child) {
+          return PrimaryButton(
+            text: "Add/Track Photo",
+            onPressed: () async {
+              final ImagePicker picker = ImagePicker();
+              final XFile? photo =
+                  await picker.pickImage(source: ImageSource.camera);
+              ref.read(imageProvider.notifier).state = photo;
+              if (!context.mounted) return;
+              context.push("/final_step");
+            },
+          );
+        }),
       ),
     );
   }

@@ -6,10 +6,12 @@ import 'package:refix/src/core/ui/widgets/button.dart';
 import '../../../core/ui/theme/colors.dart';
 
 class NewEmail extends StatelessWidget {
-  const NewEmail({super.key});
+  const NewEmail({super.key, required this.email});
 
+  final String email;
   @override
   Widget build(BuildContext context) {
+    final emailController = TextEditingController(text: email);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -27,6 +29,7 @@ class NewEmail extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: emailController,
                       decoration: const InputDecoration(hintText: "Email"),
                     ),
                     const SizedBox(

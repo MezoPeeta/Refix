@@ -14,6 +14,12 @@ import 'package:http_parser/http_parser.dart' as mime;
 
 part 'onetime_domain.g.dart';
 
+String uint8ListTob64(Uint8List uint8list) {
+  String base64String = base64Encode(uint8list);
+  String header = "data:image/png;base64,";
+  return header + base64String;
+}
+
 @riverpod
 Future<Either<String, String>> updateBoarding(Ref ref,
     {required String id,
@@ -22,31 +28,22 @@ Future<Either<String, String>> updateBoarding(Ref ref,
     required String detailsEn,
     required String detailsAr,
     required Uint8List image}) async {
-  final request = await ref.read(httpProvider).uploadFile(
-      api: "onboarding/$id",
-      method: "PUT",
-      bytesFile: image,
-      body: {
-        "heading": jsonEncode({"en": headingEn, "ar": headingAr}),
-        "details": jsonEncode({"en": detailsEn, "ar": detailsAr}),
-      });
-
-  try {
-    var response = await request.send();
-    final d = await response.stream.bytesToString();
-    print("Response: $response");
-    if (response.statusCode == 200) {
-      print('Upload successful');
-      return right("Upload successful");
-    } else if (response.statusCode == 401) {
-      ref.read(authProvider).logout();
-    } else {
-      print(d);
-      return left("Upload Failed, try refreshing");
-    }
-  } catch (e) {
-    print('Error uploading image: $e');
+  final request = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: "onboarding/$id", method: "PUT", body: {
+    "heading": jsonEncode({"en": headingEn, "ar": headingAr}),
+    "details": jsonEncode({"en": detailsEn, "ar": detailsAr}),
+    "image": uint8ListTob64(image)
+  });
+  if (request.statusCode == 200) {
+    return right("Upload successful");
+  } else if (request.statusCode == 401) {
+    ref.read(authProvider).logout();
+  } else {
+    print(request.body);
+    return left("Upload Failed, try refreshing");
   }
+
   return left("Upload Error");
 }
 

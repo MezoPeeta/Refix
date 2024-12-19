@@ -7,9 +7,11 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.loading = false,
   });
 
   final String text;
+  final bool loading;
 
   final VoidCallback onPressed;
 
@@ -18,7 +20,13 @@ class PrimaryButton extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
       height: 52,
-      child: ElevatedButton(onPressed: onPressed, child: Text(text)),
+      child: ElevatedButton(
+          onPressed: onPressed,
+          child: loading
+              ? const CircularProgressIndicator.adaptive(
+                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                )
+              : Text(text)),
     );
   }
 }

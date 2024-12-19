@@ -7,14 +7,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
-
-
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  static final emailController = TextEditingController();
-  static final passwordController = TextEditingController();
-  static final _formKey = GlobalKey<FormState>();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  bool loading = false;
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +81,13 @@ class LoginScreen extends StatelessWidget {
                           Consumer(builder: (context, ref, child) {
                             return PrimaryButton(
                                 text: "Login",
+                                loading: loading,
                                 onPressed: () async {
-                                  debugPrint("Email: ${emailController.text}");
+                               
                                   if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      loading = true;
+                                    });
                                     final response = await ref
                                         .read(authProvider)
                                         .signin(
@@ -89,6 +98,9 @@ class LoginScreen extends StatelessWidget {
                                           .showSnackBar(
                                               SnackBar(content: Text(v)));
                                     }, (v) => context.go("/"));
+                                     setState(() {
+                                      loading = false;
+                                    });
                                   }
                                 });
                           })

@@ -1,4 +1,4 @@
-package com.example.refix
+package com.refix
 
 import io.flutter.embedding.android.FlutterActivity
 

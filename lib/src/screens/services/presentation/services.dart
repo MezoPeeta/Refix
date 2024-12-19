@@ -1,25 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
+import 'package:refix/src/screens/home/data/home_data.dart';
+import 'package:refix/src/screens/home/domain/home_domain.dart';
 
 import '../../../core/ui/widgets/button.dart';
+import 'more_services.dart';
 
-class ServicesScreen extends StatelessWidget {
+class ServicesScreen extends ConsumerWidget {
   const ServicesScreen({super.key});
 
-  static var services = [
-    "Services",
-    "Services",
-    "Services",
-    "Services",
-    "Other",
-  ];
-
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final services = ref.watch(getAllServicesProvider);
     return Scaffold(
       backgroundColor: AppColors.neutral50,
       body: SafeArea(
@@ -35,7 +33,7 @@ class ServicesScreen extends StatelessWidget {
                       alignment: Alignment.center,
                       children: [
                         Image.asset(
-                          "assets/img/boarding/boarding2.jpg",
+                          "assets/img/home/Image.png",
                           height: 232,
                           width: MediaQuery.sizeOf(context).width,
                           fit: BoxFit.cover,
@@ -145,24 +143,44 @@ class ServicesScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: services.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                              crossAxisSpacing: 24,
-                              mainAxisSpacing: 24,
-                              maxCrossAxisExtent: 116.67),
-                      itemBuilder: (context, index) {
-                        return ServiceContainer(
-                          name: services[index],
-                        );
-                      },
-                    ))
+                services.when(
+                    data: (data) {
+                      data.add(const Service(
+                          name: "Other",
+                          details: "details",
+                          id: "",
+                          price: 0,
+                          isActive: false,
+                          childService: [],
+                          image: "",
+                          v: 0));
+                      return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          child: GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: data.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                                    crossAxisSpacing: 24,
+                                    mainAxisSpacing: 24,
+                                    maxCrossAxisExtent: 116.67),
+                            itemBuilder: (context, index) {
+                              return ServiceContainer(
+                                service: data[index],
+                                onPressed: () {
+                                  ref.read(choosenService.notifier).state =
+                                      data[index];
+                                  ref.read(serviceProvider.notifier).state =
+                                      data[index].childService;
+                                },
+                              );
+                            },
+                          ));
+                    },
+                    error: (e, s) => const Center(child: Text("Error")),
+                    loading: () => const CircularProgressIndicator.adaptive())
               ],
             ),
           ),
@@ -172,23 +190,27 @@ class ServicesScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: PrimaryButton(
           text: "Order Now",
-          onPressed: () {},
+          onPressed: () => context.push(
+            "/more_services",
+          ),
         ),
       ),
     );
   }
 }
 
-class ServiceContainer extends StatefulWidget {
-  const ServiceContainer({super.key, required this.name});
+class ServiceContainer extends ConsumerStatefulWidget {
+  const ServiceContainer(
+      {super.key, required this.service, required this.onPressed});
 
-  final String name;
+  final Service service;
+  final VoidCallback onPressed;
 
   @override
-  State<ServiceContainer> createState() => _ServiceContainerState();
+  ConsumerState<ServiceContainer> createState() => _ServiceContainerState();
 }
 
-class _ServiceContainerState extends State<ServiceContainer> {
+class _ServiceContainerState extends ConsumerState<ServiceContainer> {
   bool isSelected = false;
 
   @override
@@ -203,6 +225,7 @@ class _ServiceContainerState extends State<ServiceContainer> {
           setState(() {
             isSelected = !isSelected;
           });
+          widget.onPressed();
         },
         child: Column(
           children: [
@@ -210,13 +233,17 @@ class _ServiceContainerState extends State<ServiceContainer> {
               height: 52,
               width: isSelected ? 110.67 : 116.67,
               decoration: BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: CachedNetworkImageProvider(
+                          "https://refix-api.onrender.com/${widget.service.image}")),
                   borderRadius: BorderRadius.circular(AppRadii.lg),
                   color: isSelected
                       ? AppColors.primaryRefix
                       : AppColors.neutral100),
             ),
             SizedBox(height: isSelected ? 5 : 13),
-            Text(widget.name)
+            FittedBox(child: Text(widget.service.name))
           ],
         ),
       ),

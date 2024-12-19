@@ -28,33 +28,6 @@ class HttpAPI {
     return response;
   }
 
-  Future<Response> delete(
-      {required String apiName,
-      Map<String, dynamic>? body,
-      Map<String, String>? headers}) async {
-    var url = Uri.https(baseAPI, apiName);
-    var response = await http.delete(url, body: body, headers: headers);
-    return response;
-  }
-
-  Future<Response> put(
-      {required String apiName,
-      Map<String, dynamic>? body,
-      Map<String, String>? headers}) async {
-    var url = Uri.https(baseAPI, apiName);
-    var response = await http.put(url, body: body, headers: headers);
-    return response;
-  }
-
-  Future<Response> patch(
-      {required String apiName,
-      Map<String, dynamic>? body,
-      Map<String, String>? headers}) async {
-    var url = Uri.https(baseAPI, apiName);
-    var response = await http.patch(url, body: body, headers: headers);
-    return response;
-  }
-
   Future<Response> authenticatedRequest({
     required String url,
     required String method,
@@ -66,19 +39,17 @@ class HttpAPI {
       'Authorization': 'Bearer $accessToken',
       'Content-Type': 'application/json',
     };
+    var bUrl = Uri.parse("$baseAPI$url");
 
-    // Make request based on method
     switch (method.toUpperCase()) {
       case 'GET':
-        return await http.get(Uri.parse(url), headers: headers);
+        return await http.get(bUrl, headers: headers);
       case 'POST':
-        return await http.post(Uri.parse(url),
-            headers: headers, body: json.encode(body));
+        return await http.post(bUrl, headers: headers, body: json.encode(body));
       case 'PUT':
-        return await http.put(Uri.parse(url),
-            headers: headers, body: json.encode(body));
+        return await http.put(bUrl, headers: headers, body: json.encode(body));
       case 'DELETE':
-        return await http.delete(Uri.parse(url), headers: headers);
+        return await http.delete(bUrl, headers: headers);
       default:
         throw Exception('Unsupported HTTP method');
     }

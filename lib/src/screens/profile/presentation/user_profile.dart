@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/profile/presentation/profile.dart';
 
 import '../../../core/ui/theme/colors.dart';
+import '../../auth/domain/auth_domain.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends ConsumerWidget {
   const UserProfile({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(getCurrentUserProvider).value;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Your Profile"),
@@ -49,18 +53,22 @@ class UserProfile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(AppRadii.lg)),
                 child: Column(
                   children: [
-                    const ProfileOption(
+                    ProfileOption(
                       title: "Phone Number",
                       trailing: Text(
-                        "0114****42",
-                        style: TextStyle(fontSize: AppTextSize.two),
+                        user?.phone ?? "",
+                        style: const TextStyle(fontSize: AppTextSize.two),
                       ),
                     ),
                     const Divider(
                       color: AppColors.neutral300,
                     ),
-                    const ProfileOption(
-                      title: "Email",
+                    GestureDetector(
+                      onTap: () =>
+                          context.push("/new_email", extra: user?.email),
+                      child: const ProfileOption(
+                        title: "Email",
+                      ),
                     ),
                     const Divider(
                       color: AppColors.neutral300,
@@ -104,7 +112,8 @@ class UserProfile extends StatelessWidget {
                                       Column(
                                         children: [
                                           PrimaryButton(
-                                              text: "Back", onPressed: () {}),
+                                              text: "Back",
+                                              onPressed: () => context.pop()),
                                           const SizedBox(
                                             height: 8,
                                           ),
