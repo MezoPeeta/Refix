@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:http_parser/http_parser.dart' as mime;
 
 final httpProvider = Provider<HttpAPI>(HttpAPI.new);
 
@@ -71,34 +70,15 @@ class HttpAPI {
       case 'GET':
         return await http.get(bUrl, headers: headers);
       case 'POST':
-        return await http.post(bUrl, headers: headers, body: json.encode(body));
+        return await http.post(bUrl, headers: headers, body: body);
       case 'PUT':
-        return await http.put(bUrl, headers: headers, body: json.encode(body));
+        return await http.put(bUrl, headers: headers, body: body);
+      case 'PATCH':
+        return await http.patch(bUrl, headers: headers, body: body);
       case 'DELETE':
         return await http.delete(bUrl, headers: headers);
       default:
         throw Exception('Unsupported HTTP method');
     }
-  }
-
-  Future<MultipartRequest> uploadFile(
-      {required String api,
-      required String method,
-      String fileField = "image",
-      String filename = "image.png",
-      Map<String, dynamic>? body,
-      required Uint8List bytesFile}) async {
-    final token = await ref.read(authProvider).getAccessToken();
-    var request = http.MultipartRequest(method, Uri.parse("$baseAPI$api"));
-    request.files.add(http.MultipartFile.fromBytes("image", bytesFile,
-        filename: filename, contentType: mime.MediaType('image', 'png')));
-    request.headers['Authorization'] = 'Bearer $token';
-    if (body != null) {
-      body.forEach((key, value) {
-        request.fields[key] = value;
-      });
-    }
-
-    return request;
   }
 }

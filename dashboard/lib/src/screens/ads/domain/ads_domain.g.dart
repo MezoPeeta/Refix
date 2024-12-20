@@ -6,7 +6,7 @@ part of 'ads_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addAdsHash() => r'cc7e8f69e75ba8a5d2ccccb5562517b41854b000';
+String _$addAdsHash() => r'99f5c0bf55060c3ff8eb7be203d66fe32333723c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -34,7 +34,7 @@ class _SystemHash {
 const addAdsProvider = AddAdsFamily();
 
 /// See also [addAds].
-class AddAdsFamily extends Family<AsyncValue<Either<String, String>>> {
+class AddAdsFamily extends Family<AsyncValue<String>> {
   /// See also [addAds].
   const AddAdsFamily();
 
@@ -75,7 +75,7 @@ class AddAdsFamily extends Family<AsyncValue<Either<String, String>>> {
 }
 
 /// See also [addAds].
-class AddAdsProvider extends AutoDisposeFutureProvider<Either<String, String>> {
+class AddAdsProvider extends AutoDisposeFutureProvider<String> {
   /// See also [addAds].
   AddAdsProvider({
     required Uint8List image,
@@ -114,7 +114,7 @@ class AddAdsProvider extends AutoDisposeFutureProvider<Either<String, String>> {
 
   @override
   Override overrideWith(
-    FutureOr<Either<String, String>> Function(AddAdsRef provider) create,
+    FutureOr<String> Function(AddAdsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -132,7 +132,7 @@ class AddAdsProvider extends AutoDisposeFutureProvider<Either<String, String>> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<Either<String, String>> createElement() {
+  AutoDisposeFutureProviderElement<String> createElement() {
     return _AddAdsProviderElement(this);
   }
 
@@ -155,7 +155,7 @@ class AddAdsProvider extends AutoDisposeFutureProvider<Either<String, String>> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin AddAdsRef on AutoDisposeFutureProviderRef<Either<String, String>> {
+mixin AddAdsRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `image` of this provider.
   Uint8List get image;
 
@@ -163,8 +163,7 @@ mixin AddAdsRef on AutoDisposeFutureProviderRef<Either<String, String>> {
   AdsType get type;
 }
 
-class _AddAdsProviderElement
-    extends AutoDisposeFutureProviderElement<Either<String, String>>
+class _AddAdsProviderElement extends AutoDisposeFutureProviderElement<String>
     with AddAdsRef {
   _AddAdsProviderElement(super.provider);
 
@@ -434,14 +433,14 @@ class _GetAdsByIdProviderElement
   String get id => (origin as GetAdsByIdProvider).id;
 }
 
-String _$updateAdsByIdHash() => r'dc7e98e08588aa264c8ac48636001d1207566cc5';
+String _$updateAdsByIdHash() => r'e8b19328932ce5b0a29adaca13dd6b0ba05cbf9b';
 
 /// See also [updateAdsById].
 @ProviderFor(updateAdsById)
 const updateAdsByIdProvider = UpdateAdsByIdFamily();
 
 /// See also [updateAdsById].
-class UpdateAdsByIdFamily extends Family<AsyncValue<String>> {
+class UpdateAdsByIdFamily extends Family<AsyncValue<String?>> {
   /// See also [updateAdsById].
   const UpdateAdsByIdFamily();
 
@@ -485,7 +484,7 @@ class UpdateAdsByIdFamily extends Family<AsyncValue<String>> {
 }
 
 /// See also [updateAdsById].
-class UpdateAdsByIdProvider extends AutoDisposeFutureProvider<String> {
+class UpdateAdsByIdProvider extends AutoDisposeFutureProvider<String?> {
   /// See also [updateAdsById].
   UpdateAdsByIdProvider({
     required String id,
@@ -530,7 +529,7 @@ class UpdateAdsByIdProvider extends AutoDisposeFutureProvider<String> {
 
   @override
   Override overrideWith(
-    FutureOr<String> Function(UpdateAdsByIdRef provider) create,
+    FutureOr<String?> Function(UpdateAdsByIdRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -549,7 +548,7 @@ class UpdateAdsByIdProvider extends AutoDisposeFutureProvider<String> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<String> createElement() {
+  AutoDisposeFutureProviderElement<String?> createElement() {
     return _UpdateAdsByIdProviderElement(this);
   }
 
@@ -574,7 +573,7 @@ class UpdateAdsByIdProvider extends AutoDisposeFutureProvider<String> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin UpdateAdsByIdRef on AutoDisposeFutureProviderRef<String> {
+mixin UpdateAdsByIdRef on AutoDisposeFutureProviderRef<String?> {
   /// The parameter `id` of this provider.
   String get id;
 
@@ -586,7 +585,7 @@ mixin UpdateAdsByIdRef on AutoDisposeFutureProviderRef<String> {
 }
 
 class _UpdateAdsByIdProviderElement
-    extends AutoDisposeFutureProviderElement<String> with UpdateAdsByIdRef {
+    extends AutoDisposeFutureProviderElement<String?> with UpdateAdsByIdRef {
   _UpdateAdsByIdProviderElement(super.provider);
 
   @override

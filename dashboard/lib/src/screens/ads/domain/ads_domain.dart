@@ -13,26 +13,28 @@ part 'ads_domain.g.dart';
 enum AdsType { slider, banner }
 
 @riverpod
-Future<Either<String, String>> addAds(Ref ref,
+Future<String> addAds(Ref ref,
     {required Uint8List image, required AdsType type}) async {
-  final request = await ref.read(httpProvider).uploadFile(
-      api: "ads", method: "POST", bytesFile: image, body: {"type": type.name});
+  final request = await ref.read(httpProvider).authenticatedRequest(
+      url: "ads",
+      method: "POST",
+      body: {"type": type.name, "image": base64Encode(image)});
 
-  try {
-    final response = await request.send();
-    final body = await response.stream.bytesToString();
-    if (response.statusCode == 201) {
-      return right("Ad created successfully");
-    }
-    if (response.statusCode == 401) {
-      ref.read(authProvider).logout();
-    } else {
-      return left("Ad creation failed: ${jsonDecode(body)["message"].first} ");
-    }
-  } catch (e) {
-    return left("Ad creation failed: $e");
+  if (request.statusCode == 201) {
+    return "Ad created successfully";
   }
-  return left("Ad creation failed");
+  if (request.statusCode == 401) {
+    ref.read(authProvider).logout();
+  } else {
+    print(request.body);
+    final errorMessage = jsonDecode(request.body)["message"];
+    if (errorMessage is List) {
+      return Future.error(errorMessage);
+    }
+    return Future.error(errorMessage);
+  }
+
+  return Future.error("Ad Creation Failed");
 }
 
 @riverpod
@@ -67,17 +69,29 @@ Future<Either<String, Ad>> getAdsById(Ref ref, {required String id}) async {
 }
 
 @riverpod
-Future<String> updateAdsById(Ref ref,
+Future<String?> updateAdsById(Ref ref,
     {required String id,
     required String type,
     required Uint8List image}) async {
-  final request = await ref.read(httpProvider).uploadFile(
-      api: "ads/$id", method: "PATCH", bytesFile: image, body: {"type": type});
+  final request = await ref.read(httpProvider).authenticatedRequest(
+      url: "ads/$id",
+      method: "PATCH",
+      body: {"type": type, "image": base64Encode(image)});
 
-  final response = await request.send();
-
-  final data = await response.stream.bytesToString();
-  debugPrint("AD: $data");
-
-  return jsonDecode(data)["message"].first;
+  if (request.statusCode == 200) {
+    return jsonDecode(request.body)["message"];
+  }
+  if (request.statusCode == 401) {
+    ref.read(authProvider).logout();
+    return null;
+  }
+  if (request.statusCode == 413) {
+    return Future.error("Entity is too large");
+  }
+  print(request.body);
+  final errorMessage = jsonDecode(request.body)["message"];
+  if (errorMessage is List) {
+    return Future.error(errorMessage.first);
+  }
+  return Future.error(errorMessage);
 }

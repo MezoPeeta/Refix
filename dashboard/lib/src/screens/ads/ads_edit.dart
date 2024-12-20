@@ -14,8 +14,8 @@ import '../../core/theme/colors.dart';
 import '../base/base.dart';
 
 final adInfoProvider =
-    StateProvider.autoDispose<({String id, String type, String image})>((ref) {
-  return (id: "", type: "", image: "");
+    StateProvider<({String id, String type, Uint8List? image})>((ref) {
+  return (id: "", type: "", image: null);
 });
 
 class AdsEditScreen extends ConsumerStatefulWidget {
@@ -28,14 +28,13 @@ class AdsEditScreen extends ConsumerStatefulWidget {
 class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
   Uint8List? picture;
   late DropzoneViewController controller;
-
+  bool loading = false;
   @override
   void initState() {
     super.initState();
     final data = ref.read(adInfoProvider);
-
     setState(() {
-      picture = utf8.encode(data.image);
+      picture = data.image;
     });
   }
 
@@ -130,20 +129,30 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                     Consumer(builder: (context, ref, child) {
                       return PrimaryButton(
                           text: "Save",
-                          loading: false,
+                          loading: loading,
                           onPressed: () async {
                             final info = ref.read(adInfoProvider);
-                            print("Info: $info");
-                            print(picture);
                             if (picture != null) {
-                              final res = await ref.read(updateAdsByIdProvider(
-                                      id: info.id,
-                                      image: utf8.encode(info.image),
-                                      type: info.type)
-                                  .future);
+                              setState(() {
+                                loading = true;
+                              });
+                              final res = await ref
+                                  .read(updateAdsByIdProvider(
+                                          id: info.id,
+                                          image: picture!,
+                                          type: info.type)
+                                      .future)
+                                  .onError((e, s) {
+                                ref.read(scaffoldMessengerPod).showSnackBar(
+                                    SnackBar(content: Text(e.toString())));
+                                return null;
+                              });
+                              setState(() {
+                                loading = false;
+                              });
                               ref
                                   .read(scaffoldMessengerPod)
-                                  .showSnackBar(SnackBar(content: Text(res)));
+                                  .showSnackBar(SnackBar(content: Text(res!)));
                             }
                           });
                     }),

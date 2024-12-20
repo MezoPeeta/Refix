@@ -35,8 +35,8 @@ class OnetimeScreen extends ConsumerWidget {
                         child: BoardingInfo(
                           id: data[index].id,
                           onPressed: () async {
-                            final imageN =
-                                await http.get(Uri.parse(data[index].image));
+                            final imageN = await http.get(Uri.parse(
+                                "https://refix-api.onrender.com/${data[index].image}"));
                             final bytesImage = imageN.bodyBytes;
                             ref.read(boardingInfoProvider.notifier).state =
                                 BoardingUpdate(
@@ -91,7 +91,6 @@ class BoardingInfo extends StatelessWidget {
             height: 16,
           ),
           Container(
-            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(16)),
             child: Column(
@@ -125,7 +124,11 @@ class BoardingInfo extends StatelessWidget {
             height: 16,
           ),
           Consumer(builder: (context, ref, child) {
-            return PrimaryButton(text: "Edit", onPressed: onPressed,loading: false,);
+            return PrimaryButton(
+              text: "Edit",
+              onPressed: onPressed,
+              loading: false,
+            );
           })
         ],
       ),

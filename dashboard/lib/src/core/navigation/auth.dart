@@ -124,7 +124,11 @@ class AuthDomain {
       return right(account);
     }
 
-    return left(jsonDecode(response.body)["message"].first);
+    final errorMessage = jsonDecode(response.body)["message"];
+    if (errorMessage is List) {
+      return left(errorMessage.first);
+    }
+    return left(errorMessage);
   }
 
   Future<Either<ErrorResponse, UserAccount>> signup({

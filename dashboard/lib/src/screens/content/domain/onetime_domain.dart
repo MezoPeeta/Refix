@@ -12,7 +12,7 @@ part 'onetime_domain.g.dart';
 
 String uint8ListTob64(Uint8List uint8list) {
   String base64String = base64Encode(uint8list);
-  // String header = "data:image/png;base64,";
+
   return base64String;
 }
 
@@ -37,7 +37,11 @@ Future<Either<String, String>> updateBoarding(Ref ref,
     ref.read(authProvider).logout();
   } else {
     print(request.body);
-    return left("Upload Failed, try refreshing");
+    final errorMessage = jsonDecode(request.body)["message"];
+    if (errorMessage is List) {
+      return left(errorMessage.first);
+    }
+    return left(errorMessage);
   }
 
   return left("Upload Error");
