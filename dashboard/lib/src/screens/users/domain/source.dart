@@ -37,7 +37,7 @@ class UsersDataSource extends DataTableSource {
           DataCell(Text(data[index].id)),
           DataCell(Text(data[index].username)),
           DataCell(Text(data[index].email)),
-          DataCell(Text(data[index].role.name)),
+          DataCell(Text(data[index].phone ?? "-")),
           DataCell(Text(formatTime(data[index].createdAt))),
           DataCell(TextButton(
             onPressed: () {},
@@ -111,4 +111,31 @@ Future<List<String>> getLocation(Ref ref, {required List<User> users}) async {
   });
 
   return cities;
+}
+
+class CustomersDataSource extends UsersDataSource {
+  CustomersDataSource(super.data);
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) return null;
+
+    return DataRow.byIndex(
+        index: index,
+        selected: data[index].selected,
+        onSelectChanged: (value) {
+          data[index].selected = value!;
+          notifyListeners();
+        },
+        cells: [
+          DataCell(Text(data[index].id)),
+          DataCell(Text(data[index].username)),
+          DataCell(Text(data[index].email)),
+          DataCell(Text(data[index].role.name)),
+          DataCell(Text(formatTime(data[index].createdAt))),
+          DataCell(TextButton(
+            onPressed: () {},
+            child: const Text("Edit"),
+          )),
+        ]);
+  }
 }

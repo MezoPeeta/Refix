@@ -80,59 +80,55 @@ class BoardingInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Text(
-            text,
-            style: const TextStyle(
-                fontSize: AppTextSize.five, fontWeight: FontWeight.w500),
+    return Column(
+      children: [
+        Text(
+          text,
+          style: const TextStyle(
+              fontSize: AppTextSize.five, fontWeight: FontWeight.w500),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Container(
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: BorderRadius.circular(16)),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16)),
+                child: networkImage == null
+                    ? const Icon(Icons.broken_image)
+                    : ImageNetwork(
+                        height: 270,
+                        width: 408,
+                        fitWeb: BoxFitWeb.cover,
+                        image: networkImage!,
+                      ),
+              ),
+              Text(title,
+                  style: const TextStyle(
+                      fontSize: AppTextSize.six, fontWeight: FontWeight.w500)),
+              Text(description,
+                  style: const TextStyle(
+                      fontSize: AppTextSize.two, fontWeight: FontWeight.w400)),
+            ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(16)),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(16),
-                      topRight: Radius.circular(16)),
-                  child: networkImage == null
-                      ? const Icon(Icons.broken_image)
-                      : ImageNetwork(
-                          height: 270,
-                          width: 408,
-                          fitWeb: BoxFitWeb.cover,
-                          image: networkImage!,
-                        ),
-                ),
-                Text(title,
-                    style: const TextStyle(
-                        fontSize: AppTextSize.six,
-                        fontWeight: FontWeight.w500)),
-                Text(description,
-                    style: const TextStyle(
-                        fontSize: AppTextSize.two,
-                        fontWeight: FontWeight.w400)),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Consumer(builder: (context, ref, child) {
-            return PrimaryButton(
-              text: "Edit",
-              onPressed: onPressed,
-              loading: false,
-            );
-          })
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Consumer(builder: (context, ref, child) {
+          return PrimaryButton(
+            text: "Edit",
+            onPressed: onPressed,
+            loading: false,
+          );
+        })
+      ],
     );
   }
 }
