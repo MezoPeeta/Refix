@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/auth.dart';
 import 'package:dashboard/src/screens/ads/data/ads.dart';
+import 'package:dashboard/src/screens/content/domain/onetime_domain.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -18,7 +19,10 @@ Future<String> addAds(Ref ref,
   final request = await ref.read(httpProvider).authenticatedRequest(
       url: "ads",
       method: "POST",
-      body: {"type": type.name, "image": base64Encode(image)});
+      body: {
+        "type": type.name,
+        "image": base64Encode(await compressImage(image))
+      });
 
   if (request.statusCode == 201) {
     return "Ad created successfully";

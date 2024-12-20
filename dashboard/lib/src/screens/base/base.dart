@@ -22,6 +22,7 @@ class BaseScreen extends StatelessWidget {
     const OnetimeEditScreen(),
     const AdsScreen(),
     const AdsEditScreen(),
+    const SizedBox.shrink(),
     const BookingScreen(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),

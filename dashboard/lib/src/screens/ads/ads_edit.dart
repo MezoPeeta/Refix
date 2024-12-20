@@ -71,85 +71,56 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                                   });
                                 }),
                             Container(
-                                height: 222,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: AppColors.primaryRefix
-                                        .withValues(alpha: 0.3),
-                                    borderRadius: BorderRadius.circular(16)),
-                                child: picture == null
-                                    ? Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/img/home/up_icon.svg",
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                  "Drag & drop files or"),
-                                              TextButton(
-                                                child:
-                                                    const Text("Upload Image"),
-                                                onPressed: () async {
-                                                  FilePickerResult? result =
-                                                      await FilePicker.platform
-                                                          .pickFiles(
-                                                              type: FileType
-                                                                  .image);
-                                                  if (result != null) {
-                                                    final file = result
-                                                        .files.single.bytes;
+                              height: 222,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: AppColors.primaryRefix
+                                      .withValues(alpha: 0.3),
+                                  borderRadius: BorderRadius.circular(16)),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  picture == null
+                                      ? SvgPicture.asset(
+                                          "assets/img/home/up_icon.svg",
+                                        )
+                                      : Image.memory(
+                                          picture!,
+                                          width: 70,
+                                          height: 70,
+                                          fit: BoxFit.cover,
+                                        ),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text("Drag & drop files or"),
+                                      TextButton(
+                                        child: const Text("Upload Image"),
+                                        onPressed: () async {
+                                          FilePickerResult? result =
+                                              await FilePicker.platform
+                                                  .pickFiles(
+                                                      type: FileType.image);
+                                          if (result != null) {
+                                            final file =
+                                                result.files.single.bytes;
 
-                                                    setState(() {
-                                                      picture = file;
-                                                    });
-                                                  }
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                          const Text(
-                                              "The image size must be 430 * 681."),
-                                        ],
-                                      )
-                                    : Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Image.memory(
-                                            picture!,
-                                            width: 100,
-                                            fit: BoxFit.cover,
-                                          ),
-                                          const SizedBox(
-                                            height: 20,
-                                          ),
-                                          TextButton(
-                                            child: const Text("Upload Image"),
-                                            onPressed: () async {
-                                              FilePickerResult? result =
-                                                  await FilePicker.platform
-                                                      .pickFiles(
-                                                          type: FileType.image);
-                                              if (result != null) {
-                                                final file =
-                                                    result.files.single.bytes;
-
-                                                setState(() {
-                                                  picture = file;
-                                                });
-                                              }
-                                            },
-                                          ),
-                                        ],
-                                      ))
+                                            setState(() {
+                                              picture = file;
+                                            });
+                                          }
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  const Text(
+                                      "The image size must be 430 * 681."),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),

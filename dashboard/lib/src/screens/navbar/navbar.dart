@@ -163,7 +163,7 @@ class Navbar extends ConsumerWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 8;
+                          ref.read(currentIndexProvider.notifier).state = 9;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -175,7 +175,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 9;
+                          ref.read(currentIndexProvider.notifier).state = 10;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -193,7 +193,7 @@ class Navbar extends ConsumerWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 10;
+                          ref.read(currentIndexProvider.notifier).state = 11;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
