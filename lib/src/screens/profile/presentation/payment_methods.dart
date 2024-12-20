@@ -60,7 +60,7 @@ class PaymentMethods extends StatelessWidget {
               height: 16,
             ),
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(AppRadii.lg)),
@@ -69,7 +69,7 @@ class PaymentMethods extends StatelessWidget {
                 leading: SvgPicture.asset(
                   "assets/img/profile/cash.svg",
                 ),
-                title: Text(
+                title: const Text(
                   "Cash",
                   style: TextStyle(fontSize: AppTextSize.three),
                 ),
@@ -79,7 +79,7 @@ class PaymentMethods extends StatelessWidget {
               height: 16,
             ),
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(AppRadii.lg)),
@@ -90,12 +90,12 @@ class PaymentMethods extends StatelessWidget {
                     leading: SvgPicture.asset(
                       "assets/img/profile/visa.svg",
                     ),
-                    title: Text(
+                    title: const Text(
                       "Visa (9904)",
                       style: TextStyle(fontSize: AppTextSize.three),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: AppColors.neutral300,
                   ),
                   ListTile(
@@ -103,22 +103,22 @@ class PaymentMethods extends StatelessWidget {
                     leading: SvgPicture.asset(
                       "assets/img/profile/mastercard.svg",
                     ),
-                    title: Text(
+                    title: const Text(
                       "Visa (9904)",
                       style: TextStyle(fontSize: AppTextSize.three),
                     ),
                   ),
-                  Divider(
+                  const Divider(
                     color: AppColors.neutral300,
                   ),
-                  ListTile(
+                  const ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
+                      backgroundColor: AppColors.primary50,
                       child: Icon(
                         Icons.add,
                         color: AppColors.primaryRefix,
                       ),
-                      backgroundColor: AppColors.primary50,
                     ),
                     title: Text(
                       "Add a credit/debit card",

@@ -7,7 +7,6 @@ import 'package:refix/src/screens/auth/presentation/forget_password.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
 import 'package:refix/src/screens/auth/presentation/notifications.dart';
 import 'package:refix/src/screens/auth/presentation/otp_verification.dart';
-import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/profile/presentation/about_refix.dart';
 import 'package:refix/src/screens/profile/presentation/new_email.dart';
 import 'package:refix/src/screens/profile/presentation/new_phone.dart';

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 
-import '../../../core/ui/theme/colors.dart';
 
 class NewEmail extends StatelessWidget {
   const NewEmail({super.key, required this.email});
