@@ -1,4 +1,3 @@
-
 import 'package:dashboard/src/app.dart';
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:dashboard/src/core/theme/colors.dart';
@@ -199,7 +198,8 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                                         info?.detailsEn ||
                                     headingController.text != info?.headingEn ||
                                     headingArController.text !=
-                                        info?.headingAr) {
+                                        info?.headingAr ||
+                                    picture != info!.image) {
                                   final res = await ref.read(
                                       updateBoardingProvider(
                                               detailsAr:

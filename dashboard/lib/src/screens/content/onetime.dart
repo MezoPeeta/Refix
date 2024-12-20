@@ -6,6 +6,7 @@ import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_network/image_network.dart';
 
 import 'data/boarding_data.dart';
 
@@ -102,11 +103,11 @@ class BoardingInfo extends StatelessWidget {
                       topRight: Radius.circular(16)),
                   child: networkImage == null
                       ? const Icon(Icons.broken_image)
-                      : Image.network(
+                      : ImageNetwork(
                           height: 270,
                           width: 408,
-                          fit: BoxFit.cover,
-                          networkImage!,
+                          fitWeb: BoxFitWeb.cover,
+                          image: networkImage!,
                         ),
                 ),
                 Text(title,

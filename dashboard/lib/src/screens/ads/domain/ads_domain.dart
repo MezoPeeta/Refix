@@ -79,7 +79,7 @@ Future<String?> updateAdsById(Ref ref,
       body: {"type": type, "image": base64Encode(image)});
 
   if (request.statusCode == 200) {
-    return jsonDecode(request.body)["message"];
+    return request.body;
   }
   if (request.statusCode == 401) {
     ref.read(authProvider).logout();
