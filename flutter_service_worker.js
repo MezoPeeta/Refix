@@ -5,12 +5,10 @@ const CACHE_NAME = 'flutter-app-cache';
 
 const RESOURCES = {"version.json": "191595f72c94967ff44fc676a3aedb8c",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
-"main.dart.mjs": "0563ef8144c9285a1c01ac90ad8b1cc8",
-"main.dart.wasm": "84829920f7e31db3a40f9ce3c3b2d1fe",
 "index.html": "81bbdc5a62792831d0d792bdc97bbaa0",
 "/": "81bbdc5a62792831d0d792bdc97bbaa0",
 "main.dart.js": "87dffc14f89e998c8d0f210ccd6c20cd",
-"flutter_bootstrap.js": "a9cf5d84b9ad209396cefcf0e0375b67",
+"flutter_bootstrap.js": "0e48eca8e1ad0fb0121a60bec827b1b1",
 "manifest.json": "d37c4da88379fe0a558eae1a785147b2",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
@@ -53,8 +51,6 @@ const RESOURCES = {"version.json": "191595f72c94967ff44fc676a3aedb8c",
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
-"main.dart.wasm",
-"main.dart.mjs",
 "index.html",
 "flutter_bootstrap.js",
 "assets/AssetManifest.bin.json",
