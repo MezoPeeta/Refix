@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/profile/presentation/profile.dart';
@@ -17,7 +18,7 @@ class UserProfile extends ConsumerWidget {
     final user = ref.watch(getCurrentUserProvider).value;
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Your Profile"),
+        title: Text(context.tr.your_profile),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -32,13 +33,13 @@ class UserProfile extends ConsumerWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      decoration: const InputDecoration(
-                          filled: false, hintText: "First Name"),
+                      decoration: InputDecoration(
+                          filled: false, hintText: context.tr.first_name),
                     ),
                     const Divider(),
                     TextFormField(
-                      decoration: const InputDecoration(
-                          filled: false, hintText: "Last Name"),
+                      decoration: InputDecoration(
+                          filled: false, hintText: context.tr.last_name),
                     ),
                   ],
                 ),
@@ -54,7 +55,7 @@ class UserProfile extends ConsumerWidget {
                 child: Column(
                   children: [
                     ProfileOption(
-                      title: "Phone Number",
+                      title: context.tr.phone,
                       trailing: Text(
                         user?.phone ?? "",
                         style: const TextStyle(fontSize: AppTextSize.two),
@@ -66,8 +67,8 @@ class UserProfile extends ConsumerWidget {
                     GestureDetector(
                       onTap: () =>
                           context.push("/new_email", extra: user?.email),
-                      child: const ProfileOption(
-                        title: "Email",
+                      child: ProfileOption(
+                        title: context.tr.email,
                       ),
                     ),
                     const Divider(
@@ -118,7 +119,7 @@ class UserProfile extends ConsumerWidget {
                                             height: 8,
                                           ),
                                           ErrorButton(
-                                              text: "Delete Account",
+                                              text: context.tr.delete_account,
                                               onPressed: () {})
                                         ],
                                       ),
@@ -128,9 +129,9 @@ class UserProfile extends ConsumerWidget {
                               );
                             });
                       },
-                      child: const ProfileOption(
-                        title: "Delete Account",
-                        trailing: SizedBox.shrink(),
+                      child: ProfileOption(
+                        title: context.tr.delete_account,
+                        trailing: const SizedBox.shrink(),
                         titleColor: AppColors.errorRefix,
                       ),
                     ),

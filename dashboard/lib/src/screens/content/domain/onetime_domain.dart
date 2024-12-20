@@ -1,23 +1,19 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/auth.dart';
 import 'package:dashboard/src/screens/content/data/boarding_data.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart' as mime;
 
 part 'onetime_domain.g.dart';
 
 String uint8ListTob64(Uint8List uint8list) {
   String base64String = base64Encode(uint8list);
-  String header = "data:image/png;base64,";
-  return header + base64String;
+  // String header = "data:image/png;base64,";
+  return base64String;
 }
 
 @riverpod

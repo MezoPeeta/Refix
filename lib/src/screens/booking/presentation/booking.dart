@@ -14,6 +14,28 @@ class BookingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                  color: AppColors.neutralRefix,
+                  border: Border.all(),
+                  shape: BoxShape.circle),
+              child: IconButton(
+                padding: EdgeInsets.zero,
+                icon: const Icon(
+                  Icons.notifications,
+                  color: AppColors.neutralRefix,
+                  size: 16,
+                ),
+                onPressed: () => context.push("/notifications"),
+              ),
+            ),
+          )
+        ],
         title: const Text(
           "Booking",
           style: TextStyle(

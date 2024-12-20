@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -10,7 +11,9 @@ import '../../auth/domain/auth_domain.dart';
 part 'booking_domain.g.dart';
 
 @riverpod
-Future<Either<String, String>> addBooking(Ref ref,{required List<String> services,required DateTime date}) async {
+Future<Either<String, String>> addBooking(Ref ref,
+    {required List<String> services, required DateTime date}) async {
+  log("Booking");
   final response = await ref
       .read(httpProvider)
       .authenticatedRequest(method: "POST", url: "booking", body: {
@@ -20,6 +23,7 @@ Future<Either<String, String>> addBooking(Ref ref,{required List<String> service
     "images_before_reaper": ["string"],
     "status": "PENDING"
   });
+  log("Booking Request: $response");
   if (response.statusCode == 200) {
     return right("Successful");
   }

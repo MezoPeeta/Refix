@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
+import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/auth/domain/auth_domain.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -26,15 +28,15 @@ class ProfileScreen extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () => context.push("/profile"),
-                        child: const ProfileOption(
-                          title: "Your Profile",
+                        child: ProfileOption(
+                          title: context.tr.your_profile,
                         ),
                       ),
                       const Divider(
                         color: AppColors.neutral300,
                       ),
-                      const ProfileOption(
-                        title: "Payment Methods",
+                      ProfileOption(
+                        title: context.tr.payment_methods,
                       ),
                     ],
                   ),
@@ -49,20 +51,127 @@ class ProfileScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(AppRadii.lg)),
                   child: Column(
                     children: [
-                      const ProfileOption(
-                        title: "Application Language",
-                        trailing: Text(
-                          "English",
-                          style: TextStyle(fontSize: AppTextSize.two),
-                        ),
-                      ),
+                      Consumer(builder: (context, ref, child) {
+                        return GestureDetector(
+                          onTap: () {
+                            showModalBottomSheet(
+                                context: context,
+                                backgroundColor: Colors.white,
+                                builder: (context) => Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: SizedBox(
+                                        height: 300,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              spacing: 16,
+                                              children: [
+                                                Text(
+                                                  context.tr.select,
+                                                  style: const TextStyle(
+                                                      fontSize:
+                                                          AppTextSize.four),
+                                                ),
+                                                Directionality(
+                                                  textDirection:
+                                                      TextDirection.ltr,
+                                                  child: ListTile(
+                                                    tileColor: ref
+                                                                .read(
+                                                                    localeNotifierProvider)
+                                                                .languageCode ==
+                                                            "en"
+                                                        ? AppColors.secondary50
+                                                        : null,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8)),
+                                                    title: const Text(
+                                                      "English",
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              AppTextSize.two),
+                                                    ),
+                                                    onTap: () {
+                                                      ref
+                                                          .read(
+                                                              localeNotifierProvider
+                                                                  .notifier)
+                                                          .setLocale(
+                                                              const Locale(
+                                                                  "en"));
+                                                    },
+                                                  ),
+                                                ),
+                                                Directionality(
+                                                  textDirection:
+                                                      TextDirection.ltr,
+                                                  child: ListTile(
+                                                    tileColor: ref
+                                                                .read(
+                                                                    localeNotifierProvider)
+                                                                .languageCode ==
+                                                            "ar"
+                                                        ? AppColors.secondary50
+                                                        : null,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        8)),
+                                                    title: const Text(
+                                                      "العربية",
+                                                      textAlign: TextAlign.end,
+                                                      style: TextStyle(
+                                                          fontSize:
+                                                              AppTextSize.two),
+                                                    ),
+                                                    onTap: () {
+                                                      ref
+                                                          .read(
+                                                              localeNotifierProvider
+                                                                  .notifier)
+                                                          .setLocale(
+                                                              const Locale(
+                                                                  "ar"));
+                                                    },
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            PrimaryButton(
+                                                text: context.tr.save,
+                                                onPressed: () => context.pop())
+                                          ],
+                                        ),
+                                      ),
+                                    ));
+                          },
+                          child: ProfileOption(
+                            title: context.tr.language,
+                            trailing: Text(
+                              ref.watch(localeNotifierProvider).languageCode ==
+                                      "en"
+                                  ? "English"
+                                  : "العربية",
+                              style: const TextStyle(fontSize: AppTextSize.two),
+                            ),
+                          ),
+                        );
+                      }),
                       const Divider(
                         color: AppColors.neutral300,
                       ),
                       GestureDetector(
                         onTap: () => context.push("/privacy"),
-                        child: const ProfileOption(
-                          title: "Privacy",
+                        child: ProfileOption(
+                          title: context.tr.privacy,
                         ),
                       ),
                       const Divider(
@@ -95,10 +204,10 @@ class ProfileScreen extends StatelessWidget {
                             ref.read(authProvider).logout();
                             context.go("/login");
                           },
-                          child: const ProfileOption(
-                            title: "Logout",
+                          child: ProfileOption(
+                            title: context.tr.logout,
                             titleColor: AppColors.errorRefix,
-                            trailing: SizedBox.shrink(),
+                            trailing: const SizedBox.shrink(),
                           ),
                         );
                       }),

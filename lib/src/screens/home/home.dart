@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/screens/auth/domain/notification.dart';
@@ -21,29 +22,10 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
-  final services = [
-    const ElevatorIconContainer(
-      name: 'Control And Automation',
-      svgPath: "assets/img/home/paint.svg",
-    ),
-    const ElevatorIconContainer(
-      name: 'Fire Fighting Systems',
-      svgPath: "assets/img/home/fire.svg",
-    ),
-    const ElevatorIconContainer(
-      name: 'Other',
-      svgPath: "assets/img/home/add.svg",
-    ),
-    const ElevatorIconContainer(
-      name: 'Emergency Services',
-      svgPath: "assets/img/home/alert.svg",
-    ),
-  ];
-
   @override
   void initState() {
-    super.initState();
     ref.read(sendFCMTokenProvider);
+    super.initState();
   }
 
   @override
@@ -85,7 +67,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: SearchBar(
-                        hintText: "Search for ‘Air conditioning maintenance’",
+                        hintText: context.tr.search,
                         leading: SvgPicture.asset("assets/img/home/search.svg"),
                         constraints: BoxConstraints(
                             minWidth: MediaQuery.sizeOf(context).width,
@@ -95,27 +77,22 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     const SizedBox(
                       height: AppSpacing.x2,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Row(
+                          spacing: 24,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             IconContainer(
-                              name: "Electrical Systems",
+                              name: context.tr.electrical_systems,
                               svgPath: "assets/img/home/electrical.svg",
                             ),
-                            SizedBox(
-                              width: 24,
-                            ),
                             IconContainer(
-                              name: "Plumbing Systems",
+                              name: context.tr.plumbing_systems,
                               svgPath: "assets/img/home/plumber.svg",
                             ),
-                            SizedBox(
-                              width: 24,
-                            ),
                             IconContainer(
-                              name: "Air Conditioning",
+                              name: context.tr.air,
                               svgPath: "assets/img/home/motor.svg",
                             ),
                           ]),
@@ -128,31 +105,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       child: LayoutBuilder(builder: (context, constrains) {
                         final smallDevice = constrains.maxWidth < 360;
                         if (smallDevice) {
-                          return const Column(
+                          return Column(
                             children: [
                               ElevatorIconContainer(
-                                name: 'Control And Automation',
+                                name: context.tr.control,
                                 svgPath: "assets/img/home/paint.svg",
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 24,
                               ),
                               ElevatorIconContainer(
-                                name: 'Fire Fighting Systems',
+                                name: context.tr.fire,
                                 svgPath: "assets/img/home/fire.svg",
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 24,
                               ),
                               ElevatorIconContainer(
-                                name: 'Other',
+                                name: context.tr.other,
                                 svgPath: "assets/img/home/add.svg",
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 24,
                               ),
                               ElevatorIconContainer(
-                                name: 'Emergency Services',
+                                name: context.tr.emergency,
                                 svgPath: "assets/img/home/alert.svg",
                               ),
                             ],
@@ -170,7 +147,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                       mainAxisSpacing: 24,
                                       crossAxisSpacing: 24),
                               itemBuilder: (context, index) {
-                                return services[index];
+                                return [
+                                  ElevatorIconContainer(
+                                    name: context.tr.electrical_systems,
+                                    svgPath: "assets/img/home/paint.svg",
+                                  ),
+                                  ElevatorIconContainer(
+                                    name: context.tr.fire,
+                                    svgPath: "assets/img/home/fire.svg",
+                                  ),
+                                  ElevatorIconContainer(
+                                    name: context.tr.other,
+                                    svgPath: "assets/img/home/add.svg",
+                                  ),
+                                  ElevatorIconContainer(
+                                    name: context.tr.emergency,
+                                    svgPath: "assets/img/home/alert.svg",
+                                  ),
+                                ][index];
                               }),
                         );
                       }),
@@ -253,13 +247,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "You want service that is not available",
+                                  context.tr.not_available,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: AppTextSize.two.toDouble()),
                                 ),
                                 Text(
-                                  "You have issue or service you want that is not available in the options",
+                                  context.tr.not_available2,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: AppTextSize.one.toDouble()),
@@ -274,7 +268,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         height: 22,
                       ),
                       PrimaryButton(
-                        text: "Chat with us",
+                        text: context.tr.chat,
                         onPressed: () {},
                       )
                     ],

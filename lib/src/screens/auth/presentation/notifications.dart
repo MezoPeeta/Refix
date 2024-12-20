@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -53,6 +55,7 @@ class NotificationsScreen extends ConsumerWidget {
                       });
                 },
                 error: (e, s) {
+                  log("Notification Error", error: e, stackTrace: s);
                   return const Center(
                     child: Text("Error"),
                   );

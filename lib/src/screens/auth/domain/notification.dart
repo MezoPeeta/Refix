@@ -42,10 +42,13 @@ class FirebaseNotifications {
 @riverpod
 Future<void> sendFCMToken(Ref ref) async {
   final fcmToken = await FirebaseNotifications().getToken();
-  await ref.read(httpProvider).authenticatedRequest(
-      url: "customer/notification/token",
-      method: "PATCH",
-      body: {"token": fcmToken});
+  if (fcmToken != null) {
+    final request = await ref.read(httpProvider).authenticatedRequest(
+        url: "customer/notification/token",
+        method: "PATCH",
+        body: {"token": fcmToken.toString()});
+    log("Request: ${request.statusCode}");
+  }
 }
 
 @riverpod
@@ -60,7 +63,7 @@ class Notifications extends _$Notifications {
         .authenticatedRequest(url: "customer/notification", method: "GET");
     final data = jsonDecode(request.body);
     if (request.statusCode == 200) {
-      return data.map((e) => Notification.fromJson(e)).toList();
+      return data.map<Notification>((e) => Notification.fromJson(e)).toList();
     }
     if (request.statusCode == 401) {
       ref.read(authProvider).logout();

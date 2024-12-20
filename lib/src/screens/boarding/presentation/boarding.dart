@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/navigation/routes.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
@@ -95,11 +96,14 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
                             children: [
-                              Text(
-                                data[currentIndex].heading,
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: AppTextSize.six),
+                              FittedBox(
+                                fit: BoxFit.fitHeight,
+                                child: Text(
+                                  data[currentIndex].heading,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: AppTextSize.six),
+                                ),
                               ),
                               const SizedBox(
                                 height: 24,
@@ -119,7 +123,7 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
                                           height: 24,
                                         ),
                                         PrimaryButton(
-                                            text: "Get Started",
+                                            text: context.tr.get_started,
                                             onPressed: () {
                                               context.go("/sign_up");
                                             }),
@@ -127,14 +131,14 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
                                           height: 16,
                                         ),
                                         SecondaryButton(
-                                            text: "Sign In",
+                                            text: context.tr.sign_in,
                                             onPressed: () {
                                               context.go("/login");
                                             }),
                                       ],
                                     )
                                   : PrimaryButton(
-                                      text: "Next",
+                                      text: context.tr.next ?? "Next",
                                       onPressed: () {
                                         controller.nextPage(
                                             duration: const Duration(

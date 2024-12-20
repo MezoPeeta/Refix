@@ -12,8 +12,6 @@ import '../../app.dart';
 import '../../core/theme/btns.dart';
 import '../../core/theme/colors.dart';
 import '../base/base.dart';
-import '../content/onetime_edit.dart';
-import 'data/ads.dart';
 
 final adInfoProvider =
     StateProvider.autoDispose<({String id, String type, String image})>((ref) {

@@ -37,7 +37,6 @@ class HttpAPI {
 
     Map<String, String> headers = {
       'Authorization': 'Bearer $accessToken',
-      'Content-Type': 'application/json',
     };
     var bUrl = Uri.parse("$baseAPI$url");
 
@@ -45,11 +44,13 @@ class HttpAPI {
       case 'GET':
         return await http.get(bUrl, headers: headers);
       case 'POST':
-        return await http.post(bUrl, headers: headers, body: json.encode(body));
+        return await http.post(bUrl, headers: headers, body: body);
       case 'PUT':
-        return await http.put(bUrl, headers: headers, body: json.encode(body));
+        return await http.put(bUrl, headers: headers, body: body);
       case 'DELETE':
         return await http.delete(bUrl, headers: headers);
+      case 'PATCH':
+        return await http.patch(bUrl, headers: headers, body: body);
       default:
         throw Exception('Unsupported HTTP method');
     }

@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../content/onetime.dart';
 import '../navbar/navbar.dart';
-import 'package:http/http.dart' as http;
 
 class AdsScreen extends ConsumerWidget {
   const AdsScreen({super.key});

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
 
@@ -43,9 +44,9 @@ class _SignupScreenState extends State<SignupScreen> {
             key: _formKey,
             child: Column(
               children: [
-                const Text(
-                  "Hello! Register to get started",
-                  style: TextStyle(
+                Text(
+                  context.tr.signup_welcome,
+                  style: const TextStyle(
                       fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(
@@ -55,11 +56,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: usernameController,
                     validator: (username) {
                       if (username!.isEmpty) {
-                        return "Please enter your username";
+                        return context.tr.enter_username;
                       }
                       return null;
                     },
-                    decoration: const InputDecoration(label: Text("Username"))),
+                    decoration:
+                        InputDecoration(label: Text(context.tr.username))),
                 const SizedBox(
                   height: 16,
                 ),
@@ -67,16 +69,22 @@ class _SignupScreenState extends State<SignupScreen> {
                     controller: emailController,
                     validator: (email) {
                       if (email!.isEmpty) {
-                        return "Please enter your email";
+                        return context.tr.enter_email;
                       }
                       return null;
                     },
-                    decoration: const InputDecoration(label: Text("Email"))),
+                    decoration: InputDecoration(label: Text(context.tr.email))),
                 const SizedBox(
                   height: 16,
                 ),
                 InternationalPhoneNumberInput(
                     autoValidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (v) {
+                      if (v!.isEmpty) {
+                        return context.tr.enter_phone;
+                      }
+                      return null;
+                    },
                     initialValue: PhoneNumber(isoCode: "SA"),
                     selectorConfig: SelectorConfig(
                         selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -106,6 +114,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   height: 16,
                 ),
                 PasswordFormField(
+                  passwordText: context.tr.password,
                   passwordController: passwordController,
                 ),
                 const SizedBox(
@@ -113,16 +122,24 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 PasswordFormField(
                   passwordController: confirmPasswordController,
-                  passwordControllerText: passwordController.text,
-                  passwordText: "Confirm Password",
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return context.tr.renter;
+                    }
+                    if (v != passwordController.text) {
+                      return context.tr.password_8;
+                    }
+                    return null;
+                  },
+                  passwordText: context.tr.confirm_password,
                 ),
                 const SizedBox(
                   height: 32,
                 ),
                 Consumer(builder: (context, ref, child) {
                   return PrimaryButton(
-                    loading: loading,
-                      text: "Sign Up",
+                      loading: loading,
+                      text: context.tr.sign_up,
                       onPressed: () async {
                         print(phoneNumber);
                         if (_formKey.currentState!.validate()) {
@@ -155,8 +172,8 @@ class _SignupScreenState extends State<SignupScreen> {
                 const SizedBox(
                   height: 32,
                 ),
-                const DividerWithText(
-                  name: "Or Register with",
+                DividerWithText(
+                  name: context.tr.sign_up,
                 ),
                 const SizedBox(
                   height: 24,
@@ -191,18 +208,18 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        "Already Have An Account?",
-                        style: TextStyle(fontSize: AppTextSize.three),
+                      Text(
+                        context.tr.not_account,
+                        style: const TextStyle(fontSize: AppTextSize.three),
                       ),
                       const SizedBox(
                         width: 4,
                       ),
                       GestureDetector(
                         onTap: () => context.push("/login"),
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(
+                        child: Text(
+                          context.tr.sign_in,
+                          style: const TextStyle(
                               color: AppColors.primaryRefix,
                               fontWeight: FontWeight.w700,
                               fontSize: AppTextSize.three),

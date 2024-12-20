@@ -20,13 +20,10 @@ class IconContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () {
-          context.push("/services");
-        },
+        onTap: () => context.push("/services"),
         child: Column(
           children: [
             Container(
-              width: MediaQuery.sizeOf(context).width - 250,
               padding: const EdgeInsets.symmetric(
                 horizontal: AppSpacing.x,
               ),
@@ -41,9 +38,12 @@ class IconContainer extends StatelessWidget {
             const SizedBox(
               height: 13,
             ),
-            Text(
-              name,
-              textAlign: TextAlign.center,
+            SizedBox(
+              height: 50,
+              child: Text(
+                name,
+                textAlign: TextAlign.center,
+              ),
             )
           ],
         ),

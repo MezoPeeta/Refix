@@ -1,4 +1,3 @@
-import 'package:dashboard/src/core/theme/colors.dart';
 import 'package:dashboard/src/screens/ads/ads.dart';
 import 'package:dashboard/src/screens/ads/ads_edit.dart';
 import 'package:dashboard/src/screens/content/onetime.dart';

@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/screens/profile/presentation/profile.dart';
 import 'package:refix/src/screens/home/home.dart';
@@ -17,7 +20,7 @@ class BaseWidget extends StatefulWidget {
 class _BaseWidgetState extends State<BaseWidget> {
   int currentIndex = 0;
   final List<Widget> children = <Widget>[
-    HomeScreen(),
+    const HomeScreen(),
     const BookingScreen(),
     const PointsScreen(),
     const ProfileScreen()
@@ -25,9 +28,6 @@ class _BaseWidgetState extends State<BaseWidget> {
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.white,
-        systemNavigationBarIconBrightness: Brightness.light));
     return Scaffold(
       body: children[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -39,7 +39,7 @@ class _BaseWidgetState extends State<BaseWidget> {
         },
         items: [
           BottomNavigationBarItem(
-              label: "Home",
+              label: context.tr.home,
               icon: SvgPicture.asset(
                 "assets/img/home.svg",
                 colorFilter: ColorFilter.mode(
@@ -49,7 +49,7 @@ class _BaseWidgetState extends State<BaseWidget> {
                     BlendMode.srcIn),
               )),
           BottomNavigationBarItem(
-              label: "Booking",
+              label: context.tr.booking,
               icon: SvgPicture.asset(
                 "assets/img/booking.svg",
                 colorFilter: ColorFilter.mode(
@@ -59,7 +59,7 @@ class _BaseWidgetState extends State<BaseWidget> {
                     BlendMode.srcIn),
               )),
           BottomNavigationBarItem(
-              label: "Points",
+              label: context.tr.points,
               icon: SvgPicture.asset(
                 "assets/img/points.svg",
                 colorFilter: ColorFilter.mode(
@@ -69,7 +69,7 @@ class _BaseWidgetState extends State<BaseWidget> {
                     BlendMode.srcIn),
               )),
           BottomNavigationBarItem(
-              label: "Profile",
+              label: context.tr.your_profile,
               icon: SvgPicture.asset(
                 "assets/img/profile.svg",
                 colorFilter: ColorFilter.mode(

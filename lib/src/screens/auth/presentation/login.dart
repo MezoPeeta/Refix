@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
@@ -36,9 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
             key: _formKey,
             child: Column(
               children: [
-                const Text(
-                  "Welcome back! Happy to see you, Again!",
-                  style: TextStyle(
+                Text(
+                  context.tr.sign_in_hello,
+                  style: const TextStyle(
                       fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(
@@ -49,23 +50,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     autofillHints: const [AutofillHints.email],
                     validator: (email) {
                       if (email!.isEmpty) {
-                        return "Please enter your email";
+                        return context.tr.enter_email;
                       }
                       return null;
                     },
-                    decoration: const InputDecoration(label: Text("Email"))),
+                    decoration: InputDecoration(label: Text(context.tr.email))),
                 const SizedBox(
                   height: AppSpacing.x,
                 ),
                 PasswordFormField(
+                  passwordText: context.tr.password,
                   passwordController: passwordController,
                 ),
-                const Row(
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Spacer(),
-                    Text("Forgot Password?",
-                        style: TextStyle(fontSize: AppTextSize.two))
+                    const Spacer(),
+                    Text(context.tr.forgot_pass,
+                        style: const TextStyle(fontSize: AppTextSize.two))
                   ],
                 ),
                 const SizedBox(
@@ -73,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 Consumer(builder: (context, ref, child) {
                   return PrimaryButton(
-                      text: "Login",
+                      text: context.tr.sign_in,
                       loading: loading,
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -101,8 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 64,
                 ),
-                const DividerWithText(
-                  name: "Or Login with",
+                DividerWithText(
+                  name: context.tr.or_login,
                 ),
                 const SizedBox(
                   height: 24,
@@ -139,18 +144,18 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              "Don’t have an account?",
-              style: TextStyle(fontSize: AppTextSize.three),
+            Text(
+              context.tr.have_account,
+              style: const TextStyle(fontSize: AppTextSize.three),
             ),
             const SizedBox(
               width: 4,
             ),
             GestureDetector(
               onTap: () => context.push("/sign_up"),
-              child: const Text(
-                "Register Now",
-                style: TextStyle(
+              child: Text(
+                context.tr.register_now,
+                style: const TextStyle(
                     color: AppColors.primaryRefix,
                     fontWeight: FontWeight.w700,
                     fontSize: AppTextSize.three),
@@ -167,10 +172,10 @@ class PasswordFormField extends StatefulWidget {
   const PasswordFormField(
       {super.key,
       this.passwordText = "Password",
-      this.passwordControllerText,
+      this.validator,
       required this.passwordController});
   final String passwordText;
-  final String? passwordControllerText;
+  final String? Function(String?)? validator;
   final TextEditingController passwordController;
 
   @override
@@ -185,23 +190,16 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
     return TextFormField(
         controller: widget.passwordController,
         obscureText: !isVisible,
-        validator: (password) {
-          if (password!.isEmpty) {
-            return "Please enter your password";
-          }
-          if (password.length <= 8 && widget.passwordControllerText == null) {
-            return "Password must be atleast 8 letters";
-          }
-          if (widget.passwordControllerText != null) {
-            print(widget.passwordControllerText);
-
-            if (widget.passwordControllerText !=
-                widget.passwordController.text) {
-              return "Confirm password must be exactly your password";
-            }
-          }
-          return null;
-        },
+        validator: widget.validator ??
+            (password) {
+              if (password!.isEmpty) {
+                return context.tr.enter_password;
+              }
+              if (password.length <= 8) {
+                return context.tr.password_8;
+              }
+              return null;
+            },
         decoration: InputDecoration(
             label: Text(widget.passwordText),
             suffixIcon: GestureDetector(

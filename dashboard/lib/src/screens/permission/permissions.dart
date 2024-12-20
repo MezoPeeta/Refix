@@ -1,9 +1,7 @@
-import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../auth/data/auth_data.dart';
 import '../users/domain/source.dart';
 
 class PermissionsScreen extends ConsumerStatefulWidget {

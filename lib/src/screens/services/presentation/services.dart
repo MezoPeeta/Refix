@@ -180,7 +180,8 @@ class ServicesScreen extends ConsumerWidget {
                           ));
                     },
                     error: (e, s) => const Center(child: Text("Error")),
-                    loading: () => const CircularProgressIndicator.adaptive())
+                    loading: () => const Center(
+                        child: CircularProgressIndicator.adaptive()))
               ],
             ),
           ),
