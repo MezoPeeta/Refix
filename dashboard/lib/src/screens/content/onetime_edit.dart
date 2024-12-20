@@ -51,188 +51,227 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
       body: Center(
         child: Form(
           key: formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const PrevButton(),
-              Center(
-                child: Container(
-                  width: 925,
-                  height: 820,
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(32),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    spacing: 24,
-                    children: [
-                      Expanded(
-                        child: Stack(
-                          children: [
-                            DropzoneView(
-                                onCreated: (ctrl) => controller = ctrl,
-                                onDropFile: (file) async {
-                                  final a = await controller.getFileData(file);
-                                  setState(() {
-                                    picture = a;
-                                  });
-                                }),
-                            Container(
-                                height: 222,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    color: AppColors.primaryRefix
-                                        .withValues(alpha: 0.3),
-                                    borderRadius: BorderRadius.circular(16)),
-                                child: picture == null
-                                    ? Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/img/home/up_icon.svg",
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                  "Drag & drop files or"),
-                                              TextButton(
-                                                child: const Text("Button"),
-                                                onPressed: () async {
-                                                  FilePickerResult? result =
-                                                      await FilePicker.platform
-                                                          .pickFiles(
-                                                              type: FileType
-                                                                  .image);
-                                                  if (result != null) {
-                                                    final file = result
-                                                        .files.single.bytes;
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const PrevButton(),
+                Center(
+                  child: Container(
+                    width: 925,
+                    height: 820,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(32),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      spacing: 24,
+                      children: [
+                        Expanded(
+                          child: Stack(
+                            children: [
+                              DropzoneView(
+                                  onCreated: (ctrl) => controller = ctrl,
+                                  onDropFile: (file) async {
+                                    final a =
+                                        await controller.getFileData(file);
+                                    setState(() {
+                                      picture = a;
+                                    });
+                                  }),
+                              Container(
+                                  height: 222,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: AppColors.primaryRefix
+                                          .withValues(alpha: 0.3),
+                                      borderRadius: BorderRadius.circular(16)),
+                                  child: picture == null
+                                      ? Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/img/home/up_icon.svg",
+                                            ),
+                                            const SizedBox(
+                                              height: 8,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                const Text(
+                                                    "Drag & drop files or"),
+                                                TextButton(
+                                                  child: const Text(
+                                                      "Upload Image"),
+                                                  onPressed: () async {
+                                                    FilePickerResult? result =
+                                                        await FilePicker
+                                                            .platform
+                                                            .pickFiles(
+                                                                type: FileType
+                                                                    .image);
+                                                    if (result != null) {
+                                                      final file = result
+                                                          .files.single.bytes;
 
-                                                    setState(() {
-                                                      picture = file;
-                                                    });
-                                                  }
-                                                },
-                                              ),
-                                            ],
-                                          ),
-                                          const Text(
-                                              "The image size must be 430 * 681."),
-                                        ],
-                                      )
-                                    : Image.memory(
-                                        picture!,
-                                        width: 100,
-                                        fit: BoxFit.cover,
-                                      ))
-                          ],
+                                                      setState(() {
+                                                        picture = file;
+                                                      });
+                                                    }
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            const Text(
+                                                "The image size must be 430 * 681."),
+                                          ],
+                                        )
+                                      : Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Image.memory(
+                                              picture!,
+                                              width: 100,
+                                              fit: BoxFit.cover,
+                                            ),
+                                            const SizedBox(
+                                              height: 20,
+                                            ),
+                                            TextButton(
+                                              child: const Text("Upload Image"),
+                                              onPressed: () async {
+                                                FilePickerResult? result =
+                                                    await FilePicker.platform
+                                                        .pickFiles(
+                                                            type:
+                                                                FileType.image);
+                                                if (result != null) {
+                                                  final file =
+                                                      result.files.single.bytes;
+
+                                                  setState(() {
+                                                    picture = file;
+                                                  });
+                                                }
+                                              },
+                                            ),
+                                          ],
+                                        ))
+                            ],
+                          ),
                         ),
-                      ),
-                      TextFormField(
-                        controller: headingController,
-                        validator: (v) {
-                          if (v!.isEmpty) {
-                            return "Please enter heading in english";
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                            hintText: "Heading (English)"),
-                      ),
-                      TextFormField(
-                        controller: headingArController,
-                        validator: (v) {
-                          if (v!.isEmpty) {
-                            return "Please enter heading in arabic";
-                          }
-                          return null;
-                        },
-                        decoration:
-                            const InputDecoration(hintText: "Heading (Arabic)"),
-                      ),
-                      TextFormField(
-                        controller: descriptionController,
-                        validator: (v) {
-                          if (v!.isEmpty) {
-                            return "Please enter details in english";
-                          }
-                          return null;
-                        },
-                        maxLines: 5,
-                        maxLength: 200,
-                        decoration: const InputDecoration(
-                            hintText: "The details (English)"),
-                      ),
-                      TextFormField(
-                        controller: descriptionArController,
-                        validator: (v) {
-                          if (v!.isEmpty) {
-                            return "Please enter details in arabic";
-                          }
-                          return null;
-                        },
-                        maxLines: 5,
-                        maxLength: 200,
-                        decoration: const InputDecoration(
-                            hintText: "The details (Arabic)"),
-                      ),
-                      Consumer(builder: (context, ref, child) {
-                        return PrimaryButton(
-                            loading: false,
-                            text: "Save",
-                            onPressed: () async {
-                              if (formKey.currentState!.validate() &&
-                                  picture != null) {
-                                final info = ref.read(boardingInfoProvider);
-                                if (descriptionArController.text !=
-                                        info?.detailsAr ||
-                                    descriptionController.text !=
-                                        info?.detailsEn ||
-                                    headingController.text != info?.headingEn ||
-                                    headingArController.text !=
-                                        info?.headingAr ||
-                                    picture != info!.image) {
-                                  final res = await ref.read(
-                                      updateBoardingProvider(
-                                              detailsAr:
-                                                  descriptionArController.text,
-                                              detailsEn:
-                                                  descriptionController.text,
-                                              headingAr:
-                                                  headingArController.text,
-                                              headingEn: headingController.text,
-                                              image: picture!,
-                                              id: info!.id)
-                                          .future);
-                                  res.fold((v) {
-                                    ref.read(scaffoldMessengerPod).showSnackBar(
-                                        SnackBar(content: Text(v)));
-                                  }, (v) {
-                                    ref.read(scaffoldMessengerPod).showSnackBar(
-                                        SnackBar(content: Text(v)));
-                                  });
-                                  return;
+                        TextFormField(
+                          controller: headingController,
+                          validator: (v) {
+                            if (v!.isEmpty) {
+                              return "Please enter heading in english";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                              hintText: "Heading (English)"),
+                        ),
+                        TextFormField(
+                          controller: headingArController,
+                          validator: (v) {
+                            if (v!.isEmpty) {
+                              return "Please enter heading in arabic";
+                            }
+                            return null;
+                          },
+                          decoration: const InputDecoration(
+                              hintText: "Heading (Arabic)"),
+                        ),
+                        TextFormField(
+                          controller: descriptionController,
+                          validator: (v) {
+                            if (v!.isEmpty) {
+                              return "Please enter details in english";
+                            }
+                            return null;
+                          },
+                          maxLines: 5,
+                          maxLength: 200,
+                          decoration: const InputDecoration(
+                              hintText: "The details (English)"),
+                        ),
+                        TextFormField(
+                          controller: descriptionArController,
+                          validator: (v) {
+                            if (v!.isEmpty) {
+                              return "Please enter details in arabic";
+                            }
+                            return null;
+                          },
+                          maxLines: 5,
+                          maxLength: 200,
+                          decoration: const InputDecoration(
+                              hintText: "The details (Arabic)"),
+                        ),
+                        Consumer(builder: (context, ref, child) {
+                          return PrimaryButton(
+                              loading: false,
+                              text: "Save",
+                              onPressed: () async {
+                                if (formKey.currentState!.validate() &&
+                                    picture != null) {
+                                  final info = ref.read(boardingInfoProvider);
+                                  if (descriptionArController.text !=
+                                          info?.detailsAr ||
+                                      descriptionController.text !=
+                                          info?.detailsEn ||
+                                      headingController.text !=
+                                          info?.headingEn ||
+                                      headingArController.text !=
+                                          info?.headingAr ||
+                                      picture != info!.image) {
+                                    final res = await ref.read(
+                                        updateBoardingProvider(
+                                                detailsAr:
+                                                    descriptionArController
+                                                        .text,
+                                                detailsEn:
+                                                    descriptionController.text,
+                                                headingAr:
+                                                    headingArController.text,
+                                                headingEn:
+                                                    headingController.text,
+                                                image: picture!,
+                                                id: info!.id)
+                                            .future);
+                                    res.fold((v) {
+                                      ref
+                                          .read(scaffoldMessengerPod)
+                                          .showSnackBar(
+                                              SnackBar(content: Text(v)));
+                                    }, (v) {
+                                      ref
+                                          .read(scaffoldMessengerPod)
+                                          .showSnackBar(
+                                              SnackBar(content: Text(v)));
+                                    });
+                                    return;
+                                  }
+                                  ref.read(scaffoldMessengerPod).showSnackBar(
+                                      const SnackBar(
+                                          content: Text(
+                                              "You haven't changed anything")));
                                 }
-                                ref.read(scaffoldMessengerPod).showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            "You haven't changed anything")));
-                              }
-                            });
-                      }),
-                    ],
+                              });
+                        }),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
