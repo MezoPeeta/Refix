@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:fpdart/fpdart.dart';
 import 'package:refix/src/screens/services/data/bookin_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
