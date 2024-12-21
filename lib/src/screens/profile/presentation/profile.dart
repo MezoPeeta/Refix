@@ -35,8 +35,11 @@ class ProfileScreen extends StatelessWidget {
                       const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
-                        title: context.tr.payment_methods,
+                      GestureDetector(
+                        onTap: () => context.push("/payment_method"),
+                        child: ProfileOption(
+                          title: context.tr.payment_methods,
+                        ),
                       ),
                     ],
                   ),

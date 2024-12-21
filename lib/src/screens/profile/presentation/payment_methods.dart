@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
+import 'package:refix/src/core/ui/widgets/button.dart';
 
 import '../../../core/ui/theme/colors.dart';
 
@@ -11,67 +14,32 @@ class PaymentMethods extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Payment Methods"),
+        title: Text(context.tr.payment_methods),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(AppRadii.lg)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "3.55",
-                        style: TextStyle(
-                            fontSize: AppTextSize.eight,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        "Points Balance",
-                        style: TextStyle(
-                            fontSize: AppTextSize.three,
-                            color: AppColors.neutralRefix,
-                            fontWeight: FontWeight.w500),
-                      )
-                    ],
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        color: AppColors.neutral100,
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: const Text(
-                      "Switch Points",
-                      style: TextStyle(fontSize: AppTextSize.three),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(AppRadii.lg)),
-              child: ListTile(
+              child: CheckboxListTile.adaptive(
+                value: false,
                 contentPadding: EdgeInsets.zero,
-                leading: SvgPicture.asset(
-                  "assets/img/profile/cash.svg",
-                ),
-                title: const Text(
-                  "Cash",
-                  style: TextStyle(fontSize: AppTextSize.three),
+                onChanged: (v) {},
+                title: Row(
+                  spacing: 8,
+                  children: [
+                    SvgPicture.asset(
+                      "assets/img/profile/cash.svg",
+                    ),
+                    Text(
+                      context.tr.cash,
+                      style: const TextStyle(fontSize: AppTextSize.three),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -85,14 +53,41 @@ class PaymentMethods extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadii.lg)),
               child: Column(
                 children: [
-                  ListTile(
+                  CheckboxListTile.adaptive(
+                    value: false,
                     contentPadding: EdgeInsets.zero,
-                    leading: SvgPicture.asset(
-                      "assets/img/profile/visa.svg",
+                    onChanged: (v) {},
+                    title: Row(
+                      spacing: 8,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/img/profile/visa.svg",
+                        ),
+                        Text(
+                          context.tr.visa,
+                          style: const TextStyle(fontSize: AppTextSize.three),
+                        ),
+                      ],
                     ),
-                    title: const Text(
-                      "Visa (9904)",
-                      style: TextStyle(fontSize: AppTextSize.three),
+                  ),
+                  const Divider(
+                    color: AppColors.neutral300,
+                  ),
+                  CheckboxListTile.adaptive(
+                    value: true,
+                    contentPadding: EdgeInsets.zero,
+                    onChanged: (v) {},
+                    title: Row(
+                      spacing: 8,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/img/profile/mastercard.svg",
+                        ),
+                        Text(
+                          context.tr.visa,
+                          style: const TextStyle(fontSize: AppTextSize.three),
+                        ),
+                      ],
                     ),
                   ),
                   const Divider(
@@ -100,20 +95,7 @@ class PaymentMethods extends StatelessWidget {
                   ),
                   ListTile(
                     contentPadding: EdgeInsets.zero,
-                    leading: SvgPicture.asset(
-                      "assets/img/profile/mastercard.svg",
-                    ),
-                    title: const Text(
-                      "Visa (9904)",
-                      style: TextStyle(fontSize: AppTextSize.three),
-                    ),
-                  ),
-                  const Divider(
-                    color: AppColors.neutral300,
-                  ),
-                  const ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: CircleAvatar(
+                    leading: const CircleAvatar(
                       backgroundColor: AppColors.primary50,
                       child: Icon(
                         Icons.add,
@@ -121,10 +103,10 @@ class PaymentMethods extends StatelessWidget {
                       ),
                     ),
                     title: Text(
-                      "Add a credit/debit card",
-                      style: TextStyle(fontSize: AppTextSize.three),
+                      context.tr.addCard,
+                      style: const TextStyle(fontSize: AppTextSize.three),
                     ),
-                    trailing: Icon(
+                    trailing: const Icon(
                       Icons.arrow_forward_ios,
                       size: 16,
                     ),
@@ -132,6 +114,9 @@ class PaymentMethods extends StatelessWidget {
                 ],
               ),
             ),
+            const Spacer(),
+            PrimaryButton(
+                text: context.tr.continuee, onPressed: () => context.go("/"))
           ],
         ),
       ),

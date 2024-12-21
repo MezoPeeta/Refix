@@ -4,19 +4,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/home/domain/home_domain.dart';
 
 import '../../../core/ui/widgets/button.dart';
-import 'more_services.dart';
 
-class ServicesScreen extends ConsumerWidget {
-  const ServicesScreen({super.key});
+final serviceProvider = StateProvider<List<Service>>((ref) {
+  return [];
+});
+
+class ServicesScreen extends ConsumerStatefulWidget {
+  const ServicesScreen({super.key, required this.name});
+
+  final String name;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ServicesScreen> createState() => _ServicesScreenState();
+}
+
+class _ServicesScreenState extends ConsumerState<ServicesScreen> {
+  int? selectedServiceIndex;
+  Service? selectedService;
+
+  @override
+  Widget build(BuildContext context) {
     final services = ref.watch(getAllServicesProvider);
     return Scaffold(
       backgroundColor: AppColors.neutral50,
@@ -35,12 +49,14 @@ class ServicesScreen extends ConsumerWidget {
                         Image.asset(
                           "assets/img/home/Image.png",
                           height: 232,
+                          color: AppColors.black.withValues(alpha: 0.5),
+                          colorBlendMode: BlendMode.darken,
                           width: MediaQuery.sizeOf(context).width,
                           fit: BoxFit.cover,
                         ),
                         Center(
                           child: Text(
-                            "Electrical Systems",
+                            widget.name,
                             style: TextStyle(
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.white,
@@ -53,7 +69,7 @@ class ServicesScreen extends ConsumerWidget {
                       padding: const EdgeInsets.all(16),
                       child: IconButton.filled(
                           alignment: Alignment.center,
-                          padding: const EdgeInsets.only(left: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
                           onPressed: () => context.pop(),
                           icon: const Icon(Icons.arrow_back_ios)),
                     ),
@@ -65,7 +81,7 @@ class ServicesScreen extends ConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                    "Electrical Systems",
+                    widget.name,
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         fontSize: AppTextSize.four.toDouble()),
@@ -107,7 +123,7 @@ class ServicesScreen extends ConsumerWidget {
                           width: 16,
                         ),
                         Text(
-                          "45K Reviews",
+                          "45K ${context.tr.reviews}",
                           style:
                               TextStyle(fontSize: AppTextSize.one.toDouble()),
                         )
@@ -133,7 +149,7 @@ class ServicesScreen extends ConsumerWidget {
                         ),
                         Expanded(
                           child: Text(
-                            "Get 40% discount if you order now",
+                            context.tr.get_discount("40%"),
                             style: TextStyle(
                                 fontSize: AppTextSize.three.toDouble(),
                                 fontWeight: FontWeight.w500),
@@ -145,15 +161,6 @@ class ServicesScreen extends ConsumerWidget {
                 ),
                 services.when(
                     data: (data) {
-                      data.add(const Service(
-                          name: "Other",
-                          details: "details",
-                          id: "",
-                          price: 0,
-                          isActive: false,
-                          childService: [],
-                          image: "",
-                          v: 0));
                       return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 16),
@@ -169,9 +176,12 @@ class ServicesScreen extends ConsumerWidget {
                             itemBuilder: (context, index) {
                               return ServiceContainer(
                                 service: data[index],
+                                isSelected: selectedServiceIndex == index,
                                 onPressed: () {
-                                  ref.read(choosenService.notifier).state =
-                                      data[index];
+                                  setState(() {
+                                    selectedServiceIndex = index;
+                                    selectedService = data[index];
+                                  });
                                   ref.read(serviceProvider.notifier).state =
                                       data[index].childService;
                                 },
@@ -190,29 +200,33 @@ class ServicesScreen extends ConsumerWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: PrimaryButton(
-          text: "Order Now",
-          onPressed: () => context.push(
-            "/more_services",
-          ),
+          text: context.tr.order_now,
+          onPressed: () {
+            if (selectedService != null) {
+              context.pushNamed("moreServices",
+                  extra: selectedService!.childService,
+                  pathParameters: {"name": selectedService!.name});
+              return;
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(context.tr.choose_service)));
+          },
         ),
       ),
     );
   }
 }
 
-class ServiceContainer extends ConsumerStatefulWidget {
+class ServiceContainer extends StatelessWidget {
   const ServiceContainer(
-      {super.key, required this.service, required this.onPressed});
+      {super.key,
+      required this.service,
+      required this.onPressed,
+      this.isSelected = false});
 
   final Service service;
   final VoidCallback onPressed;
-
-  @override
-  ConsumerState<ServiceContainer> createState() => _ServiceContainerState();
-}
-
-class _ServiceContainerState extends ConsumerState<ServiceContainer> {
-  bool isSelected = false;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -223,10 +237,7 @@ class _ServiceContainerState extends ConsumerState<ServiceContainer> {
       color: isSelected ? AppColors.primaryRefix : Colors.transparent,
       child: GestureDetector(
         onTap: () {
-          setState(() {
-            isSelected = !isSelected;
-          });
-          widget.onPressed();
+          onPressed();
         },
         child: Column(
           children: [
@@ -237,14 +248,14 @@ class _ServiceContainerState extends ConsumerState<ServiceContainer> {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
-                          "https://refix-api.onrender.com/${widget.service.image}")),
+                          "https://refix-api.onrender.com/${service.image}")),
                   borderRadius: BorderRadius.circular(AppRadii.lg),
                   color: isSelected
                       ? AppColors.primaryRefix
                       : AppColors.neutral100),
             ),
             SizedBox(height: isSelected ? 5 : 13),
-            FittedBox(child: Text(widget.service.name))
+            FittedBox(child: Text(service.name))
           ],
         ),
       ),

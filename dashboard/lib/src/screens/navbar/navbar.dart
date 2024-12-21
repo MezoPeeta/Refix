@@ -175,7 +175,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 10;
+                          ref.read(currentIndexProvider.notifier).state = 11;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -193,7 +193,7 @@ class Navbar extends ConsumerWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 11;
+                          ref.read(currentIndexProvider.notifier).state = 13;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -205,7 +205,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 11;
+                          ref.read(currentIndexProvider.notifier).state = 14;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -225,18 +225,18 @@ class Navbar extends ConsumerWidget {
                     ),
                   ),
                   NavMenu(
-                    text: "Services",
+                    text: "Price",
                     svgPath: "assets/img/navbar/services.svg",
-                    isSelected: currentIndex == 12,
+                    isSelected: currentIndex == 15,
                     onTap: () {
-                      ref.read(currentIndexProvider.notifier).state = 12;
+                      ref.read(currentIndexProvider.notifier).state = 15;
                     },
                   ),
                   NavMenu(
-                    isSelected: currentIndex == 13,
+                    isSelected: currentIndex == 16,
                     text: "Permissions",
                     onTap: () {
-                      ref.read(currentIndexProvider.notifier).state = 13;
+                      ref.read(currentIndexProvider.notifier).state = 16;
                     },
                     svgPath: "assets/img/navbar/permissions.svg",
                   ),

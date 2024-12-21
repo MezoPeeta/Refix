@@ -57,7 +57,6 @@ class AppTheme {
           GoogleFonts.alexandria(height: 18, fontWeight: FontWeight.w300)
               .fontFamily,
       searchBarTheme: SearchBarThemeData(
-          padding: const WidgetStatePropertyAll(EdgeInsets.all(AppSpacing.x)),
           hintStyle: WidgetStatePropertyAll(
               TextStyle(fontSize: AppTextSize.one.toDouble())),
           backgroundColor: const WidgetStatePropertyAll(AppColors.neutral50),

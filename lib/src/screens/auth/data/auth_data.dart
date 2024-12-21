@@ -24,6 +24,8 @@ class User with _$User {
     @JsonKey(name: "email") required String email,
     @JsonKey(name: "type") required String type,
     required String phone,
+    @JsonKey(name: "lat") double? latitude,
+    @JsonKey(name: "lang") double? longitude,
     required int points,
     @JsonKey(name: "role") required Role role,
     @JsonKey(name: "is_verified") required bool isVerified,
@@ -42,16 +44,14 @@ class Role with _$Role {
   factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
 }
 
-
 @freezed
 class Notification with _$Notification {
   const factory Notification({
     @JsonKey(name: "title") required String title,
     @JsonKey(name: "body") required String body,
     @JsonKey(name: "read") required bool read,
-
   }) = _Notification;
 
-  factory Notification.fromJson(Map<String, dynamic> json) => _$NotificationFromJson(json);
+  factory Notification.fromJson(Map<String, dynamic> json) =>
+      _$NotificationFromJson(json);
 }
-

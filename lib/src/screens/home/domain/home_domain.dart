@@ -35,7 +35,18 @@ Future<List<Service>> getAllServices(Ref ref) async {
       .authenticatedRequest(url: "service", method: "GET");
   final data = jsonDecode(request.body);
   if (request.statusCode == 200) {
-    return data.map<Service>((e) => Service.fromJson(e)).toList();
+    final List<Service> services =
+        data.map<Service>((e) => Service.fromJson(e)).toList();
+    services.add(const Service(
+        name: "Other",
+        details: "details",
+        id: "",
+        price: 0,
+        isActive: false,
+        childService: [],
+        image: "",
+        v: 0));
+    return services;
   }
   if (request.statusCode == 401) {
     ref.read(authProvider).logout();

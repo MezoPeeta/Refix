@@ -8,6 +8,8 @@ import 'package:refix/src/core/storage/secure_storage.dart';
 import 'package:refix/src/screens/auth/data/auth_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/navigation/routes.dart';
+
 part 'auth_domain.g.dart';
 
 final authProvider = Provider<AuthDomain>(AuthDomain.new);
@@ -94,6 +96,7 @@ class AuthDomain {
     } finally {
       await storage.delete(key: 'access_token');
       await storage.delete(key: 'refresh_token');
+      ref.read(goRouterProvider).go("/login");
     }
   }
 
@@ -143,6 +146,9 @@ class AuthDomain {
       await saveTokens(
           accessToken: account.accessToken, refreshToken: account.refreshToken);
       return right(account);
+    }
+    if (response.statusCode == 401) {
+      ref.read(authProvider).logout();
     }
 
     final errorMessage = jsonDecode(response.body)["message"];

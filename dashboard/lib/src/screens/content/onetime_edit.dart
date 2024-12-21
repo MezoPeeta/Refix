@@ -29,7 +29,7 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
   final headingArController = TextEditingController();
   final descriptionController = TextEditingController();
   final descriptionArController = TextEditingController();
-
+  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -186,11 +186,14 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                         ),
                         Consumer(builder: (context, ref, child) {
                           return PrimaryButton(
-                              loading: false,
+                              loading: loading,
                               text: "Save",
                               onPressed: () async {
                                 if (formKey.currentState!.validate() &&
                                     picture != null) {
+                                  setState(() {
+                                    loading = true;
+                                  });
                                   final info = ref.read(boardingInfoProvider);
                                   if (descriptionArController.text !=
                                           info?.detailsAr ||
@@ -215,6 +218,9 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                                                 image: picture!,
                                                 id: info!.id)
                                             .future);
+                                    setState(() {
+                                      loading = false;
+                                    });
                                     res.fold((v) {
                                       ref
                                           .read(scaffoldMessengerPod)

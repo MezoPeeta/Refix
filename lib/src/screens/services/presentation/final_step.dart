@@ -1,51 +1,56 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:refix/src/screens/services/domain/location.dart';
-import 'package:refix/src/screens/services/presentation/tackphoto.dart';
 
 import '../../../core/ui/theme/radii.dart';
 import '../../../core/ui/widgets/header.dart';
 import '../../home/data/home_data.dart';
-import 'more_services.dart';
 import 'services.dart';
 
 final imageProvider = StateProvider<XFile?>((ref) => null);
 
 class FinalstepScreen extends ConsumerStatefulWidget {
-  const FinalstepScreen({super.key});
+  const FinalstepScreen(
+      {super.key, required this.service, required this.photo});
+
+  final String service;
+  final String photo;
 
   @override
   ConsumerState<FinalstepScreen> createState() => _FinalstepScreenState();
 }
 
 class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
-  static List<XFile> photos = [];
   static Set<Service> addedServices = <Service>{};
   final _key = GlobalKey<FormState>();
   final locationController = TextEditingController();
   final timeController = TextEditingController();
   bool loading = false;
+  DateTime? dateTime;
+  List<String> photos = [];
 
   @override
   Widget build(BuildContext context) {
     final subservices = ref.watch(serviceProvider);
-    final a = ref.watch(serviceForPhotoProvider);
-    final service = ref.watch(choosenService);
-
+    final service = Service.fromJson(jsonDecode(widget.service));
+    List<String> capturedPhotos = [widget.photo, ...photos];
     return Scaffold(
       appBar: AppBar(
         title: Column(
           children: [
             Text(
-              service?.name ?? "Please enter service name",
+              service.name,
               style: const TextStyle(fontSize: AppTextSize.two),
             ),
             const SizedBox(
@@ -77,12 +82,12 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const TextHeader(
-                  text: "Select Service Name",
+                TextHeader(
+                  text: context.tr.selectServiceName,
                   fontWeight: FontWeight.w500,
                 ),
                 const Text(
-                  "If you have any questions, please fill in the input box below.If you have any questions, please fill in the input box below.",
+                  "you can add more services in this booking",
                   style: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: AppTextSize.one,
@@ -91,57 +96,58 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                 const SizedBox(height: 24),
                 Row(
                   children: [
-                    a != null
-                        ? ServiceContainer(
-                            service: a,
-                            onPressed: () {},
-                          )
-                        : const SizedBox.shrink(),
-                    const SizedBox(
-                      width: 16,
+                    ServiceContainer(
+                      service: service,
+                      isSelected: true,
+                      onPressed: () {},
                     ),
-                    Wrap(
-                        children: addedServices
-                            .map((e) =>
-                                ServiceContainer(service: e, onPressed: () {}))
-                            .toList()),
                     const SizedBox(
                       width: 24,
                     ),
                     GestureDetector(
                       onTap: () {
+                        final subServices = subservices
+                            .where((e) => e.name != service.name)
+                            .toList();
                         showModalBottomSheet(
                             context: context,
                             builder: (context) {
                               return Padding(
                                 padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      child: GridView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount: subservices.length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                                                crossAxisSpacing: 24,
-                                                mainAxisSpacing: 24,
-                                                maxCrossAxisExtent: 116.67),
-                                        itemBuilder: (context, index) {
-                                          return ServiceContainer(
-                                            service: subservices[index],
-                                            onPressed: () {},
-                                          );
-                                        },
+                                child: subServices.isNotEmpty
+                                    ? Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          SizedBox(
+                                            child: GridView.builder(
+                                              shrinkWrap: true,
+                                              physics:
+                                                  const NeverScrollableScrollPhysics(),
+                                              itemCount: subServices.length,
+                                              gridDelegate:
+                                                  const SliverGridDelegateWithMaxCrossAxisExtent(
+                                                      crossAxisSpacing: 24,
+                                                      mainAxisSpacing: 24,
+                                                      maxCrossAxisExtent:
+                                                          116.67),
+                                              itemBuilder: (context, index) {
+                                                return ServiceContainer(
+                                                  service: subServices[index],
+                                                  onPressed: () {},
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          PrimaryButton(
+                                              text: "Add Services",
+                                              onPressed: () {})
+                                        ],
+                                      )
+                                    : const Center(
+                                        child: Text(
+                                            "No other subservice at the moment"),
                                       ),
-                                    ),
-                                    PrimaryButton(
-                                        text: "Add Services", onPressed: () {})
-                                  ],
-                                ),
                               );
                             });
                       },
@@ -164,8 +170,8 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                const TextHeader(
-                  text: "Photo your problem",
+                TextHeader(
+                  text: context.tr.photoYourProblem,
                   fontWeight: FontWeight.w500,
                 ),
                 const SizedBox(
@@ -173,40 +179,71 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                 ),
                 Row(
                   children: [
-                    AddedImage(
-                      path: ref.watch(imageProvider)!.path,
+                    Expanded(
+                      child: SizedBox(
+                        height: 80,
+                        child: ListView.separated(
+                            itemCount: capturedPhotos.length + 1,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              if (index == capturedPhotos.length) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    final ImagePicker picker = ImagePicker();
+                                    final XFile? photo = await picker.pickImage(
+                                        source: ImageSource.camera);
+                                    if (photo != null) {
+                                      setState(() {
+                                        photos.add(photo.path);
+                                      });
+                                    }
+                                  },
+                                  child: Container(
+                                    width: 77,
+                                    height: 80,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.neutral100,
+                                        borderRadius:
+                                            BorderRadius.circular(AppRadii.lg)),
+                                    child: SvgPicture.asset(
+                                      "assets/img/home/add_disabled.svg",
+                                      width: 39,
+                                      height: 39,
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ),
+                                );
+                              }
+                              return AddedImage(
+                                path: capturedPhotos[index],
+                                onRemove: () {
+                                  setState(() {
+                                    photos.removeAt(index - 1);
+                                  });
+                                },
+                              );
+                            }),
+                      ),
                     ),
                     const SizedBox(
                       width: 16,
-                    ),
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        width: 77,
-                        height: 80,
-                        decoration: BoxDecoration(
-                            color: AppColors.neutral100,
-                            borderRadius: BorderRadius.circular(AppRadii.lg)),
-                        child: SvgPicture.asset(
-                          "assets/img/home/add_disabled.svg",
-                          width: 39,
-                          height: 39,
-                          fit: BoxFit.scaleDown,
-                        ),
-                      ),
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 40,
                 ),
-                const TextHeader(
-                  text: "Select Service Name",
+                TextHeader(
+                  text: context.tr.selectServiceName,
                   fontWeight: FontWeight.w500,
                 ),
-                const Text(
-                  "If you have any questions, please fill in the input box below.If you have any questions, please fill in the input box below.",
-                  style: TextStyle(
+                Text(
+                  context.tr.fillInputBox,
+                  style: const TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: AppTextSize.one,
                       color: AppColors.neutralRefix),
@@ -218,6 +255,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                   readOnly: true,
                   controller: locationController,
                   onTap: () async {
+                    ref.read(updateLatLongProvider);
                     final position = await ref
                         .watch(getPlacemarkProvider.future)
                         .catchError((e) {
@@ -232,12 +270,12 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                   },
                   validator: (v) {
                     if (v!.isEmpty) {
-                      return "Please add address";
+                      return context.tr.pleaseAddAddress;
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                      hintText: "Add Address",
+                      hintText: context.tr.addAddress,
                       suffixIcon: SvgPicture.asset(
                         "assets/img/services/location.svg",
                         width: 11,
@@ -251,7 +289,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                   controller: timeController,
                   validator: (v) {
                     if (v!.isEmpty) {
-                      return "Please add date";
+                      return context.tr.pleaseAddDate;
                     }
                     return null;
                   },
@@ -260,17 +298,19 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                             context: context,
                             currentDate: DateTime.now(),
                             firstDate: DateTime.now(),
+                            initialDate: DateTime.now(),
                             lastDate:
                                 DateTime.now().add(const Duration(days: 50)))
                         .then((v) {
                       setState(() {
                         timeController.text = DateFormat.yMd().format(v!);
+                        dateTime = v;
                       });
                     });
                   },
                   readOnly: true,
                   decoration: InputDecoration(
-                      hintText: "Pick Date",
+                      hintText: context.tr.pickDate,
                       suffixIcon: SvgPicture.asset(
                         "assets/img/services/calendar.svg",
                         width: 11,
@@ -283,8 +323,8 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                 TextFormField(
                   maxLength: 200,
                   maxLines: 5,
-                  decoration: const InputDecoration(
-                    hintText: "Add Notes Here",
+                  decoration: InputDecoration(
+                    hintText: context.tr.add_notes,
                   ),
                 ),
               ],
@@ -295,24 +335,31 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: PrimaryButton(
-          text: "Booking Now",
+          text: context.tr.bookNow,
           loading: loading,
           onPressed: () async {
             if (_key.currentState!.validate()) {
               setState(() {
                 loading = true;
               });
-              final res = await ref.read(addBookingProvider(
-                      date: DateTime.parse(timeController.text),
-                      services: addedServices.map((e) => e.name).toList())
-                  .future);
-              res.fold((v) {}, (v) {
+              await ref
+                  .read(addBookingProvider(
+                      images: capturedPhotos,
+                      date: dateTime!,
+                      services: [service.id]).future)
+                  .catchError((v) {
+                if (!context.mounted) return null;
+
                 ScaffoldMessenger.of(context)
-                    .showSnackBar(const SnackBar(content: Text("Successful")));
+                    .showSnackBar(SnackBar(content: Text(v)));
               });
+
               setState(() {
                 loading = false;
               });
+              if (!context.mounted) return;
+
+              context.go("/booking_done");
             }
           },
         ),
@@ -325,9 +372,11 @@ class AddedImage extends StatelessWidget {
   const AddedImage({
     super.key,
     required this.path,
+    required this.onRemove,
   });
 
   final String path;
+  final VoidCallback onRemove;
 
   @override
   Widget build(BuildContext context) {
@@ -343,7 +392,7 @@ class AddedImage extends StatelessWidget {
               borderRadius: BorderRadius.circular(AppRadii.lg)),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: onRemove,
           child: const CircleAvatar(
             backgroundColor: AppColors.white,
             foregroundColor: AppColors.black,

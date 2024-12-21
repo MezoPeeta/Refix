@@ -156,7 +156,7 @@ class _GetAdsProviderElement extends AutoDisposeFutureProviderElement<List<Ad>>
   AdsType get type => (origin as GetAdsProvider).type;
 }
 
-String _$getAllServicesHash() => r'd7796404a1164ae3acf35926d6ccba463f73ff76';
+String _$getAllServicesHash() => r'37ce927dd9574c5b74ca156d675172cee7a79412';
 
 /// See also [getAllServices].
 @ProviderFor(getAllServices)

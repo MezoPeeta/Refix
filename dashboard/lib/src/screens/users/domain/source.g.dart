@@ -449,5 +449,154 @@ class _GetLocationProviderElement
   @override
   List<User> get users => (origin as GetLocationProvider).users;
 }
+
+String _$getBookingHash() => r'afbb25eae7f3aa706ec8bfe612f6cfdf3524e207';
+
+/// See also [getBooking].
+@ProviderFor(getBooking)
+const getBookingProvider = GetBookingFamily();
+
+/// See also [getBooking].
+class GetBookingFamily extends Family<AsyncValue<List<BookingElement>>> {
+  /// See also [getBooking].
+  const GetBookingFamily();
+
+  /// See also [getBooking].
+  GetBookingProvider call({
+    required int page,
+    String? query,
+  }) {
+    return GetBookingProvider(
+      page: page,
+      query: query,
+    );
+  }
+
+  @override
+  GetBookingProvider getProviderOverride(
+    covariant GetBookingProvider provider,
+  ) {
+    return call(
+      page: provider.page,
+      query: provider.query,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getBookingProvider';
+}
+
+/// See also [getBooking].
+class GetBookingProvider
+    extends AutoDisposeFutureProvider<List<BookingElement>> {
+  /// See also [getBooking].
+  GetBookingProvider({
+    required int page,
+    String? query,
+  }) : this._internal(
+          (ref) => getBooking(
+            ref as GetBookingRef,
+            page: page,
+            query: query,
+          ),
+          from: getBookingProvider,
+          name: r'getBookingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getBookingHash,
+          dependencies: GetBookingFamily._dependencies,
+          allTransitiveDependencies:
+              GetBookingFamily._allTransitiveDependencies,
+          page: page,
+          query: query,
+        );
+
+  GetBookingProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.page,
+    required this.query,
+  }) : super.internal();
+
+  final int page;
+  final String? query;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<BookingElement>> Function(GetBookingRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetBookingProvider._internal(
+        (ref) => create(ref as GetBookingRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        page: page,
+        query: query,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<BookingElement>> createElement() {
+    return _GetBookingProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetBookingProvider &&
+        other.page == page &&
+        other.query == query;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, page.hashCode);
+    hash = _SystemHash.combine(hash, query.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin GetBookingRef on AutoDisposeFutureProviderRef<List<BookingElement>> {
+  /// The parameter `page` of this provider.
+  int get page;
+
+  /// The parameter `query` of this provider.
+  String? get query;
+}
+
+class _GetBookingProviderElement
+    extends AutoDisposeFutureProviderElement<List<BookingElement>>
+    with GetBookingRef {
+  _GetBookingProviderElement(super.provider);
+
+  @override
+  int get page => (origin as GetBookingProvider).page;
+  @override
+  String? get query => (origin as GetBookingProvider).query;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

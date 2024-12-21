@@ -1,4 +1,5 @@
 import 'package:dashboard/src/core/theme/btns.dart';
+import 'package:dashboard/src/core/theme/radii.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,14 +29,17 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
               Row(
                 spacing: 16,
                 children: [
-                  Expanded(
-                      child:
-                          SecondaryButton(text: "Add New +", onPressed: () {})),
+                  Text(
+                    "All (${users.value?.length ?? 0})",
+                    style: const TextStyle(
+                        fontSize: AppTextSize.three,
+                        fontWeight: FontWeight.w500),
+                  ),
                   Expanded(
                       child: SecondaryButton(
-                          text: "Download User", onPressed: () {})),
+                          text: "Add New User", onPressed: () {})),
                   Expanded(
-                    flex: 4,
+                    flex: 5,
                     child: TextField(
                       onChanged: (value) {
                         setState(() {

@@ -1,13 +1,17 @@
 import 'package:dashboard/src/screens/ads/ads.dart';
 import 'package:dashboard/src/screens/ads/ads_edit.dart';
+import 'package:dashboard/src/screens/booking/presentation/booking_confirmation.dart';
+import 'package:dashboard/src/screens/booking/presentation/inBooking.dart';
 import 'package:dashboard/src/screens/content/onetime.dart';
 import 'package:dashboard/src/screens/content/onetime_edit.dart';
 import 'package:dashboard/src/screens/navbar/navbar.dart';
+import 'package:dashboard/src/screens/points/points.dart';
 import 'package:dashboard/src/screens/users/client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../booking/presentation/booking.dart';
+import '../booking/presentation/booking_conf_show.dart';
 import '../home/home.dart';
 import '../permission/permissions.dart';
 
@@ -22,9 +26,11 @@ class BaseScreen extends StatelessWidget {
     const OnetimeEditScreen(),
     const AdsScreen(),
     const AdsEditScreen(),
-    const SizedBox.shrink(),
+    const PointsScreen(),
+    const InbookingScreen(),
     const BookingScreen(),
-    const SizedBox.shrink(),
+    const BookingConfirmation(),
+    const BookingConfShow(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),

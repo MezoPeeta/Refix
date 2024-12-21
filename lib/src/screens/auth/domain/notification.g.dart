@@ -6,7 +6,7 @@ part of 'notification.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$sendFCMTokenHash() => r'4c6c01f02cf9a1ed42e435b20b39c13a8cdf85fe';
+String _$sendFCMTokenHash() => r'b0af4a2245b9340b9297da2091c29ce010c273b7';
 
 /// See also [sendFCMToken].
 @ProviderFor(sendFCMToken)
@@ -41,7 +41,7 @@ final markNotificationReadProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MarkNotificationReadRef = AutoDisposeFutureProviderRef<Object?>;
-String _$notificationsHash() => r'5531a8ebdfdfff3eb0eec6592ff76ced8fdbeace';
+String _$notificationsHash() => r'a054873bb1675a651c66e85b3fe939baa9460e82';
 
 /// See also [Notifications].
 @ProviderFor(Notifications)

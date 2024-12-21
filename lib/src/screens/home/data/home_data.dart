@@ -18,7 +18,7 @@ class Ad with _$Ad {
   factory Ad.fromJson(Map<String, dynamic> json) => _$AdFromJson(json);
 }
 
-@freezed
+@Freezed(toJson: true)
 class Service with _$Service {
   const factory Service({
     @JsonKey(name: "name") required String name,

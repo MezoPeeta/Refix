@@ -17,8 +17,7 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final users = ref.watch(getCustomersProvider(page: _page, query: query));
-    // final cities = ref.watch(getLocation())
+    final customers = ref.watch(getCustomersProvider(page: _page, query: query));
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -51,7 +50,7 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
               const SizedBox(
                 height: 8,
               ),
-              users.when(
+              customers.when(
                   data: (data) {
                     return PaginatedDataTable(
                       showCheckboxColumn: true,

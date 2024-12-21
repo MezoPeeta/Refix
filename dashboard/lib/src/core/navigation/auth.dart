@@ -163,5 +163,8 @@ Future<User?> getCurrentUser(Ref ref) async {
   if (response.statusCode == 200) {
     return User.fromJson(jsonDecode(response.body));
   }
+  if (response.statusCode == 401) {
+    ref.read(authProvider).logout();
+  }
   return null;
 }

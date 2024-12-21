@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/screens/auth/domain/notification.dart';
 
 import '../../../core/ui/theme/colors.dart';
@@ -16,13 +17,14 @@ class NotificationsScreen extends ConsumerWidget {
     final notifications = ref.watch(notificationsProvider);
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Notifications"),
+          centerTitle: false,
+          title: Text(context.tr.notifications),
           actions: [
             TextButton(
                 onPressed: () {
                   ref.read(notificationsProvider.notifier).markRead();
                 },
-                child: const Text("Mark All As Read"))
+                child: Text(context.tr.markAllRead))
           ],
         ),
         body: Padding(
@@ -30,9 +32,9 @@ class NotificationsScreen extends ConsumerWidget {
             child: notifications.when(
                 data: (data) {
                   if (data.isEmpty) {
-                    return const Center(
+                    return Center(
                         child: Text(
-                      "You don't have notification at the moment , check later",
+                      context.tr.noNotifications,
                       textAlign: TextAlign.center,
                     ));
                   }

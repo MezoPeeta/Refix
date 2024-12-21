@@ -1,54 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
+import 'package:refix/src/screens/auth/domain/auth_domain.dart';
+import 'package:refix/src/screens/points/domain/points_domain.dart';
 
-class PointsScreen extends StatelessWidget {
+class PointsScreen extends ConsumerWidget {
   const PointsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final points = ref.watch(getUserPointsProvider);
+    final balance = ref.watch(getCurrentUserProvider).value?.points ?? 0;
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(AppRadii.lg)),
-                  child: const Column(
-                    children: [
-                      Text(
-                        "33.55",
-                        style: TextStyle(fontSize: AppTextSize.eight),
-                      ),
-                      Text(
-                        "Points Balance",
-                        style: TextStyle(fontSize: AppTextSize.three),
-                      ),
-                    ],
-                  ),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(AppRadii.lg)),
+                child: Column(
+                  children: [
+                    Text(
+                      balance.toString(),
+                      style: const TextStyle(fontSize: AppTextSize.eight),
+                    ),
+                    const Text(
+                      "Points Balance",
+                      style: TextStyle(fontSize: AppTextSize.three),
+                    ),
+                  ],
                 ),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              const PointContainer(),
-              const SizedBox(
-                height: 16,
-              ),
-              const PointContainer(),
-              const SizedBox(
-                height: 16,
-              ),
-              const PointContainer()
-            ],
-          ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            points.when(
+                data: (data) {
+                  return Expanded(
+                    child: ListView.separated(
+                        itemCount: data.length,
+                        separatorBuilder: (context, index) => const SizedBox(
+                              height: 16,
+                            ),
+                        itemBuilder: (context, index) {
+                          return PointContainer(
+                            percentage: data[index].percentage,
+                            name: data[index].name,
+                            isActive: data[index].active,
+                            requiredPoints: data[index].requiredPoints,
+                            availableDays: data[index].availableDays,
+                          );
+                        }),
+                  );
+                },
+                error: (e, s) {
+                  return const Text("Error");
+                },
+                loading: () =>
+                    const Center(child: CircularProgressIndicator.adaptive()))
+          ],
         ),
       ),
     );
@@ -58,7 +76,16 @@ class PointsScreen extends StatelessWidget {
 class PointContainer extends StatelessWidget {
   const PointContainer({
     super.key,
+    required this.percentage,
+    required this.name,
+    required this.availableDays,
+    required this.isActive,
+    required this.requiredPoints,
   });
+
+  final int percentage, availableDays, requiredPoints;
+  final String name;
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -74,22 +101,33 @@ class PointContainer extends StatelessWidget {
           children: [
             Row(
               children: [
-                SvgPicture.asset("assets/img/services/star.svg"),
-                const Text(
-                  "30%",
+                SvgPicture.asset(
+                  "assets/img/services/star.svg",
+                  colorFilter: ColorFilter.mode(
+                      isActive
+                          ? AppColors.primaryRefix
+                          : AppColors.neutralRefix,
+                      BlendMode.srcIn),
+                ),
+                Text(
+                  "$percentage%",
                   style: TextStyle(
                       fontSize: AppTextSize.eight,
-                      color: AppColors.primaryRefix),
+                      color: isActive
+                          ? AppColors.primaryRefix
+                          : AppColors.neutralRefix),
                 ),
                 const Spacer(),
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(AppRadii.lg),
-                      color: AppColors.primaryRefix),
-                  child: const Text(
-                    "20 Points",
-                    style: TextStyle(color: Colors.white),
+                      color: isActive
+                          ? AppColors.primaryRefix
+                          : AppColors.neutralRefix),
+                  child: Text(
+                    "$requiredPoints Points",
+                    style: const TextStyle(color: Colors.white),
                   ),
                 )
               ],
@@ -97,17 +135,17 @@ class PointContainer extends StatelessWidget {
             const SizedBox(
               height: 32,
             ),
-            const Text(
-              "Package Name",
-              style: TextStyle(
+            Text(
+              name,
+              style: const TextStyle(
                   fontSize: AppTextSize.three, fontWeight: FontWeight.w700),
             ),
             const SizedBox(
               height: 16,
             ),
-            const Text(
-              "Ends within 30 days",
-              style: TextStyle(
+            Text(
+              "Ends within $availableDays days",
+              style: const TextStyle(
                   color: AppColors.neutral300,
                   fontSize: AppTextSize.two,
                   fontWeight: FontWeight.w700),

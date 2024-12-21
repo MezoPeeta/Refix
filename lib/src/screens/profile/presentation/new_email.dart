@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
-
 
 class NewEmail extends StatelessWidget {
   const NewEmail({super.key, required this.email});
@@ -16,11 +16,11 @@ class NewEmail extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: CustomScrollView(
             slivers: [
-              const SliverAppBar.large(
+              SliverAppBar.large(
                   centerTitle: false,
                   title: Text(
-                    "Enter New Email",
-                    style: TextStyle(
+                    context.tr.enterNewEmail,
+                    style: const TextStyle(
                         fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
                   )),
               SliverToBoxAdapter(
@@ -28,12 +28,18 @@ class NewEmail extends StatelessWidget {
                   children: [
                     TextFormField(
                       controller: emailController,
-                      decoration: const InputDecoration(hintText: "Email"),
+                      validator: (email) {
+                        if (email!.isEmpty) {
+                          return context.tr.enter_email;
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(hintText: context.tr.email),
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    PrimaryButton(text: "Next", onPressed: () {})
+                    PrimaryButton(text: context.tr.next, onPressed: () {})
                   ],
                 ),
               ),

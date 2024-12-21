@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
@@ -76,39 +74,20 @@ class _SignupScreenState extends State<SignupScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                InternationalPhoneNumberInput(
-                    autoValidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (v) {
-                      if (v!.isEmpty) {
-                        return context.tr.enter_phone;
-                      }
-                      return null;
-                    },
-                    initialValue: PhoneNumber(isoCode: "SA"),
-                    selectorConfig: SelectorConfig(
-                        selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                        leadingPadding: 16,
-                        showFlags: false,
-                        useEmoji: true,
-                        countryComparator: (country1, country2) {
-                          return country1.name!.compareTo(country2.name!);
-                        },
-                        setSelectorButtonAsPrefixIcon: true),
-                    inputDecoration: InputDecoration(
-                        fillColor: AppColors.neutral50,
-                        filled: true,
-                        contentPadding: const EdgeInsets.all(AppSpacing.x),
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(AppRadii.lg)),
-                        hintStyle: const TextStyle(
-                            color: AppColors.neutralRefix,
-                            fontSize: AppTextSize.two)),
-                    onInputChanged: (value) {
-                      setState(() {
-                        phoneNumber = value.phoneNumber;
-                      });
-                    }),
+                TextFormField(
+                  controller: phoneController,
+                  validator: (v) {
+                    if (v!.isEmpty) {
+                      return context.tr.enter_phone;
+                    }
+                    return null;
+                  },
+                  decoration: InputDecoration(
+                      icon: const Text("+966"),
+                      fillColor: AppColors.neutral50,
+                      filled: true,
+                      hintText: context.tr.phone),
+                ),
                 const SizedBox(
                   height: 16,
                 ),
@@ -147,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           });
                           final user = await ref.read(authProvider).signup(
                               email: emailController.text,
-                              phone: phoneNumber!,
+                              phone: "+966${phoneController.text}",
                               username: usernameController.text,
                               password: confirmPasswordController.text);
 

@@ -2,6 +2,9 @@ import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/auth.dart';
+import 'package:dashboard/src/screens/booking/data/booking.dart';
+import 'package:dashboard/src/screens/booking/presentation/booking.dart';
+import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -138,4 +141,116 @@ class CustomersDataSource extends UsersDataSource {
           )),
         ]);
   }
+}
+
+class BookingDataSource extends UsersDataSource {
+  List<BookingElement> bookings;
+
+  WidgetRef ref;
+  BookingDataSource(this.ref, this.bookings) : super([]);
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= bookings.length) return null;
+
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(bookings[index].id)),
+      DataCell(Text(bookings[index].services.first.name)),
+      DataCell(Text(bookings[index].customer.username)),
+      DataCell(Text(bookings[index].cost.toString())),
+      DataCell(Text(formatTime(bookings[index].createdAt))),
+      DataCell(Text(bookings[index].status)),
+      DataCell(TextButton(
+        onPressed: () {
+          ref.read(currentIndexProvider.notifier).state = 10;
+          ref.read(getBookingInfoProvider.notifier).state = bookings[index];
+        },
+        child: const Text("Show"),
+      )),
+    ]);
+  }
+
+  @override
+  // TODO: implement rowCount
+  int get rowCount => bookings.length;
+}
+
+class BookingConfDataSource extends UsersDataSource {
+  WidgetRef ref;
+  BookingConfDataSource(super.data, this.ref);
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) return null;
+
+    return DataRow.byIndex(
+        index: index,
+        selected: data[index].selected,
+        onSelectChanged: (value) {
+          data[index].selected = value!;
+          notifyListeners();
+        },
+        cells: [
+          DataCell(Text(data[index].id)),
+          DataCell(Text(data[index].username)),
+          DataCell(Text(data[index].email)),
+          DataCell(Text(data[index].role.name)),
+          DataCell(Text(formatTime(data[index].createdAt))),
+          DataCell(TextButton(
+            onPressed: () => ref.read(currentIndexProvider.notifier).state = 12,
+            child: const Text("Show"),
+          )),
+        ]);
+  }
+}
+
+class PointsDataSource extends UsersDataSource {
+  WidgetRef ref;
+  PointsDataSource(super.data, this.ref);
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) return null;
+
+    return DataRow.byIndex(
+        index: index,
+        selected: data[index].selected,
+        onSelectChanged: (value) {
+          data[index].selected = value!;
+          notifyListeners();
+        },
+        cells: [
+          DataCell(Text(data[index].id)),
+          DataCell(Text(data[index].username)),
+          DataCell(Text(data[index].email)),
+          DataCell(Text(data[index].role.name)),
+          DataCell(Text(formatTime(data[index].createdAt))),
+          DataCell(TextButton(
+            onPressed: () => ref.read(currentIndexProvider.notifier).state = 12,
+            child: const Text("Edit"),
+          )),
+        ]);
+  }
+}
+
+@riverpod
+Future<List<BookingElement>> getBooking(Ref ref,
+    {required int page, String? query}) async {
+  final url = query != null
+      ? "booking/not-assigned?page=$page&take=10&search=$query"
+      : "booking/not-assigned?page=$page&take=10";
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: url, method: "GET");
+  debugPrint("Response: ${response.body}");
+  if (response.statusCode == 200) {
+    final decoded = jsonDecode(response.body)["booking"];
+
+    return decoded
+        .map<BookingElement>((e) => BookingElement.fromJson(e))
+        .toList();
+  }
+  if (response.statusCode == 401) {
+    await ref.read(authProvider).logout();
+    return [];
+  }
+  return [];
 }

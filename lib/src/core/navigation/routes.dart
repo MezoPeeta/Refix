@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/navigation/base.dart';
 import 'package:refix/src/core/storage/secure_storage.dart';
@@ -28,6 +29,13 @@ import 'package:refix/src/screens/services/presentation/more_services.dart';
 import 'package:refix/src/screens/services/presentation/services.dart';
 import 'package:refix/src/screens/services/presentation/tackphoto.dart';
 
+import '../../screens/home/data/home_data.dart';
+
+final goRouterProvider = Provider<GoRouter>((ref) {
+  return routes;
+});
+
+
 final routes = GoRouter(
     initialLocation: "/boarding",
     redirect: (BuildContext context, GoRouterState state) async {
@@ -45,21 +53,36 @@ final routes = GoRouter(
       GoRoute(path: "/", builder: (context, state) => const BaseWidget()),
       GoRoute(
           path: "/services",
-          builder: (context, state) => const ServicesScreen()),
+          builder: (context, state) => ServicesScreen(
+                name: state.extra as String,
+              )),
       GoRoute(
           path: "/reviews", builder: (context, state) => const ReviewsScreen()),
       GoRoute(
-          path: "/more_services",
-          builder: (context, state) => const MoreServicesScreen()),
+          name: "moreServices",
+          path: "/more_services/:name",
+          builder: (context, state) => MoreServicesScreen(
+                services: state.extra as List<Service>,
+                name: state.pathParameters["name"]!,
+              )),
       GoRoute(
           path: "/need_login",
           builder: (context, state) => const NeedLoginScreen()),
       GoRoute(
           path: "/tack_photo",
-          builder: (context, state) => const TackphotoScreen()),
+          builder: (context, state) => TackphotoScreen(
+                service: state.extra as Service,
+              )),
       GoRoute(
-          path: "/final_step",
-          builder: (context, state) => const FinalstepScreen()),
+          path: "/booking_done",
+          builder: (context, state) => const BookingdoneScreen()),
+      GoRoute(
+          path: "/final_step/:service/:photo",
+          name: "FinalStep",
+          builder: (context, state) => FinalstepScreen(
+                service: state.pathParameters["service"]!,
+                photo: state.pathParameters["photo"]!,
+              )),
       GoRoute(
           path: "/booking_done",
           builder: (context, state) => const BookingdoneScreen()),

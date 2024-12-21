@@ -258,6 +258,10 @@ mixin _$User {
   @JsonKey(name: "type")
   String get type => throw _privateConstructorUsedError;
   String get phone => throw _privateConstructorUsedError;
+  @JsonKey(name: "lat")
+  double? get latitude => throw _privateConstructorUsedError;
+  @JsonKey(name: "lang")
+  double? get longitude => throw _privateConstructorUsedError;
   int get points => throw _privateConstructorUsedError;
   @JsonKey(name: "role")
   Role get role => throw _privateConstructorUsedError;
@@ -284,6 +288,8 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "email") String email,
       @JsonKey(name: "type") String type,
       String phone,
+      @JsonKey(name: "lat") double? latitude,
+      @JsonKey(name: "lang") double? longitude,
       int points,
       @JsonKey(name: "role") Role role,
       @JsonKey(name: "is_verified") bool isVerified});
@@ -311,6 +317,8 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? email = null,
     Object? type = null,
     Object? phone = null,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
     Object? points = null,
     Object? role = null,
     Object? isVerified = null,
@@ -336,6 +344,14 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
       points: null == points
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
@@ -375,6 +391,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "email") String email,
       @JsonKey(name: "type") String type,
       String phone,
+      @JsonKey(name: "lat") double? latitude,
+      @JsonKey(name: "lang") double? longitude,
       int points,
       @JsonKey(name: "role") Role role,
       @JsonKey(name: "is_verified") bool isVerified});
@@ -400,6 +418,8 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? email = null,
     Object? type = null,
     Object? phone = null,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
     Object? points = null,
     Object? role = null,
     Object? isVerified = null,
@@ -425,6 +445,14 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
       points: null == points
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
@@ -450,6 +478,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       @JsonKey(name: "email") required this.email,
       @JsonKey(name: "type") required this.type,
       required this.phone,
+      @JsonKey(name: "lat") this.latitude,
+      @JsonKey(name: "lang") this.longitude,
       required this.points,
       @JsonKey(name: "role") required this.role,
       @JsonKey(name: "is_verified") required this.isVerified});
@@ -472,6 +502,12 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
   @override
   final String phone;
   @override
+  @JsonKey(name: "lat")
+  final double? latitude;
+  @override
+  @JsonKey(name: "lang")
+  final double? longitude;
+  @override
   final int points;
   @override
   @JsonKey(name: "role")
@@ -482,7 +518,7 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, username: $username, email: $email, type: $type, phone: $phone, points: $points, role: $role, isVerified: $isVerified)';
+    return 'User(id: $id, username: $username, email: $email, type: $type, phone: $phone, latitude: $latitude, longitude: $longitude, points: $points, role: $role, isVerified: $isVerified)';
   }
 
   @override
@@ -495,6 +531,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('type', type))
       ..add(DiagnosticsProperty('phone', phone))
+      ..add(DiagnosticsProperty('latitude', latitude))
+      ..add(DiagnosticsProperty('longitude', longitude))
       ..add(DiagnosticsProperty('points', points))
       ..add(DiagnosticsProperty('role', role))
       ..add(DiagnosticsProperty('isVerified', isVerified));
@@ -511,6 +549,10 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
             (identical(other.email, email) || other.email == email) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
             (identical(other.points, points) || other.points == points) &&
             (identical(other.role, role) || other.role == role) &&
             (identical(other.isVerified, isVerified) ||
@@ -519,8 +561,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, username, email, type, phone, points, role, isVerified);
+  int get hashCode => Object.hash(runtimeType, id, username, email, type, phone,
+      latitude, longitude, points, role, isVerified);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -545,6 +587,8 @@ abstract class _User implements User {
           @JsonKey(name: "email") required final String email,
           @JsonKey(name: "type") required final String type,
           required final String phone,
+          @JsonKey(name: "lat") final double? latitude,
+          @JsonKey(name: "lang") final double? longitude,
           required final int points,
           @JsonKey(name: "role") required final Role role,
           @JsonKey(name: "is_verified") required final bool isVerified}) =
@@ -566,6 +610,12 @@ abstract class _User implements User {
   String get type;
   @override
   String get phone;
+  @override
+  @JsonKey(name: "lat")
+  double? get latitude;
+  @override
+  @JsonKey(name: "lang")
+  double? get longitude;
   @override
   int get points;
   @override

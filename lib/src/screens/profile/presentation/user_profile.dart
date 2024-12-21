@@ -16,6 +16,7 @@ class UserProfile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(getCurrentUserProvider).value;
+    final userController = TextEditingController(text: user?.username);
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr.your_profile),
@@ -30,18 +31,12 @@ class UserProfile extends ConsumerWidget {
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(AppRadii.lg)),
-                child: Column(
-                  children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                          filled: false, hintText: context.tr.first_name),
-                    ),
-                    const Divider(),
-                    TextFormField(
-                      decoration: InputDecoration(
-                          filled: false, hintText: context.tr.last_name),
-                    ),
-                  ],
+                child: TextFormField(
+                  controller: userController,
+                  decoration: InputDecoration(
+                      labelText: context.tr.username,
+                      filled: false,
+                      hintText: context.tr.username),
                 ),
               ),
               const SizedBox(

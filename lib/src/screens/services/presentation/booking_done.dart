@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
@@ -67,8 +68,9 @@ class BookingdoneScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child:
-                PrimaryButton(text: "Choose Payment Method", onPressed: () {}),
+            child: PrimaryButton(
+                text: "Choose Payment Method",
+                onPressed: () => context.push("/payment_method")),
           )
         ],
       ),

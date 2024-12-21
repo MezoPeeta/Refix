@@ -1,16 +1,26 @@
+import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/theme/btns.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/radii.dart';
 
-class BookingScreen extends StatelessWidget {
+final getBookingInfoProvider = StateProvider<BookingElement?>((ref) {
+  return null;
+});
+
+class BookingScreen extends ConsumerWidget {
   const BookingScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final details = ref.watch(getBookingInfoProvider);
+    print("Furst Image: ${details?.imagesBeforeReaper.first}");
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -39,80 +49,22 @@ class BookingScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const ServiceContainer(name: "Services"),
+                          ServiceContainer(name: details!.services.first.name),
                           const SizedBox(
                             width: 24,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding: const EdgeInsets.all(16),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            child: GridView.builder(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemCount: [
-                                                1,
-                                                2,
-                                                3,
-                                                4,
-                                                5,
-                                                6,
-                                                "Other"
-                                              ].length,
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                                                      crossAxisSpacing: 24,
-                                                      mainAxisSpacing: 24,
-                                                      mainAxisExtent: 85,
-                                                      maxCrossAxisExtent:
-                                                          116.67),
-                                              itemBuilder: (context, index) {
-                                                return ServiceContainer(
-                                                  name: [
-                                                    1,
-                                                    2,
-                                                    3,
-                                                    4,
-                                                    5,
-                                                    6,
-                                                    "Other"
-                                                  ][index]
-                                                      .toString(),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          PrimaryButton(
-                                              loading: false,
-                                              text: "Add Services",
-                                              onPressed: () {})
-                                        ],
-                                      ),
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              width: 116.67,
-                              height: 101,
-                              decoration: BoxDecoration(
-                                  color: AppColors.neutral100,
-                                  borderRadius:
-                                      BorderRadius.circular(AppRadii.lg)),
-                              child: SvgPicture.asset(
-                                "assets/img/home/add_disabled.svg",
-                                width: 39,
-                                height: 39,
-                                fit: BoxFit.scaleDown,
-                              ),
+                          Container(
+                            width: 116.67,
+                            height: 101,
+                            decoration: BoxDecoration(
+                                color: AppColors.neutral100,
+                                borderRadius:
+                                    BorderRadius.circular(AppRadii.lg)),
+                            child: SvgPicture.asset(
+                              "assets/img/home/add_disabled.svg",
+                              width: 39,
+                              height: 39,
+                              fit: BoxFit.scaleDown,
                             ),
                           )
                         ],
@@ -137,7 +89,9 @@ class BookingScreen extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const AddedImage(),
+                          AddedImage(
+                            path: details.imagesBeforeReaper.first,
+                          ),
                           const SizedBox(
                             width: 16,
                           ),
@@ -160,6 +114,17 @@ class BookingScreen extends StatelessWidget {
                       const SizedBox(
                         height: 40,
                       ),
+                      TextFormField(
+                        readOnly: true,
+                        initialValue: details.customer.username.toString(),
+                        decoration: const InputDecoration(
+                          hintText: "Customer Name",
+                          filled: true,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       const TextHeader(
                         text: "Select Service Name",
                         fontWeight: FontWeight.w500,
@@ -174,28 +139,42 @@ class BookingScreen extends StatelessWidget {
                       const SizedBox(
                         height: 16,
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                            hintText: "Add Address",
-                            filled: true,
-                            suffixIcon: SvgPicture.asset(
-                              "assets/img/services/location.svg",
-                              width: 11,
-                              fit: BoxFit.scaleDown,
-                            )),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TextFormField(
+                              readOnly: true,
+                              initialValue:
+                                  details.customer.longitude.toString(),
+                              decoration: const InputDecoration(
+                                hintText: "Add Address",
+                                filled: true,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          IconButton(
+                              onPressed: () async {
+                                final lat = details.customer.latitude;
+                                final long = details.customer.longitude;
+
+                                if (!await launchUrl(Uri.parse(
+                                    "https://maps.google.com/?q=$lat,$long"))) {
+                                  throw Exception('Could not launch URL');
+                                }
+                              },
+                              icon: const Icon(Icons.location_city))
+                        ],
                       ),
                       const SizedBox(
                         height: 16,
                       ),
                       TextFormField(
-                        onTap: () {
-                          showDatePicker(
-                              context: context,
-                              firstDate: DateTime.now(),
-                              lastDate:
-                                  DateTime.now().add(const Duration(days: 50)));
-                        },
                         readOnly: true,
+                        initialValue:
+                            DateFormat.yMd().format(details.appointmentDate),
                         decoration: InputDecoration(
                             hintText: "Pick Date",
                             suffixIcon: SvgPicture.asset(
@@ -267,7 +246,9 @@ class BookingScreen extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        const AddedImage(),
+                        const AddedImage(
+                          path: "",
+                        ),
                         const SizedBox(
                           width: 16,
                         ),
@@ -348,8 +329,10 @@ class TextHeader extends StatelessWidget {
 class AddedImage extends StatelessWidget {
   const AddedImage({
     super.key,
+    required this.path,
   });
 
+  final String path;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -359,7 +342,11 @@ class AddedImage extends StatelessWidget {
           width: 77,
           height: 80,
           decoration: BoxDecoration(
-              color: AppColors.neutral100,
+              image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: NetworkImage(
+                    "https://refix-api.onrender.com/$path",
+                  )),
               borderRadius: BorderRadius.circular(AppRadii.lg)),
         ),
         GestureDetector(

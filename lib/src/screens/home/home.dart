@@ -9,9 +9,11 @@ import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/screens/auth/domain/notification.dart';
 import 'package:refix/src/screens/home/components/icon_container.dart';
+import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/home/domain/home_domain.dart';
 
 import '../../core/ui/widgets/button.dart';
+import '../services/presentation/services.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -27,6 +29,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.initState();
   }
 
+  String query = "";
+  int? selectedServiceIndex;
+  Service? selectedService;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,11 +67,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Container(
                 color: AppColors.white,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: SearchBar(
                         hintText: context.tr.search,
+                        onChanged: (value) {
+                          setState(() {
+                            query = value;
+                          });
+                        },
                         leading: SvgPicture.asset("assets/img/home/search.svg"),
                         constraints: BoxConstraints(
                             minWidth: MediaQuery.sizeOf(context).width,
@@ -76,97 +87,170 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     const SizedBox(
                       height: AppSpacing.x2,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                          spacing: 24,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            IconContainer(
-                              name: context.tr.electrical_systems,
-                              svgPath: "assets/img/home/electrical.svg",
-                            ),
-                            IconContainer(
-                              name: context.tr.plumbing_systems,
-                              svgPath: "assets/img/home/plumber.svg",
-                            ),
-                            IconContainer(
-                              name: context.tr.air,
-                              svgPath: "assets/img/home/motor.svg",
-                            ),
-                          ]),
+                    Visibility(
+                      visible: query == "",
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Row(
+                            spacing: 24,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              IconContainer(
+                                name: context.tr.electrical_systems,
+                                svgPath: "assets/img/home/electrical.svg",
+                              ),
+                              IconContainer(
+                                name: context.tr.plumbing_systems,
+                                svgPath: "assets/img/home/plumber.svg",
+                              ),
+                              IconContainer(
+                                name: context.tr.air,
+                                svgPath: "assets/img/home/motor.svg",
+                              ),
+                            ]),
+                      ),
+                    ),
+                    Visibility(
+                      visible: query.isNotEmpty,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Consumer(builder: (context, ref, child) {
+                          final services = ref.watch(getAllServicesProvider);
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Search Results for $query"),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  services.when(
+                                      data: (data) {
+                                        return GridView.builder(
+                                          shrinkWrap: true,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          itemCount: data.length,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                                  crossAxisSpacing: 24,
+                                                  mainAxisSpacing: 24,
+                                                  maxCrossAxisExtent: 116.67),
+                                          itemBuilder: (context, index) {
+                                            return ServiceContainer(
+                                              service: data[index],
+                                              isSelected:
+                                                  selectedServiceIndex == index,
+                                              onPressed: () {
+                                                setState(() {
+                                                  selectedServiceIndex = index;
+                                                  selectedService = data[index];
+                                                });
+                                                ref
+                                                        .read(serviceProvider
+                                                            .notifier)
+                                                        .state =
+                                                    data[index].childService;
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
+                                      error: (e, s) =>
+                                          const Center(child: Text("Error")),
+                                      loading: () => const Center(
+                                          child: CircularProgressIndicator
+                                              .adaptive())),
+                                ],
+                              ),
+                              PrimaryButton(
+                                text: "Order Now",
+                                onPressed: () => context.push("/more_services",
+                                    extra: selectedService?.childService),
+                              )
+                            ],
+                          );
+                        }),
+                      ),
                     ),
                     const SizedBox(
                       height: AppSpacing.x2,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: LayoutBuilder(builder: (context, constrains) {
-                        final smallDevice = constrains.maxWidth < 360;
-                        if (smallDevice) {
-                          return Column(
-                            children: [
-                              ElevatorIconContainer(
-                                name: context.tr.control,
-                                svgPath: "assets/img/home/paint.svg",
-                              ),
-                              const SizedBox(
-                                height: 24,
-                              ),
-                              ElevatorIconContainer(
-                                name: context.tr.fire,
-                                svgPath: "assets/img/home/fire.svg",
-                              ),
-                              const SizedBox(
-                                height: 24,
-                              ),
-                              ElevatorIconContainer(
-                                name: context.tr.other,
-                                svgPath: "assets/img/home/add.svg",
-                              ),
-                              const SizedBox(
-                                height: 24,
-                              ),
-                              ElevatorIconContainer(
-                                name: context.tr.emergency,
-                                svgPath: "assets/img/home/alert.svg",
-                              ),
-                            ],
+                    Visibility(
+                      visible: query == "",
+                      child: Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: LayoutBuilder(builder: (context, constrains) {
+                          final smallDevice = constrains.maxWidth < 360;
+                          if (smallDevice) {
+                            return Column(
+                              children: [
+                                ElevatorIconContainer(
+                                  name: context.tr.control,
+                                  svgPath: "assets/img/home/paint.svg",
+                                ),
+                                const SizedBox(
+                                  height: 24,
+                                ),
+                                ElevatorIconContainer(
+                                  name: context.tr.fire,
+                                  svgPath: "assets/img/home/fire.svg",
+                                ),
+                                const SizedBox(
+                                  height: 24,
+                                ),
+                                ElevatorIconContainer(
+                                  name: context.tr.other,
+                                  svgPath: "assets/img/home/add.svg",
+                                ),
+                                const SizedBox(
+                                  height: 24,
+                                ),
+                                ElevatorIconContainer(
+                                  name: context.tr.emergency,
+                                  svgPath: "assets/img/home/alert.svg",
+                                ),
+                              ],
+                            );
+                          }
+                          return SizedBox(
+                            height: 152,
+                            child: GridView.builder(
+                                itemCount: 4,
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisExtent: 64,
+                                        crossAxisCount: 2,
+                                        mainAxisSpacing: 24,
+                                        crossAxisSpacing: 24),
+                                itemBuilder: (context, index) {
+                                  return [
+                                    ElevatorIconContainer(
+                                      name: context.tr.electrical_systems,
+                                      svgPath: "assets/img/home/paint.svg",
+                                    ),
+                                    ElevatorIconContainer(
+                                      name: context.tr.fire,
+                                      svgPath: "assets/img/home/fire.svg",
+                                    ),
+                                    ElevatorIconContainer(
+                                      name: context.tr.other,
+                                      svgPath: "assets/img/home/add.svg",
+                                    ),
+                                    ElevatorIconContainer(
+                                      name: context.tr.emergency,
+                                      svgPath: "assets/img/home/alert.svg",
+                                    ),
+                                  ][index];
+                                }),
                           );
-                        }
-                        return SizedBox(
-                          height: 152,
-                          child: GridView.builder(
-                              itemCount: 4,
-                              physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      mainAxisExtent: 64,
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 24,
-                                      crossAxisSpacing: 24),
-                              itemBuilder: (context, index) {
-                                return [
-                                  ElevatorIconContainer(
-                                    name: context.tr.electrical_systems,
-                                    svgPath: "assets/img/home/paint.svg",
-                                  ),
-                                  ElevatorIconContainer(
-                                    name: context.tr.fire,
-                                    svgPath: "assets/img/home/fire.svg",
-                                  ),
-                                  ElevatorIconContainer(
-                                    name: context.tr.other,
-                                    svgPath: "assets/img/home/add.svg",
-                                  ),
-                                  ElevatorIconContainer(
-                                    name: context.tr.emergency,
-                                    svgPath: "assets/img/home/alert.svg",
-                                  ),
-                                ][index];
-                              }),
-                        );
-                      }),
+                        }),
+                      ),
                     )
                   ],
                 ),
@@ -174,185 +258,203 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               const SizedBox(
                 height: AppSpacing.lg,
               ),
-              Container(
-                color: AppColors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.x),
-                  child: Column(
-                    children: [
-                      Consumer(builder: (context, ref, child) {
-                        final ads =
-                            ref.watch(getAdsProvider(type: AdsType.slider));
-                        return ads.when(
-                            data: (data) {
-                              print(data);
-                              if (data.isEmpty) {
-                                return const Center(
-                                    child: Text("No Ads at the moment"));
-                              }
-                              return CarouselSlider(
-                                options: CarouselOptions(
-                                    height: 143.0,
-                                    initialPage: 0,
-                                    enlargeFactor: 0,
-                                    padEnds: false,
-                                    enableInfiniteScroll: false),
-                                items: data.map((i) {
-                                  return Builder(
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        padding: EdgeInsets.zero,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 16.0),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: CachedNetworkImageProvider(
-                                                    "https://refix-api.onrender.com/${i.image}")),
-                                            borderRadius: BorderRadius.circular(
-                                                AppRadii.lg),
-                                            border: Border.all(
-                                                color: AppColors.neutralRefix)),
-                                      );
-                                    },
-                                  );
-                                }).toList(),
-                              );
-                            },
-                            error: (e, s) {
-                              debugPrint("Error: $e");
-                              return const Text("Error");
-                            },
-                            loading: () => const CircularProgressIndicator());
-                      })
-                    ],
+              Visibility(
+                visible: query == "",
+                child: Container(
+                  color: AppColors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.x),
+                    child: Column(
+                      children: [
+                        Consumer(builder: (context, ref, child) {
+                          final ads =
+                              ref.watch(getAdsProvider(type: AdsType.slider));
+                          return ads.when(
+                              data: (data) {
+                                if (data.isEmpty) {
+                                  return const Center(
+                                      child: Text("No Ads at the moment"));
+                                }
+                                return CarouselSlider(
+                                  options: CarouselOptions(
+                                      height: 143.0,
+                                      initialPage: 0,
+                                      enlargeFactor: 0,
+                                      padEnds: false,
+                                      enableInfiniteScroll: false),
+                                  items: data.map((i) {
+                                    return Builder(
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          padding: EdgeInsets.zero,
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: CachedNetworkImageProvider(
+                                                      "https://refix-api.onrender.com/${i.image}")),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppRadii.lg),
+                                              border: Border.all(
+                                                  color:
+                                                      AppColors.neutralRefix)),
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                              error: (e, s) {
+                                debugPrint("Error: $e");
+                                return const Text("Error");
+                              },
+                              loading: () => const CircularProgressIndicator());
+                        })
+                      ],
+                    ),
                   ),
                 ),
               ),
               const SizedBox(
                 height: AppSpacing.lg,
               ),
-              Container(
-                color: AppColors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.x),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  context.tr.not_available,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: AppTextSize.two.toDouble()),
-                                ),
-                                Text(
-                                  context.tr.not_available2,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w300,
-                                      fontSize: AppTextSize.one.toDouble()),
-                                )
-                              ],
+              Visibility(
+                visible: query == "",
+                child: Container(
+                  color: AppColors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppSpacing.x),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    context.tr.not_available,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: AppTextSize.two.toDouble()),
+                                  ),
+                                  Text(
+                                    context.tr.not_available2,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w300,
+                                        fontSize: AppTextSize.one.toDouble()),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                          SvgPicture.asset("assets/img/home/chat.svg")
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 22,
-                      ),
-                      PrimaryButton(
-                        text: context.tr.chat,
-                        onPressed: () {},
-                      )
-                    ],
+                            SvgPicture.asset("assets/img/home/chat.svg")
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 22,
+                        ),
+                        PrimaryButton(
+                          text: context.tr.chat,
+                          onPressed: () {},
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
               const SizedBox(
                 height: AppSpacing.lg,
               ),
-              Consumer(builder: (context, ref, child) {
-                final ads = ref.watch(getAdsProvider(type: AdsType.banner));
+              Visibility(
+                visible: query == "",
+                child: Consumer(builder: (context, ref, child) {
+                  final ads = ref.watch(getAdsProvider(type: AdsType.banner));
 
-                return ads.when(
-                    data: (data) {
-                      if (data.isEmpty) {
-                        return const SizedBox.shrink();
-                      }
-                      return Container(
-                        color: AppColors.white,
-                        padding: const EdgeInsets.all(AppSpacing.x),
-                        child: Container(
-                          height: 367,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: CachedNetworkImageProvider(
-                                      "https://refix-api.onrender.com/${data.first.image}")),
-                              borderRadius: BorderRadius.circular(AppRadii.lg),
-                              border:
-                                  Border.all(color: AppColors.neutralRefix)),
-                        ),
-                      );
-                    },
-                    error: (e, s) => const Text("Error Banner Ad"),
-                    loading: () => const CircularProgressIndicator.adaptive());
-              }),
+                  return ads.when(
+                      data: (data) {
+                        if (data.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+                        return Container(
+                          color: AppColors.white,
+                          padding: const EdgeInsets.all(AppSpacing.x),
+                          child: Container(
+                            height: 367,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: CachedNetworkImageProvider(
+                                        "https://refix-api.onrender.com/${data.first.image}")),
+                                borderRadius:
+                                    BorderRadius.circular(AppRadii.lg),
+                                border:
+                                    Border.all(color: AppColors.neutralRefix)),
+                          ),
+                        );
+                      },
+                      error: (e, s) => const Text("Error Banner Ad"),
+                      loading: () =>
+                          const CircularProgressIndicator.adaptive());
+                }),
+              ),
               const SizedBox(
                 height: AppSpacing.lg,
               ),
-              Container(
-                color: AppColors.white,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: AppSpacing.x),
-                  child: Column(
-                    children: [
-                      Consumer(builder: (context, ref, child) {
-                        final ads =
-                            ref.watch(getAdsProvider(type: AdsType.slider));
+              Visibility(
+                visible: query == "",
+                child: Container(
+                  color: AppColors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.x),
+                    child: Column(
+                      children: [
+                        Consumer(builder: (context, ref, child) {
+                          final ads =
+                              ref.watch(getAdsProvider(type: AdsType.slider));
 
-                        return ads.when(
-                            data: (data) {
-                              return CarouselSlider(
-                                options: CarouselOptions(
-                                    height: 143.0,
-                                    initialPage: 0,
-                                    enlargeFactor: 0,
-                                    padEnds: false,
-                                    enableInfiniteScroll: false),
-                                items: data.map((i) {
-                                  return Builder(
-                                    builder: (BuildContext context) {
-                                      return Container(
-                                        padding: EdgeInsets.zero,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 16.0),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                fit: BoxFit.cover,
-                                                image: CachedNetworkImageProvider(
-                                                    "https://refix-api.onrender.com/${i.image}")),
-                                            borderRadius: BorderRadius.circular(
-                                                AppRadii.lg),
-                                            border: Border.all(
-                                                color: AppColors.neutralRefix)),
-                                      );
-                                    },
-                                  );
-                                }).toList(),
-                              );
-                            },
-                            error: (e, s) => const Center(child: Text("Error")),
-                            loading: () =>
-                                const CircularProgressIndicator.adaptive());
-                      })
-                    ],
+                          return ads.when(
+                              data: (data) {
+                                return CarouselSlider(
+                                  options: CarouselOptions(
+                                      height: 143.0,
+                                      initialPage: 0,
+                                      enlargeFactor: 0,
+                                      padEnds: false,
+                                      enableInfiniteScroll: false),
+                                  items: data.map((i) {
+                                    return Builder(
+                                      builder: (BuildContext context) {
+                                        return Container(
+                                          padding: EdgeInsets.zero,
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 16.0),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: CachedNetworkImageProvider(
+                                                      "https://refix-api.onrender.com/${i.image}")),
+                                              borderRadius:
+                                                  BorderRadius.circular(
+                                                      AppRadii.lg),
+                                              border: Border.all(
+                                                  color:
+                                                      AppColors.neutralRefix)),
+                                        );
+                                      },
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                              error: (e, s) =>
+                                  const Center(child: Text("Error")),
+                              loading: () =>
+                                  const CircularProgressIndicator.adaptive());
+                        })
+                      ],
+                    ),
                   ),
                 ),
               ),

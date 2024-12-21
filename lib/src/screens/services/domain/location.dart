@@ -1,6 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:refix/src/screens/auth/domain/auth_domain.dart';
+import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'location.g.dart';
@@ -40,10 +43,26 @@ Future<Position> getCurrentPosition(Ref ref) async {
 @riverpod
 Future<Placemark?> getPlacemark(Ref ref) async {
   final position = await ref.watch(getCurrentPositionProvider.future);
+
   try {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     return placemarks.first;
   } catch (e) {}
   return null;
+}
+
+@riverpod
+Future<void> updateLatLong(Ref ref) async {
+  final position = await ref.read(getCurrentPositionProvider.future);
+
+  final currentCustomer = await ref.read(getCurrentUserProvider.future);
+  if (currentCustomer == null) {
+    ref.read(authProvider).logout();
+    return;
+  }
+  final updatedCustomerLocation = currentCustomer.copyWith(
+      latitude: position.latitude, longitude: position.longitude);
+  ref.read(updateCustomerProvider(customer: updatedCustomerLocation));
+  debugPrint("Updated Customer");
 }

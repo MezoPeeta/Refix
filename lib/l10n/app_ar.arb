@@ -57,10 +57,94 @@
     "chat": "الدردشة معنا",
     "not_available": "تريد خدمة غير متوفرة",
     "not_available2": "لديك مشكلة أو خدمة تريدها غير متوفرة في الخيارات",
-    "search":"ابحث عن 'صيانة تكييف الهواء'",
+    "search": "ابحث عن 'صيانة تكييف الهواء'",
     "save": "حفظ",
-    "select": "حدد وسوف يتغير في جميع أنحاء التطبيق"
-
-
-
+    "select": "حدد وسوف يتغير في جميع أنحاء التطبيق",
+    "reviews": "التعليقات",
+    "get_discount": "احصل على خصم {percentage} إذا طلبت الآن",
+    "@get_discount": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "40%"
+            }
+        }
+    },
+    "order_now": "اطلب الآن",
+    "choose_service": "الرجاء اختيار الخدمة",
+    "fillInputBox": "إذا كان لديك أي أسئلة، يرجى ملء مربع الإدخال أدناه.",
+    "selectServiceName": "اختر اسم الخدمة",
+    "@selectServiceName": {
+        "description": "رسالة تطلب من المستخدم اختيار اسم الخدمة"
+    },
+    "appTrackPhotoIssue": "يرجى إضافة/تتبع صورة للمشكلة.",
+    "@appTrackPhotoIssue": {
+        "description": "رسالة تطلب من المستخدم إضافة أو تتبع صورة تتعلق بالمشكلة"
+    },
+    "substituteTextExplanation": "تُستخدم هذه الجملة كبديل للنص الحقيقي في مجالات الطباعة والتصميم.",
+    "@substituteTextExplanation": {
+        "description": "نص بديل يُستخدم عادةً في الطباعة والتصميم لمحاكاة المحتوى الفعلي"
+    },
+    "addTrackPhoto": "أضف/تتبع صورة",
+    "@addTrackPhoto": {
+        "description": "خيار لإضافة أو تتبع صورة"
+    },
+    "addAddress": "أضف عنوانًا",
+    "@addAddress": {
+        "description": "خيار لإضافة عنوان جديد"
+    },
+    "pickDate": "اختر التاريخ",
+    "@pickDate": {
+        "description": "رسالة لاختيار التاريخ"
+    },
+    "bookNow": "احجز الآن",
+    "@bookNow": {
+        "description": "زر أو خيار لحجز الخدمة فورًا"
+    },
+    "photoYourProblem": "صوّر مشكلتك",
+    "@photoYourProblem": {
+        "description": "تعليمات لتصوير أو تحميل صورة تتعلق بمشكلة المستخدم"
+    },
+    "pleaseAddAddress": "يرجى إضافة عنوان",
+    "@pleaseAddAddress": {
+        "description": "رسالة تطلب من المستخدم إضافة عنوان"
+    },
+    "pleaseAddDate": "يرجى إضافة تاريخ",
+    "@pleaseAddDate": {
+        "description": "رسالة تطلب من المستخدم إضافة تاريخ"
+    },
+    "addMoreServices": "يمكنك إضافة المزيد من الخدمات في هذا الحجز",
+    "@addMoreServices": {
+        "description": "رسالة تخبر المستخدم بإمكانية إضافة المزيد من الخدمات إلى الحجز الحالي"
+    },
+    "notifications": "اشعارات",
+    "markAllRead": "اقرا الكل",
+    "noNotifications": "لا توجد إشعارات في الوقت الحالي، تحقق لاحقًا.",
+    "@noNotifications": {
+        "description": "رسالة تُعرض عندما لا توجد إشعارات متاحة"
+    },
+    "enterNewEmail": "أدخل بريدًا إلكترونيًا جديدًا",
+    "@enterNewEmail": {
+        "description": "رسالة تطلب من المستخدم إدخال بريد إلكتروني جديد"
+    },
+    "enterNewPhone": "أدخل رقم هاتف جديد",
+    "@enterNewPhone": {
+        "description": "رسالة تطلب من المستخدم إدخال رقم هاتف جديد"
+    },
+    "cash": "نقدًا",
+    "@cash": {
+        "description": "خيار طريقة الدفع نقدًا"
+    },
+    "visa": "فيزا",
+    "@visa": {
+        "description": "خيار طريقة الدفع باستخدام فيزا"
+    },
+    "addCard": "أضف بطاقة ائتمان/خصم",
+    "@addCard": {
+        "description": "رسالة تطلب من المستخدم إضافة بطاقة ائتمان أو خصم"
+    },
+    "continuee": "استمر",
+    "@continuee": {
+        "description": "زر لمتابعة العملية"
+    }
 }

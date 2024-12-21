@@ -19,7 +19,7 @@ class IconContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () => context.push("/services"),
+        onTap: () => context.push("/services", extra: name),
         child: Column(
           children: [
             Container(

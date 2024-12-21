@@ -32,7 +32,7 @@ class MyApp extends ConsumerWidget {
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: TranslationRepo.supportedLocales,
-        routerConfig: routes,
+        routerConfig: ref.watch(goRouterProvider),
         locale: ref.watch(localeNotifierProvider),
         title: 'Refix',
         theme: AppTheme.customTheme);

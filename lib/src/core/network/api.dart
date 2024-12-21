@@ -1,7 +1,9 @@
+import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:refix/src/core/localization/domain.dart';
 
 import '../../screens/auth/domain/auth_domain.dart';
 
@@ -13,7 +15,7 @@ class HttpAPI {
   HttpAPI(this.ref);
   Future<Response> post(
       {required String apiName,
-      Map<String, dynamic>? body,
+      Object? body,
       Map<String, String>? headers}) async {
     var url = Uri.parse("$baseAPI$apiName");
     var response = await http.post(url, body: body, headers: headers);
@@ -33,9 +35,12 @@ class HttpAPI {
     Map<String, dynamic>? body,
   }) async {
     String? accessToken = await ref.read(authProvider).getAccessToken();
+    final currentLocale = ref.read(localeNotifierProvider).languageCode;
 
     Map<String, String> headers = {
       'Authorization': 'Bearer $accessToken',
+      "Content-Type": "application/json",
+      "Accept-Language": currentLocale,
     };
     var bUrl = Uri.parse("$baseAPI$url");
 
@@ -43,7 +48,7 @@ class HttpAPI {
       case 'GET':
         return await http.get(bUrl, headers: headers);
       case 'POST':
-        return await http.post(bUrl, headers: headers, body: body);
+        return await http.post(bUrl, headers: headers, body: jsonEncode(body));
       case 'PUT':
         return await http.put(bUrl, headers: headers, body: body);
       case 'DELETE':

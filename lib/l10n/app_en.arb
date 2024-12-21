@@ -65,5 +65,95 @@
     "not_available2": "You have issue or service you want that is not available in the options",
     "search": "Search for ‘Air conditioning maintenance’",
     "save": "Save",
-    "select": "Select and it will change throughout the app"
+    "select": "Select and it will change throughout the app",
+    "reviews": "Reviews",
+    "get_discount": "Get {percentage} discount if you order now",
+    "@get_discount": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "40%"
+            }
+        }
+    },
+    "order_now": "Order Now",
+    "choose_service": "Please choose a service",
+    "fillInputBox": "If you have any questions, please fill in the input box below.",
+    "@fillInputBox": {
+        "description": "Prompt message asking the user to fill in the input box if they have questions"
+    },
+    "selectServiceName": "Select Service Name",
+    "@selectServiceName": {
+        "description": "A prompt for the user to select the name of a service"
+    },
+    "appTrackPhotoIssue": "Please App/Track Photo the issue.",
+    "@appTrackPhotoIssue": {
+        "description": "Prompt asking the user to app or track a photo related to an issue"
+    },
+    "substituteTextExplanation": "This sentence is used as a substitute for real text in the fields of printing and design.",
+    "@substituteTextExplanation": {
+        "description": "A placeholder text commonly used in printing and design to simulate actual content"
+    },
+    "addTrackPhoto": "Add/Track Photo",
+    "@addTrackPhoto": {
+        "description": "Option to add or track a photo"
+    },
+    "addAddress": "Add address",
+    "@addAddress": {
+        "description": "Option to add a new address"
+    },
+    "pickDate": "Pick Date",
+    "@pickDate": {
+        "description": "Prompt to select a date"
+    },
+    "bookNow": "Book Now",
+    "@bookNow": {
+        "description": "Button or option to book a service immediately"
+    },
+    "photoYourProblem": "Photo your problem",
+    "@photoYourProblem": {
+        "description": "Instruction to take or upload a photo related to the user's problem"
+    },
+    "pleaseAddAddress": "Please add address",
+    "@pleaseAddAddress": {
+        "description": "Prompt asking the user to add an address"
+    },
+    "pleaseAddDate": "Please add date",
+    "@pleaseAddDate": {
+        "description": "Prompt asking the user to add a date"
+    },
+    "addMoreServices": "You can add more services in this booking",
+    "@addMoreServices": {
+        "description": "Message informing the user that they can add more services to their current booking"
+    },
+    "notifications":"Notifications",
+    "markAllRead":"Mark All As Read",
+    "noNotifications": "You don't have notifications at the moment, check later.",
+    "@noNotifications": {
+      "description": "Message displayed when there are no notifications available"
+    },
+    "enterNewEmail": "Enter New Email",
+    "@enterNewEmail": {
+      "description": "Prompt asking the user to enter a new email address"
+    },
+    "enterNewPhone": "Enter New Number",
+    "@enterNewPhone": {
+      "description": "Prompt asking the user to enter a new phone number"
+    },
+    "cash": "Cash",
+    "@cash": {
+      "description": "Payment method option for cash"
+    },
+    "visa": "Visa",
+    "@visa": {
+      "description": "Payment method option for Visa"
+    },
+    "addCard": "Add a credit/debit card",
+    "@addCard": {
+      "description": "Prompt asking the user to add a credit or debit card"
+    },
+    "continuee": "Continue",
+    "@continuee": {
+      "description": "Button label to continue the process"
+    }
 }

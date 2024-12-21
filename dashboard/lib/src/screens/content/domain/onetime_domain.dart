@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/api.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:image/image.dart' as img;
-
 part 'onetime_domain.g.dart';
 
 @riverpod
@@ -26,6 +26,7 @@ Future<Either<String, String>> updateBoarding(Ref ref,
     "details": jsonEncode({"en": detailsEn, "ar": detailsAr}),
     "image": base64Encode(await compressImage(image))
   });
+  print(base64Encode(image));
   if (request.statusCode == 200) {
     return right("Upload successful");
   } else if (request.statusCode == 401) {
