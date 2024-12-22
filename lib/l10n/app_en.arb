@@ -126,34 +126,63 @@
     "@addMoreServices": {
         "description": "Message informing the user that they can add more services to their current booking"
     },
-    "notifications":"Notifications",
-    "markAllRead":"Mark All As Read",
+    "notifications": "Notifications",
+    "markAllRead": "Mark All As Read",
     "noNotifications": "You don't have notifications at the moment, check later.",
     "@noNotifications": {
-      "description": "Message displayed when there are no notifications available"
+        "description": "Message displayed when there are no notifications available"
     },
     "enterNewEmail": "Enter New Email",
     "@enterNewEmail": {
-      "description": "Prompt asking the user to enter a new email address"
+        "description": "Prompt asking the user to enter a new email address"
     },
     "enterNewPhone": "Enter New Number",
     "@enterNewPhone": {
-      "description": "Prompt asking the user to enter a new phone number"
+        "description": "Prompt asking the user to enter a new phone number"
     },
     "cash": "Cash",
     "@cash": {
-      "description": "Payment method option for cash"
+        "description": "Payment method option for cash"
     },
     "visa": "Visa",
     "@visa": {
-      "description": "Payment method option for Visa"
+        "description": "Payment method option for Visa"
     },
     "addCard": "Add a credit/debit card",
     "@addCard": {
-      "description": "Prompt asking the user to add a credit or debit card"
+        "description": "Prompt asking the user to add a credit or debit card"
     },
     "continuee": "Continue",
     "@continuee": {
-      "description": "Button label to continue the process"
-    }
+        "description": "Button label to continue the process"
+    },
+    "discount_next": "Get a {percentage} discount on your next booking",
+    "@discount_next": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "60%"
+            }
+        }
+    },
+    "pointsBalance": "Points Balance",
+    "endsWithin": "Ends within {days} days",
+    "@endsWithin": {
+        "placeholders": {
+            "days": {
+                "type": "String",
+                "example": "20"
+            }
+        }
+    },
+    "terms_and_conditions": "Terms And Conditions",
+    "about_refix": "About Refix",
+    "current": "Current",
+    "closed": "Closed",
+    "discounts_and_updates": "Discounts and Updates",
+    "sms_message": "SMS Message",
+    "pop_up_notifications": "Pop-Up Notifications",
+    "share_locations": "Share locations",
+    "access_permissions_to_the_system": "Access permissions to the system",
+    "location_sharing_info": "Location sharing helps the driver provide you with better services. If location sharing is disabled, the driver will not be able to see your location in real-time."
 }

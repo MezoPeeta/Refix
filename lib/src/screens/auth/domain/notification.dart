@@ -66,30 +66,14 @@ class Notifications extends _$Notifications {
       return data.map<Notification>((e) => Notification.fromJson(e)).toList();
     }
     if (request.statusCode == 401) {
-      ref.read(authProvider).logout();
+      ref.read(authProvider).refreshAccessToken();
       return [];
     }
     return [];
   }
 
   Future<void> markRead() async {
-    state = const AsyncValue.loading();
-    final request = await ref
-        .read(httpProvider)
-        .authenticatedRequest(url: "customer/notification", method: "GET");
-
-    if (request.statusCode == 204) {
-      final notifications = await ref
-          .read(httpProvider)
-          .authenticatedRequest(url: "customer/notification", method: "GET");
-      final data = jsonDecode(notifications.body);
-      final List<Notification> lN =
-          data.map<Notification>((e) => Notification.fromJson(e)).toList();
-      state = AsyncValue.data(lN);
-      return;
-    }
-    if (request.statusCode == 401) {
-      ref.read(authProvider).logout();
-    }
+    await ref.read(httpProvider).authenticatedRequest(
+        url: "customer/notification/read", method: "PATCH");
   }
 }

@@ -42,7 +42,7 @@ Future<String> addBooking(Ref ref,
     return response.body;
   }
   if (response.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
     return Future.error("Failed");
   }
   return Future.error("Failed");
@@ -60,16 +60,15 @@ Future<void> updateCustomer(Ref ref, {required User customer}) async {
 
 @riverpod
 Future<List<Booking>> getUserBooking(Ref ref) async {
-  final request = await ref.read(httpProvider).authenticatedRequest(
-      url: "customer/book", method: "GET");
-  // log(request.body);
+  final request = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: "customer/book", method: "GET");
   if (request.statusCode == 200) {
     final data = jsonDecode(request.body);
-    return data.map<Booking>((e)=>Booking.fromJson(e)).toList();
+    return data.map<Booking>((e) => Booking.fromJson(e)).toList();
   }
-   if (request.statusCode == 401) {
-    ref.read(authProvider).logout();
+  if (request.statusCode == 401) {
+    ref.read(authProvider).refreshAccessToken();
   }
   return [];
 }
-

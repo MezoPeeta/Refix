@@ -44,9 +44,9 @@ class Role with _$Role {
   factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
 }
 
-@freezed
+@unfreezed
 class Notification with _$Notification {
-  const factory Notification({
+   factory Notification({
     @JsonKey(name: "title") required String title,
     @JsonKey(name: "body") required String body,
     @JsonKey(name: "read") required bool read,

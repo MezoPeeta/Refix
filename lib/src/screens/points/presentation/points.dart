@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/screens/auth/domain/auth_domain.dart';
@@ -31,9 +32,9 @@ class PointsScreen extends ConsumerWidget {
                       balance.toString(),
                       style: const TextStyle(fontSize: AppTextSize.eight),
                     ),
-                    const Text(
-                      "Points Balance",
-                      style: TextStyle(fontSize: AppTextSize.three),
+                    Text(
+                      context.tr.pointsBalance,
+                      style: const TextStyle(fontSize: AppTextSize.three),
                     ),
                   ],
                 ),
@@ -126,7 +127,7 @@ class PointContainer extends StatelessWidget {
                           ? AppColors.primaryRefix
                           : AppColors.neutralRefix),
                   child: Text(
-                    "$requiredPoints Points",
+                    "$requiredPoints ${context.tr.points}",
                     style: const TextStyle(color: Colors.white),
                   ),
                 )
@@ -144,21 +145,11 @@ class PointContainer extends StatelessWidget {
               height: 16,
             ),
             Text(
-              "Ends within $availableDays days",
+              context.tr.endsWithin(availableDays.toString()),
               style: const TextStyle(
                   color: AppColors.neutral300,
                   fontSize: AppTextSize.two,
                   fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            const Text(
-              "Figma ipsum component variant main laye.Figma ipsum component variant main laye.Figma ipsum component variant main laye.",
-              style: TextStyle(
-                color: AppColors.neutral300,
-                fontSize: AppTextSize.one,
-              ),
             ),
           ],
         ),

@@ -23,7 +23,7 @@ Future<List<Ad>> getAds(Ref ref, {AdsType type = AdsType.slider}) async {
     return a;
   }
   if (request.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
   }
   return [];
 }
@@ -49,7 +49,7 @@ Future<List<Service>> getAllServices(Ref ref) async {
     return services;
   }
   if (request.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
     return [];
   }
   return [];

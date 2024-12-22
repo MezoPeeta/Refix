@@ -6,7 +6,7 @@ part of 'booking_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addBookingHash() => r'c5709dcc3b9048f9452a7697866ac75db15dde85';
+String _$addBookingHash() => r'b331520ea2021079742b0990e3689943e520ed4e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -320,7 +320,7 @@ class _UpdateCustomerProviderElement
   User get customer => (origin as UpdateCustomerProvider).customer;
 }
 
-String _$getUserBookingHash() => r'b8e9d4d0235732d0a55eaa127d06f0841772ede3';
+String _$getUserBookingHash() => r'af7a9d05548d70495b82b832e189e151096746e6';
 
 /// See also [getUserBooking].
 @ProviderFor(getUserBooking)

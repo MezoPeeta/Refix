@@ -180,23 +180,17 @@ class ProfileScreen extends StatelessWidget {
                       const Divider(
                         color: AppColors.neutral300,
                       ),
-                      const ProfileOption(
-                        title: "Terms And Conditions",
+                      ProfileOption(
+                        title: context.tr.terms_and_conditions,
                       ),
                       const Divider(
                         color: AppColors.neutral300,
                       ),
                       GestureDetector(
                         onTap: () => context.push("/about"),
-                        child: const ProfileOption(
-                          title: "About Refix",
+                        child: ProfileOption(
+                          title: context.tr.about_refix,
                         ),
-                      ),
-                      const Divider(
-                        color: AppColors.neutral300,
-                      ),
-                      const ProfileOption(
-                        title: "Be A Part Of Refix",
                       ),
                       const Divider(
                         color: AppColors.neutral300,

@@ -58,9 +58,9 @@ class BookingScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                         color: AppColors.primaryRefix,
                         borderRadius: BorderRadius.circular(AppRadii.lg)),
-                    child: const Text(
-                      "Current",
-                      style: TextStyle(color: AppColors.white),
+                    child: Text(
+                      context.tr.current,
+                      style: const TextStyle(color: AppColors.white),
                     ),
                   ),
                   const SizedBox(
@@ -71,9 +71,9 @@ class BookingScreen extends ConsumerWidget {
                     decoration: BoxDecoration(
                         color: AppColors.neutralRefix,
                         borderRadius: BorderRadius.circular(AppRadii.lg)),
-                    child: const Text(
-                      "Closed",
-                      style: TextStyle(color: AppColors.white),
+                    child: Text(
+                      context.tr.closed,
+                      style: const TextStyle(color: AppColors.white),
                     ),
                   )
                 ],
@@ -91,10 +91,10 @@ class BookingScreen extends ConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          "Get a 60% discount on your next booking.",
-                          style: TextStyle(
+                          context.tr.discount_next("60%"),
+                          style: const TextStyle(
                               color: AppColors.white,
                               fontWeight: FontWeight.w700),
                         ),
@@ -122,7 +122,7 @@ class BookingScreen extends ConsumerWidget {
             bookings.when(
                 data: (data) {
                   return ListView.separated(
-                      itemCount: 4,
+                      itemCount: data.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       separatorBuilder: (context, _) {
@@ -163,22 +163,22 @@ class BookingScreen extends ConsumerWidget {
                               const SizedBox(
                                 width: 16,
                               ),
-                              const Column(
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Date of visit: 12/25/2025",
                                     style: TextStyle(fontSize: AppTextSize.one),
                                   ),
                                   Text(
-                                    "Name Of Service",
-                                    style: TextStyle(
+                                    data[index].services.first.name,
+                                    style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    "Some details of service",
-                                    style: TextStyle(
+                                    data[index].services.first.details,
+                                    style: const TextStyle(
                                       fontSize: AppTextSize.two,
                                     ),
                                   )

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/screens/profile/domain/permissions.dart';
 import 'package:refix/src/screens/profile/presentation/profile.dart';
@@ -13,7 +14,7 @@ class Privacy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Privacy"),
+        title: Text(context.tr.privacy),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -24,15 +25,15 @@ class Privacy extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "Discounts and Updates",
-                    style: TextStyle(fontSize: AppTextSize.three),
+                  Text(
+                    context.tr.discounts_and_updates,
+                    style: const TextStyle(fontSize: AppTextSize.three),
                   ),
                   Consumer(builder: (context, ref, child) {
                     final isGranted =
                         ref.watch(getSMSPermissionProvider).value ?? false;
                     return ProfileOption(
-                      title: "SMS Message",
+                      title: context.tr.sms_message,
                       trailing: Switch.adaptive(
                           inactiveTrackColor: AppColors.white,
                           activeTrackColor: AppColors.primaryRefix,
@@ -46,7 +47,7 @@ class Privacy extends StatelessWidget {
                     color: AppColors.neutralRefix,
                   ),
                   ProfileOption(
-                    title: "Email",
+                    title: context.tr.email,
                     trailing: Switch.adaptive(
                         inactiveTrackColor: AppColors.white,
                         activeTrackColor: AppColors.primaryRefix,
@@ -61,7 +62,7 @@ class Privacy extends StatelessWidget {
                         ref.watch(getNotificationPermissionProvider).value ??
                             false;
                     return ProfileOption(
-                      title: "Pop-Up Notifications",
+                      title: context.tr.pop_up_notifications,
                       trailing: Switch.adaptive(
                           inactiveTrackColor: AppColors.white,
                           activeTrackColor: AppColors.primaryRefix,
@@ -84,7 +85,7 @@ class Privacy extends StatelessWidget {
                 color: AppColors.white,
                 padding: const EdgeInsets.all(16),
                 child: ProfileOption(
-                  title: "Share Location",
+                  title: context.tr.share_locations,
                   trailing: Switch.adaptive(
                       inactiveTrackColor: AppColors.white,
                       activeTrackColor: AppColors.primaryRefix,
@@ -93,11 +94,11 @@ class Privacy extends StatelessWidget {
                 ),
               );
             }),
-            const Padding(
-              padding: EdgeInsets.all(16.0),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
               child: Text(
-                "Location sharing helps the driver provide you with better services. If location sharing is disabled, the driver will not be able to see your location in real-time.",
-                style: TextStyle(
+                context.tr.location_sharing_info,
+                style: const TextStyle(
                     color: AppColors.neutralRefix, fontWeight: FontWeight.w300),
               ),
             ),
@@ -108,8 +109,8 @@ class Privacy extends StatelessWidget {
               child: Container(
                 color: AppColors.white,
                 padding: const EdgeInsets.all(16),
-                child: const ProfileOption(
-                  title: "Access permissions to the system",
+                child: ProfileOption(
+                  title: context.tr.access_permissions_to_the_system,
                 ),
               ),
             ),

@@ -822,10 +822,16 @@ Notification _$NotificationFromJson(Map<String, dynamic> json) {
 mixin _$Notification {
   @JsonKey(name: "title")
   String get title => throw _privateConstructorUsedError;
+  @JsonKey(name: "title")
+  set title(String value) => throw _privateConstructorUsedError;
   @JsonKey(name: "body")
   String get body => throw _privateConstructorUsedError;
+  @JsonKey(name: "body")
+  set body(String value) => throw _privateConstructorUsedError;
   @JsonKey(name: "read")
   bool get read => throw _privateConstructorUsedError;
+  @JsonKey(name: "read")
+  set read(bool value) => throw _privateConstructorUsedError;
 
   /// Serializes this Notification to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -936,7 +942,7 @@ class __$$NotificationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
-  const _$NotificationImpl(
+  _$NotificationImpl(
       {@JsonKey(name: "title") required this.title,
       @JsonKey(name: "body") required this.body,
       @JsonKey(name: "read") required this.read});
@@ -946,13 +952,13 @@ class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
 
   @override
   @JsonKey(name: "title")
-  final String title;
+  String title;
   @override
   @JsonKey(name: "body")
-  final String body;
+  String body;
   @override
   @JsonKey(name: "read")
-  final bool read;
+  bool read;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -968,20 +974,6 @@ class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
       ..add(DiagnosticsProperty('body', body))
       ..add(DiagnosticsProperty('read', read));
   }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$NotificationImpl &&
-            (identical(other.title, title) || other.title == title) &&
-            (identical(other.body, body) || other.body == body) &&
-            (identical(other.read, read) || other.read == read));
-  }
-
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @override
-  int get hashCode => Object.hash(runtimeType, title, body, read);
 
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.
@@ -1000,10 +992,10 @@ class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
 }
 
 abstract class _Notification implements Notification {
-  const factory _Notification(
-      {@JsonKey(name: "title") required final String title,
-      @JsonKey(name: "body") required final String body,
-      @JsonKey(name: "read") required final bool read}) = _$NotificationImpl;
+  factory _Notification(
+      {@JsonKey(name: "title") required String title,
+      @JsonKey(name: "body") required String body,
+      @JsonKey(name: "read") required bool read}) = _$NotificationImpl;
 
   factory _Notification.fromJson(Map<String, dynamic> json) =
       _$NotificationImpl.fromJson;
@@ -1011,12 +1003,18 @@ abstract class _Notification implements Notification {
   @override
   @JsonKey(name: "title")
   String get title;
+  @JsonKey(name: "title")
+  set title(String value);
   @override
   @JsonKey(name: "body")
   String get body;
+  @JsonKey(name: "body")
+  set body(String value);
   @override
   @JsonKey(name: "read")
   bool get read;
+  @JsonKey(name: "read")
+  set read(bool value);
 
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.

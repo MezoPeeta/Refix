@@ -19,7 +19,7 @@ Future<List<Point>> getUserPoints(Ref ref) async {
     return data.map<Point>((e) => Point.fromJson(e)).toList();
   }
   if (response.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
   }
   return [];
 }

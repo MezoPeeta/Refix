@@ -146,5 +146,34 @@
     "continuee": "استمر",
     "@continuee": {
         "description": "زر لمتابعة العملية"
-    }
+    },
+    "discount_next": "احصل على خصم {percentage} على حجزك التالي",
+    "@discount_next": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "60%"
+            }
+        }
+    },
+    "pointsBalance": "رصيد النقاط",
+    "endsWithin": "ينتهي خلال {days} يوم",
+    "@endsWithin": {
+        "placeholders": {
+            "days": {
+                "type": "String",
+                "example": "20"
+            }
+        }
+    },
+    "terms_and_conditions": "الشروط والأحكام",
+    "about_refix": "حول ريفيكس",
+    "current": "الحالي",
+    "closed": "مغلق",
+    "discounts_and_updates": "الخصومات والتحديثات",
+    "sms_message": "رسالة نصية قصيرة",
+    "pop_up_notifications": "الإشعارات المنبثقة",
+    "share_locations": "مشاركة المواقع",
+    "access_permissions_to_the_system": "أذونات الوصول إلى النظام",
+    "location_sharing_info": "تساعد مشاركة الموقع السائق في تقديم خدمات أفضل لك. إذا تم تعطيل مشاركة الموقع، فلن يتمكن السائق من رؤية موقعك في الوقت الفعلي."
 }

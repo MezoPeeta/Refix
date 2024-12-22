@@ -6,7 +6,7 @@ part of 'home_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getAdsHash() => r'baad38897d166a3c8073f55279da03eea354c79b';
+String _$getAdsHash() => r'a80e72c9e32373100b47d4e0e9578826211b71ef';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -156,7 +156,7 @@ class _GetAdsProviderElement extends AutoDisposeFutureProviderElement<List<Ad>>
   AdsType get type => (origin as GetAdsProvider).type;
 }
 
-String _$getAllServicesHash() => r'37ce927dd9574c5b74ca156d675172cee7a79412';
+String _$getAllServicesHash() => r'8558be1e50ba35b699b3863be4c9e37ef15ab4e4';
 
 /// See also [getAllServices].
 @ProviderFor(getAllServices)
