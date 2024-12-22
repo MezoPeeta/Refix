@@ -15,7 +15,7 @@ class _InbookingScreenState extends ConsumerState<InbookingScreen> {
   String? query;
   @override
   Widget build(BuildContext context) {
-    final bookings = ref.watch(getBookingProvider(page: _page, query: query));
+    final bookings = ref.watch(getBookingsProvider(page: _page, query: query));
 
     return Scaffold(
         backgroundColor: Colors.white,

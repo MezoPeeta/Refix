@@ -97,10 +97,7 @@ class AuthDomain {
     } finally {
       await storage.delete(key: 'access_token');
       await storage.delete(key: 'refresh_token');
-      final scaffoldMessenger = ref.read(scaffoldMessengerPod);
 
-      scaffoldMessenger.showSnackBar(
-          const SnackBar(content: Text("Session finished, Login again")));
       ref.read(goRouterProvider).go("/login");
     }
   }
@@ -131,7 +128,7 @@ class AuthDomain {
     return left(errorMessage);
   }
 
-  Future<Either<ErrorResponse, UserAccount>> signup({
+  Future<UserAccount?> signup({
     required String email,
     required String password,
     required String username,
@@ -148,10 +145,10 @@ class AuthDomain {
       final account = UserAccount.fromJson(decodedResponse);
       await saveTokens(
           accessToken: account.accessToken, refreshToken: account.refreshToken);
-      return right(account);
+      return account;
     }
 
-    return left(ErrorResponse.fromJson(jsonDecode(response.body)));
+    return null;
   }
 }
 
@@ -164,7 +161,7 @@ Future<User?> getCurrentUser(Ref ref) async {
     return User.fromJson(jsonDecode(response.body));
   }
   if (response.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
   }
   return null;
 }

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/auth.dart';
+import 'package:dashboard/src/screens/auth/data/roles.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/booking/presentation/booking.dart';
 import 'package:dashboard/src/screens/navbar/navbar.dart';
@@ -74,7 +75,7 @@ Future<List<User>> getCustomers(Ref ref,
     return decoded.map<User>((e) => User.fromJson(e)).toList();
   }
   if (response.statusCode == 401) {
-    await ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
     return [];
   }
   return [];
@@ -94,7 +95,7 @@ Future<List<User>> getUsers(Ref ref, {required int page, String? query}) async {
     return decoded.map<User>((e) => User.fromJson(e)).toList();
   }
   if (response.statusCode == 401) {
-    await ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
     return [];
   }
   return [];
@@ -232,7 +233,7 @@ class PointsDataSource extends UsersDataSource {
 }
 
 @riverpod
-Future<List<BookingElement>> getBooking(Ref ref,
+Future<List<BookingElement>> getUnAssignedBookings(Ref ref,
     {required int page, String? query}) async {
   final url = query != null
       ? "booking/not-assigned?page=$page&take=10&search=$query"
@@ -240,17 +241,77 @@ Future<List<BookingElement>> getBooking(Ref ref,
   final response = await ref
       .read(httpProvider)
       .authenticatedRequest(url: url, method: "GET");
-  debugPrint("Response: ${response.body}");
   if (response.statusCode == 200) {
-    final decoded = jsonDecode(response.body)["booking"];
+    final decoded = jsonDecode(response.body)["booking"] as List;
 
-    return decoded
-        .map<BookingElement>((e) => BookingElement.fromJson(e))
-        .toList();
+    final List<BookingElement> bookings = await Future.wait(
+      decoded.map<Future<BookingElement>>(
+        (e) async {
+          final roleData = e["customer"]["role"];
+          final role =
+              await ref.read(convertRoleProvider(data: roleData).future);
+          final customerData = Map<String, dynamic>.from(e["customer"]);
+          customerData["role"] = role!.toJson();
+          final bookingData = Map<String, dynamic>.from(e);
+          bookingData["customer"] = customerData;
+          return BookingElement.fromJson(bookingData);
+        },
+      ),
+    );
+
+    return bookings;
   }
   if (response.statusCode == 401) {
-    await ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
     return [];
   }
   return [];
+}
+
+@riverpod
+Future<List<BookingElement>> getBookings(Ref ref,
+    {required int page, String? query}) async {
+  final url = query != null
+      ? "booking?page=$page&take=10&search=$query"
+      : "booking?page=$page&take=10";
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: url, method: "GET");
+  if (response.statusCode == 200) {
+    final decoded = jsonDecode(response.body)["booking"] as List;
+
+    final List<BookingElement> bookings = await Future.wait(
+      decoded.map<Future<BookingElement>>(
+        (e) async {
+          final roleData = e["customer"]["role"];
+          final role =
+              await ref.read(convertRoleProvider(data: roleData).future);
+          final customerData = Map<String, dynamic>.from(e["customer"]);
+          customerData["role"] = role!.toJson();
+          final bookingData = Map<String, dynamic>.from(e);
+          bookingData["customer"] = customerData;
+          return BookingElement.fromJson(bookingData);
+        },
+      ),
+    );
+
+    return bookings;
+  }
+  if (response.statusCode == 401) {
+    ref.read(authProvider).refreshAccessToken();
+    return [];
+  }
+  return [];
+}
+
+
+@riverpod
+Future<Role?> convertRole(Ref ref, {required Object? data}) async {
+  if (data is String) {
+    return await ref.read(getRoleByIDProvider(id: data).future);
+  }
+  if (data is Map<String, dynamic>) {
+    return Role.fromJson(data);
+  }
+  return null;
 }

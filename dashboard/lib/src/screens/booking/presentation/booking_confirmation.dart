@@ -16,8 +16,8 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
   String? query;
   @override
   Widget build(BuildContext context) {
-    final customers =
-        ref.watch(getCustomersProvider(page: _page, query: query));
+    final bookings =
+        ref.watch(getUnAssignedBookingsProvider(page: _page, query: query));
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -29,7 +29,7 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                 spacing: 20,
                 children: [
                   Text(
-                    "All (${customers.value?.length ?? 0})",
+                    "All (${bookings.value?.length ?? 0})",
                     style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: AppTextSize.three),
@@ -48,12 +48,11 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                   )
                 ],
               ),
-              customers.when(
+              bookings.when(
                   data: (data) {
                     return PaginatedDataTable(
                       showCheckboxColumn: true,
                       showFirstLastButtons: false,
-                      columnSpacing: 10,
                       showEmptyRows: false,
                       onPageChanged: (page) {
                         setState(() {
@@ -68,17 +67,17 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                         )),
                         DataColumn(
                             label: Text(
-                          "Username",
+                          "Service Name",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(
                             label: Text(
-                          "Email",
+                          "Customer Name",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(
                             label: Text(
-                          "Phone Number",
+                          "Cost",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(
@@ -86,9 +85,14 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                           "Created",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
+                        DataColumn(
+                            label: Text(
+                          "Status",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
                         DataColumn(label: SizedBox.shrink()),
                       ],
-                      source: BookingConfDataSource(data, ref),
+                      source: BookingDataSource(ref, data),
                     );
                   },
                   error: (e, s) {

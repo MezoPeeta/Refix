@@ -44,13 +44,4 @@ class Role with _$Role {
   factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
 }
 
-@freezed
-class ErrorResponse with _$ErrorResponse {
-  const factory ErrorResponse({
-    @JsonKey(name: "error") required String error,
-    @JsonKey(name: "message") required String message,
-  }) = _ErrorResponse;
 
-  factory ErrorResponse.fromJson(Map<String, dynamic> json) =>
-      _$ErrorResponseFromJson(json);
-}

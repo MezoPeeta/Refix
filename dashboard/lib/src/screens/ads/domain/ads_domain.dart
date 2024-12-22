@@ -28,7 +28,7 @@ Future<String> addAds(Ref ref,
     return "Ad created successfully";
   }
   if (request.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
   } else {
     print(request.body);
     final errorMessage = jsonDecode(request.body)["message"];
@@ -54,7 +54,7 @@ Future<List<Ad>> getAds(Ref ref, {AdsType? type}) async {
     return a;
   }
   if (request.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
   }
   return [];
 }
@@ -86,7 +86,7 @@ Future<String?> updateAdsById(Ref ref,
     return request.body;
   }
   if (request.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
     return null;
   }
   if (request.statusCode == 413) {

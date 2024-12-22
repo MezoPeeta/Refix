@@ -6,7 +6,7 @@ part of 'source.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getCustomersHash() => r'fd87ed59b06075800697db188a796e3a41565b70';
+String _$getCustomersHash() => r'587da34633ceb20d31d79eff4179cab454b34f57';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -174,7 +174,7 @@ class _GetCustomersProviderElement
   String? get query => (origin as GetCustomersProvider).query;
 }
 
-String _$getUsersHash() => r'675c4ea50402fcaedfb6abdd45ecd688cb357e44';
+String _$getUsersHash() => r'bc49b76f5a2a0cac798036943c84d95d08b3caf2';
 
 /// See also [getUsers].
 @ProviderFor(getUsers)
@@ -450,31 +450,33 @@ class _GetLocationProviderElement
   List<User> get users => (origin as GetLocationProvider).users;
 }
 
-String _$getBookingHash() => r'afbb25eae7f3aa706ec8bfe612f6cfdf3524e207';
+String _$getUnAssignedBookingsHash() =>
+    r'289223b835139190b7f75cbaac2e51d2a35fc985';
 
-/// See also [getBooking].
-@ProviderFor(getBooking)
-const getBookingProvider = GetBookingFamily();
+/// See also [getUnAssignedBookings].
+@ProviderFor(getUnAssignedBookings)
+const getUnAssignedBookingsProvider = GetUnAssignedBookingsFamily();
 
-/// See also [getBooking].
-class GetBookingFamily extends Family<AsyncValue<List<BookingElement>>> {
-  /// See also [getBooking].
-  const GetBookingFamily();
+/// See also [getUnAssignedBookings].
+class GetUnAssignedBookingsFamily
+    extends Family<AsyncValue<List<BookingElement>>> {
+  /// See also [getUnAssignedBookings].
+  const GetUnAssignedBookingsFamily();
 
-  /// See also [getBooking].
-  GetBookingProvider call({
+  /// See also [getUnAssignedBookings].
+  GetUnAssignedBookingsProvider call({
     required int page,
     String? query,
   }) {
-    return GetBookingProvider(
+    return GetUnAssignedBookingsProvider(
       page: page,
       query: query,
     );
   }
 
   @override
-  GetBookingProvider getProviderOverride(
-    covariant GetBookingProvider provider,
+  GetUnAssignedBookingsProvider getProviderOverride(
+    covariant GetUnAssignedBookingsProvider provider,
   ) {
     return call(
       page: provider.page,
@@ -494,36 +496,36 @@ class GetBookingFamily extends Family<AsyncValue<List<BookingElement>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'getBookingProvider';
+  String? get name => r'getUnAssignedBookingsProvider';
 }
 
-/// See also [getBooking].
-class GetBookingProvider
+/// See also [getUnAssignedBookings].
+class GetUnAssignedBookingsProvider
     extends AutoDisposeFutureProvider<List<BookingElement>> {
-  /// See also [getBooking].
-  GetBookingProvider({
+  /// See also [getUnAssignedBookings].
+  GetUnAssignedBookingsProvider({
     required int page,
     String? query,
   }) : this._internal(
-          (ref) => getBooking(
-            ref as GetBookingRef,
+          (ref) => getUnAssignedBookings(
+            ref as GetUnAssignedBookingsRef,
             page: page,
             query: query,
           ),
-          from: getBookingProvider,
-          name: r'getBookingProvider',
+          from: getUnAssignedBookingsProvider,
+          name: r'getUnAssignedBookingsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$getBookingHash,
-          dependencies: GetBookingFamily._dependencies,
+                  : _$getUnAssignedBookingsHash,
+          dependencies: GetUnAssignedBookingsFamily._dependencies,
           allTransitiveDependencies:
-              GetBookingFamily._allTransitiveDependencies,
+              GetUnAssignedBookingsFamily._allTransitiveDependencies,
           page: page,
           query: query,
         );
 
-  GetBookingProvider._internal(
+  GetUnAssignedBookingsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
@@ -539,12 +541,13 @@ class GetBookingProvider
 
   @override
   Override overrideWith(
-    FutureOr<List<BookingElement>> Function(GetBookingRef provider) create,
+    FutureOr<List<BookingElement>> Function(GetUnAssignedBookingsRef provider)
+        create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: GetBookingProvider._internal(
-        (ref) => create(ref as GetBookingRef),
+      override: GetUnAssignedBookingsProvider._internal(
+        (ref) => create(ref as GetUnAssignedBookingsRef),
         from: from,
         name: null,
         dependencies: null,
@@ -558,12 +561,12 @@ class GetBookingProvider
 
   @override
   AutoDisposeFutureProviderElement<List<BookingElement>> createElement() {
-    return _GetBookingProviderElement(this);
+    return _GetUnAssignedBookingsProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetBookingProvider &&
+    return other is GetUnAssignedBookingsProvider &&
         other.page == page &&
         other.query == query;
   }
@@ -580,7 +583,8 @@ class GetBookingProvider
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin GetBookingRef on AutoDisposeFutureProviderRef<List<BookingElement>> {
+mixin GetUnAssignedBookingsRef
+    on AutoDisposeFutureProviderRef<List<BookingElement>> {
   /// The parameter `page` of this provider.
   int get page;
 
@@ -588,15 +592,294 @@ mixin GetBookingRef on AutoDisposeFutureProviderRef<List<BookingElement>> {
   String? get query;
 }
 
-class _GetBookingProviderElement
+class _GetUnAssignedBookingsProviderElement
     extends AutoDisposeFutureProviderElement<List<BookingElement>>
-    with GetBookingRef {
-  _GetBookingProviderElement(super.provider);
+    with GetUnAssignedBookingsRef {
+  _GetUnAssignedBookingsProviderElement(super.provider);
 
   @override
-  int get page => (origin as GetBookingProvider).page;
+  int get page => (origin as GetUnAssignedBookingsProvider).page;
   @override
-  String? get query => (origin as GetBookingProvider).query;
+  String? get query => (origin as GetUnAssignedBookingsProvider).query;
+}
+
+String _$getBookingsHash() => r'fc54dc7b44acb26b04840e68fa806d9cd29c2177';
+
+/// See also [getBookings].
+@ProviderFor(getBookings)
+const getBookingsProvider = GetBookingsFamily();
+
+/// See also [getBookings].
+class GetBookingsFamily extends Family<AsyncValue<List<BookingElement>>> {
+  /// See also [getBookings].
+  const GetBookingsFamily();
+
+  /// See also [getBookings].
+  GetBookingsProvider call({
+    required int page,
+    String? query,
+  }) {
+    return GetBookingsProvider(
+      page: page,
+      query: query,
+    );
+  }
+
+  @override
+  GetBookingsProvider getProviderOverride(
+    covariant GetBookingsProvider provider,
+  ) {
+    return call(
+      page: provider.page,
+      query: provider.query,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getBookingsProvider';
+}
+
+/// See also [getBookings].
+class GetBookingsProvider
+    extends AutoDisposeFutureProvider<List<BookingElement>> {
+  /// See also [getBookings].
+  GetBookingsProvider({
+    required int page,
+    String? query,
+  }) : this._internal(
+          (ref) => getBookings(
+            ref as GetBookingsRef,
+            page: page,
+            query: query,
+          ),
+          from: getBookingsProvider,
+          name: r'getBookingsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getBookingsHash,
+          dependencies: GetBookingsFamily._dependencies,
+          allTransitiveDependencies:
+              GetBookingsFamily._allTransitiveDependencies,
+          page: page,
+          query: query,
+        );
+
+  GetBookingsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.page,
+    required this.query,
+  }) : super.internal();
+
+  final int page;
+  final String? query;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<BookingElement>> Function(GetBookingsRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetBookingsProvider._internal(
+        (ref) => create(ref as GetBookingsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        page: page,
+        query: query,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<BookingElement>> createElement() {
+    return _GetBookingsProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetBookingsProvider &&
+        other.page == page &&
+        other.query == query;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, page.hashCode);
+    hash = _SystemHash.combine(hash, query.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin GetBookingsRef on AutoDisposeFutureProviderRef<List<BookingElement>> {
+  /// The parameter `page` of this provider.
+  int get page;
+
+  /// The parameter `query` of this provider.
+  String? get query;
+}
+
+class _GetBookingsProviderElement
+    extends AutoDisposeFutureProviderElement<List<BookingElement>>
+    with GetBookingsRef {
+  _GetBookingsProviderElement(super.provider);
+
+  @override
+  int get page => (origin as GetBookingsProvider).page;
+  @override
+  String? get query => (origin as GetBookingsProvider).query;
+}
+
+String _$convertRoleHash() => r'bc42b970ef8ed1a319a8461b76fdb800ca296db0';
+
+/// See also [convertRole].
+@ProviderFor(convertRole)
+const convertRoleProvider = ConvertRoleFamily();
+
+/// See also [convertRole].
+class ConvertRoleFamily extends Family<AsyncValue<Role?>> {
+  /// See also [convertRole].
+  const ConvertRoleFamily();
+
+  /// See also [convertRole].
+  ConvertRoleProvider call({
+    required Object? data,
+  }) {
+    return ConvertRoleProvider(
+      data: data,
+    );
+  }
+
+  @override
+  ConvertRoleProvider getProviderOverride(
+    covariant ConvertRoleProvider provider,
+  ) {
+    return call(
+      data: provider.data,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'convertRoleProvider';
+}
+
+/// See also [convertRole].
+class ConvertRoleProvider extends AutoDisposeFutureProvider<Role?> {
+  /// See also [convertRole].
+  ConvertRoleProvider({
+    required Object? data,
+  }) : this._internal(
+          (ref) => convertRole(
+            ref as ConvertRoleRef,
+            data: data,
+          ),
+          from: convertRoleProvider,
+          name: r'convertRoleProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$convertRoleHash,
+          dependencies: ConvertRoleFamily._dependencies,
+          allTransitiveDependencies:
+              ConvertRoleFamily._allTransitiveDependencies,
+          data: data,
+        );
+
+  ConvertRoleProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.data,
+  }) : super.internal();
+
+  final Object? data;
+
+  @override
+  Override overrideWith(
+    FutureOr<Role?> Function(ConvertRoleRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ConvertRoleProvider._internal(
+        (ref) => create(ref as ConvertRoleRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        data: data,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Role?> createElement() {
+    return _ConvertRoleProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ConvertRoleProvider && other.data == data;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, data.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ConvertRoleRef on AutoDisposeFutureProviderRef<Role?> {
+  /// The parameter `data` of this provider.
+  Object? get data;
+}
+
+class _ConvertRoleProviderElement
+    extends AutoDisposeFutureProviderElement<Role?> with ConvertRoleRef {
+  _ConvertRoleProviderElement(super.provider);
+
+  @override
+  Object? get data => (origin as ConvertRoleProvider).data;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

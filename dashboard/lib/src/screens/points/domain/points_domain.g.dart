@@ -6,7 +6,7 @@ part of 'points_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getPointsHash() => r'fe1862d4f81fd6f2862e9938eaf832254b70cca2';
+String _$getPointsHash() => r'23ccf5ac7d358b976530d5f4c28f5b7915b37519';
 
 /// Copied from Dart SDK
 class _SystemHash {

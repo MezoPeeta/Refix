@@ -30,7 +30,7 @@ Future<Either<String, String>> updateBoarding(Ref ref,
   if (request.statusCode == 200) {
     return right("Upload successful");
   } else if (request.statusCode == 401) {
-    ref.read(authProvider).logout();
+    ref.read(authProvider).refreshAccessToken();
   } else {
     print(request.body);
     final errorMessage = jsonDecode(request.body)["message"];
