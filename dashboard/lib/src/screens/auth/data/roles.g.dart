@@ -6,7 +6,7 @@ part of 'roles.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getRoleByIDHash() => r'1655c627723def57cf7a1deab174c6660ddb89e5';
+String _$getRoleByIDHash() => r'9149680ee2d2eae63f3dfb792decb3be9b104e78';
 
 /// Copied from Dart SDK
 class _SystemHash {

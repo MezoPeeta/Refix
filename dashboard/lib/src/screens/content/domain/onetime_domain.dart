@@ -26,13 +26,18 @@ Future<Either<String, String>> updateBoarding(Ref ref,
     "details": jsonEncode({"en": detailsEn, "ar": detailsAr}),
     "image": base64Encode(await compressImage(image))
   });
-  print(base64Encode(image));
   if (request.statusCode == 200) {
     return right("Upload successful");
   } else if (request.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    updateBoarding(ref,
+        id: id,
+        headingEn: headingEn,
+        headingAr: headingAr,
+        detailsEn: detailsEn,
+        detailsAr: detailsAr,
+        image: image);
   } else {
-    print(request.body);
     final errorMessage = jsonDecode(request.body)["message"];
     if (errorMessage is List) {
       return left(errorMessage.first);

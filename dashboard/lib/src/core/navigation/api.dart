@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -61,6 +62,7 @@ class HttpAPI {
     final accessToken = await ref.read(authProvider).getAccessToken();
     Map<String, String> headers = {
       'Authorization': 'Bearer $accessToken',
+      "Content-Type": "application/json",
     };
     var bUrl = Uri.parse("$baseAPI$url");
 
@@ -68,15 +70,27 @@ class HttpAPI {
       case 'GET':
         return await http.get(bUrl, headers: headers);
       case 'POST':
-        return await http.post(bUrl, headers: headers, body: body);
+        return await http.post(bUrl, headers: headers, body: jsonEncode(body));
       case 'PUT':
-        return await http.put(bUrl, headers: headers, body: body);
+        return await http.put(bUrl, headers: headers, body: jsonEncode(body));
       case 'PATCH':
-        return await http.patch(bUrl, headers: headers, body: body);
+        return await http.patch(bUrl, headers: headers, body: jsonEncode(body));
       case 'DELETE':
         return await http.delete(bUrl, headers: headers);
       default:
         throw Exception('Unsupported HTTP method');
     }
+  }
+
+  String getResponseError(Response response) {
+    final responseBody = jsonDecode(response.body);
+    if (responseBody is String) {
+      return responseBody;
+    }
+    final errorMessage = responseBody["message"];
+    if (errorMessage is List) {
+      return errorMessage.first;
+    }
+    return errorMessage;
   }
 }

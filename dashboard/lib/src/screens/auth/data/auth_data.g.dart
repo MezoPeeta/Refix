@@ -31,7 +31,6 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       role: Role.fromJson(json['role'] as Map<String, dynamic>),
       isVerified: json['is_verified'] as bool,
       createdAt: DateTime.parse(json['createdAt'] as String),
-      selected: json['selected'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -46,7 +45,6 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'role': instance.role,
       'is_verified': instance.isVerified,
       'createdAt': instance.createdAt.toIso8601String(),
-      'selected': instance.selected,
     };
 
 _$RoleImpl _$$RoleImplFromJson(Map<String, dynamic> json) => _$RoleImpl(
@@ -58,4 +56,25 @@ Map<String, dynamic> _$$RoleImplToJson(_$RoleImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'name': instance.name,
+    };
+
+_$WorkerImpl _$$WorkerImplFromJson(Map<String, dynamic> json) => _$WorkerImpl(
+      notificationToken: json['notification_token'] as String?,
+      id: json['_id'] as String,
+      email: json['email'] as String,
+      username: json['username'] as String,
+      companyName: json['company_name'] as String,
+      phone: json['phone'] as String?,
+      role: Role.fromJson(json['role'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$WorkerImplToJson(_$WorkerImpl instance) =>
+    <String, dynamic>{
+      'notification_token': instance.notificationToken,
+      '_id': instance.id,
+      'email': instance.email,
+      'username': instance.username,
+      'company_name': instance.companyName,
+      'phone': instance.phone,
+      'role': instance.role,
     };

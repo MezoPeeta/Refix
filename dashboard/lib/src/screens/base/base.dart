@@ -14,27 +14,33 @@ import '../booking/presentation/booking.dart';
 import '../booking/presentation/booking_conf_show.dart';
 import '../home/home.dart';
 import '../permission/permissions.dart';
+import '../points/add_point.dart';
+import '../users/tasks.dart';
+import '../users/workers.dart';
 
 class BaseScreen extends StatelessWidget {
   const BaseScreen({super.key});
   static final List<Widget> children = [
     const HomeScreen(),
     const ClientScreen(),
-    const ClientScreen(),
+    const WorkersScreen(),
     const ClientScreen(),
     const OnetimeScreen(),
     const OnetimeEditScreen(),
     const AdsScreen(),
     const AdsEditScreen(),
     const PointsScreen(),
+    const AddEditPoints(),
     const InbookingScreen(),
     const BookingScreen(),
     const BookingConfirmation(),
-    const BookingConfShow(),
+    BookingConfShow(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),
+
     const PermissionsScreen(),
+    // const AddEditUser()
   ];
   @override
   Widget build(BuildContext context) {

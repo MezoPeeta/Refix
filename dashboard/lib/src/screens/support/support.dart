@@ -1,22 +1,22 @@
-import 'package:dashboard/src/screens/navbar/navbar.dart';
-import 'package:dashboard/src/screens/points/domain/points_domain.dart';
-import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../core/theme/btns.dart';
+import '../../core/theme/radii.dart';
+import '../users/domain/source.dart';
 
-class PointsScreen extends ConsumerStatefulWidget {
-  const PointsScreen({super.key});
+class SupportScreen extends ConsumerStatefulWidget {
+  const SupportScreen({super.key});
 
   @override
-  ConsumerState<PointsScreen> createState() => _PointsScreenState();
+  ConsumerState<SupportScreen> createState() => _SupportScreenState();
 }
 
-class _PointsScreenState extends ConsumerState<PointsScreen> {
+class _SupportScreenState extends ConsumerState<SupportScreen> {
+  int _page = 1;
+  String? query;
   @override
   Widget build(BuildContext context) {
-    final points = ref.watch(getPointsProvider);
+    final bookings = ref.watch(getBookingsProvider(page: _page, query: query));
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -27,17 +27,38 @@ class _PointsScreenState extends ConsumerState<PointsScreen> {
               Row(
                 spacing: 20,
                 children: [
+                  Text(
+                    "All (${bookings.value?.length ?? 0})",
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: AppTextSize.three),
+                  ),
                   Expanded(
-                      child: SecondaryButton(
-                          text: "Add New +",
-                          onPressed: () {
-                            ref.read(currentIndexProvider.notifier).state = 9;
-                          })),
+                    flex: 4,
+                    child: TextField(
+                      onChanged: (value) {
+                        setState(() {
+                          query = value;
+                        });
+                      },
+                      decoration: const InputDecoration(
+                          filled: true, hintText: "Search Here"),
+                    ),
+                  )
                 ],
               ),
-              points.when(
+              bookings.when(
                   data: (data) {
+                    print("Data is :$data");
                     return PaginatedDataTable(
+                      showCheckboxColumn: true,
+                      showFirstLastButtons: false,
+                      showEmptyRows: false,
+                      onPageChanged: (page) {
+                        setState(() {
+                          _page = page;
+                        });
+                      },
                       columns: const [
                         DataColumn(
                             label: Text(
@@ -46,22 +67,17 @@ class _PointsScreenState extends ConsumerState<PointsScreen> {
                         )),
                         DataColumn(
                             label: Text(
-                          "Package Name",
+                          "Service Name",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(
                             label: Text(
-                          "Offer",
+                          "Customer Name",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(
                             label: Text(
-                          "Available Number of Days",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Points",
+                          "Cost",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(
@@ -76,11 +92,11 @@ class _PointsScreenState extends ConsumerState<PointsScreen> {
                         )),
                         DataColumn(label: SizedBox.shrink()),
                       ],
-                      source: PointsDataSource(data, ref),
+                      source: BookingDataSource(ref, data),
                     );
                   },
                   error: (e, s) {
-                    debugPrint("Points Error: $e");
+                    debugPrint("Error: $e");
                     return const Text("Error");
                   },
                   loading: () =>

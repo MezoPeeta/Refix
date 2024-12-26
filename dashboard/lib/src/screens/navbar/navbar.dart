@@ -163,7 +163,7 @@ class Navbar extends ConsumerWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 9;
+                          ref.read(currentIndexProvider.notifier).state = 10;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -175,7 +175,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 11;
+                          ref.read(currentIndexProvider.notifier).state = 12;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -193,7 +193,7 @@ class Navbar extends ConsumerWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 13;
+                          ref.read(currentIndexProvider.notifier).state = 14;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -205,7 +205,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 14;
+                          ref.read(currentIndexProvider.notifier).state = 15;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -227,16 +227,16 @@ class Navbar extends ConsumerWidget {
                   NavMenu(
                     text: "Price",
                     svgPath: "assets/img/navbar/services.svg",
-                    isSelected: currentIndex == 15,
+                    isSelected: currentIndex == 16,
                     onTap: () {
-                      ref.read(currentIndexProvider.notifier).state = 15;
+                      ref.read(currentIndexProvider.notifier).state = 16;
                     },
                   ),
                   NavMenu(
-                    isSelected: currentIndex == 16,
+                    isSelected: currentIndex == 17,
                     text: "Permissions",
                     onTap: () {
-                      ref.read(currentIndexProvider.notifier).state = 16;
+                      ref.read(currentIndexProvider.notifier).state = 17;
                     },
                     svgPath: "assets/img/navbar/permissions.svg",
                   ),

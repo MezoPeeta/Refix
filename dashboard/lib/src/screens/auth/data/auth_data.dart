@@ -16,20 +16,20 @@ class UserAccount with _$UserAccount {
       _$UserAccountFromJson(json);
 }
 
-@unfreezed
+@freezed
 class User with _$User {
-  factory User(
-      {@JsonKey(name: "notification_token") String? notificationToken,
-      @JsonKey(name: "_id") required String id,
-      @JsonKey(name: "username") required String username,
-      @JsonKey(name: "email") required String email,
-      @JsonKey(name: "phone")  String? phone,
-      @JsonKey(name: "lang")  double? longitude,
-      @JsonKey(name: "lat")  double? latitude,
-      @JsonKey(name: "role") required Role role,
-      @JsonKey(name: "is_verified") required bool isVerified,
-      @JsonKey(name: "createdAt") required DateTime createdAt,
-      @Default(false) bool selected}) = _User;
+  const factory User({
+    @JsonKey(name: "notification_token") String? notificationToken,
+    @JsonKey(name: "_id") required String id,
+    @JsonKey(name: "username") required String username,
+    @JsonKey(name: "email") required String email,
+    @JsonKey(name: "phone") String? phone,
+    @JsonKey(name: "lang") double? longitude,
+    @JsonKey(name: "lat") double? latitude,
+    @JsonKey(name: "role") required Role role,
+    @JsonKey(name: "is_verified") required bool isVerified,
+    @JsonKey(name: "createdAt") required DateTime createdAt,
+  }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 }
@@ -44,4 +44,17 @@ class Role with _$Role {
   factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
 }
 
+@freezed
+class Worker with _$Worker {
+  const factory Worker({
+    @JsonKey(name: "notification_token") String? notificationToken,
+    @JsonKey(name: "_id") required String id,
+    @JsonKey(name: "email") required String email,
+    @JsonKey(name: "username") required String username,
+    @JsonKey(name: "company_name") required String companyName,
+    @JsonKey(name: "phone") String? phone,
+    @JsonKey(name: "role") required Role role,
+  }) = _Worker;
 
+  factory Worker.fromJson(Map<String, dynamic> json) => _$WorkerFromJson(json);
+}

@@ -6,8 +6,11 @@ import 'package:dashboard/src/screens/auth/data/roles.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/booking/presentation/booking.dart';
 import 'package:dashboard/src/screens/navbar/navbar.dart';
+import 'package:dashboard/src/screens/points/add_point.dart';
+import 'package:dashboard/src/screens/points/data/point.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -30,24 +33,17 @@ class UsersDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
 
-    return DataRow.byIndex(
-        index: index,
-        selected: data[index].selected,
-        onSelectChanged: (value) {
-          data[index].selected = value!;
-          notifyListeners();
-        },
-        cells: [
-          DataCell(Text(data[index].id)),
-          DataCell(Text(data[index].username)),
-          DataCell(Text(data[index].email)),
-          DataCell(Text(data[index].phone ?? "-")),
-          DataCell(Text(formatTime(data[index].createdAt))),
-          DataCell(TextButton(
-            onPressed: () {},
-            child: const Text("Edit"),
-          )),
-        ]);
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].id)),
+      DataCell(Text(data[index].username)),
+      DataCell(Text(data[index].email)),
+      DataCell(Text(data[index].phone ?? "-")),
+      DataCell(Text(formatTime(data[index].createdAt))),
+      DataCell(TextButton(
+        onPressed: () {},
+        child: const Text("Edit"),
+      )),
+    ]);
   }
 
   @override
@@ -76,6 +72,7 @@ Future<List<User>> getCustomers(Ref ref,
   }
   if (response.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    getCustomers(ref, page: page);
     return [];
   }
   return [];
@@ -96,6 +93,7 @@ Future<List<User>> getUsers(Ref ref, {required int page, String? query}) async {
   }
   if (response.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    getUsers(ref, page: page);
     return [];
   }
   return [];
@@ -123,24 +121,17 @@ class CustomersDataSource extends UsersDataSource {
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
 
-    return DataRow.byIndex(
-        index: index,
-        selected: data[index].selected,
-        onSelectChanged: (value) {
-          data[index].selected = value!;
-          notifyListeners();
-        },
-        cells: [
-          DataCell(Text(data[index].id)),
-          DataCell(Text(data[index].username)),
-          DataCell(Text(data[index].email)),
-          DataCell(Text(data[index].role.name)),
-          DataCell(Text(formatTime(data[index].createdAt))),
-          DataCell(TextButton(
-            onPressed: () {},
-            child: const Text("Edit"),
-          )),
-        ]);
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].id)),
+      DataCell(Text(data[index].username)),
+      DataCell(Text(data[index].email)),
+      DataCell(Text(data[index].role.name)),
+      DataCell(Text(formatTime(data[index].createdAt))),
+      DataCell(TextButton(
+        onPressed: () {},
+        child: const Text("Edit"),
+      )),
+    ]);
   }
 }
 
@@ -163,7 +154,7 @@ class BookingDataSource extends UsersDataSource {
       DataCell(Text(bookings[index].status)),
       DataCell(TextButton(
         onPressed: () {
-          ref.read(currentIndexProvider.notifier).state = 10;
+          ref.read(currentIndexProvider.notifier).state = 13;
           ref.read(getBookingInfoProvider.notifier).state = bookings[index];
         },
         child: const Text("Show"),
@@ -172,7 +163,6 @@ class BookingDataSource extends UsersDataSource {
   }
 
   @override
-  // TODO: implement rowCount
   int get rowCount => bookings.length;
 }
 
@@ -183,53 +173,62 @@ class BookingConfDataSource extends UsersDataSource {
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
 
-    return DataRow.byIndex(
-        index: index,
-        selected: data[index].selected,
-        onSelectChanged: (value) {
-          data[index].selected = value!;
-          notifyListeners();
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].id)),
+      DataCell(Text(data[index].username)),
+      DataCell(Text(data[index].email)),
+      DataCell(Text(data[index].role.name)),
+      DataCell(Text(formatTime(data[index].createdAt))),
+      DataCell(TextButton(
+        onPressed: () {
+          ref.read(currentIndexProvider.notifier).state = 12;
         },
-        cells: [
-          DataCell(Text(data[index].id)),
-          DataCell(Text(data[index].username)),
-          DataCell(Text(data[index].email)),
-          DataCell(Text(data[index].role.name)),
-          DataCell(Text(formatTime(data[index].createdAt))),
-          DataCell(TextButton(
-            onPressed: () => ref.read(currentIndexProvider.notifier).state = 12,
-            child: const Text("Show"),
-          )),
-        ]);
+        child: const Text("Show"),
+      )),
+    ]);
   }
 }
 
-class PointsDataSource extends UsersDataSource {
+class PointsDataSource extends DataTableSource {
   WidgetRef ref;
-  PointsDataSource(super.data, this.ref);
+  List<Point> data;
+  PointsDataSource(this.data, this.ref);
+  String formatTime(DateTime time) {
+    final formattedDate = DateFormat.yMd().format(time);
+    final formattedTime = DateFormat('jm').format(time);
+    return "$formattedTime $formattedDate";
+  }
+
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
 
-    return DataRow.byIndex(
-        index: index,
-        selected: data[index].selected,
-        onSelectChanged: (value) {
-          data[index].selected = value!;
-          notifyListeners();
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].id)),
+      DataCell(Text(data[index].name)),
+      DataCell(Text("${data[index].percentage}%")),
+      DataCell(Text(data[index].availableDays.toString())),
+      DataCell(Text(data[index].requiredPoints.toString())),
+      DataCell(Text(formatTime(data[index].createdAt))),
+      DataCell(Text(data[index].active ? "Active" : "Inactive")),
+      DataCell(TextButton(
+        onPressed: () {
+          ref.read(pointIDProvider.notifier).state = data[index];
+          ref.read(currentIndexProvider.notifier).state = 9;
         },
-        cells: [
-          DataCell(Text(data[index].id)),
-          DataCell(Text(data[index].username)),
-          DataCell(Text(data[index].email)),
-          DataCell(Text(data[index].role.name)),
-          DataCell(Text(formatTime(data[index].createdAt))),
-          DataCell(TextButton(
-            onPressed: () => ref.read(currentIndexProvider.notifier).state = 12,
-            child: const Text("Edit"),
-          )),
-        ]);
+        child: const Text("Edit"),
+      )),
+    ]);
   }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 10;
 }
 
 @riverpod
@@ -263,6 +262,7 @@ Future<List<BookingElement>> getUnAssignedBookings(Ref ref,
   }
   if (response.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    getUnAssignedBookings(ref, page: page);
     return [];
   }
   return [];
@@ -299,11 +299,11 @@ Future<List<BookingElement>> getBookings(Ref ref,
   }
   if (response.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    getBookings(ref, page: page);
     return [];
   }
   return [];
 }
-
 
 @riverpod
 Future<Role?> convertRole(Ref ref, {required Object? data}) async {
@@ -314,4 +314,57 @@ Future<Role?> convertRole(Ref ref, {required Object? data}) async {
     return Role.fromJson(data);
   }
   return null;
+}
+
+class WorkersDataTable extends DataTableSource {
+  final List<Worker> data;
+  final BuildContext context;
+  WorkersDataTable(this.data, this.context);
+
+  String formatTime(DateTime time) {
+    final formattedDate = DateFormat.yMd().format(time);
+    final formattedTime = DateFormat('jm').format(time);
+    return "$formattedTime $formattedDate";
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) return null;
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].id)),
+      DataCell(Text(data[index].username)),
+      DataCell(Text(data[index].companyName)),
+      DataCell(Text(data[index].phone ?? "-")),
+      DataCell(TextButton(
+        onPressed: () => context.push("/tasks", extra: data[index]),
+        child: const Text("Show"),
+      )),
+    ]);
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 5;
+}
+
+@riverpod
+Future<String?> assignWorkerToBooking(Ref ref,
+    {required String bookingID, required String workerID}) async {
+  final response = await ref.read(httpProvider).authenticatedRequest(
+      url: "booking/$bookingID/$workerID/assign", method: "PATCH");
+  final data = jsonDecode(response.body);
+
+  if (response.statusCode == 200) {
+    return data;
+  }
+  if (response.statusCode == 401) {
+    ref.read(authProvider).refreshAccessToken();
+    return assignWorkerToBooking(ref, bookingID: bookingID, workerID: workerID);
+  }
+  return Future.error("Failed: ${data["message"]}");
 }

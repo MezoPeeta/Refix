@@ -20,7 +20,6 @@ class BookingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final details = ref.watch(getBookingInfoProvider);
-    print("Furst Image: ${details?.imagesBeforeReaper.first}");
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),

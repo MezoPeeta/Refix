@@ -173,7 +173,7 @@ class _AddAdsProviderElement extends AutoDisposeFutureProviderElement<String>
   AdsType get type => (origin as AddAdsProvider).type;
 }
 
-String _$getAdsHash() => r'c4ea6903cc1e136a13d9499f0f1e17f261daa2f2';
+String _$getAdsHash() => r'77d2b7a3fbf8776f71a885fd1cd8e83b70994429';
 
 /// See also [getAds].
 @ProviderFor(getAds)
@@ -433,7 +433,7 @@ class _GetAdsByIdProviderElement
   String get id => (origin as GetAdsByIdProvider).id;
 }
 
-String _$updateAdsByIdHash() => r'deda9ba2222168e7979f6d4884f48316576b90b3';
+String _$updateAdsByIdHash() => r'7b085638820d703dac40eff75e71eb75cb2be8f2';
 
 /// See also [updateAdsById].
 @ProviderFor(updateAdsById)

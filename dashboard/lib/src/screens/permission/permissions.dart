@@ -3,6 +3,7 @@ import 'package:dashboard/src/core/theme/radii.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../navbar/navbar.dart';
 import '../users/domain/source.dart';
 
 class PermissionsScreen extends ConsumerStatefulWidget {
@@ -22,11 +23,11 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
     // final cities = ref.watch(getLocation())
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            children: [
-              Row(
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
                 spacing: 16,
                 children: [
                   Text(
@@ -37,7 +38,10 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
                   ),
                   Expanded(
                       child: SecondaryButton(
-                          text: "Add New User", onPressed: () {})),
+                          text: "Add New User",
+                          onPressed: () {
+                            ref.read(currentIndexProvider.notifier).state = 17;
+                          })),
                   Expanded(
                     flex: 5,
                     child: TextField(
@@ -52,15 +56,16 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
                   )
                 ],
               ),
-              const SizedBox(
-                height: 8,
-              ),
-              users.when(
-                  data: (data) {
-                    return PaginatedDataTable(
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            users.when(
+                data: (data) {
+                  return Expanded(
+                    child: PaginatedDataTable(
                       showCheckboxColumn: true,
                       showFirstLastButtons: false,
-                      columnSpacing: 10,
                       showEmptyRows: false,
                       onPageChanged: (page) {
                         setState(() {
@@ -96,16 +101,16 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
                         DataColumn(label: SizedBox.shrink()),
                       ],
                       source: CustomersDataSource(data),
-                    );
-                  },
-                  error: (e, s) {
-                    debugPrint("Error: $e");
-                    return const Text("Error");
-                  },
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator())),
-            ],
-          ),
+                    ),
+                  );
+                },
+                error: (e, s) {
+                  debugPrint("Error: $e");
+                  return const Text("Error");
+                },
+                loading: () =>
+                    const Center(child: CircularProgressIndicator())),
+          ],
         ));
   }
 }

@@ -6,7 +6,7 @@ part of 'source.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getCustomersHash() => r'587da34633ceb20d31d79eff4179cab454b34f57';
+String _$getCustomersHash() => r'd96f4d090977fb9969a28a44f2b4ed80efc40afc';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -174,7 +174,7 @@ class _GetCustomersProviderElement
   String? get query => (origin as GetCustomersProvider).query;
 }
 
-String _$getUsersHash() => r'bc49b76f5a2a0cac798036943c84d95d08b3caf2';
+String _$getUsersHash() => r'1d3ead9f5a590509332e49baa3043a82fa201320';
 
 /// See also [getUsers].
 @ProviderFor(getUsers)
@@ -451,7 +451,7 @@ class _GetLocationProviderElement
 }
 
 String _$getUnAssignedBookingsHash() =>
-    r'289223b835139190b7f75cbaac2e51d2a35fc985';
+    r'3141cd93b33681ccc010351f6a9dbd4f42daa7c9';
 
 /// See also [getUnAssignedBookings].
 @ProviderFor(getUnAssignedBookings)
@@ -603,7 +603,7 @@ class _GetUnAssignedBookingsProviderElement
   String? get query => (origin as GetUnAssignedBookingsProvider).query;
 }
 
-String _$getBookingsHash() => r'fc54dc7b44acb26b04840e68fa806d9cd29c2177';
+String _$getBookingsHash() => r'55a3e687c4ebeed456549a0c47c64d6c62cc7cd0';
 
 /// See also [getBookings].
 @ProviderFor(getBookings)
@@ -880,6 +880,155 @@ class _ConvertRoleProviderElement
 
   @override
   Object? get data => (origin as ConvertRoleProvider).data;
+}
+
+String _$assignWorkerToBookingHash() =>
+    r'6ee669a9713e65d6ce208b81026b204f26ede87e';
+
+/// See also [assignWorkerToBooking].
+@ProviderFor(assignWorkerToBooking)
+const assignWorkerToBookingProvider = AssignWorkerToBookingFamily();
+
+/// See also [assignWorkerToBooking].
+class AssignWorkerToBookingFamily extends Family<AsyncValue<String?>> {
+  /// See also [assignWorkerToBooking].
+  const AssignWorkerToBookingFamily();
+
+  /// See also [assignWorkerToBooking].
+  AssignWorkerToBookingProvider call({
+    required String bookingID,
+    required String workerID,
+  }) {
+    return AssignWorkerToBookingProvider(
+      bookingID: bookingID,
+      workerID: workerID,
+    );
+  }
+
+  @override
+  AssignWorkerToBookingProvider getProviderOverride(
+    covariant AssignWorkerToBookingProvider provider,
+  ) {
+    return call(
+      bookingID: provider.bookingID,
+      workerID: provider.workerID,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'assignWorkerToBookingProvider';
+}
+
+/// See also [assignWorkerToBooking].
+class AssignWorkerToBookingProvider extends AutoDisposeFutureProvider<String?> {
+  /// See also [assignWorkerToBooking].
+  AssignWorkerToBookingProvider({
+    required String bookingID,
+    required String workerID,
+  }) : this._internal(
+          (ref) => assignWorkerToBooking(
+            ref as AssignWorkerToBookingRef,
+            bookingID: bookingID,
+            workerID: workerID,
+          ),
+          from: assignWorkerToBookingProvider,
+          name: r'assignWorkerToBookingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$assignWorkerToBookingHash,
+          dependencies: AssignWorkerToBookingFamily._dependencies,
+          allTransitiveDependencies:
+              AssignWorkerToBookingFamily._allTransitiveDependencies,
+          bookingID: bookingID,
+          workerID: workerID,
+        );
+
+  AssignWorkerToBookingProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.bookingID,
+    required this.workerID,
+  }) : super.internal();
+
+  final String bookingID;
+  final String workerID;
+
+  @override
+  Override overrideWith(
+    FutureOr<String?> Function(AssignWorkerToBookingRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: AssignWorkerToBookingProvider._internal(
+        (ref) => create(ref as AssignWorkerToBookingRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        bookingID: bookingID,
+        workerID: workerID,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String?> createElement() {
+    return _AssignWorkerToBookingProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AssignWorkerToBookingProvider &&
+        other.bookingID == bookingID &&
+        other.workerID == workerID;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, bookingID.hashCode);
+    hash = _SystemHash.combine(hash, workerID.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin AssignWorkerToBookingRef on AutoDisposeFutureProviderRef<String?> {
+  /// The parameter `bookingID` of this provider.
+  String get bookingID;
+
+  /// The parameter `workerID` of this provider.
+  String get workerID;
+}
+
+class _AssignWorkerToBookingProviderElement
+    extends AutoDisposeFutureProviderElement<String?>
+    with AssignWorkerToBookingRef {
+  _AssignWorkerToBookingProviderElement(super.provider);
+
+  @override
+  String get bookingID => (origin as AssignWorkerToBookingProvider).bookingID;
+  @override
+  String get workerID => (origin as AssignWorkerToBookingProvider).workerID;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

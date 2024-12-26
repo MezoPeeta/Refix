@@ -19,6 +19,7 @@ Future<Role?> getRoleByID(Ref ref, {required String id}) async {
   }
   if (request.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    getRoleByID(ref, id: id);
   }
 
   return null;

@@ -1,16 +1,32 @@
+import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../core/theme/btns.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/radii.dart';
+import '../../users/domain/users_domain.dart';
 import 'booking.dart';
 
-class BookingConfShow extends StatelessWidget {
+class BookingConfShow extends ConsumerStatefulWidget {
   const BookingConfShow({super.key});
 
   @override
+  ConsumerState<BookingConfShow> createState() => _BookingConfShowState();
+}
+
+class _BookingConfShowState extends ConsumerState<BookingConfShow> {
+  final int _page = 1;
+
+  String? query;
+  String? workerID;
+
+  @override
   Widget build(BuildContext context) {
+    final details = ref.watch(getBookingInfoProvider);
+    final workers =
+        ref.watch(getAllWorkersProvider(page: _page, query: query)).value;
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,71 +49,23 @@ class BookingConfShow extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const ServiceContainer(name: "Services"),
+                    ServiceContainer(
+                      name: details!.services.first.name,
+                    ),
                     const SizedBox(
                       width: 24,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      child: GridView.builder(
-                                        shrinkWrap: true,
-                                        physics:
-                                            const NeverScrollableScrollPhysics(),
-                                        itemCount:
-                                            [1, 2, 3, 4, 5, 6, "Other"].length,
-                                        gridDelegate:
-                                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                                                crossAxisSpacing: 24,
-                                                mainAxisSpacing: 24,
-                                                mainAxisExtent: 85,
-                                                maxCrossAxisExtent: 116.67),
-                                        itemBuilder: (context, index) {
-                                          return ServiceContainer(
-                                            name: [
-                                              1,
-                                              2,
-                                              3,
-                                              4,
-                                              5,
-                                              6,
-                                              "Other"
-                                            ][index]
-                                                .toString(),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    PrimaryButton(
-                                        loading: false,
-                                        text: "Add Services",
-                                        onPressed: () {})
-                                  ],
-                                ),
-                              );
-                            });
-                      },
-                      child: Container(
-                        width: 116.67,
-                        height: 101,
-                        decoration: BoxDecoration(
-                            color: AppColors.neutral100,
-                            borderRadius: BorderRadius.circular(AppRadii.lg)),
-                        child: SvgPicture.asset(
-                          "assets/img/home/add_disabled.svg",
-                          width: 39,
-                          height: 39,
-                          fit: BoxFit.scaleDown,
-                        ),
+                    Container(
+                      width: 116.67,
+                      height: 101,
+                      decoration: BoxDecoration(
+                          color: AppColors.neutral100,
+                          borderRadius: BorderRadius.circular(AppRadii.lg)),
+                      child: SvgPicture.asset(
+                        "assets/img/home/add_disabled.svg",
+                        width: 39,
+                        height: 39,
+                        fit: BoxFit.scaleDown,
                       ),
                     )
                   ],
@@ -122,8 +90,8 @@ class BookingConfShow extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const AddedImage(
-                      path: "",
+                    AddedImage(
+                      path: details.imagesBeforeReaper.first,
                     ),
                     const SizedBox(
                       width: 16,
@@ -161,6 +129,7 @@ class BookingConfShow extends StatelessWidget {
                   height: 16,
                 ),
                 TextFormField(
+                  initialValue: details.customer.phone,
                   decoration: InputDecoration(
                       hintText: "Phone Number",
                       filled: true,
@@ -174,6 +143,7 @@ class BookingConfShow extends StatelessWidget {
                   height: 16,
                 ),
                 TextFormField(
+                  initialValue: details.customer.latitude.toString(),
                   decoration: InputDecoration(
                       hintText: "Add Address",
                       filled: true,
@@ -188,6 +158,7 @@ class BookingConfShow extends StatelessWidget {
                 ),
                 TextFormField(
                   maxLength: 200,
+                  initialValue: details.notes,
                   maxLines: 8,
                   decoration: const InputDecoration(
                     hintText: "Add Notes",
@@ -222,7 +193,56 @@ class BookingConfShow extends StatelessWidget {
                   height: 16,
                 ),
                 PrimaryButton(
-                    text: "Add Worker", onPressed: () {}, loading: false)
+                    text: "Add Worker",
+                    onPressed: () {
+                      showModalBottomSheet(
+                          context: context,
+                          builder: (context) {
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  DropdownButtonFormField(
+                                    value: workerID,
+                                    decoration: const InputDecoration(
+                                        hintText: "Pick Worker"),
+                                    items: workers
+                                        ?.map((e) => DropdownMenuItem(
+                                            value: e.id,
+                                            child: Text(e.username)))
+                                        .toList(),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        workerID = value;
+                                      });
+                                    },
+                                  ),
+                                  PrimaryButton(
+                                      text: "Confirm",
+                                      onPressed: () async {
+                                        final status = await ref
+                                            .read(assignWorkerToBookingProvider(
+                                                    bookingID: details.id,
+                                                    workerID: workerID ?? "")
+                                                .future)
+                                            .catchError((error) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(error)));
+                                        });
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(status ?? "")));
+                                      },
+                                      loading: false)
+                                ],
+                              ),
+                            );
+                          });
+                    },
+                    loading: false)
               ],
             ),
           ),

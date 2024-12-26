@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../app.dart';
 import '../../screens/auth/data/auth_data.dart';
 import '../storage/storage.dart';
 import 'api.dart';
@@ -49,9 +48,7 @@ class AuthDomain {
         final Map<String, dynamic> data = json.decode(response.body);
         await saveTokens(
             accessToken: data['accessToken'],
-            refreshToken: data['refreshToken'] ??
-                refreshToken // Use new refresh token if provided
-            );
+            refreshToken: data['refreshToken'] ?? refreshToken);
         return data["accessToken"];
       }
       if (response.statusCode == 401) {
@@ -162,6 +159,7 @@ Future<User?> getCurrentUser(Ref ref) async {
   }
   if (response.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    return getCurrentUser(ref);
   }
   return null;
 }

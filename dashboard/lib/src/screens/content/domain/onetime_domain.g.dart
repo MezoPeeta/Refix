@@ -6,7 +6,7 @@ part of 'onetime_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateBoardingHash() => r'0f61715915dd895c19586a7c1731252720d2aaf9';
+String _$updateBoardingHash() => r'aa97768baef6112787be1f4cff7ce1e3ada76abe';
 
 /// Copied from Dart SDK
 class _SystemHash {

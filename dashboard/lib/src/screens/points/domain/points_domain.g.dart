@@ -6,7 +6,23 @@ part of 'points_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getPointsHash() => r'23ccf5ac7d358b976530d5f4c28f5b7915b37519';
+String _$getPointsHash() => r'ddf7ab9a1e42b71f5f7a6586ef34c4bd10ce1d59';
+
+/// See also [getPoints].
+@ProviderFor(getPoints)
+final getPointsProvider = AutoDisposeFutureProvider<List<Point>>.internal(
+  getPoints,
+  name: r'getPointsProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$getPointsHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef GetPointsRef = AutoDisposeFutureProviderRef<List<Point>>;
+String _$addPointsHash() => r'1855a882f6b517c856e9c94d1ec5c602fca24ccb';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,33 +45,48 @@ class _SystemHash {
   }
 }
 
-/// See also [getPoints].
-@ProviderFor(getPoints)
-const getPointsProvider = GetPointsFamily();
+/// See also [addPoints].
+@ProviderFor(addPoints)
+const addPointsProvider = AddPointsFamily();
 
-/// See also [getPoints].
-class GetPointsFamily extends Family<AsyncValue<List<User>>> {
-  /// See also [getPoints].
-  const GetPointsFamily();
+/// See also [addPoints].
+class AddPointsFamily extends Family<AsyncValue<String?>> {
+  /// See also [addPoints].
+  const AddPointsFamily();
 
-  /// See also [getPoints].
-  GetPointsProvider call({
-    required int page,
-    String? query,
+  /// See also [addPoints].
+  AddPointsProvider call({
+    required String nameEn,
+    required String nameAr,
+    required String detailsEn,
+    required String detailsAr,
+    required int points,
+    required int days,
+    required int offers,
   }) {
-    return GetPointsProvider(
-      page: page,
-      query: query,
+    return AddPointsProvider(
+      nameEn: nameEn,
+      nameAr: nameAr,
+      detailsEn: detailsEn,
+      detailsAr: detailsAr,
+      points: points,
+      days: days,
+      offers: offers,
     );
   }
 
   @override
-  GetPointsProvider getProviderOverride(
-    covariant GetPointsProvider provider,
+  AddPointsProvider getProviderOverride(
+    covariant AddPointsProvider provider,
   ) {
     return call(
-      page: provider.page,
-      query: provider.query,
+      nameEn: provider.nameEn,
+      nameAr: provider.nameAr,
+      detailsEn: provider.detailsEn,
+      detailsAr: provider.detailsAr,
+      points: provider.points,
+      days: provider.days,
+      offers: provider.offers,
     );
   }
 
@@ -71,83 +102,123 @@ class GetPointsFamily extends Family<AsyncValue<List<User>>> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'getPointsProvider';
+  String? get name => r'addPointsProvider';
 }
 
-/// See also [getPoints].
-class GetPointsProvider extends AutoDisposeFutureProvider<List<User>> {
-  /// See also [getPoints].
-  GetPointsProvider({
-    required int page,
-    String? query,
+/// See also [addPoints].
+class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
+  /// See also [addPoints].
+  AddPointsProvider({
+    required String nameEn,
+    required String nameAr,
+    required String detailsEn,
+    required String detailsAr,
+    required int points,
+    required int days,
+    required int offers,
   }) : this._internal(
-          (ref) => getPoints(
-            ref as GetPointsRef,
-            page: page,
-            query: query,
+          (ref) => addPoints(
+            ref as AddPointsRef,
+            nameEn: nameEn,
+            nameAr: nameAr,
+            detailsEn: detailsEn,
+            detailsAr: detailsAr,
+            points: points,
+            days: days,
+            offers: offers,
           ),
-          from: getPointsProvider,
-          name: r'getPointsProvider',
+          from: addPointsProvider,
+          name: r'addPointsProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$getPointsHash,
-          dependencies: GetPointsFamily._dependencies,
-          allTransitiveDependencies: GetPointsFamily._allTransitiveDependencies,
-          page: page,
-          query: query,
+                  : _$addPointsHash,
+          dependencies: AddPointsFamily._dependencies,
+          allTransitiveDependencies: AddPointsFamily._allTransitiveDependencies,
+          nameEn: nameEn,
+          nameAr: nameAr,
+          detailsEn: detailsEn,
+          detailsAr: detailsAr,
+          points: points,
+          days: days,
+          offers: offers,
         );
 
-  GetPointsProvider._internal(
+  AddPointsProvider._internal(
     super._createNotifier, {
     required super.name,
     required super.dependencies,
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.page,
-    required this.query,
+    required this.nameEn,
+    required this.nameAr,
+    required this.detailsEn,
+    required this.detailsAr,
+    required this.points,
+    required this.days,
+    required this.offers,
   }) : super.internal();
 
-  final int page;
-  final String? query;
+  final String nameEn;
+  final String nameAr;
+  final String detailsEn;
+  final String detailsAr;
+  final int points;
+  final int days;
+  final int offers;
 
   @override
   Override overrideWith(
-    FutureOr<List<User>> Function(GetPointsRef provider) create,
+    FutureOr<String?> Function(AddPointsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
-      override: GetPointsProvider._internal(
-        (ref) => create(ref as GetPointsRef),
+      override: AddPointsProvider._internal(
+        (ref) => create(ref as AddPointsRef),
         from: from,
         name: null,
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        page: page,
-        query: query,
+        nameEn: nameEn,
+        nameAr: nameAr,
+        detailsEn: detailsEn,
+        detailsAr: detailsAr,
+        points: points,
+        days: days,
+        offers: offers,
       ),
     );
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<User>> createElement() {
-    return _GetPointsProviderElement(this);
+  AutoDisposeFutureProviderElement<String?> createElement() {
+    return _AddPointsProviderElement(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return other is GetPointsProvider &&
-        other.page == page &&
-        other.query == query;
+    return other is AddPointsProvider &&
+        other.nameEn == nameEn &&
+        other.nameAr == nameAr &&
+        other.detailsEn == detailsEn &&
+        other.detailsAr == detailsAr &&
+        other.points == points &&
+        other.days == days &&
+        other.offers == offers;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, page.hashCode);
-    hash = _SystemHash.combine(hash, query.hashCode);
+    hash = _SystemHash.combine(hash, nameEn.hashCode);
+    hash = _SystemHash.combine(hash, nameAr.hashCode);
+    hash = _SystemHash.combine(hash, detailsEn.hashCode);
+    hash = _SystemHash.combine(hash, detailsAr.hashCode);
+    hash = _SystemHash.combine(hash, points.hashCode);
+    hash = _SystemHash.combine(hash, days.hashCode);
+    hash = _SystemHash.combine(hash, offers.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -155,22 +226,290 @@ class GetPointsProvider extends AutoDisposeFutureProvider<List<User>> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin GetPointsRef on AutoDisposeFutureProviderRef<List<User>> {
-  /// The parameter `page` of this provider.
-  int get page;
+mixin AddPointsRef on AutoDisposeFutureProviderRef<String?> {
+  /// The parameter `nameEn` of this provider.
+  String get nameEn;
 
-  /// The parameter `query` of this provider.
-  String? get query;
+  /// The parameter `nameAr` of this provider.
+  String get nameAr;
+
+  /// The parameter `detailsEn` of this provider.
+  String get detailsEn;
+
+  /// The parameter `detailsAr` of this provider.
+  String get detailsAr;
+
+  /// The parameter `points` of this provider.
+  int get points;
+
+  /// The parameter `days` of this provider.
+  int get days;
+
+  /// The parameter `offers` of this provider.
+  int get offers;
 }
 
-class _GetPointsProviderElement
-    extends AutoDisposeFutureProviderElement<List<User>> with GetPointsRef {
-  _GetPointsProviderElement(super.provider);
+class _AddPointsProviderElement
+    extends AutoDisposeFutureProviderElement<String?> with AddPointsRef {
+  _AddPointsProviderElement(super.provider);
 
   @override
-  int get page => (origin as GetPointsProvider).page;
+  String get nameEn => (origin as AddPointsProvider).nameEn;
   @override
-  String? get query => (origin as GetPointsProvider).query;
+  String get nameAr => (origin as AddPointsProvider).nameAr;
+  @override
+  String get detailsEn => (origin as AddPointsProvider).detailsEn;
+  @override
+  String get detailsAr => (origin as AddPointsProvider).detailsAr;
+  @override
+  int get points => (origin as AddPointsProvider).points;
+  @override
+  int get days => (origin as AddPointsProvider).days;
+  @override
+  int get offers => (origin as AddPointsProvider).offers;
+}
+
+String _$updatePointHash() => r'6b2d8dd03adb7b85c94bb24bac0ce4d6c270ef66';
+
+/// See also [updatePoint].
+@ProviderFor(updatePoint)
+const updatePointProvider = UpdatePointFamily();
+
+/// See also [updatePoint].
+class UpdatePointFamily extends Family<AsyncValue<String?>> {
+  /// See also [updatePoint].
+  const UpdatePointFamily();
+
+  /// See also [updatePoint].
+  UpdatePointProvider call({
+    required String nameEn,
+    required String nameAr,
+    required String id,
+    required String detailsEn,
+    required String detailsAr,
+    required int points,
+    required int days,
+    required int offers,
+  }) {
+    return UpdatePointProvider(
+      nameEn: nameEn,
+      nameAr: nameAr,
+      id: id,
+      detailsEn: detailsEn,
+      detailsAr: detailsAr,
+      points: points,
+      days: days,
+      offers: offers,
+    );
+  }
+
+  @override
+  UpdatePointProvider getProviderOverride(
+    covariant UpdatePointProvider provider,
+  ) {
+    return call(
+      nameEn: provider.nameEn,
+      nameAr: provider.nameAr,
+      id: provider.id,
+      detailsEn: provider.detailsEn,
+      detailsAr: provider.detailsAr,
+      points: provider.points,
+      days: provider.days,
+      offers: provider.offers,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'updatePointProvider';
+}
+
+/// See also [updatePoint].
+class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
+  /// See also [updatePoint].
+  UpdatePointProvider({
+    required String nameEn,
+    required String nameAr,
+    required String id,
+    required String detailsEn,
+    required String detailsAr,
+    required int points,
+    required int days,
+    required int offers,
+  }) : this._internal(
+          (ref) => updatePoint(
+            ref as UpdatePointRef,
+            nameEn: nameEn,
+            nameAr: nameAr,
+            id: id,
+            detailsEn: detailsEn,
+            detailsAr: detailsAr,
+            points: points,
+            days: days,
+            offers: offers,
+          ),
+          from: updatePointProvider,
+          name: r'updatePointProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$updatePointHash,
+          dependencies: UpdatePointFamily._dependencies,
+          allTransitiveDependencies:
+              UpdatePointFamily._allTransitiveDependencies,
+          nameEn: nameEn,
+          nameAr: nameAr,
+          id: id,
+          detailsEn: detailsEn,
+          detailsAr: detailsAr,
+          points: points,
+          days: days,
+          offers: offers,
+        );
+
+  UpdatePointProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.nameEn,
+    required this.nameAr,
+    required this.id,
+    required this.detailsEn,
+    required this.detailsAr,
+    required this.points,
+    required this.days,
+    required this.offers,
+  }) : super.internal();
+
+  final String nameEn;
+  final String nameAr;
+  final String id;
+  final String detailsEn;
+  final String detailsAr;
+  final int points;
+  final int days;
+  final int offers;
+
+  @override
+  Override overrideWith(
+    FutureOr<String?> Function(UpdatePointRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: UpdatePointProvider._internal(
+        (ref) => create(ref as UpdatePointRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        nameEn: nameEn,
+        nameAr: nameAr,
+        id: id,
+        detailsEn: detailsEn,
+        detailsAr: detailsAr,
+        points: points,
+        days: days,
+        offers: offers,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String?> createElement() {
+    return _UpdatePointProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UpdatePointProvider &&
+        other.nameEn == nameEn &&
+        other.nameAr == nameAr &&
+        other.id == id &&
+        other.detailsEn == detailsEn &&
+        other.detailsAr == detailsAr &&
+        other.points == points &&
+        other.days == days &&
+        other.offers == offers;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, nameEn.hashCode);
+    hash = _SystemHash.combine(hash, nameAr.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, detailsEn.hashCode);
+    hash = _SystemHash.combine(hash, detailsAr.hashCode);
+    hash = _SystemHash.combine(hash, points.hashCode);
+    hash = _SystemHash.combine(hash, days.hashCode);
+    hash = _SystemHash.combine(hash, offers.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin UpdatePointRef on AutoDisposeFutureProviderRef<String?> {
+  /// The parameter `nameEn` of this provider.
+  String get nameEn;
+
+  /// The parameter `nameAr` of this provider.
+  String get nameAr;
+
+  /// The parameter `id` of this provider.
+  String get id;
+
+  /// The parameter `detailsEn` of this provider.
+  String get detailsEn;
+
+  /// The parameter `detailsAr` of this provider.
+  String get detailsAr;
+
+  /// The parameter `points` of this provider.
+  int get points;
+
+  /// The parameter `days` of this provider.
+  int get days;
+
+  /// The parameter `offers` of this provider.
+  int get offers;
+}
+
+class _UpdatePointProviderElement
+    extends AutoDisposeFutureProviderElement<String?> with UpdatePointRef {
+  _UpdatePointProviderElement(super.provider);
+
+  @override
+  String get nameEn => (origin as UpdatePointProvider).nameEn;
+  @override
+  String get nameAr => (origin as UpdatePointProvider).nameAr;
+  @override
+  String get id => (origin as UpdatePointProvider).id;
+  @override
+  String get detailsEn => (origin as UpdatePointProvider).detailsEn;
+  @override
+  String get detailsAr => (origin as UpdatePointProvider).detailsAr;
+  @override
+  int get points => (origin as UpdatePointProvider).points;
+  @override
+  int get days => (origin as UpdatePointProvider).days;
+  @override
+  int get offers => (origin as UpdatePointProvider).offers;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

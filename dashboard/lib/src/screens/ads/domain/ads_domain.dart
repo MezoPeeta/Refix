@@ -55,6 +55,7 @@ Future<List<Ad>> getAds(Ref ref, {AdsType? type}) async {
   }
   if (request.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    getAds(ref);
   }
   return [];
 }
@@ -87,6 +88,7 @@ Future<String?> updateAdsById(Ref ref,
   }
   if (request.statusCode == 401) {
     ref.read(authProvider).refreshAccessToken();
+    updateAdsById(ref, id: id, type: type, image: image);
     return null;
   }
   if (request.statusCode == 413) {
