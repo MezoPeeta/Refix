@@ -27,25 +27,25 @@ Future<String> addBooking(Ref ref,
     {required List<String> services,
     required DateTime date,
     required List<String> images}) async {
-  final response = await ref
-      .read(httpProvider)
-      .authenticatedRequest(method: "POST", url: "booking", body: {
-    "services": services,
-    "appointment_date": date.toIso8601String(),
-    "notes": "ssds",
-    "images_before_reaper": convertPhotosToBase64(images),
-    "status": "PENDING"
-  });
+  try {
+    final response = await ref
+        .read(httpProvider)
+        .authenticatedRequest(method: "POST", url: "booking", body: {
+      "services": services,
+      "appointment_date": date.toIso8601String(),
+      "notes": "ssds",
+      "images_before_reaper": convertPhotosToBase64(images),
+      "payment_method": "CASH"
+    });
 
-  log("Booking Request: ${response.body}");
-  if (response.statusCode == 201) {
-    return response.body;
+    log("Booking Request: ${response.body}");
+    if (response.statusCode == 201) {
+      return response.body;
+    }
+    return jsonDecode(response.body)["message"];
+  } catch (e) {
+    return e.toString();
   }
-  if (response.statusCode == 401) {
-    ref.read(authProvider).refreshAccessToken();
-    return Future.error("Failed");
-  }
-  return Future.error("Failed");
 }
 
 @riverpod

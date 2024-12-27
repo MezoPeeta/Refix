@@ -60,3 +60,5 @@ class HttpAPI {
     }
   }
 }
+
+class UnauthorizedException implements Exception {}

@@ -116,7 +116,8 @@ class PaymentMethods extends StatelessWidget {
             ),
             const Spacer(),
             PrimaryButton(
-                text: context.tr.continuee, onPressed: () => context.go("/"))
+                text: context.tr.continuee,
+                onPressed: () => context.go("/bookingfinalDone"))
           ],
         ),
       ),

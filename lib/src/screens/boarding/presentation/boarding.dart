@@ -6,6 +6,7 @@ import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/core/widgets/network_error.dart';
 import 'package:refix/src/screens/boarding/domain/boarding_domain.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -154,7 +155,8 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
             },
             error: (e, s) {
               debugPrint("Error $e");
-              return null;
+              return NetworkError(
+                  onTryAgain: () => ref.invalidate(getBoardingProvider));
             },
             loading: () => const Center(child: CircularProgressIndicator())));
   }

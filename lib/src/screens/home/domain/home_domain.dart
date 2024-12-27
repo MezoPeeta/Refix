@@ -32,7 +32,7 @@ Future<List<Ad>> getAds(Ref ref, {AdsType type = AdsType.slider}) async {
 Future<List<Service>> getAllServices(Ref ref) async {
   final request = await ref
       .read(httpProvider)
-      .authenticatedRequest(url: "service", method: "GET");
+      .authenticatedRequest(url: "service?page=1&take=10", method: "GET");
   final data = jsonDecode(request.body);
   if (request.statusCode == 200) {
     final List<Service> services =

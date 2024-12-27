@@ -348,10 +348,11 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                       date: dateTime!,
                       services: [service.id]).future)
                   .catchError((v) {
-                if (!context.mounted) return null;
-
                 ScaffoldMessenger.of(context)
                     .showSnackBar(SnackBar(content: Text(v)));
+                setState(() {
+                  loading = false;
+                });
               });
 
               setState(() {

@@ -8,6 +8,7 @@ import 'package:refix/src/screens/auth/presentation/forget_password.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
 import 'package:refix/src/screens/auth/presentation/notifications.dart';
 import 'package:refix/src/screens/auth/presentation/otp_verification.dart';
+import 'package:refix/src/screens/booking/presentation/booking_final.dart';
 import 'package:refix/src/screens/profile/presentation/about_refix.dart';
 import 'package:refix/src/screens/profile/presentation/new_email.dart';
 import 'package:refix/src/screens/profile/presentation/new_phone.dart';
@@ -73,9 +74,7 @@ final routes = GoRouter(
           builder: (context, state) => TackphotoScreen(
                 service: state.extra as Service,
               )),
-      GoRoute(
-          path: "/booking_done",
-          builder: (context, state) => const BookingdoneScreen()),
+      
       GoRoute(
           path: "/final_step/:service/:photo",
           name: "FinalStep",
@@ -133,4 +132,7 @@ final routes = GoRouter(
       GoRoute(
           path: "/notifications",
           builder: (context, state) => const NotificationsScreen()),
+           GoRoute(
+          path: "/bookingfinalDone",
+          builder: (context, state) => const BookingFinalDone()),
     ]);
