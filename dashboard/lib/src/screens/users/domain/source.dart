@@ -174,7 +174,7 @@ class BookingDataSource extends DataTableSource {
   int get rowCount => bookings.length;
 
   @override
-  bool get isRowCountApproximate => true;
+  bool get isRowCountApproximate => false;
 
   @override
   int get selectedRowCount => 10;
@@ -216,7 +216,7 @@ class BookingConfDataSource extends DataTableSource {
   int get rowCount => bookings.length;
 
   @override
-  bool get isRowCountApproximate => true;
+  bool get isRowCountApproximate => false;
 
   @override
   int get selectedRowCount => 10;
