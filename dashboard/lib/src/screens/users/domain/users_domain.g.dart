@@ -710,5 +710,379 @@ class _UpdateWorkerProviderElement
   @override
   String get companyName => (origin as UpdateWorkerProvider).companyName;
 }
+
+String _$createUserHash() => r'e3071b2464b6433cb6f42fae48b5722465a4597f';
+
+/// See also [createUser].
+@ProviderFor(createUser)
+const createUserProvider = CreateUserFamily();
+
+/// See also [createUser].
+class CreateUserFamily extends Family<AsyncValue<String>> {
+  /// See also [createUser].
+  const CreateUserFamily();
+
+  /// See also [createUser].
+  CreateUserProvider call({
+    required String username,
+    required String email,
+    required String password,
+    required String phone,
+  }) {
+    return CreateUserProvider(
+      username: username,
+      email: email,
+      password: password,
+      phone: phone,
+    );
+  }
+
+  @override
+  CreateUserProvider getProviderOverride(
+    covariant CreateUserProvider provider,
+  ) {
+    return call(
+      username: provider.username,
+      email: provider.email,
+      password: provider.password,
+      phone: provider.phone,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'createUserProvider';
+}
+
+/// See also [createUser].
+class CreateUserProvider extends AutoDisposeFutureProvider<String> {
+  /// See also [createUser].
+  CreateUserProvider({
+    required String username,
+    required String email,
+    required String password,
+    required String phone,
+  }) : this._internal(
+          (ref) => createUser(
+            ref as CreateUserRef,
+            username: username,
+            email: email,
+            password: password,
+            phone: phone,
+          ),
+          from: createUserProvider,
+          name: r'createUserProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$createUserHash,
+          dependencies: CreateUserFamily._dependencies,
+          allTransitiveDependencies:
+              CreateUserFamily._allTransitiveDependencies,
+          username: username,
+          email: email,
+          password: password,
+          phone: phone,
+        );
+
+  CreateUserProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.username,
+    required this.email,
+    required this.password,
+    required this.phone,
+  }) : super.internal();
+
+  final String username;
+  final String email;
+  final String password;
+  final String phone;
+
+  @override
+  Override overrideWith(
+    FutureOr<String> Function(CreateUserRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: CreateUserProvider._internal(
+        (ref) => create(ref as CreateUserRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        username: username,
+        email: email,
+        password: password,
+        phone: phone,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String> createElement() {
+    return _CreateUserProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is CreateUserProvider &&
+        other.username == username &&
+        other.email == email &&
+        other.password == password &&
+        other.phone == phone;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, username.hashCode);
+    hash = _SystemHash.combine(hash, email.hashCode);
+    hash = _SystemHash.combine(hash, password.hashCode);
+    hash = _SystemHash.combine(hash, phone.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin CreateUserRef on AutoDisposeFutureProviderRef<String> {
+  /// The parameter `username` of this provider.
+  String get username;
+
+  /// The parameter `email` of this provider.
+  String get email;
+
+  /// The parameter `password` of this provider.
+  String get password;
+
+  /// The parameter `phone` of this provider.
+  String get phone;
+}
+
+class _CreateUserProviderElement
+    extends AutoDisposeFutureProviderElement<String> with CreateUserRef {
+  _CreateUserProviderElement(super.provider);
+
+  @override
+  String get username => (origin as CreateUserProvider).username;
+  @override
+  String get email => (origin as CreateUserProvider).email;
+  @override
+  String get password => (origin as CreateUserProvider).password;
+  @override
+  String get phone => (origin as CreateUserProvider).phone;
+}
+
+String _$updateUserHash() => r'0e5b6b00f11d724c72618fc9ff36180215ba01b3';
+
+/// See also [updateUser].
+@ProviderFor(updateUser)
+const updateUserProvider = UpdateUserFamily();
+
+/// See also [updateUser].
+class UpdateUserFamily extends Family<AsyncValue<String>> {
+  /// See also [updateUser].
+  const UpdateUserFamily();
+
+  /// See also [updateUser].
+  UpdateUserProvider call({
+    required String username,
+    required String email,
+    required String id,
+    required String password,
+    required String phone,
+  }) {
+    return UpdateUserProvider(
+      username: username,
+      email: email,
+      id: id,
+      password: password,
+      phone: phone,
+    );
+  }
+
+  @override
+  UpdateUserProvider getProviderOverride(
+    covariant UpdateUserProvider provider,
+  ) {
+    return call(
+      username: provider.username,
+      email: provider.email,
+      id: provider.id,
+      password: provider.password,
+      phone: provider.phone,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'updateUserProvider';
+}
+
+/// See also [updateUser].
+class UpdateUserProvider extends AutoDisposeFutureProvider<String> {
+  /// See also [updateUser].
+  UpdateUserProvider({
+    required String username,
+    required String email,
+    required String id,
+    required String password,
+    required String phone,
+  }) : this._internal(
+          (ref) => updateUser(
+            ref as UpdateUserRef,
+            username: username,
+            email: email,
+            id: id,
+            password: password,
+            phone: phone,
+          ),
+          from: updateUserProvider,
+          name: r'updateUserProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$updateUserHash,
+          dependencies: UpdateUserFamily._dependencies,
+          allTransitiveDependencies:
+              UpdateUserFamily._allTransitiveDependencies,
+          username: username,
+          email: email,
+          id: id,
+          password: password,
+          phone: phone,
+        );
+
+  UpdateUserProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.username,
+    required this.email,
+    required this.id,
+    required this.password,
+    required this.phone,
+  }) : super.internal();
+
+  final String username;
+  final String email;
+  final String id;
+  final String password;
+  final String phone;
+
+  @override
+  Override overrideWith(
+    FutureOr<String> Function(UpdateUserRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: UpdateUserProvider._internal(
+        (ref) => create(ref as UpdateUserRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        username: username,
+        email: email,
+        id: id,
+        password: password,
+        phone: phone,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String> createElement() {
+    return _UpdateUserProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UpdateUserProvider &&
+        other.username == username &&
+        other.email == email &&
+        other.id == id &&
+        other.password == password &&
+        other.phone == phone;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, username.hashCode);
+    hash = _SystemHash.combine(hash, email.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, password.hashCode);
+    hash = _SystemHash.combine(hash, phone.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin UpdateUserRef on AutoDisposeFutureProviderRef<String> {
+  /// The parameter `username` of this provider.
+  String get username;
+
+  /// The parameter `email` of this provider.
+  String get email;
+
+  /// The parameter `id` of this provider.
+  String get id;
+
+  /// The parameter `password` of this provider.
+  String get password;
+
+  /// The parameter `phone` of this provider.
+  String get phone;
+}
+
+class _UpdateUserProviderElement
+    extends AutoDisposeFutureProviderElement<String> with UpdateUserRef {
+  _UpdateUserProviderElement(super.provider);
+
+  @override
+  String get username => (origin as UpdateUserProvider).username;
+  @override
+  String get email => (origin as UpdateUserProvider).email;
+  @override
+  String get id => (origin as UpdateUserProvider).id;
+  @override
+  String get password => (origin as UpdateUserProvider).password;
+  @override
+  String get phone => (origin as UpdateUserProvider).phone;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

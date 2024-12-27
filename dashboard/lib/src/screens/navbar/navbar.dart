@@ -152,7 +152,7 @@ class Navbar extends ConsumerWidget {
                   NavMenu(
                     text: "Points",
                     svgPath: "assets/img/navbar/points.svg",
-                    isSelected: currentIndex == 8,
+                    isSelected: currentIndex == 8 || currentIndex == 9,
                     onTap: () {
                       ref.read(currentIndexProvider.notifier).state = 8;
                     },
@@ -225,7 +225,7 @@ class Navbar extends ConsumerWidget {
                     ),
                   ),
                   NavMenu(
-                    text: "Price",
+                    text: "Services",
                     svgPath: "assets/img/navbar/services.svg",
                     isSelected: currentIndex == 16,
                     onTap: () {

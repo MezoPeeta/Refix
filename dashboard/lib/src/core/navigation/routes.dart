@@ -1,6 +1,7 @@
 import 'package:dashboard/src/screens/auth/data/auth_data.dart';
 import 'package:dashboard/src/screens/base/base.dart';
 import 'package:dashboard/src/screens/users/tasks.dart';
+import 'package:dashboard/src/screens/users/users_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -36,6 +37,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             path: "/worker/edit",
             builder: (context, state) => AddEditWorker(
                   worker: state.extra as Worker?,
+                )),
+        GoRoute(
+            path: "/user/edit",
+            builder: (context, state) => AddEditUser(
+                  user: state.extra as User?,
                 )),
       ]);
 });

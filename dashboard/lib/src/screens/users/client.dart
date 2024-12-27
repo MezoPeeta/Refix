@@ -1,6 +1,7 @@
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import 'domain/source.dart';
 
@@ -17,7 +18,8 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final customers = ref.watch(getCustomersProvider(page: _page, query: query));
+    final customers =
+        ref.watch(getCustomersProvider(page: _page, query: query));
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -28,8 +30,9 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
                 spacing: 16,
                 children: [
                   Expanded(
-                      child:
-                          SecondaryButton(text: "Add New +", onPressed: () {})),
+                      child: SecondaryButton(
+                          text: "Add New +",
+                          onPressed: () => context.push("/user/edit"))),
                   Expanded(
                       child: SecondaryButton(
                           text: "Download User", onPressed: () {})),
@@ -90,7 +93,7 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
                         )),
                         DataColumn(label: SizedBox.shrink()),
                       ],
-                      source: UsersDataSource(data),
+                      source: UsersDataSource(data, context),
                     );
                   },
                   error: (e, s) {

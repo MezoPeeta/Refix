@@ -21,7 +21,8 @@ part 'source.g.dart';
 
 class UsersDataSource extends DataTableSource {
   final List<User> data;
-  UsersDataSource(this.data);
+  final BuildContext context;
+  UsersDataSource(this.data, this.context);
 
   String formatTime(DateTime time) {
     final formattedDate = DateFormat.yMd().format(time);
@@ -40,7 +41,7 @@ class UsersDataSource extends DataTableSource {
       DataCell(Text(data[index].phone ?? "-")),
       DataCell(Text(formatTime(data[index].createdAt))),
       DataCell(TextButton(
-        onPressed: () {},
+        onPressed: () => context.push("/user/edit", extra: data[index]),
         child: const Text("Edit"),
       )),
     ]);
@@ -116,7 +117,8 @@ Future<List<String>> getLocation(Ref ref, {required List<User> users}) async {
 }
 
 class CustomersDataSource extends UsersDataSource {
-  CustomersDataSource(super.data);
+  CustomersDataSource(super.data, super.context);
+
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
@@ -135,11 +137,59 @@ class CustomersDataSource extends UsersDataSource {
   }
 }
 
-class BookingDataSource extends UsersDataSource {
+class BookingDataSource extends DataTableSource {
   List<BookingElement> bookings;
 
   WidgetRef ref;
-  BookingDataSource(this.ref, this.bookings) : super([]);
+  BookingDataSource(this.ref, this.bookings);
+
+  String formatTime(DateTime time) {
+    final formattedDate = DateFormat.yMd().format(time);
+    final formattedTime = DateFormat('jm').format(time);
+    return "$formattedTime $formattedDate";
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= bookings.length) return null;
+
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(bookings[index].id)),
+      DataCell(Text(bookings[index].services.first.name)),
+      DataCell(Text(bookings[index].customer.username)),
+      DataCell(Text(bookings[index].cost.toString())),
+      DataCell(Text(formatTime(bookings[index].createdAt))),
+      DataCell(Text(bookings[index].status)),
+      DataCell(TextButton(
+        onPressed: () {
+          ref.read(currentIndexProvider.notifier).state = 11;
+          ref.read(getBookingInfoProvider.notifier).state = bookings[index];
+        },
+        child: const Text("Show"),
+      )),
+    ]);
+  }
+
+  @override
+  int get rowCount => bookings.length;
+
+  @override
+  bool get isRowCountApproximate => true;
+
+  @override
+  int get selectedRowCount => 10;
+}
+
+class BookingConfDataSource extends DataTableSource {
+  List<BookingElement> bookings;
+
+  WidgetRef ref;
+  BookingConfDataSource(this.ref, this.bookings);
+  String formatTime(DateTime time) {
+    final formattedDate = DateFormat.yMd().format(time);
+    final formattedTime = DateFormat('jm').format(time);
+    return "$formattedTime $formattedDate";
+  }
 
   @override
   DataRow? getRow(int index) {
@@ -164,29 +214,12 @@ class BookingDataSource extends UsersDataSource {
 
   @override
   int get rowCount => bookings.length;
-}
 
-class BookingConfDataSource extends UsersDataSource {
-  WidgetRef ref;
-  BookingConfDataSource(super.data, this.ref);
   @override
-  DataRow? getRow(int index) {
-    if (index >= data.length) return null;
+  bool get isRowCountApproximate => true;
 
-    return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].username)),
-      DataCell(Text(data[index].email)),
-      DataCell(Text(data[index].role.name)),
-      DataCell(Text(formatTime(data[index].createdAt))),
-      DataCell(TextButton(
-        onPressed: () {
-          ref.read(currentIndexProvider.notifier).state = 12;
-        },
-        child: const Text("Show"),
-      )),
-    ]);
-  }
+  @override
+  int get selectedRowCount => 10;
 }
 
 class PointsDataSource extends DataTableSource {
@@ -357,14 +390,11 @@ Future<String?> assignWorkerToBooking(Ref ref,
     {required String bookingID, required String workerID}) async {
   final response = await ref.read(httpProvider).authenticatedRequest(
       url: "booking/$bookingID/$workerID/assign", method: "PATCH");
-  final data = jsonDecode(response.body);
+  final data = response.body;
 
   if (response.statusCode == 200) {
     return data;
   }
-  if (response.statusCode == 401) {
-    ref.read(authProvider).refreshAccessToken();
-    return assignWorkerToBooking(ref, bookingID: bookingID, workerID: workerID);
-  }
-  return Future.error("Failed: ${data["message"]}");
+
+  return "Failed: ${jsonDecode(data)["message"]}";
 }

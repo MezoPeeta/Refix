@@ -4,11 +4,13 @@ import 'package:dashboard/src/core/navigation/auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:retry/retry.dart';
 
 final httpProvider = Provider<HttpAPI>(HttpAPI.new);
 
 class HttpAPI {
   final String baseAPI = "https://refix-api.onrender.com/api/v1/";
+
   Ref ref;
   HttpAPI(this.ref);
   Future<Response> post(
@@ -59,27 +61,51 @@ class HttpAPI {
     required String method,
     Map<String, dynamic>? body,
   }) async {
+    const r = RetryOptions(maxAttempts: 8);
     final accessToken = await ref.read(authProvider).getAccessToken();
-    Map<String, String> headers = {
-      'Authorization': 'Bearer $accessToken',
-      "Content-Type": "application/json",
-    };
-    var bUrl = Uri.parse("$baseAPI$url");
 
-    switch (method.toUpperCase()) {
-      case 'GET':
-        return await http.get(bUrl, headers: headers);
-      case 'POST':
-        return await http.post(bUrl, headers: headers, body: jsonEncode(body));
-      case 'PUT':
-        return await http.put(bUrl, headers: headers, body: jsonEncode(body));
-      case 'PATCH':
-        return await http.patch(bUrl, headers: headers, body: jsonEncode(body));
-      case 'DELETE':
-        return await http.delete(bUrl, headers: headers);
-      default:
-        throw Exception('Unsupported HTTP method');
+    Future<Response> makeRequest() async {
+      Map<String, String> headers = {
+        'Authorization': 'Bearer $accessToken',
+        "Content-Type": "application/json",
+      };
+      var bUrl = Uri.parse("$baseAPI$url");
+
+      Response response;
+      switch (method.toUpperCase()) {
+        case 'GET':
+          response = await http.get(bUrl, headers: headers);
+          break;
+        case 'POST':
+          response =
+              await http.post(bUrl, headers: headers, body: jsonEncode(body));
+          break;
+        case 'PUT':
+          response =
+              await http.put(bUrl, headers: headers, body: jsonEncode(body));
+          break;
+        case 'PATCH':
+          response = await http.patch(bUrl,
+              headers: headers, body: body != null ? jsonEncode(body) : null);
+          break;
+        case 'DELETE':
+          response = await http.delete(bUrl, headers: headers);
+          break;
+        default:
+          throw Exception('Unsupported HTTP method');
+      }
+
+      if (response.statusCode == 401) {
+        await ref.read(authProvider).refreshAccessToken();
+        throw UnauthorizedException();
+      }
+      return response;
     }
+
+    return await r.retry(
+      makeRequest,
+      retryIf: (e) => e is UnauthorizedException,
+    );
   }
 
   String getResponseError(Response response) {
@@ -94,3 +120,5 @@ class HttpAPI {
     return errorMessage;
   }
 }
+
+class UnauthorizedException implements Exception {}

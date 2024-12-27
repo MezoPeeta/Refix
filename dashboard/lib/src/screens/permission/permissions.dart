@@ -100,7 +100,7 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
                         )),
                         DataColumn(label: SizedBox.shrink()),
                       ],
-                      source: CustomersDataSource(data),
+                      source: CustomersDataSource(data, context),
                     ),
                   );
                 },

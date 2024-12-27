@@ -6,18 +6,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/theme/btns.dart';
 import '../auth/data/auth_data.dart';
 
-class AddEditWorker extends ConsumerStatefulWidget {
-  const AddEditWorker({super.key, required this.worker});
-  final Worker? worker;
+class AddEditUser extends ConsumerStatefulWidget {
+  const AddEditUser({super.key, required this.user});
+  final User? user;
 
   @override
-  ConsumerState<AddEditWorker> createState() => _AddEditWorkerState();
+  ConsumerState<AddEditUser> createState() => _AddEditUserState();
 }
 
-class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
+class _AddEditUserState extends ConsumerState<AddEditUser> {
   final nameController = TextEditingController();
 
-  final companyController = TextEditingController();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
   final emailController = TextEditingController();
@@ -29,13 +28,13 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
   @override
   void initState() {
     super.initState();
-    if (widget.worker != null) {
+    if (widget.user != null) {
       setState(() {
         isEditting = true;
-        nameController.text = widget.worker!.username;
-        companyController.text = widget.worker!.companyName;
-        phoneController.text = widget.worker!.phone ?? "-";
-        emailController.text = widget.worker!.email;
+        nameController.text = widget.user!.username;
+        phoneController.text =
+            widget.user!.phone!.replaceAll("+966", "") ?? "-";
+        emailController.text = widget.user!.email;
       });
     }
   }
@@ -54,7 +53,7 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
               spacing: 16,
               children: [
                 Text(
-                  isEditting ? "Edit Worker" : "Add Worker",
+                  isEditting ? "Edit User" : "Add User",
                 ),
                 TextFormField(
                   controller: nameController,
@@ -77,17 +76,6 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
                   decoration: const InputDecoration(hintText: "Email"),
                 ),
                 TextFormField(
-                  controller: companyController,
-                  keyboardType: TextInputType.number,
-                  validator: (v) {
-                    if (v!.isEmpty) {
-                      return "Please add company name";
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(hintText: "Company Name"),
-                ),
-                TextFormField(
                   controller: phoneController,
                   validator: (v) {
                     if (v!.isEmpty) {
@@ -105,6 +93,9 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
                 TextFormField(
                   controller: passwordController,
                   validator: (v) {
+                    if (isEditting) {
+                      return null;
+                    }
                     if (v!.isEmpty) {
                       return "Please add password";
                     }
@@ -113,16 +104,15 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
                   decoration: const InputDecoration(hintText: "Password"),
                 ),
                 PrimaryButton(
-                    text: isEditting ? "Edit Worker" : "Add Worker",
+                    text: isEditting ? "Edit User" : "Add User",
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         setState(() {
                           loading = true;
                         });
                         if (isEditting) {
-                          final status = await ref.read(updateWorkerProvider(
-                                  id: widget.worker!.id,
-                                  companyName: companyController.text,
+                          final status = await ref.read(updateUserProvider(
+                                  id: widget.user!.id,
                                   phone: "+966${phoneController.text}",
                                   email: emailController.text,
                                   password: passwordController.text,
@@ -135,8 +125,7 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
                               .showSnackBar(SnackBar(content: Text(status)));
                           return;
                         }
-                        final status = await ref.read(createWorkerProvider(
-                                companyName: companyController.text,
+                        final status = await ref.read(createUserProvider(
                                 phone: "+966${phoneController.text}",
                                 email: emailController.text,
                                 password: passwordController.text,

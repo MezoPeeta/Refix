@@ -21,6 +21,7 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
 
   String? query;
   String? workerID;
+  bool loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -130,28 +131,20 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                 ),
                 TextFormField(
                   initialValue: details.customer.phone,
-                  decoration: InputDecoration(
-                      hintText: "Phone Number",
-                      filled: true,
-                      suffixIcon: SvgPicture.asset(
-                        "assets/img/services/location.svg",
-                        width: 11,
-                        fit: BoxFit.scaleDown,
-                      )),
+                  decoration: const InputDecoration(
+                    hintText: "Phone Number",
+                    filled: true,
+                  ),
                 ),
                 const SizedBox(
                   height: 16,
                 ),
                 TextFormField(
                   initialValue: details.customer.latitude.toString(),
-                  decoration: InputDecoration(
-                      hintText: "Add Address",
-                      filled: true,
-                      suffixIcon: SvgPicture.asset(
-                        "assets/img/services/location.svg",
-                        width: 11,
-                        fit: BoxFit.scaleDown,
-                      )),
+                  decoration: const InputDecoration(
+                    hintText: "Add Address",
+                    filled: true,
+                  ),
                 ),
                 const SizedBox(
                   height: 16,
@@ -222,21 +215,22 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                                   PrimaryButton(
                                       text: "Confirm",
                                       onPressed: () async {
-                                        final status = await ref
-                                            .read(assignWorkerToBookingProvider(
+                                        setState(() {
+                                          loading = true;
+                                        });
+                                        final status = await ref.read(
+                                            assignWorkerToBookingProvider(
                                                     bookingID: details.id,
                                                     workerID: workerID ?? "")
-                                                .future)
-                                            .catchError((error) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: Text(error)));
+                                                .future);
+                                        setState(() {
+                                          loading = false;
                                         });
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                                 content: Text(status ?? "")));
                                       },
-                                      loading: false)
+                                      loading: loading)
                                 ],
                               ),
                             );

@@ -36,7 +36,7 @@ class AuthDomain {
   Future<String?> refreshAccessToken() async {
     try {
       String? refreshToken = await getRefreshToken();
-
+      print("RefreshToken: $refreshToken");
       if (refreshToken == null) {
         return null;
       }

@@ -34,7 +34,7 @@ class BaseScreen extends StatelessWidget {
     const InbookingScreen(),
     const BookingScreen(),
     const BookingConfirmation(),
-    BookingConfShow(),
+    const BookingConfShow(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),

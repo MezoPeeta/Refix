@@ -273,14 +273,10 @@ class BookingScreen extends ConsumerWidget {
                       height: 16,
                     ),
                     TextFormField(
-                      decoration: InputDecoration(
-                          hintText: "Worker Name",
-                          filled: true,
-                          suffixIcon: SvgPicture.asset(
-                            "assets/img/services/location.svg",
-                            width: 11,
-                            fit: BoxFit.scaleDown,
-                          )),
+                      decoration: const InputDecoration(
+                        hintText: "Worker Name",
+                        filled: true,
+                      ),
                     ),
                     const SizedBox(
                       height: 16,

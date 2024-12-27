@@ -82,3 +82,49 @@ Future<String> updateWorker(Ref ref,
   }
   return data["message"] is List ? data["message"].first : data["message"];
 }
+
+
+@riverpod
+Future<String> createUser(Ref ref,
+    {required String username,
+    required String email,
+    required String password,
+    required String phone,
+    }) async {
+  final request = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: "user", method: "POST", body: {
+    "username": username,
+    "email": email,
+    "password": password,
+    "phone": phone,
+  });
+  final data = jsonDecode(request.body);
+  if (request.statusCode == 200) {
+    return data;
+  }
+  return data["message"] is List ? data["message"].first : data["message"];
+}
+
+@riverpod
+Future<String> updateUser(Ref ref,
+    {required String username,
+    required String email,
+    required String id,
+    required String password,
+    required String phone,
+    }) async {
+  final request = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: "user/$id", method: "PATCH", body: {
+    "username": username,
+    "email": email,
+    "password": password,
+    "phone": phone,
+  });
+  final data = jsonDecode(request.body);
+  if (request.statusCode == 200) {
+    return data;
+  }
+  return data["message"] is List ? data["message"].first : data["message"];
+}

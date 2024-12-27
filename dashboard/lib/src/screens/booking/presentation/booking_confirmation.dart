@@ -92,7 +92,7 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                         )),
                         DataColumn(label: SizedBox.shrink()),
                       ],
-                      source: BookingDataSource(ref, data),
+                      source: BookingConfDataSource(ref, data),
                     );
                   },
                   error: (e, s) {
