@@ -17,9 +17,6 @@ class FirebaseNotifications {
 
   init() async {
     if (Platform.isIOS) {
-      await _messaging.requestPermission();
-      final token = await getToken();
-      log("Token $token");
       return;
     }
     GooglePlayServicesAvailability availability = await GoogleApiAvailability

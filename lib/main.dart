@@ -10,11 +10,11 @@ import 'src/app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    name: Platform.isIOS ? "devproject" : null,
+   //  name: Platform.isIOS ? "devproject" : null,
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await CacheHelper.init();
-
+  await Firebase.initializeApp();
   runApp(const ProviderScope(child: MyApp()));
   await FirebaseNotifications().init();
 }
