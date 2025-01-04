@@ -15,7 +15,6 @@ import '../booking/presentation/booking_conf_show.dart';
 import '../home/home.dart';
 import '../permission/permissions.dart';
 import '../points/add_point.dart';
-import '../users/tasks.dart';
 import '../users/workers.dart';
 
 class BaseScreen extends StatelessWidget {

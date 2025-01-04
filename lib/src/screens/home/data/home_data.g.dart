@@ -26,16 +26,13 @@ Map<String, dynamic> _$$AdImplToJson(_$AdImpl instance) => <String, dynamic>{
 
 _$ServiceImpl _$$ServiceImplFromJson(Map<String, dynamic> json) =>
     _$ServiceImpl(
-      name: json['name'] as String,
-      details: json['details'] as String,
+      name: Localized.fromJson(json['name'] as Map<String, dynamic>),
+      details: Localized.fromJson(json['details'] as Map<String, dynamic>),
       id: json['_id'] as String,
       price: (json['price'] as num).toInt(),
+      type: json['type'] as String?,
       isActive: json['is_active'] as bool,
-      childService: (json['childService'] as List<dynamic>)
-          .map((e) => Service.fromJson(e as Map<String, dynamic>))
-          .toList(),
       image: json['image'] as String,
-      v: (json['__v'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$ServiceImplToJson(_$ServiceImpl instance) =>
@@ -44,8 +41,17 @@ Map<String, dynamic> _$$ServiceImplToJson(_$ServiceImpl instance) =>
       'details': instance.details,
       '_id': instance.id,
       'price': instance.price,
+      'type': instance.type,
       'is_active': instance.isActive,
-      'childService': instance.childService,
       'image': instance.image,
-      '__v': instance.v,
+    };
+
+_$LocalizedImpl _$$LocalizedImplFromJson(Map<String, dynamic> json) =>
+    _$LocalizedImpl(
+      localized: json['localized'] as String,
+    );
+
+Map<String, dynamic> _$$LocalizedImplToJson(_$LocalizedImpl instance) =>
+    <String, dynamic>{
+      'localized': instance.localized,
     };

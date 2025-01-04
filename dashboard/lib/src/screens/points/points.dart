@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/btns.dart';
-import '../base/base.dart';
 
 class PointsScreen extends ConsumerStatefulWidget {
   const PointsScreen({super.key});

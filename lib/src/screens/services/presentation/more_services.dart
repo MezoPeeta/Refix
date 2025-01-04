@@ -10,15 +10,14 @@ import 'package:refix/src/core/ui/widgets/header.dart';
 import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/services/presentation/services.dart';
 
+import '../../home/domain/home_domain.dart';
 import 'tackphoto.dart';
 
 // final serviceProvider = StateProvider<List<Service>>((ref) => []);
 final choosenService = StateProvider<Service?>((ref) => null);
 
 class MoreServicesScreen extends ConsumerStatefulWidget {
-  const MoreServicesScreen(
-      {super.key, required this.services, required this.name});
-  final List<Service> services;
+  const MoreServicesScreen({super.key, required this.name});
   final String name;
 
   @override
@@ -27,19 +26,12 @@ class MoreServicesScreen extends ConsumerStatefulWidget {
 
 class _MoreServicesScreenState extends ConsumerState<MoreServicesScreen> {
   bool isOther = false;
-  final otherService = const Service(
-      name: "Other",
-      details: "details",
-      id: "id",
-      price: 0,
-      isActive: false,
-      childService: [],
-      image: "image",
-      v: 0);
+
   int? selectedServiceIndex;
   Service? selectedService;
   @override
   Widget build(BuildContext context) {
+    final services = ref.watch(getSubServicesProvider(type: widget.name));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -88,58 +80,54 @@ class _MoreServicesScreenState extends ConsumerState<MoreServicesScreen> {
                     color: AppColors.neutralRefix),
               ),
               const SizedBox(height: 24),
-              Column(
-                children: [
-                  GridView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: widget.services.length + 1,
-                    gridDelegate:
-                        const SliverGridDelegateWithMaxCrossAxisExtent(
-                            crossAxisSpacing: 24,
-                            mainAxisSpacing: 24,
-                            maxCrossAxisExtent: 116.67),
-                    itemBuilder: (context, index) {
-                      if (index == widget.services.length) {
-                        return ServiceContainer(
-                            isSelected: index == selectedServiceIndex,
-                            onPressed: () {
-                              setState(() {
-                                selectedServiceIndex = index;
-                              });
-                              ref.read(serviceForPhotoProvider.notifier).state =
-                                  otherService;
-                            },
-                            service: otherService);
-                      }
-                      return ServiceContainer(
-                        service: widget.services[index],
-                        isSelected: index == selectedServiceIndex,
-                        onPressed: () {
-                          setState(() {
-                            selectedServiceIndex = index;
-                            selectedService = widget.services[index];
-                          });
-                          // ref.read(serviceForPhotoProvider.notifier).state =
-                          //     widget.services[index];
-                        },
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Visibility(
-                    visible: selectedServiceIndex == widget.services.length,
-                    child: TextFormField(
-                      maxLength: 200,
-                      decoration: InputDecoration(
-                          filled: true, hintText: context.tr.add_notes),
-                      maxLines: 5,
-                    ),
-                  )
-                ],
-              )
+              services.when(
+                  data: (data) {
+                    return Column(
+                      children: [
+                        GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: data.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  crossAxisSpacing: 24,
+                                  mainAxisSpacing: 24,
+                                  maxCrossAxisExtent: 116.67),
+                          itemBuilder: (context, index) {
+                            return ServiceContainer(
+                              service: data[index],
+                              isSelected: index == selectedServiceIndex,
+                              onPressed: () {
+                                setState(() {
+                                  selectedServiceIndex = index;
+                                  selectedService = data[index];
+                                });
+                                // ref.read(serviceForPhotoProvider.notifier).state =
+                                //     widget.services[index];
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        Visibility(
+                          visible: selectedServiceIndex == data.length,
+                          child: TextFormField(
+                            maxLength: 200,
+                            decoration: InputDecoration(
+                                filled: true, hintText: context.tr.add_notes),
+                            maxLines: 5,
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                  error: (e, s) => const Center(
+                        child: Text("Error: "),
+                      ),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator.adaptive()))
             ],
           ),
         ),

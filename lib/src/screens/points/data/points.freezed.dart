@@ -23,7 +23,7 @@ mixin _$Point {
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: "name")
-  String get name => throw _privateConstructorUsedError;
+  Localized get name => throw _privateConstructorUsedError;
   @JsonKey(name: "percentage")
   int get percentage => throw _privateConstructorUsedError;
   @JsonKey(name: "required_points")
@@ -55,7 +55,7 @@ abstract class $PointCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: "_id") String id,
-      @JsonKey(name: "name") String name,
+      @JsonKey(name: "name") Localized name,
       @JsonKey(name: "percentage") int percentage,
       @JsonKey(name: "required_points") int requiredPoints,
       @JsonKey(name: "available_days") int availableDays,
@@ -63,6 +63,8 @@ abstract class $PointCopyWith<$Res> {
       @JsonKey(name: "createdAt") DateTime createdAt,
       @JsonKey(name: "updatedAt") DateTime updatedAt,
       @JsonKey(name: "__v") int v});
+
+  $LocalizedCopyWith<$Res> get name;
 }
 
 /// @nodoc
@@ -98,7 +100,7 @@ class _$PointCopyWithImpl<$Res, $Val extends Point>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       percentage: null == percentage
           ? _value.percentage
           : percentage // ignore: cast_nullable_to_non_nullable
@@ -129,6 +131,16 @@ class _$PointCopyWithImpl<$Res, $Val extends Point>
               as int,
     ) as $Val);
   }
+
+  /// Create a copy of Point
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res> get name {
+    return $LocalizedCopyWith<$Res>(_value.name, (value) {
+      return _then(_value.copyWith(name: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -140,7 +152,7 @@ abstract class _$$PointImplCopyWith<$Res> implements $PointCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(name: "_id") String id,
-      @JsonKey(name: "name") String name,
+      @JsonKey(name: "name") Localized name,
       @JsonKey(name: "percentage") int percentage,
       @JsonKey(name: "required_points") int requiredPoints,
       @JsonKey(name: "available_days") int availableDays,
@@ -148,6 +160,9 @@ abstract class _$$PointImplCopyWith<$Res> implements $PointCopyWith<$Res> {
       @JsonKey(name: "createdAt") DateTime createdAt,
       @JsonKey(name: "updatedAt") DateTime updatedAt,
       @JsonKey(name: "__v") int v});
+
+  @override
+  $LocalizedCopyWith<$Res> get name;
 }
 
 /// @nodoc
@@ -181,7 +196,7 @@ class __$$PointImplCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       percentage: null == percentage
           ? _value.percentage
           : percentage // ignore: cast_nullable_to_non_nullable
@@ -236,7 +251,7 @@ class _$PointImpl implements _Point {
   final String id;
   @override
   @JsonKey(name: "name")
-  final String name;
+  final Localized name;
   @override
   @JsonKey(name: "percentage")
   final int percentage;
@@ -309,7 +324,7 @@ class _$PointImpl implements _Point {
 abstract class _Point implements Point {
   const factory _Point(
       {@JsonKey(name: "_id") required final String id,
-      @JsonKey(name: "name") required final String name,
+      @JsonKey(name: "name") required final Localized name,
       @JsonKey(name: "percentage") required final int percentage,
       @JsonKey(name: "required_points") required final int requiredPoints,
       @JsonKey(name: "available_days") required final int availableDays,
@@ -325,7 +340,7 @@ abstract class _Point implements Point {
   String get id;
   @override
   @JsonKey(name: "name")
-  String get name;
+  Localized get name;
   @override
   @JsonKey(name: "percentage")
   int get percentage;

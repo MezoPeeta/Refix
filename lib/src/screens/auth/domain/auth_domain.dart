@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -172,4 +173,31 @@ Future<User?> getCurrentUser(Ref ref) async {
     ref.read(authProvider).logout();
   }
   return null;
+}
+
+@riverpod
+Future<User?> updateCurrentUser(Ref ref, {required User user}) async {
+  final currentUser = await ref.read(getCurrentUserProvider.future);
+  final response = await ref.read(httpProvider).authenticatedRequest(
+      method: "PATCH", url: "customer/${currentUser?.id}", body: user.toJson());
+  if (response.statusCode == 200) {
+    return User.fromJson(jsonDecode(response.body));
+  }
+
+  return null;
+}
+
+@riverpod
+Future<void> deleteCurrentUser(
+  Ref ref,
+) async {
+  final currentUser = await ref.read(getCurrentUserProvider.future);
+  final response = await ref.read(httpProvider).authenticatedRequest(
+      method: "DELETE", url: "customer/${currentUser?.id}");
+  log("Response: ${response.body}");
+  if (response.statusCode == 200) {
+    return ref.read(goRouterProvider).go("/");
+  }
+
+  return;
 }

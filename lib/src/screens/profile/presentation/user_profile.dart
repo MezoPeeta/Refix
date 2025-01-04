@@ -49,11 +49,15 @@ class UserProfile extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(AppRadii.lg)),
                 child: Column(
                   children: [
-                    ProfileOption(
-                      title: context.tr.phone,
-                      trailing: Text(
-                        user?.phone ?? "",
-                        style: const TextStyle(fontSize: AppTextSize.two),
+                    GestureDetector(
+                      onTap: () =>
+                          context.push("/switch_phone", extra: user?.phone),
+                      child: ProfileOption(
+                        title: context.tr.phone,
+                        trailing: Text(
+                          user?.phone ?? "",
+                          style: const TextStyle(fontSize: AppTextSize.two),
+                        ),
                       ),
                     ),
                     const Divider(
@@ -88,18 +92,18 @@ class UserProfile extends ConsumerWidget {
                                           const SizedBox(
                                             height: 8,
                                           ),
-                                          const Text(
-                                            "Do you want to delete the account?",
-                                            style: TextStyle(
+                                          Text(
+                                            context.tr.deleteAccountQuestion,
+                                            style: const TextStyle(
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.w500),
                                           ),
                                           const SizedBox(
                                             height: 16,
                                           ),
-                                          const Text(
-                                            "Your account will be deleted within 4 days from now",
-                                            style: TextStyle(
+                                          Text(
+                                            context.tr.deleteAccountWarning,
+                                            style: const TextStyle(
                                                 fontSize: AppTextSize.one,
                                                 color: AppColors.neutralRefix),
                                           ),
@@ -108,14 +112,15 @@ class UserProfile extends ConsumerWidget {
                                       Column(
                                         children: [
                                           PrimaryButton(
-                                              text: "Back",
+                                              text: context.tr.backButton,
                                               onPressed: () => context.pop()),
                                           const SizedBox(
                                             height: 8,
                                           ),
                                           ErrorButton(
                                               text: context.tr.delete_account,
-                                              onPressed: () {})
+                                              onPressed: () => ref.read(
+                                                  deleteCurrentUserProvider))
                                         ],
                                       ),
                                     ],

@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 
 import '../../../core/ui/theme/colors.dart';
+import '../../auth/domain/auth_domain.dart';
 
 class NewPhone extends StatelessWidget {
-  const NewPhone({super.key});
+  const NewPhone({super.key, required this.phone});
 
-  static final phoneController = TextEditingController();
+  final String? phone;
+  static final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final phoneController = TextEditingController(text: phone);
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -26,27 +31,50 @@ class NewPhone extends StatelessWidget {
                         fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
                   )),
               SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    TextFormField(
-                      controller: phoneController,
-                      validator: (v) {
-                        if (v!.isEmpty) {
-                          return context.tr.enter_phone;
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          icon: const Text("+966"),
-                          fillColor: AppColors.neutral50,
-                          filled: true,
-                          hintText: context.tr.phone),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    PrimaryButton(text: context.tr.next, onPressed: () {})
-                  ],
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        controller: phoneController,
+                        validator: (v) {
+                          if (v!.isEmpty) {
+                            return context.tr.enter_phone;
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            icon: const Text("+966"),
+                            fillColor: AppColors.neutral50,
+                            filled: true,
+                            hintText: context.tr.phone),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Consumer(builder: (context, ref, child) {
+                        return PrimaryButton(
+                            text: context.tr.next,
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                final currentUser = await ref
+                                    .read(getCurrentUserProvider.future);
+                                if (currentUser!.phone
+                                    .contains(phoneController.text)) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content:
+                                              Text(context.tr.changePhone)));
+                                  return;
+                                }
+                                ref.read(updateCurrentUserProvider(
+                                    user: currentUser.copyWith(
+                                        email: "+966${phoneController.text}")));
+                              }
+                            });
+                      })
+                    ],
+                  ),
                 ),
               ),
             ],

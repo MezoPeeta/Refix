@@ -21,16 +21,26 @@ class Ad with _$Ad {
 @Freezed(toJson: true)
 class Service with _$Service {
   const factory Service({
-    @JsonKey(name: "name") required String name,
-    @JsonKey(name: "details") required String details,
+    @JsonKey(name: "name") required Localized name,
+    @JsonKey(name: "details") required Localized details,
     @JsonKey(name: "_id") required String id,
     @JsonKey(name: "price") required int price,
+    @JsonKey(name: "type") String? type,
     @JsonKey(name: "is_active") required bool isActive,
-    @JsonKey(name: "childService") required List<Service> childService,
     @JsonKey(name: "image") required String image,
-    @JsonKey(name: "__v") required int v,
   }) = _Service;
 
   factory Service.fromJson(Map<String, dynamic> json) =>
       _$ServiceFromJson(json);
 }
+
+@Freezed(toJson: true)
+class Localized with _$Localized {
+  const factory Localized({
+    @JsonKey(name: "localized") required String localized,
+  }) = _Localized;
+
+  factory Localized.fromJson(Map<String, dynamic> json) =>
+      _$LocalizedFromJson(json);
+}
+

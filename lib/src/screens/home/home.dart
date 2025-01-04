@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/screens/auth/domain/notification.dart';
+import 'package:refix/src/screens/booking/data/booking_data.dart';
 import 'package:refix/src/screens/home/components/icon_container.dart';
 import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/home/domain/home_domain.dart';
@@ -29,9 +32,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     super.initState();
   }
 
-  String query = "";
   int? selectedServiceIndex;
   Service? selectedService;
+  final searchControntroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,12 +75,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: SearchBar(
+                        controller: searchControntroller,
+                        textInputAction: TextInputAction.search,
                         hintText: context.tr.search,
                         onChanged: (value) {
                           setState(() {
-                            query = value;
+                            searchControntroller.text = value;
                           });
                         },
+                        trailing: searchControntroller.text.isNotEmpty
+                            ? [
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      searchControntroller.clear();
+                                    });
+                                  },
+                                  child: const Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8),
+                                    child: Icon(
+                                      Icons.close,
+                                      size: 18,
+                                    ),
+                                  ),
+                                )
+                              ]
+                            : null,
                         leading: SvgPicture.asset("assets/img/home/search.svg"),
                         constraints: BoxConstraints(
                             minWidth: MediaQuery.sizeOf(context).width,
@@ -88,7 +112,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       height: AppSpacing.x2,
                     ),
                     Visibility(
-                      visible: query == "",
+                      visible: searchControntroller.text == "",
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: Row(
@@ -98,24 +122,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               IconContainer(
                                 name: context.tr.electrical_systems,
                                 svgPath: "assets/img/home/electrical.svg",
+                                type: MainService.electricalSystems,
                               ),
                               IconContainer(
                                 name: context.tr.plumbing_systems,
                                 svgPath: "assets/img/home/plumber.svg",
+                                type: MainService.plumbingSystems,
                               ),
                               IconContainer(
                                 name: context.tr.air,
                                 svgPath: "assets/img/home/motor.svg",
+                                type: MainService.airConditioning,
                               ),
                             ]),
                       ),
                     ),
                     Visibility(
-                      visible: query.isNotEmpty,
+                      visible: searchControntroller.text.isNotEmpty,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Consumer(builder: (context, ref, child) {
-                          final services = ref.watch(getAllServicesProvider);
+                          final services = ref.watch(getAllServicesProvider(
+                              query: searchControntroller.text));
 
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,7 +152,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Search Results for $query"),
+                                  Text(context.tr
+                                      .searchResult(searchControntroller.text)),
                                   const SizedBox(
                                     height: 10,
                                   ),
@@ -143,34 +172,54 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           itemBuilder: (context, index) {
                                             return ServiceContainer(
                                               service: data[index],
-                                              isSelected:
-                                                  selectedServiceIndex == index,
+                                              isSelected: selectedService ==
+                                                  data[index],
                                               onPressed: () {
-                                                setState(() {
-                                                  selectedServiceIndex = index;
-                                                  selectedService = data[index];
-                                                });
-                                                ref
-                                                        .read(serviceProvider
-                                                            .notifier)
-                                                        .state =
-                                                    data[index].childService;
+                                                if (selectedService ==
+                                                    data[index]) {
+                                                  setState(() {
+                                                    selectedService = null;
+                                                  });
+                                                } else {
+                                                  setState(() {
+                                                    selectedService =
+                                                        data[index];
+                                                  });
+                                                }
                                               },
                                             );
                                           },
                                         );
                                       },
-                                      error: (e, s) =>
-                                          const Center(child: Text("Error")),
+                                      error: (e, s) {
+                                        log("Search Error",
+                                            error: e, stackTrace: s);
+                                        return const Center(
+                                            child: Text("Error"));
+                                      },
                                       loading: () => const Center(
                                           child: CircularProgressIndicator
                                               .adaptive())),
                                 ],
                               ),
                               PrimaryButton(
-                                text: "Order Now",
-                                onPressed: () => context.push("/more_services",
-                                    extra: selectedService?.childService),
+                                text: context.tr.order_now,
+                                onPressed: () {
+                                  if (selectedService == null) {
+                                    log("Selected Service is Null");
+                                    return;
+                                  }
+                                  if (selectedService!.type == null) {
+                                    log("Selected Service: $selectedService has type null");
+                                    return;
+                                  }
+
+                                  context.pushNamed("Services",
+                                      extra: selectedService!.name.localized,
+                                      pathParameters: {
+                                        "type": selectedService!.type!
+                                      });
+                                },
                               )
                             ],
                           );
@@ -181,7 +230,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       height: AppSpacing.x2,
                     ),
                     Visibility(
-                      visible: query == "",
+                      visible: searchControntroller.text == "",
                       child: Padding(
                         padding: const EdgeInsets.all(16),
                         child: LayoutBuilder(builder: (context, constrains) {
@@ -192,6 +241,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ElevatorIconContainer(
                                   name: context.tr.control,
                                   svgPath: "assets/img/home/paint.svg",
+                                  type: MainService.controlAndAutomation,
                                 ),
                                 const SizedBox(
                                   height: 24,
@@ -199,6 +249,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ElevatorIconContainer(
                                   name: context.tr.fire,
                                   svgPath: "assets/img/home/fire.svg",
+                                  type: MainService.fireFightingSystems,
                                 ),
                                 const SizedBox(
                                   height: 24,
@@ -206,6 +257,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ElevatorIconContainer(
                                   name: context.tr.other,
                                   svgPath: "assets/img/home/add.svg",
+                                  type: MainService.other,
                                 ),
                                 const SizedBox(
                                   height: 24,
@@ -213,6 +265,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 ElevatorIconContainer(
                                   name: context.tr.emergency,
                                   svgPath: "assets/img/home/alert.svg",
+                                  type: MainService.emergencyServices,
                                 ),
                               ],
                             );
@@ -231,20 +284,33 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 itemBuilder: (context, index) {
                                   return [
                                     ElevatorIconContainer(
-                                      name: context.tr.electrical_systems,
+                                      name: context.tr.control,
                                       svgPath: "assets/img/home/paint.svg",
+                                      type: MainService.controlAndAutomation,
+                                    ),
+                                    const SizedBox(
+                                      height: 24,
                                     ),
                                     ElevatorIconContainer(
                                       name: context.tr.fire,
                                       svgPath: "assets/img/home/fire.svg",
+                                      type: MainService.fireFightingSystems,
+                                    ),
+                                    const SizedBox(
+                                      height: 24,
                                     ),
                                     ElevatorIconContainer(
                                       name: context.tr.other,
                                       svgPath: "assets/img/home/add.svg",
+                                      type: MainService.other,
+                                    ),
+                                    const SizedBox(
+                                      height: 24,
                                     ),
                                     ElevatorIconContainer(
                                       name: context.tr.emergency,
                                       svgPath: "assets/img/home/alert.svg",
+                                      type: MainService.emergencyServices,
                                     ),
                                   ][index];
                                 }),
@@ -259,7 +325,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: AppSpacing.lg,
               ),
               Visibility(
-                visible: query == "",
+                visible: searchControntroller.text == "",
                 child: Container(
                   color: AppColors.white,
                   child: Padding(
@@ -307,10 +373,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 );
                               },
                               error: (e, s) {
-                                debugPrint("Error: $e");
+                                log("Search Error", error: e, stackTrace: s);
                                 return const Text("Error");
                               },
-                              loading: () => const CircularProgressIndicator());
+                              loading: () => const Center(
+                                  child: CircularProgressIndicator.adaptive()));
                         })
                       ],
                     ),
@@ -321,7 +388,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: AppSpacing.lg,
               ),
               Visibility(
-                visible: query == "",
+                visible: searchControntroller.text == "",
                 child: Container(
                   color: AppColors.white,
                   child: Padding(
@@ -369,7 +436,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: AppSpacing.lg,
               ),
               Visibility(
-                visible: query == "",
+                visible: searchControntroller.text == "",
                 child: Consumer(builder: (context, ref, child) {
                   final ads = ref.watch(getAdsProvider(type: AdsType.banner));
 
@@ -404,7 +471,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 height: AppSpacing.lg,
               ),
               Visibility(
-                visible: query == "",
+                visible: searchControntroller.text == "",
                 child: Container(
                   color: AppColors.white,
                   child: Padding(

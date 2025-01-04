@@ -36,7 +36,6 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   return routes;
 });
 
-
 final routes = GoRouter(
     initialLocation: "/boarding",
     redirect: (BuildContext context, GoRouterState state) async {
@@ -53,9 +52,11 @@ final routes = GoRouter(
     routes: [
       GoRoute(path: "/", builder: (context, state) => const BaseWidget()),
       GoRoute(
-          path: "/services",
+          path: "/services/:type",
+          name: "Services",
           builder: (context, state) => ServicesScreen(
                 name: state.extra as String,
+                type: state.pathParameters["type"] as String,
               )),
       GoRoute(
           path: "/reviews", builder: (context, state) => const ReviewsScreen()),
@@ -63,7 +64,6 @@ final routes = GoRouter(
           name: "moreServices",
           path: "/more_services/:name",
           builder: (context, state) => MoreServicesScreen(
-                services: state.extra as List<Service>,
                 name: state.pathParameters["name"]!,
               )),
       GoRoute(
@@ -74,7 +74,6 @@ final routes = GoRouter(
           builder: (context, state) => TackphotoScreen(
                 service: state.extra as Service,
               )),
-      
       GoRoute(
           path: "/final_step/:service/:photo",
           name: "FinalStep",
@@ -113,9 +112,10 @@ final routes = GoRouter(
           path: "/profile", builder: (context, state) => const UserProfile()),
       GoRoute(
           path: "/switch_phone",
-          builder: (context, state) => const SwitchPhone()),
+          builder: (context, state) =>
+              SwitchPhone(phone: state.extra as String?)),
       GoRoute(
-          path: "/new_phone", builder: (context, state) => const NewPhone()),
+          path: "/new_phone", builder: (context, state) =>  NewPhone(phone: state.extra as String?)),
       GoRoute(
           path: "/new_email",
           builder: (context, state) => NewEmail(
@@ -132,7 +132,7 @@ final routes = GoRouter(
       GoRoute(
           path: "/notifications",
           builder: (context, state) => const NotificationsScreen()),
-           GoRoute(
+      GoRoute(
           path: "/bookingfinalDone",
           builder: (context, state) => const BookingFinalDone()),
     ]);

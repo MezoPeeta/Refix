@@ -54,7 +54,7 @@ class PointsScreen extends ConsumerWidget {
                         itemBuilder: (context, index) {
                           return PointContainer(
                             percentage: data[index].percentage,
-                            name: data[index].name,
+                            name: data[index].name.localized,
                             isActive: data[index].active,
                             requiredPoints: data[index].requiredPoints,
                             availableDays: data[index].availableDays,

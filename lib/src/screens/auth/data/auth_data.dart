@@ -16,7 +16,7 @@ class UserAccount with _$UserAccount {
       _$UserAccountFromJson(json);
 }
 
-@freezed
+@Freezed(copyWith: true)
 class User with _$User {
   const factory User({
     @JsonKey(name: "_id") required String id,

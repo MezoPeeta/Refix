@@ -180,12 +180,6 @@ class ProfileScreen extends StatelessWidget {
                       const Divider(
                         color: AppColors.neutral300,
                       ),
-                      ProfileOption(
-                        title: context.tr.terms_and_conditions,
-                      ),
-                      const Divider(
-                        color: AppColors.neutral300,
-                      ),
                       GestureDetector(
                         onTap: () => context.push("/about"),
                         child: ProfileOption(

@@ -6,7 +6,7 @@ part of 'boarding_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getBoardingHash() => r'2bd99580f50bdf60c8ffede7c826dfa6920edb3d';
+String _$getBoardingHash() => r'413fcbc39ef169253eaed0f7068677e63f4b2ea6';
 
 /// See also [getBoarding].
 @ProviderFor(getBoarding)

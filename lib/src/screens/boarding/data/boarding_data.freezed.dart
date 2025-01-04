@@ -23,8 +23,8 @@ mixin _$Boarding {
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   String get image => throw _privateConstructorUsedError;
-  String get heading => throw _privateConstructorUsedError;
-  String get details => throw _privateConstructorUsedError;
+  Localized get heading => throw _privateConstructorUsedError;
+  Localized get details => throw _privateConstructorUsedError;
 
   /// Serializes this Boarding to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,8 +44,11 @@ abstract class $BoardingCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: "_id") String id,
       String image,
-      String heading,
-      String details});
+      Localized heading,
+      Localized details});
+
+  $LocalizedCopyWith<$Res> get heading;
+  $LocalizedCopyWith<$Res> get details;
 }
 
 /// @nodoc
@@ -80,12 +83,32 @@ class _$BoardingCopyWithImpl<$Res, $Val extends Boarding>
       heading: null == heading
           ? _value.heading
           : heading // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
     ) as $Val);
+  }
+
+  /// Create a copy of Boarding
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res> get heading {
+    return $LocalizedCopyWith<$Res>(_value.heading, (value) {
+      return _then(_value.copyWith(heading: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Boarding
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res> get details {
+    return $LocalizedCopyWith<$Res>(_value.details, (value) {
+      return _then(_value.copyWith(details: value) as $Val);
+    });
   }
 }
 
@@ -100,8 +123,13 @@ abstract class _$$BoardingImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: "_id") String id,
       String image,
-      String heading,
-      String details});
+      Localized heading,
+      Localized details});
+
+  @override
+  $LocalizedCopyWith<$Res> get heading;
+  @override
+  $LocalizedCopyWith<$Res> get details;
 }
 
 /// @nodoc
@@ -134,11 +162,11 @@ class __$$BoardingImplCopyWithImpl<$Res>
       heading: null == heading
           ? _value.heading
           : heading // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
     ));
   }
 }
@@ -161,9 +189,9 @@ class _$BoardingImpl with DiagnosticableTreeMixin implements _Boarding {
   @override
   final String image;
   @override
-  final String heading;
+  final Localized heading;
   @override
-  final String details;
+  final Localized details;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -216,8 +244,8 @@ abstract class _Boarding implements Boarding {
   const factory _Boarding(
       {@JsonKey(name: "_id") required final String id,
       required final String image,
-      required final String heading,
-      required final String details}) = _$BoardingImpl;
+      required final Localized heading,
+      required final Localized details}) = _$BoardingImpl;
 
   factory _Boarding.fromJson(Map<String, dynamic> json) =
       _$BoardingImpl.fromJson;
@@ -228,9 +256,9 @@ abstract class _Boarding implements Boarding {
   @override
   String get image;
   @override
-  String get heading;
+  Localized get heading;
   @override
-  String get details;
+  Localized get details;
 
   /// Create a copy of Boarding
   /// with the given fields replaced by the non-null parameter values.

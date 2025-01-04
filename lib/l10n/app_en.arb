@@ -184,5 +184,31 @@
     "pop_up_notifications": "Pop-Up Notifications",
     "share_locations": "Share locations",
     "access_permissions_to_the_system": "Access permissions to the system",
-    "location_sharing_info": "Location sharing helps the driver provide you with better services. If location sharing is disabled, the driver will not be able to see your location in real-time."
+    "location_sharing_info": "Location sharing helps the driver provide you with better services. If location sharing is disabled, the driver will not be able to see your location in real-time.",
+    "show": "Show",
+    "searchResult": "Search Results for: {query}",
+    "@searchResult": {
+        "placeholders": {
+            "query": {
+                "type": "String"
+            }
+        }
+    },
+    "fineBooking": "A fine of {fine} SAR will be added if the cancellation is made after",
+    "@fineBooking": {
+        "placeholders": {
+            "fine": {
+                "type": "String",
+                "example": "20"
+            }
+        }
+    },
+    "changeEmail": "You haven't changed your email",
+    "switchToNewNumber": "Switch To New Number",
+    "currentlyRegisteredNumber": "The currently registered mobile number is {phone}. Your balance, data, and other account-related information will not be affected.",
+    "switchNow": "Switch Now",
+    "changePhone": "You've not changed your phone number",
+    "deleteAccountQuestion": "Do you want to delete the account?",
+  "deleteAccountWarning": "Your account will be deleted within 4 days from now.",
+  "backButton": "Back"
 }

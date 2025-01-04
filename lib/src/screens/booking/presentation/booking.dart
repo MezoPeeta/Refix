@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,12 +11,16 @@ import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 
+final currentStatusProvider = StateProvider<String>((ref) => "PENDING");
+
 class BookingScreen extends ConsumerWidget {
   const BookingScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(getUserBookingProvider);
+    final status = ref.watch(currentStatusProvider);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -53,27 +59,44 @@ class BookingScreen extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        color: AppColors.primaryRefix,
-                        borderRadius: BorderRadius.circular(AppRadii.lg)),
-                    child: Text(
-                      context.tr.current,
-                      style: const TextStyle(color: AppColors.white),
+                  GestureDetector(
+                    onTap: () {
+                      ref.read(currentStatusProvider.notifier).state =
+                          "PENDING";
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: status == "PENDING"
+                              ? AppColors.primaryRefix
+                              : AppColors.neutralRefix,
+                          borderRadius: BorderRadius.circular(AppRadii.lg)),
+                      child: Text(
+                        context.tr.current,
+                        style: const TextStyle(color: AppColors.white),
+                      ),
                     ),
                   ),
                   const SizedBox(
                     width: 8,
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                        color: AppColors.neutralRefix,
-                        borderRadius: BorderRadius.circular(AppRadii.lg)),
-                    child: Text(
-                      context.tr.closed,
-                      style: const TextStyle(color: AppColors.white),
+                  GestureDetector(
+                    onTap: () {
+                      ref.read(currentStatusProvider.notifier).state = "CLOSED";
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                          color: status == "CLOSED"
+                              ? AppColors.primaryRefix
+                              : AppColors.neutralRefix,
+                          borderRadius: BorderRadius.circular(AppRadii.lg)),
+                      child: Text(
+                        context.tr.closed,
+                        style: const TextStyle(color: AppColors.white),
+                      ),
                     ),
                   )
                 ],
@@ -121,17 +144,19 @@ class BookingScreen extends ConsumerWidget {
             ),
             bookings.when(
                 data: (data) {
+                  final bookings =
+                      data.where((e) => e.status == status).toList();
                   return ListView.separated(
-                      itemCount: data.length,
+                      itemCount: bookings.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       separatorBuilder: (context, _) {
-                        return const Padding(
-                          padding: EdgeInsets.symmetric(
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           child: Text(
-                            "A fine of 20 SAR will be added if the cancellation is made after 8/15/2024.",
-                            style: TextStyle(
+                            context.tr.fineBooking("20"),
+                            style: const TextStyle(
                                 color: AppColors.neutral300,
                                 fontSize: AppTextSize.one),
                           ),
@@ -166,18 +191,22 @@ class BookingScreen extends ConsumerWidget {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    "Date of visit: 12/25/2025",
-                                    style: TextStyle(fontSize: AppTextSize.one),
-                                  ),
                                   Text(
-                                    data[index].services.first.name,
+                                    bookings[index]
+                                        .services
+                                        .first
+                                        .name
+                                        .localized,
                                     style: const TextStyle(
                                         fontSize: 18,
                                         fontWeight: FontWeight.w500),
                                   ),
                                   Text(
-                                    data[index].services.first.details,
+                                    bookings[index]
+                                        .services
+                                        .first
+                                        .details
+                                        .localized,
                                     style: const TextStyle(
                                       fontSize: AppTextSize.two,
                                     ),
@@ -186,7 +215,7 @@ class BookingScreen extends ConsumerWidget {
                               ),
                               const Spacer(),
                               SecondaryButton(
-                                text: "Show",
+                                text: context.tr.show,
                                 onPressed: () => context.push("/in_booking"),
                                 size: const Size(74, 40),
                               )
@@ -196,8 +225,8 @@ class BookingScreen extends ConsumerWidget {
                       });
                 },
                 error: (e, s) {
-                  debugPrint("Error: $e");
-                  return const Text("Error");
+                  log("Booking Error", error: e, stackTrace: s);
+                  return Text("Error: $e");
                 },
                 loading: () =>
                     const Center(child: CircularProgressIndicator.adaptive()))

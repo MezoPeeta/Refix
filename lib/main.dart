@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:refix/src/core/cache/helper.dart';
 import 'package:refix/src/screens/auth/domain/notification.dart';
-import 'dart:io';
 import 'firebase_options.dart';
 import 'src/app.dart';
 

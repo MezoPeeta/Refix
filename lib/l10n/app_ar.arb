@@ -175,5 +175,63 @@
     "pop_up_notifications": "الإشعارات المنبثقة",
     "share_locations": "مشاركة المواقع",
     "access_permissions_to_the_system": "أذونات الوصول إلى النظام",
-    "location_sharing_info": "تساعد مشاركة الموقع السائق في تقديم خدمات أفضل لك. إذا تم تعطيل مشاركة الموقع، فلن يتمكن السائق من رؤية موقعك في الوقت الفعلي."
+    "location_sharing_info": "تساعد مشاركة الموقع السائق في تقديم خدمات أفضل لك. إذا تم تعطيل مشاركة الموقع، فلن يتمكن السائق من رؤية موقعك في الوقت الفعلي.",
+    "show": "عرض",
+    "searchResult": "نتائج البحث عن: {query}",
+    "@searchResult": {
+        "placeholders": {
+            "query": {
+                "type": "String"
+            }
+        }
+    },
+    "fineBooking": "سيتم إضافة غرامة قدرها {fine} ريال في حالة الإلغاء بعد",
+    "@fineBooking": {
+        "placeholders": {
+            "fine": {
+                "type": "String",
+                "example": "20"
+            }
+        }
+    },
+    "changeEmail": "لم تقم بتغيير البريد الإلكتروني الخاص بك",
+    "@switchToNewNumber": {
+        "description": "Title for switching to a new number",
+        "type": "text",
+        "placeholders": {}
+    },
+    "switchToNewNumber": "التبديل إلى رقم جديد",
+    "@currentlyRegisteredNumber": {
+        "description": "Message showing the currently registered number and assurance about account data",
+        "type": "text",
+        "placeholders": {
+            "phone": {}
+        }
+    },
+    "currentlyRegisteredNumber": "رقم الهاتف المسجل حاليًا هو {phone}. لن تتأثر رصيدك أو بياناتك أو أي معلومات أخرى متعلقة بالحساب.",
+    "@switchNow": {
+        "description": "Button text for switching to a new number",
+        "type": "text",
+        "placeholders": {}
+    },
+    "switchNow": "التبديل الآن",
+    "changePhone": "لم تقم بتغيير رقم هاتفك",
+    "@deleteAccountQuestion": {
+        "description": "Question asking if the user wants to delete their account",
+        "type": "text",
+        "placeholders": {}
+    },
+    "deleteAccountQuestion": "هل تريد حذف الحساب؟",
+    "@deleteAccountWarning": {
+        "description": "Warning message about account deletion timeline",
+        "type": "text",
+        "placeholders": {}
+    },
+    "deleteAccountWarning": "سيتم حذف حسابك خلال 4 أيام من الآن.",
+    "@backButton": {
+        "description": "Text for the back button",
+        "type": "text",
+        "placeholders": {}
+    },
+    "backButton": "رجوع"
 }

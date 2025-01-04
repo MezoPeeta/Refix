@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 
 import '../../../core/ui/theme/colors.dart';
 
 class SwitchPhone extends StatelessWidget {
-  const SwitchPhone({super.key});
-  
+  const SwitchPhone({super.key, required this.phone});
+  final String? phone;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Switch To New Number"),
+        title: Text(context.tr.switchToNewNumber),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(16.0),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
-              "The currently registered mobile number is 0114****42 Your balance data and other account-related information will not be affected.",
-              style: TextStyle(
+              context.tr.currentlyRegisteredNumber(phone ?? ""),
+              style: const TextStyle(
                   color: AppColors.neutralRefix, fontSize: AppTextSize.one),
             )
           ],
@@ -27,7 +30,10 @@ class SwitchPhone extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: PrimaryButton(text: "Switch Now", onPressed: () {}),
+        child: PrimaryButton(
+            text: context.tr.switchNow,
+            onPressed: () => context.push("/new_phone",
+                extra: phone?.replaceAll("+966", ""))),
       ),
     );
   }

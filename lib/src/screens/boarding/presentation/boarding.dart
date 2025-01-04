@@ -98,7 +98,7 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
                               FittedBox(
                                 fit: BoxFit.fitHeight,
                                 child: Text(
-                                  data[currentIndex].heading,
+                                  data[currentIndex].heading.localized,
                                   style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       fontSize: AppTextSize.six),
@@ -108,7 +108,7 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
                                 height: 24,
                               ),
                               Text(
-                                data[currentIndex].details,
+                                data[currentIndex].details.localized,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                     fontSize: AppTextSize.two,
@@ -155,8 +155,7 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
             },
             error: (e, s) {
               debugPrint("Error $e");
-              return NetworkError(
-                  onTryAgain: () => ref.invalidate(getBoardingProvider));
+              return const Center(child: Text("Error"));
             },
             loading: () => const Center(child: CircularProgressIndicator())));
   }

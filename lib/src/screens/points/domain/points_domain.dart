@@ -23,3 +23,17 @@ Future<List<Point>> getUserPoints(Ref ref) async {
   }
   return [];
 }
+
+@riverpod
+Future<void> claimPoints(Ref ref, {required String pointsID}) async {
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(method: "PATCH", url: "points/claim/$pointsID");
+  if (response.statusCode == 201) {
+    return jsonDecode(response.body);
+  }
+  if (response.statusCode == 401) {
+    ref.read(authProvider).refreshAccessToken();
+  }
+  return ;
+}

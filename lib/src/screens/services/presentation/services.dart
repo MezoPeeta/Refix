@@ -17,21 +17,19 @@ final serviceProvider = StateProvider<List<Service>>((ref) {
 });
 
 class ServicesScreen extends ConsumerStatefulWidget {
-  const ServicesScreen({super.key, required this.name});
+  const ServicesScreen({super.key, required this.name, required this.type});
 
   final String name;
+  final String type;
 
   @override
   ConsumerState<ServicesScreen> createState() => _ServicesScreenState();
 }
 
 class _ServicesScreenState extends ConsumerState<ServicesScreen> {
-  int? selectedServiceIndex;
-  Service? selectedService;
-
   @override
   Widget build(BuildContext context) {
-    final services = ref.watch(getAllServicesProvider);
+    final services = ref.watch(getSubServicesProvider(type: widget.type));
     return Scaffold(
       backgroundColor: AppColors.neutral50,
       body: SafeArea(
@@ -176,14 +174,10 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                             itemBuilder: (context, index) {
                               return ServiceContainer(
                                 service: data[index],
-                                isSelected: selectedServiceIndex == index,
+                                isSelected: false,
                                 onPressed: () {
-                                  setState(() {
-                                    selectedServiceIndex = index;
-                                    selectedService = data[index];
-                                  });
-                                  ref.read(serviceProvider.notifier).state =
-                                      data[index].childService;
+                                  // ref.read(serviceProvider.notifier).state =
+                                  //     data[index].childService;
                                 },
                               );
                             },
@@ -202,14 +196,8 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
         child: PrimaryButton(
           text: context.tr.order_now,
           onPressed: () {
-            if (selectedService != null) {
-              context.pushNamed("moreServices",
-                  extra: selectedService!.childService,
-                  pathParameters: {"name": selectedService!.name});
-              return;
-            }
-            ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(context.tr.choose_service)));
+            context.pushNamed("moreServices",
+                pathParameters: {"name": widget.type});
           },
         ),
       ),
@@ -236,9 +224,7 @@ class ServiceContainer extends StatelessWidget {
       padding: isSelected ? const EdgeInsets.all(8) : EdgeInsets.zero,
       color: isSelected ? AppColors.primaryRefix : Colors.transparent,
       child: GestureDetector(
-        onTap: () {
-          onPressed();
-        },
+        onTap: onPressed,
         child: Column(
           children: [
             Container(
@@ -255,7 +241,7 @@ class ServiceContainer extends StatelessWidget {
                       : AppColors.neutral100),
             ),
             SizedBox(height: isSelected ? 5 : 13),
-            FittedBox(child: Text(service.name))
+            FittedBox(child: Text(service.name.localized))
           ],
         ),
       ),

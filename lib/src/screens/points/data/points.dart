@@ -1,6 +1,7 @@
 
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:refix/src/screens/home/data/home_data.dart';
 
 part 'points.freezed.dart';
 part 'points.g.dart';
@@ -12,7 +13,7 @@ class Point with _$Point {
         @JsonKey(name: "_id")
         required String id,
         @JsonKey(name: "name")
-        required String name,
+        required Localized name,
         @JsonKey(name: "percentage")
         required int percentage,
         @JsonKey(name: "required_points")

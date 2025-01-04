@@ -8,7 +8,7 @@ part of 'points.dart';
 
 _$PointImpl _$$PointImplFromJson(Map<String, dynamic> json) => _$PointImpl(
       id: json['_id'] as String,
-      name: json['name'] as String,
+      name: Localized.fromJson(json['name'] as Map<String, dynamic>),
       percentage: (json['percentage'] as num).toInt(),
       requiredPoints: (json['required_points'] as num).toInt(),
       availableDays: (json['available_days'] as num).toInt(),

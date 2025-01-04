@@ -25,7 +25,7 @@ class TackphotoScreen extends ConsumerWidget {
         title: Column(
           children: [
             Text(
-              service.name,
+              service.name.localized,
               style: const TextStyle(fontSize: AppTextSize.two),
             ),
             const SizedBox(

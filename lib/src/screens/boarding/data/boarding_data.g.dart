@@ -10,8 +10,8 @@ _$BoardingImpl _$$BoardingImplFromJson(Map<String, dynamic> json) =>
     _$BoardingImpl(
       id: json['_id'] as String,
       image: json['image'] as String,
-      heading: json['heading'] as String,
-      details: json['details'] as String,
+      heading: Localized.fromJson(json['heading'] as Map<String, dynamic>),
+      details: Localized.fromJson(json['details'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$BoardingImplToJson(_$BoardingImpl instance) =>

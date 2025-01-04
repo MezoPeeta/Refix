@@ -287,21 +287,19 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Service {
   @JsonKey(name: "name")
-  String get name => throw _privateConstructorUsedError;
+  Localized get name => throw _privateConstructorUsedError;
   @JsonKey(name: "details")
-  String get details => throw _privateConstructorUsedError;
+  Localized get details => throw _privateConstructorUsedError;
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: "price")
   int get price => throw _privateConstructorUsedError;
+  @JsonKey(name: "type")
+  String? get type => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active")
   bool get isActive => throw _privateConstructorUsedError;
-  @JsonKey(name: "childService")
-  List<Service> get childService => throw _privateConstructorUsedError;
   @JsonKey(name: "image")
   String get image => throw _privateConstructorUsedError;
-  @JsonKey(name: "__v")
-  int get v => throw _privateConstructorUsedError;
 
   /// Serializes this Service to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -318,14 +316,16 @@ abstract class $ServiceCopyWith<$Res> {
       _$ServiceCopyWithImpl<$Res, Service>;
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
-      @JsonKey(name: "details") String details,
+      {@JsonKey(name: "name") Localized name,
+      @JsonKey(name: "details") Localized details,
       @JsonKey(name: "_id") String id,
       @JsonKey(name: "price") int price,
+      @JsonKey(name: "type") String? type,
       @JsonKey(name: "is_active") bool isActive,
-      @JsonKey(name: "childService") List<Service> childService,
-      @JsonKey(name: "image") String image,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "image") String image});
+
+  $LocalizedCopyWith<$Res> get name;
+  $LocalizedCopyWith<$Res> get details;
 }
 
 /// @nodoc
@@ -347,20 +347,19 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
     Object? details = null,
     Object? id = null,
     Object? price = null,
+    Object? type = freezed,
     Object? isActive = null,
-    Object? childService = null,
     Object? image = null,
-    Object? v = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -369,23 +368,39 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
-      childService: null == childService
-          ? _value.childService
-          : childService // ignore: cast_nullable_to_non_nullable
-              as List<Service>,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
+  }
+
+  /// Create a copy of Service
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res> get name {
+    return $LocalizedCopyWith<$Res>(_value.name, (value) {
+      return _then(_value.copyWith(name: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Service
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res> get details {
+    return $LocalizedCopyWith<$Res>(_value.details, (value) {
+      return _then(_value.copyWith(details: value) as $Val);
+    });
   }
 }
 
@@ -397,14 +412,18 @@ abstract class _$$ServiceImplCopyWith<$Res> implements $ServiceCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
-      @JsonKey(name: "details") String details,
+      {@JsonKey(name: "name") Localized name,
+      @JsonKey(name: "details") Localized details,
       @JsonKey(name: "_id") String id,
       @JsonKey(name: "price") int price,
+      @JsonKey(name: "type") String? type,
       @JsonKey(name: "is_active") bool isActive,
-      @JsonKey(name: "childService") List<Service> childService,
-      @JsonKey(name: "image") String image,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "image") String image});
+
+  @override
+  $LocalizedCopyWith<$Res> get name;
+  @override
+  $LocalizedCopyWith<$Res> get details;
 }
 
 /// @nodoc
@@ -424,20 +443,19 @@ class __$$ServiceImplCopyWithImpl<$Res>
     Object? details = null,
     Object? id = null,
     Object? price = null,
+    Object? type = freezed,
     Object? isActive = null,
-    Object? childService = null,
     Object? image = null,
-    Object? v = null,
   }) {
     return _then(_$ServiceImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       details: null == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -446,22 +464,18 @@ class __$$ServiceImplCopyWithImpl<$Res>
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
               as int,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       isActive: null == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
-      childService: null == childService
-          ? _value._childService
-          : childService // ignore: cast_nullable_to_non_nullable
-              as List<Service>,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -474,21 +488,19 @@ class _$ServiceImpl implements _Service {
       @JsonKey(name: "details") required this.details,
       @JsonKey(name: "_id") required this.id,
       @JsonKey(name: "price") required this.price,
+      @JsonKey(name: "type") this.type,
       @JsonKey(name: "is_active") required this.isActive,
-      @JsonKey(name: "childService") required final List<Service> childService,
-      @JsonKey(name: "image") required this.image,
-      @JsonKey(name: "__v") required this.v})
-      : _childService = childService;
+      @JsonKey(name: "image") required this.image});
 
   factory _$ServiceImpl.fromJson(Map<String, dynamic> json) =>
       _$$ServiceImplFromJson(json);
 
   @override
   @JsonKey(name: "name")
-  final String name;
+  final Localized name;
   @override
   @JsonKey(name: "details")
-  final String details;
+  final Localized details;
   @override
   @JsonKey(name: "_id")
   final String id;
@@ -496,27 +508,18 @@ class _$ServiceImpl implements _Service {
   @JsonKey(name: "price")
   final int price;
   @override
+  @JsonKey(name: "type")
+  final String? type;
+  @override
   @JsonKey(name: "is_active")
   final bool isActive;
-  final List<Service> _childService;
-  @override
-  @JsonKey(name: "childService")
-  List<Service> get childService {
-    if (_childService is EqualUnmodifiableListView) return _childService;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_childService);
-  }
-
   @override
   @JsonKey(name: "image")
   final String image;
-  @override
-  @JsonKey(name: "__v")
-  final int v;
 
   @override
   String toString() {
-    return 'Service(name: $name, details: $details, id: $id, price: $price, isActive: $isActive, childService: $childService, image: $image, v: $v)';
+    return 'Service(name: $name, details: $details, id: $id, price: $price, type: $type, isActive: $isActive, image: $image)';
   }
 
   @override
@@ -528,18 +531,16 @@ class _$ServiceImpl implements _Service {
             (identical(other.details, details) || other.details == details) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.price, price) || other.price == price) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
-            const DeepCollectionEquality()
-                .equals(other._childService, _childService) &&
-            (identical(other.image, image) || other.image == image) &&
-            (identical(other.v, v) || other.v == v));
+            (identical(other.image, image) || other.image == image));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, details, id, price,
-      isActive, const DeepCollectionEquality().hash(_childService), image, v);
+  int get hashCode =>
+      Object.hash(runtimeType, name, details, id, price, type, isActive, image);
 
   /// Create a copy of Service
   /// with the given fields replaced by the non-null parameter values.
@@ -559,23 +560,22 @@ class _$ServiceImpl implements _Service {
 
 abstract class _Service implements Service {
   const factory _Service(
-      {@JsonKey(name: "name") required final String name,
-      @JsonKey(name: "details") required final String details,
+      {@JsonKey(name: "name") required final Localized name,
+      @JsonKey(name: "details") required final Localized details,
       @JsonKey(name: "_id") required final String id,
       @JsonKey(name: "price") required final int price,
+      @JsonKey(name: "type") final String? type,
       @JsonKey(name: "is_active") required final bool isActive,
-      @JsonKey(name: "childService") required final List<Service> childService,
-      @JsonKey(name: "image") required final String image,
-      @JsonKey(name: "__v") required final int v}) = _$ServiceImpl;
+      @JsonKey(name: "image") required final String image}) = _$ServiceImpl;
 
   factory _Service.fromJson(Map<String, dynamic> json) = _$ServiceImpl.fromJson;
 
   @override
   @JsonKey(name: "name")
-  String get name;
+  Localized get name;
   @override
   @JsonKey(name: "details")
-  String get details;
+  Localized get details;
   @override
   @JsonKey(name: "_id")
   String get id;
@@ -583,22 +583,173 @@ abstract class _Service implements Service {
   @JsonKey(name: "price")
   int get price;
   @override
+  @JsonKey(name: "type")
+  String? get type;
+  @override
   @JsonKey(name: "is_active")
   bool get isActive;
   @override
-  @JsonKey(name: "childService")
-  List<Service> get childService;
-  @override
   @JsonKey(name: "image")
   String get image;
-  @override
-  @JsonKey(name: "__v")
-  int get v;
 
   /// Create a copy of Service
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ServiceImplCopyWith<_$ServiceImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Localized _$LocalizedFromJson(Map<String, dynamic> json) {
+  return _Localized.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Localized {
+  @JsonKey(name: "localized")
+  String get localized => throw _privateConstructorUsedError;
+
+  /// Serializes this Localized to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Localized
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LocalizedCopyWith<Localized> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LocalizedCopyWith<$Res> {
+  factory $LocalizedCopyWith(Localized value, $Res Function(Localized) then) =
+      _$LocalizedCopyWithImpl<$Res, Localized>;
+  @useResult
+  $Res call({@JsonKey(name: "localized") String localized});
+}
+
+/// @nodoc
+class _$LocalizedCopyWithImpl<$Res, $Val extends Localized>
+    implements $LocalizedCopyWith<$Res> {
+  _$LocalizedCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Localized
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? localized = null,
+  }) {
+    return _then(_value.copyWith(
+      localized: null == localized
+          ? _value.localized
+          : localized // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LocalizedImplCopyWith<$Res>
+    implements $LocalizedCopyWith<$Res> {
+  factory _$$LocalizedImplCopyWith(
+          _$LocalizedImpl value, $Res Function(_$LocalizedImpl) then) =
+      __$$LocalizedImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({@JsonKey(name: "localized") String localized});
+}
+
+/// @nodoc
+class __$$LocalizedImplCopyWithImpl<$Res>
+    extends _$LocalizedCopyWithImpl<$Res, _$LocalizedImpl>
+    implements _$$LocalizedImplCopyWith<$Res> {
+  __$$LocalizedImplCopyWithImpl(
+      _$LocalizedImpl _value, $Res Function(_$LocalizedImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Localized
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? localized = null,
+  }) {
+    return _then(_$LocalizedImpl(
+      localized: null == localized
+          ? _value.localized
+          : localized // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LocalizedImpl implements _Localized {
+  const _$LocalizedImpl({@JsonKey(name: "localized") required this.localized});
+
+  factory _$LocalizedImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LocalizedImplFromJson(json);
+
+  @override
+  @JsonKey(name: "localized")
+  final String localized;
+
+  @override
+  String toString() {
+    return 'Localized(localized: $localized)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LocalizedImpl &&
+            (identical(other.localized, localized) ||
+                other.localized == localized));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, localized);
+
+  /// Create a copy of Localized
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LocalizedImplCopyWith<_$LocalizedImpl> get copyWith =>
+      __$$LocalizedImplCopyWithImpl<_$LocalizedImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LocalizedImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Localized implements Localized {
+  const factory _Localized(
+          {@JsonKey(name: "localized") required final String localized}) =
+      _$LocalizedImpl;
+
+  factory _Localized.fromJson(Map<String, dynamic> json) =
+      _$LocalizedImpl.fromJson;
+
+  @override
+  @JsonKey(name: "localized")
+  String get localized;
+
+  /// Create a copy of Localized
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LocalizedImplCopyWith<_$LocalizedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
