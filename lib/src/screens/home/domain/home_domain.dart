@@ -62,9 +62,7 @@ Future<List<Service>> getSubServices(
       ? "service?page=1&take=10&type=$type"
       : "service?page=1&take=10";
 
-  final request = await ref
-      .read(httpProvider)
-      .authenticatedRequest(url: url, method: "GET");
+  final request = await ref.read(httpProvider).get(apiName: url);
   final data = jsonDecode(request.body);
   if (request.statusCode == 200) {
     final List<Service> services =

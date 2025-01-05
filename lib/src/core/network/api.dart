@@ -25,7 +25,8 @@ class HttpAPI {
       "Content-Type": "application/json",
       "Accept-Language": currentLocale,
     };
-    var response = await http.post(url, body: jsonEncode(body), headers: headers);
+    var response =
+        await http.post(url, body: jsonEncode(body), headers: headers);
     return response;
   }
 
@@ -64,12 +65,12 @@ class HttpAPI {
           response = await http.get(bUrl, headers: headers);
           break;
         case 'POST':
-          response =
-              await http.post(bUrl, headers: headers, body: jsonEncode(body));
+          response = await http.post(bUrl,
+              headers: headers, body: body != null ? jsonEncode(body) : null);
           break;
         case 'PUT':
-          response =
-              await http.put(bUrl, headers: headers, body: jsonEncode(body));
+          response = await http.put(bUrl,
+              headers: headers, body: body != null ? jsonEncode(body) : null);
           break;
         case 'PATCH':
           response = await http.patch(bUrl,
@@ -91,6 +92,7 @@ class HttpAPI {
 
     return await r.retry(
       makeRequest,
+      onRetry: (e) => e is UnauthorizedException,
       retryIf: (e) => e is UnauthorizedException,
     );
   }

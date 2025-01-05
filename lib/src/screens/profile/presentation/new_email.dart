@@ -4,15 +4,23 @@ import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/auth/domain/auth_domain.dart';
+import 'package:refix/src/screens/profile/domain/user_notifier.dart';
 
-class NewEmail extends StatelessWidget {
+class NewEmail extends StatefulWidget {
   const NewEmail({super.key, required this.email});
 
   final String email;
   static final _formKey = GlobalKey<FormState>();
+
+  @override
+  State<NewEmail> createState() => _NewEmailState();
+}
+
+class _NewEmailState extends State<NewEmail> {
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
-    final emailController = TextEditingController(text: email);
+    final emailController = TextEditingController(text: widget.email);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Padding(
@@ -28,7 +36,7 @@ class NewEmail extends StatelessWidget {
                   )),
               SliverToBoxAdapter(
                 child: Form(
-                  key: _formKey,
+                  key: NewEmail._formKey,
                   child: Column(
                     children: [
                       const SizedBox(
@@ -51,21 +59,35 @@ class NewEmail extends StatelessWidget {
                       Consumer(
                           builder: (context, ref, child) => PrimaryButton(
                               text: context.tr.next,
+                              loading: loading,
                               onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  final currentUser = await ref
-                                      .read(getCurrentUserProvider.future);
-                                  if (currentUser!.email ==
-                                      emailController.text) {
+                                if (NewEmail._formKey.currentState!
+                                    .validate()) {
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  if (loading == true) {
+                                    final currentUser = await ref
+                                        .read(customerNotifierProvider.future);
+                                    if (currentUser!.email ==
+                                        emailController.text) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(
+                                                  context.tr.changeEmail)));
+                                      return;
+                                    }
+                                    await ref
+                                        .read(customerNotifierProvider.notifier)
+                                        .updateCustomer(currentUser.copyWith(
+                                            email: emailController.text));
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content:
-                                                Text(context.tr.changeEmail)));
-                                    return;
+                                        const SnackBar(
+                                            content: Text("Updated")));
                                   }
-                                  ref.read(updateCurrentUserProvider(
-                                      user: currentUser.copyWith(
-                                          email: emailController.text)));
+                                  setState(() {
+                                    loading = false;
+                                  });
                                 }
                               }))
                     ],

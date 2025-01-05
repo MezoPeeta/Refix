@@ -6,7 +6,7 @@ part of 'points_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getUserPointsHash() => r'85a299f7d140d2aa3a6ceb10a179bdbc9247a0c5';
+String _$getUserPointsHash() => r'1f19a26529bd5b3cee44456de20b34896ded653f';
 
 /// See also [getUserPoints].
 @ProviderFor(getUserPoints)
@@ -23,7 +23,7 @@ final getUserPointsProvider = AutoDisposeFutureProvider<List<Point>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetUserPointsRef = AutoDisposeFutureProviderRef<List<Point>>;
-String _$claimPointsHash() => r'7ccaff1f3e2183b56e5b3eced9b701e6b004f8dc';
+String _$claimPointsHash() => r'0d2a6f50d62f2a1010075685dc595088251fd870';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -51,7 +51,7 @@ class _SystemHash {
 const claimPointsProvider = ClaimPointsFamily();
 
 /// See also [claimPoints].
-class ClaimPointsFamily extends Family<AsyncValue<void>> {
+class ClaimPointsFamily extends Family<AsyncValue<int>> {
   /// See also [claimPoints].
   const ClaimPointsFamily();
 
@@ -89,7 +89,7 @@ class ClaimPointsFamily extends Family<AsyncValue<void>> {
 }
 
 /// See also [claimPoints].
-class ClaimPointsProvider extends AutoDisposeFutureProvider<void> {
+class ClaimPointsProvider extends AutoDisposeFutureProvider<int> {
   /// See also [claimPoints].
   ClaimPointsProvider({
     required String pointsID,
@@ -124,7 +124,7 @@ class ClaimPointsProvider extends AutoDisposeFutureProvider<void> {
 
   @override
   Override overrideWith(
-    FutureOr<void> Function(ClaimPointsRef provider) create,
+    FutureOr<int> Function(ClaimPointsRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -141,7 +141,7 @@ class ClaimPointsProvider extends AutoDisposeFutureProvider<void> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<void> createElement() {
+  AutoDisposeFutureProviderElement<int> createElement() {
     return _ClaimPointsProviderElement(this);
   }
 
@@ -161,17 +161,35 @@ class ClaimPointsProvider extends AutoDisposeFutureProvider<void> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin ClaimPointsRef on AutoDisposeFutureProviderRef<void> {
+mixin ClaimPointsRef on AutoDisposeFutureProviderRef<int> {
   /// The parameter `pointsID` of this provider.
   String get pointsID;
 }
 
-class _ClaimPointsProviderElement extends AutoDisposeFutureProviderElement<void>
+class _ClaimPointsProviderElement extends AutoDisposeFutureProviderElement<int>
     with ClaimPointsRef {
   _ClaimPointsProviderElement(super.provider);
 
   @override
   String get pointsID => (origin as ClaimPointsProvider).pointsID;
 }
+
+String _$getCustomerOfferHash() => r'1b6f3a326543dce04f17667f1b0d2d2ded99ce73';
+
+/// See also [getCustomerOffer].
+@ProviderFor(getCustomerOffer)
+final getCustomerOfferProvider = AutoDisposeFutureProvider<Offer>.internal(
+  getCustomerOffer,
+  name: r'getCustomerOfferProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$getCustomerOfferHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+typedef GetCustomerOfferRef = AutoDisposeFutureProviderRef<Offer>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,26 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/services/domain/booking_domain.dart';
 
 import '../../../core/ui/theme/colors.dart';
 
-class PaymentMethods extends StatelessWidget {
+class PaymentMethods extends ConsumerWidget {
   const PaymentMethods({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final discount =
+        ref.watch(getDiscountProvider(pageName: "New User Add Card"));
     return Scaffold(
       appBar: AppBar(
         title: Text(context.tr.payment_methods),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Container(
+      body: Column(
+        children: [
+          discount.when(
+              data: (data) {
+                return Container(
+                  color: AppColors.primary100,
+                  height: 40,
+                  width: MediaQuery.sizeOf(context).width,
+                  child: Center(
+                      child: Text(
+                    data?.heading?.localized ?? "",
+                    style: const TextStyle(color: AppColors.primaryRefix),
+                  )),
+                );
+              },
+              error: (e, s) => const Text("Error"),
+              loading: () => const SizedBox.shrink()),
+          const SizedBox(
+            height: 16,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -43,10 +65,13 @@ class PaymentMethods extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            Container(
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Container(
               padding: const EdgeInsets.all(16.0),
               decoration: BoxDecoration(
                   color: Colors.white,
@@ -114,12 +139,15 @@ class PaymentMethods extends StatelessWidget {
                 ],
               ),
             ),
-            const Spacer(),
-            PrimaryButton(
+          ),
+          const Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: PrimaryButton(
                 text: context.tr.continuee,
-                onPressed: () => context.go("/bookingfinalDone"))
-          ],
-        ),
+                onPressed: () => context.go("/bookingfinalDone")),
+          )
+        ],
       ),
     );
   }

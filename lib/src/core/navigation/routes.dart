@@ -8,7 +8,9 @@ import 'package:refix/src/screens/auth/presentation/forget_password.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
 import 'package:refix/src/screens/auth/presentation/notifications.dart';
 import 'package:refix/src/screens/auth/presentation/otp_verification.dart';
+import 'package:refix/src/screens/boarding/data/boarding_data.dart';
 import 'package:refix/src/screens/booking/presentation/booking_final.dart';
+import 'package:refix/src/screens/points/presentation/redeem_points.dart';
 import 'package:refix/src/screens/profile/presentation/about_refix.dart';
 import 'package:refix/src/screens/profile/presentation/new_email.dart';
 import 'package:refix/src/screens/profile/presentation/new_phone.dart';
@@ -24,6 +26,7 @@ import 'package:refix/src/screens/booking/presentation/inbooking.dart';
 import 'package:refix/src/screens/booking/presentation/report_booking.dart';
 import 'package:refix/src/screens/booking/presentation/reviews.dart';
 import 'package:refix/src/screens/reviews/presentation/reviews.dart';
+import 'package:refix/src/screens/services/data/bookin_data.dart';
 import 'package:refix/src/screens/services/presentation/booking_done.dart';
 import 'package:refix/src/screens/services/presentation/final_step.dart';
 import 'package:refix/src/screens/services/presentation/more_services.dart';
@@ -59,7 +62,10 @@ final routes = GoRouter(
                 type: state.pathParameters["type"] as String,
               )),
       GoRoute(
-          path: "/reviews", builder: (context, state) => const ReviewsScreen()),
+          path: "/reviews",
+          builder: (context, state) => ReviewsScreen(
+                type: state.extra as String,
+              )),
       GoRoute(
           name: "moreServices",
           path: "/more_services/:name",
@@ -70,20 +76,29 @@ final routes = GoRouter(
           path: "/need_login",
           builder: (context, state) => const NeedLoginScreen()),
       GoRoute(
-          path: "/tack_photo",
+          path: "/tack_photo/:type",
+          name: "TackPhoto",
           builder: (context, state) => TackphotoScreen(
                 service: state.extra as Service,
+                type: state.pathParameters["type"]!,
               )),
       GoRoute(
-          path: "/final_step/:service/:photo",
+          path: "/final_step/:service/:photo/:type",
           name: "FinalStep",
           builder: (context, state) => FinalstepScreen(
                 service: state.pathParameters["service"]!,
                 photo: state.pathParameters["photo"]!,
+                type: state.pathParameters["type"]!,
               )),
       GoRoute(
-          path: "/booking_done",
-          builder: (context, state) => const BookingdoneScreen()),
+          path: "/booking_done/:cost/:points",
+          name: "BookingDone",
+          builder: (context, state) => BookingdoneScreen(
+                discount: state.extra as Discount,
+                pointsPercentage:
+                    int.tryParse(state.pathParameters["points"]!) ?? 0,
+                cost: double.parse(state.pathParameters["cost"]!),
+              )),
       GoRoute(path: "/login", builder: (context, state) => const LoginScreen()),
       GoRoute(
           path: "/forget_password",
@@ -95,7 +110,10 @@ final routes = GoRouter(
           path: "/sign_up", builder: (context, state) => const SignupScreen()),
       GoRoute(
           path: "/in_booking",
-          builder: (context, state) => const InbookingScreen()),
+          name: "InBooking",
+          builder: (context, state) => InbookingScreen(
+                booking: state.extra as Booking,
+              )),
       GoRoute(
           path: "/cancel_booking",
           builder: (context, state) => const CancelReasonScreen()),
@@ -115,7 +133,8 @@ final routes = GoRouter(
           builder: (context, state) =>
               SwitchPhone(phone: state.extra as String?)),
       GoRoute(
-          path: "/new_phone", builder: (context, state) =>  NewPhone(phone: state.extra as String?)),
+          path: "/new_phone",
+          builder: (context, state) => NewPhone(phone: state.extra as String?)),
       GoRoute(
           path: "/new_email",
           builder: (context, state) => NewEmail(
@@ -125,6 +144,11 @@ final routes = GoRouter(
           path: "/payment_method",
           builder: (context, state) => const PaymentMethods()),
       GoRoute(path: "/privacy", builder: (context, state) => const Privacy()),
+      GoRoute(
+          path: "/redeem",
+          builder: (context, state) => RedeemPoints(
+                percentage: state.extra as String,
+              )),
       GoRoute(
           path: "/terms",
           builder: (context, state) => const TermsAndConditions()),

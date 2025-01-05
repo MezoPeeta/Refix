@@ -28,8 +28,8 @@ mixin _$Booking {
   User get customer => throw _privateConstructorUsedError;
   @JsonKey(name: "appointment_date")
   DateTime get appointmentDate => throw _privateConstructorUsedError;
-  @JsonKey(name: "notes")
-  String get notes => throw _privateConstructorUsedError;
+  @JsonKey(name: "note")
+  String? get note => throw _privateConstructorUsedError;
   @JsonKey(name: "images_before_reaper")
   List<String> get imagesBeforeReaper => throw _privateConstructorUsedError;
   @JsonKey(name: "images_after_reaper")
@@ -66,7 +66,7 @@ abstract class $BookingCopyWith<$Res> {
       @JsonKey(name: "services") List<Service> services,
       @JsonKey(name: "customer") User customer,
       @JsonKey(name: "appointment_date") DateTime appointmentDate,
-      @JsonKey(name: "notes") String notes,
+      @JsonKey(name: "note") String? note,
       @JsonKey(name: "images_before_reaper") List<String> imagesBeforeReaper,
       @JsonKey(name: "images_after_reaper") List<dynamic> imagesAfterReaper,
       @JsonKey(name: "description_problem") dynamic descriptionProblem,
@@ -98,7 +98,7 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? services = null,
     Object? customer = null,
     Object? appointmentDate = null,
-    Object? notes = null,
+    Object? note = freezed,
     Object? imagesBeforeReaper = null,
     Object? imagesAfterReaper = null,
     Object? descriptionProblem = freezed,
@@ -125,10 +125,10 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.appointmentDate
           : appointmentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
       imagesBeforeReaper: null == imagesBeforeReaper
           ? _value.imagesBeforeReaper
           : imagesBeforeReaper // ignore: cast_nullable_to_non_nullable
@@ -187,7 +187,7 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
       @JsonKey(name: "services") List<Service> services,
       @JsonKey(name: "customer") User customer,
       @JsonKey(name: "appointment_date") DateTime appointmentDate,
-      @JsonKey(name: "notes") String notes,
+      @JsonKey(name: "note") String? note,
       @JsonKey(name: "images_before_reaper") List<String> imagesBeforeReaper,
       @JsonKey(name: "images_after_reaper") List<dynamic> imagesAfterReaper,
       @JsonKey(name: "description_problem") dynamic descriptionProblem,
@@ -218,7 +218,7 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? services = null,
     Object? customer = null,
     Object? appointmentDate = null,
-    Object? notes = null,
+    Object? note = freezed,
     Object? imagesBeforeReaper = null,
     Object? imagesAfterReaper = null,
     Object? descriptionProblem = freezed,
@@ -245,10 +245,10 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.appointmentDate
           : appointmentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
       imagesBeforeReaper: null == imagesBeforeReaper
           ? _value._imagesBeforeReaper
           : imagesBeforeReaper // ignore: cast_nullable_to_non_nullable
@@ -293,7 +293,7 @@ class _$BookingImpl implements _Booking {
       @JsonKey(name: "services") required final List<Service> services,
       @JsonKey(name: "customer") required this.customer,
       @JsonKey(name: "appointment_date") required this.appointmentDate,
-      @JsonKey(name: "notes") required this.notes,
+      @JsonKey(name: "note") this.note,
       @JsonKey(name: "images_before_reaper")
       required final List<String> imagesBeforeReaper,
       @JsonKey(name: "images_after_reaper")
@@ -330,8 +330,8 @@ class _$BookingImpl implements _Booking {
   @JsonKey(name: "appointment_date")
   final DateTime appointmentDate;
   @override
-  @JsonKey(name: "notes")
-  final String notes;
+  @JsonKey(name: "note")
+  final String? note;
   final List<String> _imagesBeforeReaper;
   @override
   @JsonKey(name: "images_before_reaper")
@@ -373,7 +373,7 @@ class _$BookingImpl implements _Booking {
 
   @override
   String toString() {
-    return 'Booking(id: $id, services: $services, customer: $customer, appointmentDate: $appointmentDate, notes: $notes, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, updatedAt: $updatedAt, v: $v)';
+    return 'Booking(id: $id, services: $services, customer: $customer, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, updatedAt: $updatedAt, v: $v)';
   }
 
   @override
@@ -387,7 +387,7 @@ class _$BookingImpl implements _Booking {
                 other.customer == customer) &&
             (identical(other.appointmentDate, appointmentDate) ||
                 other.appointmentDate == appointmentDate) &&
-            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.note, note) || other.note == note) &&
             const DeepCollectionEquality()
                 .equals(other._imagesBeforeReaper, _imagesBeforeReaper) &&
             const DeepCollectionEquality()
@@ -411,7 +411,7 @@ class _$BookingImpl implements _Booking {
       const DeepCollectionEquality().hash(_services),
       customer,
       appointmentDate,
-      notes,
+      note,
       const DeepCollectionEquality().hash(_imagesBeforeReaper),
       const DeepCollectionEquality().hash(_imagesAfterReaper),
       const DeepCollectionEquality().hash(descriptionProblem),
@@ -444,7 +444,7 @@ abstract class _Booking implements Booking {
       @JsonKey(name: "customer") required final User customer,
       @JsonKey(name: "appointment_date")
       required final DateTime appointmentDate,
-      @JsonKey(name: "notes") required final String notes,
+      @JsonKey(name: "note") final String? note,
       @JsonKey(name: "images_before_reaper")
       required final List<String> imagesBeforeReaper,
       @JsonKey(name: "images_after_reaper")
@@ -472,8 +472,8 @@ abstract class _Booking implements Booking {
   @JsonKey(name: "appointment_date")
   DateTime get appointmentDate;
   @override
-  @JsonKey(name: "notes")
-  String get notes;
+  @JsonKey(name: "note")
+  String? get note;
   @override
   @JsonKey(name: "images_before_reaper")
   List<String> get imagesBeforeReaper;

@@ -23,7 +23,7 @@ final getCurrentUserProvider = AutoDisposeFutureProvider<User?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetCurrentUserRef = AutoDisposeFutureProviderRef<User?>;
-String _$updateCurrentUserHash() => r'cdb017e6f359f9c1b9125e283920b04af9ea699d';
+String _$updateCurrentUserHash() => r'0e59811258797e6a2ea3cd97ab7793ea8b714c50';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -51,7 +51,7 @@ class _SystemHash {
 const updateCurrentUserProvider = UpdateCurrentUserFamily();
 
 /// See also [updateCurrentUser].
-class UpdateCurrentUserFamily extends Family<AsyncValue<User?>> {
+class UpdateCurrentUserFamily extends Family<AsyncValue<String?>> {
   /// See also [updateCurrentUser].
   const UpdateCurrentUserFamily();
 
@@ -89,7 +89,7 @@ class UpdateCurrentUserFamily extends Family<AsyncValue<User?>> {
 }
 
 /// See also [updateCurrentUser].
-class UpdateCurrentUserProvider extends AutoDisposeFutureProvider<User?> {
+class UpdateCurrentUserProvider extends AutoDisposeFutureProvider<String?> {
   /// See also [updateCurrentUser].
   UpdateCurrentUserProvider({
     required User user,
@@ -124,7 +124,7 @@ class UpdateCurrentUserProvider extends AutoDisposeFutureProvider<User?> {
 
   @override
   Override overrideWith(
-    FutureOr<User?> Function(UpdateCurrentUserRef provider) create,
+    FutureOr<String?> Function(UpdateCurrentUserRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -141,7 +141,7 @@ class UpdateCurrentUserProvider extends AutoDisposeFutureProvider<User?> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<User?> createElement() {
+  AutoDisposeFutureProviderElement<String?> createElement() {
     return _UpdateCurrentUserProviderElement(this);
   }
 
@@ -161,13 +161,14 @@ class UpdateCurrentUserProvider extends AutoDisposeFutureProvider<User?> {
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-mixin UpdateCurrentUserRef on AutoDisposeFutureProviderRef<User?> {
+mixin UpdateCurrentUserRef on AutoDisposeFutureProviderRef<String?> {
   /// The parameter `user` of this provider.
   User get user;
 }
 
 class _UpdateCurrentUserProviderElement
-    extends AutoDisposeFutureProviderElement<User?> with UpdateCurrentUserRef {
+    extends AutoDisposeFutureProviderElement<String?>
+    with UpdateCurrentUserRef {
   _UpdateCurrentUserProviderElement(super.provider);
 
   @override

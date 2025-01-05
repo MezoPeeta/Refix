@@ -48,7 +48,7 @@ Map<String, dynamic> _$$ServiceImplToJson(_$ServiceImpl instance) =>
 
 _$LocalizedImpl _$$LocalizedImplFromJson(Map<String, dynamic> json) =>
     _$LocalizedImpl(
-      localized: json['localized'] as String,
+      localized: json['localized'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$LocalizedImplToJson(_$LocalizedImpl instance) =>

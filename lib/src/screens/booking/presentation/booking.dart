@@ -20,7 +20,8 @@ class BookingScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final bookings = ref.watch(getUserBookingProvider);
     final status = ref.watch(currentStatusProvider);
-
+    final discount =
+        ref.watch(getDiscountProvider(pageName: "Booking-Current"));
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -103,42 +104,48 @@ class BookingScreen extends ConsumerWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                height: 144,
-                decoration: BoxDecoration(
-                    color: AppColors.secondaryRefix,
-                    borderRadius: BorderRadius.circular(AppRadii.lg)),
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          context.tr.discount_next("60%"),
-                          style: const TextStyle(
-                              color: AppColors.white,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                      Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          const CircleAvatar(
-                            backgroundColor: AppColors.primaryRefix,
-                            radius: 40,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: discount.when(
+                    data: (data) {
+                      return Container(
+                        height: 144,
+                        decoration: BoxDecoration(
+                            color: AppColors.secondaryRefix,
+                            borderRadius: BorderRadius.circular(AppRadii.lg)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  data?.heading?.localized ?? "",
+                                  style: const TextStyle(
+                                      color: AppColors.white,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              Stack(
+                                alignment: Alignment.bottomCenter,
+                                children: [
+                                  const CircleAvatar(
+                                    backgroundColor: AppColors.primaryRefix,
+                                    radius: 40,
+                                  ),
+                                  Lottie.asset(
+                                      "assets/img/services/present_lottie.json",
+                                      width: 80)
+                                ],
+                              ),
+                            ],
                           ),
-                          Lottie.asset(
-                              "assets/img/services/present_lottie.json",
-                              width: 80)
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
+                        ),
+                      );
+                    },
+                    error: (e, s) {
+                      return const Text("Error loading discount");
+                    },
+                    loading: () => const CircularProgressIndicator.adaptive())),
             const SizedBox(
               height: 16,
             ),
@@ -146,6 +153,11 @@ class BookingScreen extends ConsumerWidget {
                 data: (data) {
                   final bookings =
                       data.where((e) => e.status == status).toList();
+                  if (bookings.isEmpty) {
+                    return const Center(
+                      child: Text("You haven't booked yet"),
+                    );
+                  }
                   return ListView.separated(
                       itemCount: bookings.length,
                       shrinkWrap: true,
@@ -214,11 +226,31 @@ class BookingScreen extends ConsumerWidget {
                                 ],
                               ),
                               const Spacer(),
-                              SecondaryButton(
-                                text: context.tr.show,
-                                onPressed: () => context.push("/in_booking"),
-                                size: const Size(74, 40),
-                              )
+                              status == "PENDING"
+                                  ? SecondaryButton(
+                                      text: context.tr.show,
+                                      onPressed: () async {
+                                        final location = await ref.read(
+                                            getLocationProvider(
+                                                    latitude: data[index]
+                                                        .customer
+                                                        .latitude!,
+                                                    longitude: data[index]
+                                                        .customer
+                                                        .longitude!)
+                                                .future);
+                                        context.pushNamed(
+                                          "InBooking",
+                                          extra: data[index],
+                                        );
+                                      },
+                                      size: const Size(74, 40),
+                                    )
+                                  : SecondaryButton(
+                                      text: context.tr.addReview,
+                                      onPressed: () async {},
+                                      size: const Size(74, 40),
+                                    )
                             ],
                           ),
                         );

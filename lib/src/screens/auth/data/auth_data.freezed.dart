@@ -263,10 +263,12 @@ mixin _$User {
   @JsonKey(name: "lang")
   double? get longitude => throw _privateConstructorUsedError;
   int get points => throw _privateConstructorUsedError;
-  @JsonKey(name: "role")
-  Role get role => throw _privateConstructorUsedError;
   @JsonKey(name: "is_verified")
   bool get isVerified => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_point_offer")
+  bool get havePointsOffer => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_discount")
+  bool get haveDiscount => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -291,10 +293,9 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "lat") double? latitude,
       @JsonKey(name: "lang") double? longitude,
       int points,
-      @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified") bool isVerified});
-
-  $RoleCopyWith<$Res> get role;
+      @JsonKey(name: "is_verified") bool isVerified,
+      @JsonKey(name: "have_point_offer") bool havePointsOffer,
+      @JsonKey(name: "have_discount") bool haveDiscount});
 }
 
 /// @nodoc
@@ -320,8 +321,9 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? points = null,
-    Object? role = null,
     Object? isVerified = null,
+    Object? havePointsOffer = null,
+    Object? haveDiscount = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -356,25 +358,19 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as int,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
       isVerified: null == isVerified
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
               as bool,
+      havePointsOffer: null == havePointsOffer
+          ? _value.havePointsOffer
+          : havePointsOffer // ignore: cast_nullable_to_non_nullable
+              as bool,
+      haveDiscount: null == haveDiscount
+          ? _value.haveDiscount
+          : haveDiscount // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
-  }
-
-  /// Create a copy of User
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $RoleCopyWith<$Res> get role {
-    return $RoleCopyWith<$Res>(_value.role, (value) {
-      return _then(_value.copyWith(role: value) as $Val);
-    });
   }
 }
 
@@ -394,11 +390,9 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "lat") double? latitude,
       @JsonKey(name: "lang") double? longitude,
       int points,
-      @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified") bool isVerified});
-
-  @override
-  $RoleCopyWith<$Res> get role;
+      @JsonKey(name: "is_verified") bool isVerified,
+      @JsonKey(name: "have_point_offer") bool havePointsOffer,
+      @JsonKey(name: "have_discount") bool haveDiscount});
 }
 
 /// @nodoc
@@ -421,8 +415,9 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? points = null,
-    Object? role = null,
     Object? isVerified = null,
+    Object? havePointsOffer = null,
+    Object? haveDiscount = null,
   }) {
     return _then(_$UserImpl(
       id: null == id
@@ -457,13 +452,17 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.points
           : points // ignore: cast_nullable_to_non_nullable
               as int,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
       isVerified: null == isVerified
           ? _value.isVerified
           : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool,
+      havePointsOffer: null == havePointsOffer
+          ? _value.havePointsOffer
+          : havePointsOffer // ignore: cast_nullable_to_non_nullable
+              as bool,
+      haveDiscount: null == haveDiscount
+          ? _value.haveDiscount
+          : haveDiscount // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
   }
@@ -481,8 +480,9 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       @JsonKey(name: "lat") this.latitude,
       @JsonKey(name: "lang") this.longitude,
       required this.points,
-      @JsonKey(name: "role") required this.role,
-      @JsonKey(name: "is_verified") required this.isVerified});
+      @JsonKey(name: "is_verified") required this.isVerified,
+      @JsonKey(name: "have_point_offer") required this.havePointsOffer,
+      @JsonKey(name: "have_discount") required this.haveDiscount});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -510,15 +510,18 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
   @override
   final int points;
   @override
-  @JsonKey(name: "role")
-  final Role role;
-  @override
   @JsonKey(name: "is_verified")
   final bool isVerified;
+  @override
+  @JsonKey(name: "have_point_offer")
+  final bool havePointsOffer;
+  @override
+  @JsonKey(name: "have_discount")
+  final bool haveDiscount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, username: $username, email: $email, type: $type, phone: $phone, latitude: $latitude, longitude: $longitude, points: $points, role: $role, isVerified: $isVerified)';
+    return 'User(id: $id, username: $username, email: $email, type: $type, phone: $phone, latitude: $latitude, longitude: $longitude, points: $points, isVerified: $isVerified, havePointsOffer: $havePointsOffer, haveDiscount: $haveDiscount)';
   }
 
   @override
@@ -534,8 +537,9 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('latitude', latitude))
       ..add(DiagnosticsProperty('longitude', longitude))
       ..add(DiagnosticsProperty('points', points))
-      ..add(DiagnosticsProperty('role', role))
-      ..add(DiagnosticsProperty('isVerified', isVerified));
+      ..add(DiagnosticsProperty('isVerified', isVerified))
+      ..add(DiagnosticsProperty('havePointsOffer', havePointsOffer))
+      ..add(DiagnosticsProperty('haveDiscount', haveDiscount));
   }
 
   @override
@@ -554,15 +558,18 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
             (identical(other.longitude, longitude) ||
                 other.longitude == longitude) &&
             (identical(other.points, points) || other.points == points) &&
-            (identical(other.role, role) || other.role == role) &&
             (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified));
+                other.isVerified == isVerified) &&
+            (identical(other.havePointsOffer, havePointsOffer) ||
+                other.havePointsOffer == havePointsOffer) &&
+            (identical(other.haveDiscount, haveDiscount) ||
+                other.haveDiscount == haveDiscount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, username, email, type, phone,
-      latitude, longitude, points, role, isVerified);
+      latitude, longitude, points, isVerified, havePointsOffer, haveDiscount);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -582,17 +589,18 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 
 abstract class _User implements User {
   const factory _User(
-          {@JsonKey(name: "_id") required final String id,
-          @JsonKey(name: "username") required final String username,
-          @JsonKey(name: "email") required final String email,
-          @JsonKey(name: "type") required final String type,
-          required final String phone,
-          @JsonKey(name: "lat") final double? latitude,
-          @JsonKey(name: "lang") final double? longitude,
-          required final int points,
-          @JsonKey(name: "role") required final Role role,
-          @JsonKey(name: "is_verified") required final bool isVerified}) =
-      _$UserImpl;
+      {@JsonKey(name: "_id") required final String id,
+      @JsonKey(name: "username") required final String username,
+      @JsonKey(name: "email") required final String email,
+      @JsonKey(name: "type") required final String type,
+      required final String phone,
+      @JsonKey(name: "lat") final double? latitude,
+      @JsonKey(name: "lang") final double? longitude,
+      required final int points,
+      @JsonKey(name: "is_verified") required final bool isVerified,
+      @JsonKey(name: "have_point_offer") required final bool havePointsOffer,
+      @JsonKey(name: "have_discount")
+      required final bool haveDiscount}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -619,11 +627,14 @@ abstract class _User implements User {
   @override
   int get points;
   @override
-  @JsonKey(name: "role")
-  Role get role;
-  @override
   @JsonKey(name: "is_verified")
   bool get isVerified;
+  @override
+  @JsonKey(name: "have_point_offer")
+  bool get havePointsOffer;
+  @override
+  @JsonKey(name: "have_discount")
+  bool get haveDiscount;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

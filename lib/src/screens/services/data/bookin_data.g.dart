@@ -14,7 +14,7 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       customer: User.fromJson(json['customer'] as Map<String, dynamic>),
       appointmentDate: DateTime.parse(json['appointment_date'] as String),
-      notes: json['notes'] as String,
+      note: json['note'] as String?,
       imagesBeforeReaper: (json['images_before_reaper'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
@@ -33,7 +33,7 @@ Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
       'services': instance.services,
       'customer': instance.customer,
       'appointment_date': instance.appointmentDate.toIso8601String(),
-      'notes': instance.notes,
+      'note': instance.note,
       'images_before_reaper': instance.imagesBeforeReaper,
       'images_after_reaper': instance.imagesAfterReaper,
       'description_problem': instance.descriptionProblem,

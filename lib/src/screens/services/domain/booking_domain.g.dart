@@ -190,7 +190,7 @@ class _AddBookingProviderElement
   List<String> get images => (origin as AddBookingProvider).images;
 }
 
-String _$updateCustomerHash() => r'2e729dcf45aa48c69fad9270399a91bba2599a12';
+String _$updateCustomerHash() => r'e740123cd2c1182fb965f602fbb6e91772abce5a';
 
 /// See also [updateCustomer].
 @ProviderFor(updateCustomer)
@@ -338,5 +338,558 @@ final getUserBookingProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetUserBookingRef = AutoDisposeFutureProviderRef<List<Booking>>;
+String _$getLocationHash() => r'cdba494ca7f795c737f1cb9f5d516d1eae5ed35f';
+
+/// See also [getLocation].
+@ProviderFor(getLocation)
+const getLocationProvider = GetLocationFamily();
+
+/// See also [getLocation].
+class GetLocationFamily extends Family<AsyncValue<String?>> {
+  /// See also [getLocation].
+  const GetLocationFamily();
+
+  /// See also [getLocation].
+  GetLocationProvider call({
+    required double latitude,
+    required double longitude,
+  }) {
+    return GetLocationProvider(
+      latitude: latitude,
+      longitude: longitude,
+    );
+  }
+
+  @override
+  GetLocationProvider getProviderOverride(
+    covariant GetLocationProvider provider,
+  ) {
+    return call(
+      latitude: provider.latitude,
+      longitude: provider.longitude,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getLocationProvider';
+}
+
+/// See also [getLocation].
+class GetLocationProvider extends AutoDisposeFutureProvider<String?> {
+  /// See also [getLocation].
+  GetLocationProvider({
+    required double latitude,
+    required double longitude,
+  }) : this._internal(
+          (ref) => getLocation(
+            ref as GetLocationRef,
+            latitude: latitude,
+            longitude: longitude,
+          ),
+          from: getLocationProvider,
+          name: r'getLocationProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getLocationHash,
+          dependencies: GetLocationFamily._dependencies,
+          allTransitiveDependencies:
+              GetLocationFamily._allTransitiveDependencies,
+          latitude: latitude,
+          longitude: longitude,
+        );
+
+  GetLocationProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.latitude,
+    required this.longitude,
+  }) : super.internal();
+
+  final double latitude;
+  final double longitude;
+
+  @override
+  Override overrideWith(
+    FutureOr<String?> Function(GetLocationRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetLocationProvider._internal(
+        (ref) => create(ref as GetLocationRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        latitude: latitude,
+        longitude: longitude,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String?> createElement() {
+    return _GetLocationProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetLocationProvider &&
+        other.latitude == latitude &&
+        other.longitude == longitude;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, latitude.hashCode);
+    hash = _SystemHash.combine(hash, longitude.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin GetLocationRef on AutoDisposeFutureProviderRef<String?> {
+  /// The parameter `latitude` of this provider.
+  double get latitude;
+
+  /// The parameter `longitude` of this provider.
+  double get longitude;
+}
+
+class _GetLocationProviderElement
+    extends AutoDisposeFutureProviderElement<String?> with GetLocationRef {
+  _GetLocationProviderElement(super.provider);
+
+  @override
+  double get latitude => (origin as GetLocationProvider).latitude;
+  @override
+  double get longitude => (origin as GetLocationProvider).longitude;
+}
+
+String _$updateBookingHash() => r'931898328dca4c065d3fd3221b1ae3c680a1998f';
+
+/// See also [updateBooking].
+@ProviderFor(updateBooking)
+const updateBookingProvider = UpdateBookingFamily();
+
+/// See also [updateBooking].
+class UpdateBookingFamily extends Family<AsyncValue<String>> {
+  /// See also [updateBooking].
+  const UpdateBookingFamily();
+
+  /// See also [updateBooking].
+  UpdateBookingProvider call({
+    required Booking booking,
+  }) {
+    return UpdateBookingProvider(
+      booking: booking,
+    );
+  }
+
+  @override
+  UpdateBookingProvider getProviderOverride(
+    covariant UpdateBookingProvider provider,
+  ) {
+    return call(
+      booking: provider.booking,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'updateBookingProvider';
+}
+
+/// See also [updateBooking].
+class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
+  /// See also [updateBooking].
+  UpdateBookingProvider({
+    required Booking booking,
+  }) : this._internal(
+          (ref) => updateBooking(
+            ref as UpdateBookingRef,
+            booking: booking,
+          ),
+          from: updateBookingProvider,
+          name: r'updateBookingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$updateBookingHash,
+          dependencies: UpdateBookingFamily._dependencies,
+          allTransitiveDependencies:
+              UpdateBookingFamily._allTransitiveDependencies,
+          booking: booking,
+        );
+
+  UpdateBookingProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.booking,
+  }) : super.internal();
+
+  final Booking booking;
+
+  @override
+  Override overrideWith(
+    FutureOr<String> Function(UpdateBookingRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: UpdateBookingProvider._internal(
+        (ref) => create(ref as UpdateBookingRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        booking: booking,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String> createElement() {
+    return _UpdateBookingProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UpdateBookingProvider && other.booking == booking;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, booking.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin UpdateBookingRef on AutoDisposeFutureProviderRef<String> {
+  /// The parameter `booking` of this provider.
+  Booking get booking;
+}
+
+class _UpdateBookingProviderElement
+    extends AutoDisposeFutureProviderElement<String> with UpdateBookingRef {
+  _UpdateBookingProviderElement(super.provider);
+
+  @override
+  Booking get booking => (origin as UpdateBookingProvider).booking;
+}
+
+String _$addNoteBookingHash() => r'c7c489386736de83b484b372e3ed2d21851139ba';
+
+/// See also [addNoteBooking].
+@ProviderFor(addNoteBooking)
+const addNoteBookingProvider = AddNoteBookingFamily();
+
+/// See also [addNoteBooking].
+class AddNoteBookingFamily extends Family<AsyncValue<String>> {
+  /// See also [addNoteBooking].
+  const AddNoteBookingFamily();
+
+  /// See also [addNoteBooking].
+  AddNoteBookingProvider call({
+    required int bookingID,
+    required String note,
+  }) {
+    return AddNoteBookingProvider(
+      bookingID: bookingID,
+      note: note,
+    );
+  }
+
+  @override
+  AddNoteBookingProvider getProviderOverride(
+    covariant AddNoteBookingProvider provider,
+  ) {
+    return call(
+      bookingID: provider.bookingID,
+      note: provider.note,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'addNoteBookingProvider';
+}
+
+/// See also [addNoteBooking].
+class AddNoteBookingProvider extends AutoDisposeFutureProvider<String> {
+  /// See also [addNoteBooking].
+  AddNoteBookingProvider({
+    required int bookingID,
+    required String note,
+  }) : this._internal(
+          (ref) => addNoteBooking(
+            ref as AddNoteBookingRef,
+            bookingID: bookingID,
+            note: note,
+          ),
+          from: addNoteBookingProvider,
+          name: r'addNoteBookingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$addNoteBookingHash,
+          dependencies: AddNoteBookingFamily._dependencies,
+          allTransitiveDependencies:
+              AddNoteBookingFamily._allTransitiveDependencies,
+          bookingID: bookingID,
+          note: note,
+        );
+
+  AddNoteBookingProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.bookingID,
+    required this.note,
+  }) : super.internal();
+
+  final int bookingID;
+  final String note;
+
+  @override
+  Override overrideWith(
+    FutureOr<String> Function(AddNoteBookingRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: AddNoteBookingProvider._internal(
+        (ref) => create(ref as AddNoteBookingRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        bookingID: bookingID,
+        note: note,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String> createElement() {
+    return _AddNoteBookingProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is AddNoteBookingProvider &&
+        other.bookingID == bookingID &&
+        other.note == note;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, bookingID.hashCode);
+    hash = _SystemHash.combine(hash, note.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin AddNoteBookingRef on AutoDisposeFutureProviderRef<String> {
+  /// The parameter `bookingID` of this provider.
+  int get bookingID;
+
+  /// The parameter `note` of this provider.
+  String get note;
+}
+
+class _AddNoteBookingProviderElement
+    extends AutoDisposeFutureProviderElement<String> with AddNoteBookingRef {
+  _AddNoteBookingProviderElement(super.provider);
+
+  @override
+  int get bookingID => (origin as AddNoteBookingProvider).bookingID;
+  @override
+  String get note => (origin as AddNoteBookingProvider).note;
+}
+
+String _$getDiscountHash() => r'91c253e10a13c29c73ec8d57d2e3b2b4adb275e9';
+
+/// See also [getDiscount].
+@ProviderFor(getDiscount)
+const getDiscountProvider = GetDiscountFamily();
+
+/// See also [getDiscount].
+class GetDiscountFamily extends Family<AsyncValue<Discount?>> {
+  /// See also [getDiscount].
+  const GetDiscountFamily();
+
+  /// See also [getDiscount].
+  GetDiscountProvider call({
+    required String pageName,
+  }) {
+    return GetDiscountProvider(
+      pageName: pageName,
+    );
+  }
+
+  @override
+  GetDiscountProvider getProviderOverride(
+    covariant GetDiscountProvider provider,
+  ) {
+    return call(
+      pageName: provider.pageName,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getDiscountProvider';
+}
+
+/// See also [getDiscount].
+class GetDiscountProvider extends AutoDisposeFutureProvider<Discount?> {
+  /// See also [getDiscount].
+  GetDiscountProvider({
+    required String pageName,
+  }) : this._internal(
+          (ref) => getDiscount(
+            ref as GetDiscountRef,
+            pageName: pageName,
+          ),
+          from: getDiscountProvider,
+          name: r'getDiscountProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getDiscountHash,
+          dependencies: GetDiscountFamily._dependencies,
+          allTransitiveDependencies:
+              GetDiscountFamily._allTransitiveDependencies,
+          pageName: pageName,
+        );
+
+  GetDiscountProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.pageName,
+  }) : super.internal();
+
+  final String pageName;
+
+  @override
+  Override overrideWith(
+    FutureOr<Discount?> Function(GetDiscountRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetDiscountProvider._internal(
+        (ref) => create(ref as GetDiscountRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        pageName: pageName,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<Discount?> createElement() {
+    return _GetDiscountProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetDiscountProvider && other.pageName == pageName;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, pageName.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin GetDiscountRef on AutoDisposeFutureProviderRef<Discount?> {
+  /// The parameter `pageName` of this provider.
+  String get pageName;
+}
+
+class _GetDiscountProviderElement
+    extends AutoDisposeFutureProviderElement<Discount?> with GetDiscountRef {
+  _GetDiscountProviderElement(super.provider);
+
+  @override
+  String get pageName => (origin as GetDiscountProvider).pageName;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

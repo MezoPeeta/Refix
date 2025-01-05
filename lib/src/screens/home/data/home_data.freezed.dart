@@ -606,7 +606,7 @@ Localized _$LocalizedFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Localized {
-  @JsonKey(name: "localized")
+  @JsonKey(name: "localized", defaultValue: "")
   String get localized => throw _privateConstructorUsedError;
 
   /// Serializes this Localized to a JSON map.
@@ -624,7 +624,7 @@ abstract class $LocalizedCopyWith<$Res> {
   factory $LocalizedCopyWith(Localized value, $Res Function(Localized) then) =
       _$LocalizedCopyWithImpl<$Res, Localized>;
   @useResult
-  $Res call({@JsonKey(name: "localized") String localized});
+  $Res call({@JsonKey(name: "localized", defaultValue: "") String localized});
 }
 
 /// @nodoc
@@ -661,7 +661,7 @@ abstract class _$$LocalizedImplCopyWith<$Res>
       __$$LocalizedImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: "localized") String localized});
+  $Res call({@JsonKey(name: "localized", defaultValue: "") String localized});
 }
 
 /// @nodoc
@@ -691,13 +691,14 @@ class __$$LocalizedImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LocalizedImpl implements _Localized {
-  const _$LocalizedImpl({@JsonKey(name: "localized") required this.localized});
+  const _$LocalizedImpl(
+      {@JsonKey(name: "localized", defaultValue: "") required this.localized});
 
   factory _$LocalizedImpl.fromJson(Map<String, dynamic> json) =>
       _$$LocalizedImplFromJson(json);
 
   @override
-  @JsonKey(name: "localized")
+  @JsonKey(name: "localized", defaultValue: "")
   final String localized;
 
   @override
@@ -736,14 +737,14 @@ class _$LocalizedImpl implements _Localized {
 
 abstract class _Localized implements Localized {
   const factory _Localized(
-          {@JsonKey(name: "localized") required final String localized}) =
-      _$LocalizedImpl;
+      {@JsonKey(name: "localized", defaultValue: "")
+      required final String localized}) = _$LocalizedImpl;
 
   factory _Localized.fromJson(Map<String, dynamic> json) =
       _$LocalizedImpl.fromJson;
 
   @override
-  @JsonKey(name: "localized")
+  @JsonKey(name: "localized", defaultValue: "")
   String get localized;
 
   /// Create a copy of Localized

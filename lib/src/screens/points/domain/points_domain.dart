@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:refix/src/screens/points/data/points.dart';
@@ -11,9 +12,8 @@ part 'points_domain.g.dart';
 
 @riverpod
 Future<List<Point>> getUserPoints(Ref ref) async {
-  final response = await ref
-      .read(httpProvider)
-      .authenticatedRequest(method: "GET", url: "points/available");
+  final response =
+      await ref.read(httpProvider).get(apiName: "points/available");
   if (response.statusCode == 200) {
     final data = jsonDecode(response.body);
     return data.map<Point>((e) => Point.fromJson(e)).toList();
@@ -25,15 +25,18 @@ Future<List<Point>> getUserPoints(Ref ref) async {
 }
 
 @riverpod
-Future<void> claimPoints(Ref ref, {required String pointsID}) async {
+Future<int> claimPoints(Ref ref, {required String pointsID}) async {
   final response = await ref
       .read(httpProvider)
-      .authenticatedRequest(method: "PATCH", url: "points/claim/$pointsID");
-  if (response.statusCode == 201) {
-    return jsonDecode(response.body);
-  }
-  if (response.statusCode == 401) {
-    ref.read(authProvider).refreshAccessToken();
-  }
-  return ;
+      .authenticatedRequest(method: "POST", url: "points/claim/$pointsID");
+  return response.statusCode;
+}
+
+@riverpod
+Future<Offer> getCustomerOffer(Ref ref) async {
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(method: "GET", url: "points/customer");
+  log("Customer Offer: ${jsonDecode(response.body)["offer"]}");
+  return Offer.fromJson(jsonDecode(response.body)["offer"]);
 }

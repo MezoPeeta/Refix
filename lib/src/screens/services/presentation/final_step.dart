@@ -10,29 +10,34 @@ import 'package:intl/intl.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/points/domain/points_domain.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:refix/src/screens/services/domain/location.dart';
 
 import '../../../core/ui/theme/radii.dart';
 import '../../../core/ui/widgets/header.dart';
 import '../../home/data/home_data.dart';
+import '../../home/domain/home_domain.dart';
 import 'services.dart';
 
 final imageProvider = StateProvider<XFile?>((ref) => null);
 
 class FinalstepScreen extends ConsumerStatefulWidget {
   const FinalstepScreen(
-      {super.key, required this.service, required this.photo});
+      {super.key,
+      required this.service,
+      required this.photo,
+      required this.type});
 
   final String service;
   final String photo;
+  final String type;
 
   @override
   ConsumerState<FinalstepScreen> createState() => _FinalstepScreenState();
 }
 
 class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
-  static Set<Service> addedServices = <Service>{};
   final _key = GlobalKey<FormState>();
   final locationController = TextEditingController();
   final timeController = TextEditingController();
@@ -42,7 +47,6 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final subservices = ref.watch(serviceProvider);
     final service = Service.fromJson(jsonDecode(widget.service));
     List<String> capturedPhotos = [widget.photo, ...photos];
     return Scaffold(
@@ -106,15 +110,17 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        final subServices = subservices
-                            .where((e) => e.name != service.name)
-                            .toList();
+                        final services = ref
+                                .watch(
+                                    getSubServicesProvider(type: widget.type))
+                                .value ??
+                            [];
                         showModalBottomSheet(
                             context: context,
                             builder: (context) {
                               return Padding(
                                 padding: const EdgeInsets.all(16),
-                                child: subServices.isNotEmpty
+                                child: services.isNotEmpty
                                     ? Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
@@ -124,7 +130,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                               shrinkWrap: true,
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
-                                              itemCount: subServices.length,
+                                              itemCount: services.length,
                                               gridDelegate:
                                                   const SliverGridDelegateWithMaxCrossAxisExtent(
                                                       crossAxisSpacing: 24,
@@ -133,7 +139,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                                           116.67),
                                               itemBuilder: (context, index) {
                                                 return ServiceContainer(
-                                                  service: subServices[index],
+                                                  service: services[index],
                                                   onPressed: () {},
                                                 );
                                               },
@@ -342,25 +348,37 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
               setState(() {
                 loading = true;
               });
-              await ref
-                  .read(addBookingProvider(
-                      images: capturedPhotos,
-                      date: dateTime!,
-                      services: [service.id]).future)
-                  .catchError((v) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(v)));
+              if (loading == true) {
+                await ref
+                    .read(addBookingProvider(
+                        images: capturedPhotos,
+                        date: dateTime!,
+                        services: [service.id]).future)
+                    .catchError((v) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(v)));
+                  setState(() {
+                    loading = false;
+                  });
+                });
+
                 setState(() {
                   loading = false;
                 });
-              });
-
-              setState(() {
-                loading = false;
-              });
-              if (!context.mounted) return;
-
-              context.go("/booking_done");
+                if (!context.mounted) return;
+                final discount = await ref
+                    .read(getDiscountProvider(pageName: "Booking Done").future);
+                final offer = await ref.read(getCustomerOfferProvider.future);
+                if (discount != null) {
+                  return context.goNamed("BookingDone",
+                      extra: discount,
+                      pathParameters: {
+                        "cost": service.price.toString(),
+                        "points": offer.point.percentage.toString()
+                      });
+                }
+                context.go("/payment_method");
+              }
             }
           },
         ),
@@ -374,9 +392,11 @@ class AddedImage extends StatelessWidget {
     super.key,
     required this.path,
     required this.onRemove,
+    this.isFile = true,
   });
 
   final String path;
+  final bool isFile;
   final VoidCallback onRemove;
 
   @override
@@ -389,7 +409,8 @@ class AddedImage extends StatelessWidget {
           height: 80,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  fit: BoxFit.cover, image: FileImage(File(path))),
+                  fit: BoxFit.cover,
+                  image: isFile ? FileImage(File(path)) : NetworkImage(path)),
               borderRadius: BorderRadius.circular(AppRadii.lg)),
         ),
         GestureDetector(

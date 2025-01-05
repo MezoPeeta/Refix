@@ -37,10 +37,9 @@ class Service with _$Service {
 @Freezed(toJson: true)
 class Localized with _$Localized {
   const factory Localized({
-    @JsonKey(name: "localized") required String localized,
+    @JsonKey(name: "localized", defaultValue: "") required String localized,
   }) = _Localized;
 
   factory Localized.fromJson(Map<String, dynamic> json) =>
       _$LocalizedFromJson(json);
 }
-

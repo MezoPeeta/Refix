@@ -209,6 +209,21 @@
     "switchNow": "Switch Now",
     "changePhone": "You've not changed your phone number",
     "deleteAccountQuestion": "Do you want to delete the account?",
-  "deleteAccountWarning": "Your account will be deleted within 4 days from now.",
-  "backButton": "Back"
+    "deleteAccountWarning": "Your account will be deleted within 4 days from now.",
+    "backButton": "Back",
+    "addNoteForWorker": "Add Note For Worker",
+    "cancelBooking": "Cancel Booking",
+    "addReview": "Add Review",
+    "costOfService": "Cost Of Service",
+    "choosePaymentMethod": "Choose Payment Method",
+    "cost": "{cost} SAR",
+    "@cost": {
+        "description": "The cost of the service with the currency symbol.",
+        "placeholders": {
+            "cost": {
+                "type": "String",
+                "example": "100"
+            }
+        }
+    }
 }

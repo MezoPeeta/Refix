@@ -287,7 +287,7 @@ class _GetAllServicesProviderElement
   String? get query => (origin as GetAllServicesProvider).query;
 }
 
-String _$getSubServicesHash() => r'ac1c5f8eb880b733ae312a5a6a70afd7cc55177d';
+String _$getSubServicesHash() => r'54e90d503fae293cc8d162d7e56b92964e88d61f';
 
 /// See also [getSubServices].
 @ProviderFor(getSubServices)

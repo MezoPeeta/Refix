@@ -11,7 +11,6 @@ import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/services/presentation/services.dart';
 
 import '../../home/domain/home_domain.dart';
-import 'tackphoto.dart';
 
 // final serviceProvider = StateProvider<List<Service>>((ref) => []);
 final choosenService = StateProvider<Service?>((ref) => null);
@@ -138,10 +137,9 @@ class _MoreServicesScreenState extends ConsumerState<MoreServicesScreen> {
           text: context.tr.next,
           onPressed: () {
             if (selectedService != null) {
-              context.push(
-                "/tack_photo",
-                extra: selectedService,
-              );
+              context.pushNamed("TackPhoto",
+                  extra: selectedService,
+                  pathParameters: {"type": widget.name});
               return;
             }
             ScaffoldMessenger.of(context).showSnackBar(

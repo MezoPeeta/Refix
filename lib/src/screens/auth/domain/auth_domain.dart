@@ -7,6 +7,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:refix/src/core/network/api.dart';
 import 'package:refix/src/core/storage/secure_storage.dart';
 import 'package:refix/src/screens/auth/data/auth_data.dart';
+import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/navigation/routes.dart';
@@ -176,12 +177,13 @@ Future<User?> getCurrentUser(Ref ref) async {
 }
 
 @riverpod
-Future<User?> updateCurrentUser(Ref ref, {required User user}) async {
+Future<String?> updateCurrentUser(Ref ref, {required User user}) async {
   final currentUser = await ref.read(getCurrentUserProvider.future);
   final response = await ref.read(httpProvider).authenticatedRequest(
       method: "PATCH", url: "customer/${currentUser?.id}", body: user.toJson());
+  log("Updated Customer: ${response.body}");
   if (response.statusCode == 200) {
-    return User.fromJson(jsonDecode(response.body));
+    return "Updated Successfully";
   }
 
   return null;

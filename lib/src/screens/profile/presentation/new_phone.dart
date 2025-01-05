@@ -6,16 +6,23 @@ import 'package:refix/src/core/ui/widgets/button.dart';
 
 import '../../../core/ui/theme/colors.dart';
 import '../../auth/domain/auth_domain.dart';
+import '../domain/user_notifier.dart';
 
-class NewPhone extends StatelessWidget {
+class NewPhone extends StatefulWidget {
   const NewPhone({super.key, required this.phone});
 
   final String? phone;
   static final _formKey = GlobalKey<FormState>();
 
   @override
+  State<NewPhone> createState() => _NewPhoneState();
+}
+
+class _NewPhoneState extends State<NewPhone> {
+  @override
   Widget build(BuildContext context) {
-    final phoneController = TextEditingController(text: phone);
+    final phoneController = TextEditingController(text: widget.phone);
+    bool loading = false;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -32,7 +39,7 @@ class NewPhone extends StatelessWidget {
                   )),
               SliverToBoxAdapter(
                 child: Form(
-                  key: _formKey,
+                  key: NewPhone._formKey,
                   child: Column(
                     children: [
                       TextFormField(
@@ -55,21 +62,34 @@ class NewPhone extends StatelessWidget {
                       Consumer(builder: (context, ref, child) {
                         return PrimaryButton(
                             text: context.tr.next,
+                            loading: loading,
                             onPressed: () async {
-                              if (_formKey.currentState!.validate()) {
-                                final currentUser = await ref
-                                    .read(getCurrentUserProvider.future);
-                                if (currentUser!.phone
-                                    .contains(phoneController.text)) {
+                              if (NewPhone._formKey.currentState!.validate()) {
+                                setState(() {
+                                  loading = true;
+                                });
+                                if (loading == true) {
+                                  final currentUser = await ref
+                                      .read(customerNotifierProvider.future);
+                                  if (currentUser!.phone
+                                      .contains(phoneController.text)) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                Text(context.tr.changePhone)));
+                                    return;
+                                  }
+                                  await ref
+                                      .read(customerNotifierProvider.notifier)
+                                      .updateCustomer(currentUser.copyWith(
+                                          email:
+                                              "+966${phoneController.text}"));
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text(context.tr.changePhone)));
-                                  return;
+                                      const SnackBar(content: Text("Updated")));
                                 }
-                                ref.read(updateCurrentUserProvider(
-                                    user: currentUser.copyWith(
-                                        email: "+966${phoneController.text}")));
+                                setState(() {
+                                  loading = false;
+                                });
                               }
                             });
                       })

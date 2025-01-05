@@ -14,9 +14,10 @@ import '../../../core/ui/widgets/button.dart';
 final serviceForPhotoProvider = StateProvider<Service?>((ref) => null);
 
 class TackphotoScreen extends ConsumerWidget {
-  const TackphotoScreen({super.key, required this.service});
+  const TackphotoScreen({super.key, required this.service, required this.type});
 
   final Service service;
+  final String type;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -73,10 +74,14 @@ class TackphotoScreen extends ConsumerWidget {
               final ImagePicker picker = ImagePicker();
               final XFile? photo =
                   await picker.pickImage(source: ImageSource.camera);
+              if (photo == null) {
+                return context.pop();
+              }
               if (!context.mounted) return;
               context.pushNamed("FinalStep", pathParameters: {
-                "service": jsonEncode(service.toJson()),
-                "photo": photo!.path
+                "service": jsonEncode(service),
+                "type": type,
+                "photo": photo.path
               });
             },
           );

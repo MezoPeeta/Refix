@@ -6,6 +6,8 @@ import 'package:refix/src/screens/auth/domain/auth_domain.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../profile/domain/user_notifier.dart';
+
 part 'location.g.dart';
 
 @riverpod
@@ -56,7 +58,7 @@ Future<Placemark?> getPlacemark(Ref ref) async {
 Future<void> updateLatLong(Ref ref) async {
   final position = await ref.read(getCurrentPositionProvider.future);
 
-  final currentCustomer = await ref.read(getCurrentUserProvider.future);
+  final currentCustomer = await ref.read(customerNotifierProvider.future);
   if (currentCustomer == null) {
     ref.read(authProvider).logout();
     return;

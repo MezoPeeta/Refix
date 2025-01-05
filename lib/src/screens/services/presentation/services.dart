@@ -88,7 +88,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: GestureDetector(
-                    onTap: () => context.push("/reviews"),
+                    onTap: () => context.push("/reviews", extra: widget.type),
                     child: Row(
                       children: [
                         Container(

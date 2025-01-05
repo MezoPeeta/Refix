@@ -19,3 +19,16 @@ class Boarding with _$Boarding {
   factory Boarding.fromJson(Map<String, Object?> json) =>
       _$BoardingFromJson(json);
 }
+
+@freezed
+class Discount with _$Discount {
+  const factory Discount(
+      {@JsonKey(name: "page_name") String? pageName,
+      Localized? heading,
+      Localized? details,
+      double? discount,
+      required bool active}) = _Discount;
+
+  factory Discount.fromJson(Map<String, Object?> json) =>
+      _$DiscountFromJson(json);
+}

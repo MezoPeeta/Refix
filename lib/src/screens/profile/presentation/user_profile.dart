@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/profile/domain/user_notifier.dart';
 import 'package:refix/src/screens/profile/presentation/profile.dart';
 
 import '../../../core/ui/theme/colors.dart';
@@ -15,7 +16,7 @@ class UserProfile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(getCurrentUserProvider).value;
+    final user = ref.watch(customerNotifierProvider).value;
     final userController = TextEditingController(text: user?.username);
     return Scaffold(
       appBar: AppBar(
@@ -50,8 +51,11 @@ class UserProfile extends ConsumerWidget {
                 child: Column(
                   children: [
                     GestureDetector(
-                      onTap: () =>
-                          context.push("/switch_phone", extra: user?.phone),
+                      onTap: () {
+                        if (user == null) return;
+
+                        context.push("/switch_phone", extra: user.phone);
+                      },
                       child: ProfileOption(
                         title: context.tr.phone,
                         trailing: Text(
@@ -64,8 +68,11 @@ class UserProfile extends ConsumerWidget {
                       color: AppColors.neutral300,
                     ),
                     GestureDetector(
-                      onTap: () =>
-                          context.push("/new_email", extra: user?.email),
+                      onTap: () {
+                        if (user == null) return;
+
+                        context.push("/new_email", extra: user.email);
+                      },
                       child: ProfileOption(
                         title: context.tr.email,
                       ),

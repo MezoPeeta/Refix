@@ -40,7 +40,7 @@ final getPlacemarkProvider = AutoDisposeFutureProvider<Placemark?>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetPlacemarkRef = AutoDisposeFutureProviderRef<Placemark?>;
-String _$updateLatLongHash() => r'001500f227399b54ca11df21331967ffdc19b875';
+String _$updateLatLongHash() => r'33b67879194149b03dc86c1d0985a953b46c0c1f';
 
 /// See also [updateLatLong].
 @ProviderFor(updateLatLong)
