@@ -38,8 +38,11 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
     if (post != null) {
       setState(() {
         isEditting = true;
-        nameController.text = post.name;
-        nameArabicController.text = post.name;
+        nameController.text = post.name.en;
+        nameArabicController.text = post.name.ar;
+        detailsController.text = post.details?.en ?? "";
+        detailsArabicController.text = post.details?.ar ?? "";
+
         offerController.text = post.percentage.toString();
         dateController.text = post.availableDays.toString();
         pointsController.text = post.availableDays.toString();

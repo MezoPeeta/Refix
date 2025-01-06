@@ -5,6 +5,7 @@ import 'package:dashboard/src/core/navigation/auth.dart';
 import 'package:dashboard/src/screens/auth/data/roles.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/booking/presentation/booking.dart';
+import 'package:dashboard/src/screens/discount/data/discount_data.dart';
 import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:dashboard/src/screens/points/add_point.dart';
 import 'package:dashboard/src/screens/points/data/point.dart';
@@ -130,7 +131,7 @@ class CustomersDataSource extends UsersDataSource {
       DataCell(Text(data[index].role.name)),
       DataCell(Text(formatTime(data[index].createdAt))),
       DataCell(TextButton(
-        onPressed: () {},
+        onPressed: () => context.push("/permission/edit", extra: data[index]),
         child: const Text("Edit"),
       )),
     ]);
@@ -155,14 +156,14 @@ class BookingDataSource extends DataTableSource {
 
     return DataRow.byIndex(index: index, cells: [
       DataCell(Text(bookings[index].id)),
-      DataCell(Text(bookings[index].services.first.name)),
+      DataCell(Text(bookings[index].services.first.name?.en ?? "-")),
       DataCell(Text(bookings[index].customer.username)),
       DataCell(Text(bookings[index].cost.toString())),
       DataCell(Text(formatTime(bookings[index].createdAt))),
       DataCell(Text(bookings[index].status)),
       DataCell(TextButton(
         onPressed: () {
-          ref.read(currentIndexProvider.notifier).state = 11;
+          ref.read(currentIndexProvider.notifier).state = 12;
           ref.read(getBookingInfoProvider.notifier).state = bookings[index];
         },
         child: const Text("Show"),
@@ -197,14 +198,14 @@ class BookingConfDataSource extends DataTableSource {
 
     return DataRow.byIndex(index: index, cells: [
       DataCell(Text(bookings[index].id)),
-      DataCell(Text(bookings[index].services.first.name)),
+      DataCell(Text(bookings[index].services.first.name?.en ?? "-")),
       DataCell(Text(bookings[index].customer.username)),
       DataCell(Text(bookings[index].cost.toString())),
       DataCell(Text(formatTime(bookings[index].createdAt))),
       DataCell(Text(bookings[index].status)),
       DataCell(TextButton(
         onPressed: () {
-          ref.read(currentIndexProvider.notifier).state = 13;
+          ref.read(currentIndexProvider.notifier).state = 14;
           ref.read(getBookingInfoProvider.notifier).state = bookings[index];
         },
         child: const Text("Show"),
@@ -238,7 +239,7 @@ class PointsDataSource extends DataTableSource {
 
     return DataRow.byIndex(index: index, cells: [
       DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].name)),
+      DataCell(Text(data[index].name.en)),
       DataCell(Text("${data[index].percentage}%")),
       DataCell(Text(data[index].availableDays.toString())),
       DataCell(Text(data[index].requiredPoints.toString())),
@@ -247,7 +248,7 @@ class PointsDataSource extends DataTableSource {
       DataCell(TextButton(
         onPressed: () {
           ref.read(pointIDProvider.notifier).state = data[index];
-          ref.read(currentIndexProvider.notifier).state = 9;
+          ref.read(currentIndexProvider.notifier).state = 10;
         },
         child: const Text("Edit"),
       )),
@@ -282,10 +283,15 @@ Future<List<BookingElement>> getUnAssignedBookings(Ref ref,
           final roleData = e["customer"]["role"];
           final role =
               await ref.read(convertRoleProvider(data: roleData).future);
+
           final customerData = Map<String, dynamic>.from(e["customer"]);
+
           customerData["role"] = role!.toJson();
+
           final bookingData = Map<String, dynamic>.from(e);
+
           bookingData["customer"] = customerData;
+
           return BookingElement.fromJson(bookingData);
         },
       ),
@@ -293,11 +299,7 @@ Future<List<BookingElement>> getUnAssignedBookings(Ref ref,
 
     return bookings;
   }
-  if (response.statusCode == 401) {
-    ref.read(authProvider).refreshAccessToken();
-    getUnAssignedBookings(ref, page: page);
-    return [];
-  }
+
   return [];
 }
 
@@ -397,4 +399,142 @@ Future<String?> assignWorkerToBooking(Ref ref,
   }
 
   return "Failed: ${jsonDecode(data)["message"]}";
+}
+
+class DiscountTableSource extends DataTableSource {
+  final List<Discount> data;
+  final BuildContext context;
+  DiscountTableSource(this.data, this.context);
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) return null;
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].pageName ?? "")),
+      DataCell(SizedBox(
+          width: 200,
+          child: Text(
+            data[index].heading?.en ?? "-",
+            overflow: TextOverflow.ellipsis,
+          ))),
+      DataCell(SizedBox(
+          width: 200,
+          child: Text(
+            data[index].heading?.ar ?? "-",
+            overflow: TextOverflow.ellipsis,
+          ))),
+      DataCell(SizedBox(
+          width: 200,
+          child: Text(
+            data[index].details?.en ?? "-",
+            overflow: TextOverflow.ellipsis,
+          ))),
+      DataCell(SizedBox(
+          width: 200,
+          child: Text(
+            data[index].details?.ar ?? "-",
+            overflow: TextOverflow.ellipsis,
+          ))),
+      DataCell(TextButton(
+        onPressed: () => context.push("/discount/edit", extra: data[index]),
+        child: const Text("Edit"),
+      )),
+    ]);
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 10;
+}
+
+@riverpod
+Future<String> updateBooking(Ref ref, {required BookingElement booking}) async {
+  final request = await ref.read(httpProvider).authenticatedRequest(
+      url: "booking/${booking.id}", method: "PATCH", body: booking.toJson());
+  return getResponseMessage(jsonDecode(request.body));
+}
+
+String getResponseMessage(dynamic message) {
+  if (message is Map<String, dynamic>) {
+    final mess = message["message"];
+    if (mess is List) {
+      return mess.first;
+    }
+    return mess;
+  }
+
+  return message;
+}
+
+class RuleDataSource extends DataTableSource {
+  final List<Role> data;
+  final BuildContext context;
+  RuleDataSource(this.data, this.context);
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) return null;
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].id)),
+      DataCell(Text(data[index].name)),
+      DataCell(TextButton(
+        onPressed: () => context.push("/rule/edit", extra: data[index]),
+        child: const Text("Edit"),
+      )),
+    ]);
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 10;
+}
+
+class ServicesDataTable extends DataTableSource {
+  final List<Service> data;
+  final BuildContext context;
+  ServicesDataTable(this.data, this.context);
+  String formatTime(DateTime time) {
+    final formattedDate = DateFormat.yMd().format(time);
+    final formattedTime = DateFormat('jm').format(time);
+    return "$formattedTime $formattedDate";
+  }
+
+  @override
+  DataRow? getRow(int index) {
+    if (index >= data.length) return null;
+    return DataRow.byIndex(index: index, cells: [
+      DataCell(Text(data[index].id)),
+      DataCell(CircleAvatar(
+        backgroundImage:
+            NetworkImage("https://refix-api.onrender.com/${data[index].image}"),
+      )),
+      DataCell(Text(data[index].name?.en ?? "-")),
+      DataCell(Text(data[index].type ?? "-")),
+      DataCell(Text("${data[index].price} SAR")),
+      DataCell(Text(data[index].isActive ? "Active" : "Inactive")),
+      DataCell(TextButton(
+        onPressed: () => context.push("/services/edit", extra: data[index]),
+        child: const Text("Edit"),
+      )),
+    ]);
+  }
+
+  @override
+  bool get isRowCountApproximate => false;
+
+  @override
+  int get rowCount => data.length;
+
+  @override
+  int get selectedRowCount => 10;
 }

@@ -29,7 +29,7 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       longitude: (json['lang'] as num?)?.toDouble(),
       latitude: (json['lat'] as num?)?.toDouble(),
       role: Role.fromJson(json['role'] as Map<String, dynamic>),
-      isVerified: json['is_verified'] as bool,
+      isVerified: json['is_verified'] as bool? ?? false,
       createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
@@ -50,12 +50,37 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
 _$RoleImpl _$$RoleImplFromJson(Map<String, dynamic> json) => _$RoleImpl(
       id: json['_id'] as String,
       name: json['name'] as String,
+      permissions: const PermissionConverter().fromJson(json['permissions']),
     );
 
 Map<String, dynamic> _$$RoleImplToJson(_$RoleImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'name': instance.name,
+      'permissions': _$JsonConverterToJson<dynamic, List<Permission>>(
+          instance.permissions, const PermissionConverter().toJson),
+    };
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);
+
+_$PermissionImpl _$$PermissionImplFromJson(Map<String, dynamic> json) =>
+    _$PermissionImpl(
+      id: json['_id'] as String,
+      name: json['name'] as String,
+      target: json['target'] as String?,
+      isSelected: json['isSelected'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$PermissionImplToJson(_$PermissionImpl instance) =>
+    <String, dynamic>{
+      '_id': instance.id,
+      'name': instance.name,
+      'target': instance.target,
+      'isSelected': instance.isSelected,
     };
 
 _$WorkerImpl _$$WorkerImplFromJson(Map<String, dynamic> json) => _$WorkerImpl(
@@ -65,7 +90,6 @@ _$WorkerImpl _$$WorkerImplFromJson(Map<String, dynamic> json) => _$WorkerImpl(
       username: json['username'] as String,
       companyName: json['company_name'] as String,
       phone: json['phone'] as String?,
-      role: Role.fromJson(json['role'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$WorkerImplToJson(_$WorkerImpl instance) =>
@@ -76,5 +100,4 @@ Map<String, dynamic> _$$WorkerImplToJson(_$WorkerImpl instance) =>
       'username': instance.username,
       'company_name': instance.companyName,
       'phone': instance.phone,
-      'role': instance.role,
     };

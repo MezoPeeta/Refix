@@ -35,6 +35,7 @@ class SecondaryButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.loading = false,
     this.size,
   });
 
@@ -43,6 +44,7 @@ class SecondaryButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   final Size? size;
+  final bool loading;
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,11 @@ class SecondaryButton extends StatelessWidget {
               foregroundColor: WidgetStatePropertyAll(AppColors.white),
               backgroundColor: WidgetStatePropertyAll(AppColors.primaryRefix)),
           onPressed: onPressed,
-          child: FittedBox(child: Text(text))),
+          child: loading
+              ? const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation(Colors.white),
+                )
+              : FittedBox(child: Text(text))),
     );
   }
 }

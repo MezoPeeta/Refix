@@ -451,7 +451,7 @@ class _GetLocationProviderElement
 }
 
 String _$getUnAssignedBookingsHash() =>
-    r'3141cd93b33681ccc010351f6a9dbd4f42daa7c9';
+    r'7fe360cd82ea2ce7973ad92b5ac0b78e772b46df';
 
 /// See also [getUnAssignedBookings].
 @ProviderFor(getUnAssignedBookings)
@@ -1029,6 +1029,136 @@ class _AssignWorkerToBookingProviderElement
   String get bookingID => (origin as AssignWorkerToBookingProvider).bookingID;
   @override
   String get workerID => (origin as AssignWorkerToBookingProvider).workerID;
+}
+
+String _$updateBookingHash() => r'3edee860fbdc5e5d2acefb2d5957d7ef8c12c733';
+
+/// See also [updateBooking].
+@ProviderFor(updateBooking)
+const updateBookingProvider = UpdateBookingFamily();
+
+/// See also [updateBooking].
+class UpdateBookingFamily extends Family<AsyncValue<String>> {
+  /// See also [updateBooking].
+  const UpdateBookingFamily();
+
+  /// See also [updateBooking].
+  UpdateBookingProvider call({
+    required BookingElement booking,
+  }) {
+    return UpdateBookingProvider(
+      booking: booking,
+    );
+  }
+
+  @override
+  UpdateBookingProvider getProviderOverride(
+    covariant UpdateBookingProvider provider,
+  ) {
+    return call(
+      booking: provider.booking,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'updateBookingProvider';
+}
+
+/// See also [updateBooking].
+class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
+  /// See also [updateBooking].
+  UpdateBookingProvider({
+    required BookingElement booking,
+  }) : this._internal(
+          (ref) => updateBooking(
+            ref as UpdateBookingRef,
+            booking: booking,
+          ),
+          from: updateBookingProvider,
+          name: r'updateBookingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$updateBookingHash,
+          dependencies: UpdateBookingFamily._dependencies,
+          allTransitiveDependencies:
+              UpdateBookingFamily._allTransitiveDependencies,
+          booking: booking,
+        );
+
+  UpdateBookingProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.booking,
+  }) : super.internal();
+
+  final BookingElement booking;
+
+  @override
+  Override overrideWith(
+    FutureOr<String> Function(UpdateBookingRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: UpdateBookingProvider._internal(
+        (ref) => create(ref as UpdateBookingRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        booking: booking,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String> createElement() {
+    return _UpdateBookingProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is UpdateBookingProvider && other.booking == booking;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, booking.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin UpdateBookingRef on AutoDisposeFutureProviderRef<String> {
+  /// The parameter `booking` of this provider.
+  BookingElement get booking;
+}
+
+class _UpdateBookingProviderElement
+    extends AutoDisposeFutureProviderElement<String> with UpdateBookingRef {
+  _UpdateBookingProviderElement(super.provider);
+
+  @override
+  BookingElement get booking => (origin as UpdateBookingProvider).booking;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

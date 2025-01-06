@@ -55,50 +55,52 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
               ),
               customers.when(
                   data: (data) {
-                    return PaginatedDataTable(
-                      showCheckboxColumn: true,
-                      showFirstLastButtons: false,
-                      columnSpacing: 10,
-                      showEmptyRows: false,
-                      onPageChanged: (page) {
-                        setState(() {
-                          _page = page;
-                        });
-                      },
-                      columns: const [
-                        DataColumn(
-                            label: Text(
-                          "ID",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Username",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Email",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Phone Number",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Created",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(label: SizedBox.shrink()),
-                      ],
-                      source: UsersDataSource(data, context),
+                    return Expanded(
+                      child: PaginatedDataTable(
+                        showCheckboxColumn: true,
+                        showFirstLastButtons: false,
+                        columnSpacing: 10,
+                        showEmptyRows: false,
+                        onPageChanged: (page) {
+                          setState(() {
+                            _page = page;
+                          });
+                        },
+                        columns: const [
+                          DataColumn(
+                              label: Text(
+                            "ID",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Username",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Email",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Phone Number",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Created",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(label: SizedBox.shrink()),
+                        ],
+                        source: UsersDataSource(data, context),
+                      ),
                     );
                   },
                   error: (e, s) {
                     debugPrint("Error: $e");
-                    return const Text("Error");
+                    return Text("Error:$e,st:$s");
                   },
                   loading: () =>
                       const Center(child: CircularProgressIndicator())),

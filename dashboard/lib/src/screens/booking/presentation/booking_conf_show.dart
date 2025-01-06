@@ -51,7 +51,7 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                 Row(
                   children: [
                     ServiceContainer(
-                      name: details!.services.first.name,
+                      name: details!.services.first.name?.en ?? "",
                     ),
                     const SizedBox(
                       width: 24,
@@ -151,7 +151,7 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                 ),
                 TextFormField(
                   maxLength: 200,
-                  initialValue: details.notes,
+                  initialValue: details.note ?? "-",
                   maxLines: 8,
                   decoration: const InputDecoration(
                     hintText: "Add Notes",
@@ -168,16 +168,16 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                     border: Border.all(color: AppColors.primaryRefix),
                     borderRadius: BorderRadius.circular(AppRadii.lg),
                   ),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
+                      const Text(
                         "Cost Of Service",
                         style: TextStyle(fontSize: AppTextSize.two),
                       ),
                       Text(
-                        "12.5 SAR",
-                        style: TextStyle(fontSize: AppTextSize.two),
+                        "${details.cost} SAR",
+                        style: const TextStyle(fontSize: AppTextSize.two),
                       ),
                     ],
                   ),

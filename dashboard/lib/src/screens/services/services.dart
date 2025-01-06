@@ -1,25 +1,27 @@
 import 'package:dashboard/src/core/theme/btns.dart';
+import 'package:dashboard/src/screens/services/domain/services_domain.dart';
 import 'package:dashboard/src/screens/users/domain/users_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import 'domain/source.dart';
+import '../../core/theme/radii.dart';
+import '../users/domain/source.dart';
 
-class WorkersScreen extends ConsumerStatefulWidget {
-  const WorkersScreen({super.key});
+class ServicesScreen extends ConsumerStatefulWidget {
+  const ServicesScreen({super.key});
 
   @override
-  ConsumerState<WorkersScreen> createState() => _WorkersScreenState();
+  ConsumerState<ServicesScreen> createState() => _ServicesScreenState();
 }
 
-class _WorkersScreenState extends ConsumerState<WorkersScreen> {
+class _ServicesScreenState extends ConsumerState<ServicesScreen> {
   int _page = 1;
   String? query;
 
   @override
   Widget build(BuildContext context) {
-    final workers = ref.watch(getAllWorkersProvider(page: _page, query: query));
+    final services = ref.watch(getServicesProvider(page: _page, query: query));
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -29,11 +31,17 @@ class _WorkersScreenState extends ConsumerState<WorkersScreen> {
               Row(
                 spacing: 16,
                 children: [
+                  Text(
+                    "All (${services.value?.length ?? 0})",
+                    style: const TextStyle(
+                        fontSize: AppTextSize.three,
+                        fontWeight: FontWeight.w500),
+                  ),
                   Expanded(
                       child: SecondaryButton(
-                          text: "Add New +",
+                          text: "Add New Service",
                           onPressed: () => context.push(
-                                "/worker/edit",
+                                "/services/edit",
                               ))),
                   Expanded(
                     flex: 4,
@@ -52,7 +60,7 @@ class _WorkersScreenState extends ConsumerState<WorkersScreen> {
               const SizedBox(
                 height: 8,
               ),
-              workers.when(
+              services.when(
                   data: (data) {
                     return Expanded(
                       child: PaginatedDataTable(
@@ -72,22 +80,32 @@ class _WorkersScreenState extends ConsumerState<WorkersScreen> {
                           )),
                           DataColumn(
                               label: Text(
-                            "Username",
+                            "Image",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(
                               label: Text(
-                            "Company Name",
+                            "Name",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(
                               label: Text(
-                            "Phone Number",
+                            "Type",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Price",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                           DataColumn(
+                              label: Text(
+                            "Status",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(label: SizedBox.shrink()),
                         ],
-                        source: WorkersDataTable(data, context),
+                        source: ServicesDataTable(data, context),
                       ),
                     );
                   },

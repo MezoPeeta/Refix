@@ -83,7 +83,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 text: "Login",
                                 loading: loading,
                                 onPressed: () async {
-                               
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
                                       loading = true;
@@ -98,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .showSnackBar(
                                               SnackBar(content: Text(v)));
                                     }, (v) => context.go("/"));
-                                     setState(() {
+                                    setState(() {
                                       loading = false;
                                     });
                                   }

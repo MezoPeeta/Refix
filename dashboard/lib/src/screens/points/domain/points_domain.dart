@@ -21,11 +21,7 @@ Future<List<Point>> getPoints(
 
     return decoded.map<Point>((e) => Point.fromJson(e)).toList();
   }
-  if (response.statusCode == 401) {
-    ref.read(authProvider).refreshAccessToken();
-    getPoints(ref);
-    return [];
-  }
+
   return [];
 }
 

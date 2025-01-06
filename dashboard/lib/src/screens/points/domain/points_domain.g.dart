@@ -6,7 +6,7 @@ part of 'points_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getPointsHash() => r'ddf7ab9a1e42b71f5f7a6586ef34c4bd10ce1d59';
+String _$getPointsHash() => r'51388eef33b1b2b1d515f9f4d609c760136351ea';
 
 /// See also [getPoints].
 @ProviderFor(getPoints)

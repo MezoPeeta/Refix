@@ -42,15 +42,15 @@ class OnetimeScreen extends ConsumerWidget {
                             ref.read(boardingInfoProvider.notifier).state =
                                 BoardingUpdate(
                                     image: bytesImage,
-                                    detailsEn: data[index].details,
-                                    headingEn: data[index].heading,
+                                    detailsEn: data[index].details.en,
+                                    headingEn: data[index].heading.en,
                                     id: data[index].id,
-                                    detailsAr: data[index].details,
-                                    headingAr: data[index].heading);
+                                    detailsAr: data[index].details.ar,
+                                    headingAr: data[index].heading.ar);
                             ref.read(currentIndexProvider.notifier).state = 5;
                           },
-                          title: data[index].heading,
-                          description: data[index].details,
+                          title: data[index].heading.en,
+                          description: data[index].details.en,
                           networkImage:
                               "https://refix-api.onrender.com/${data[index].image}",
                           text: "Screen ${index + 1}",

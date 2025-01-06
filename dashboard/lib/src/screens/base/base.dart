@@ -4,8 +4,10 @@ import 'package:dashboard/src/screens/booking/presentation/booking_confirmation.
 import 'package:dashboard/src/screens/booking/presentation/inBooking.dart';
 import 'package:dashboard/src/screens/content/onetime.dart';
 import 'package:dashboard/src/screens/content/onetime_edit.dart';
+import 'package:dashboard/src/screens/discount/presentation/discount.dart';
 import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:dashboard/src/screens/points/points.dart';
+import 'package:dashboard/src/screens/rules/presentation/rules.dart';
 import 'package:dashboard/src/screens/users/client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +17,7 @@ import '../booking/presentation/booking_conf_show.dart';
 import '../home/home.dart';
 import '../permission/permissions.dart';
 import '../points/add_point.dart';
+import '../services/services.dart';
 import '../users/workers.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -26,6 +29,7 @@ class BaseScreen extends StatelessWidget {
     const ClientScreen(),
     const OnetimeScreen(),
     const OnetimeEditScreen(),
+    const DiscountScreen(),
     const AdsScreen(),
     const AdsEditScreen(),
     const PointsScreen(),
@@ -36,9 +40,10 @@ class BaseScreen extends StatelessWidget {
     const BookingConfShow(),
     const SizedBox.shrink(),
     const SizedBox.shrink(),
-    const SizedBox.shrink(),
-
+    const ServicesScreen(),
     const PermissionsScreen(),
+    const RulesScreen(),
+
     // const AddEditUser()
   ];
   @override

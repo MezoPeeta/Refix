@@ -1,4 +1,6 @@
+import 'package:dashboard/src/app.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
+import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,11 +16,19 @@ final getBookingInfoProvider = StateProvider<BookingElement?>((ref) {
   return null;
 });
 
-class BookingScreen extends ConsumerWidget {
+class BookingScreen extends ConsumerStatefulWidget {
   const BookingScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<BookingScreen> createState() => _BookingScreenState();
+}
+
+class _BookingScreenState extends ConsumerState<BookingScreen> {
+  bool loading = false;
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
     final details = ref.watch(getBookingInfoProvider);
     return Scaffold(
       body: Padding(
@@ -48,7 +58,8 @@ class BookingScreen extends ConsumerWidget {
                       ),
                       Row(
                         children: [
-                          ServiceContainer(name: details!.services.first.name),
+                          ServiceContainer(
+                              name: details!.services.first.name?.en ?? ""),
                           const SizedBox(
                             width: 24,
                           ),
@@ -88,24 +99,39 @@ class BookingScreen extends ConsumerWidget {
                       ),
                       Row(
                         children: [
-                          AddedImage(
-                            path: details.imagesBeforeReaper.first,
-                          ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Container(
-                            width: 77,
-                            height: 80,
-                            decoration: BoxDecoration(
-                                color: AppColors.neutral100,
-                                borderRadius:
-                                    BorderRadius.circular(AppRadii.lg)),
-                            child: SvgPicture.asset(
-                              "assets/img/home/add_disabled.svg",
-                              width: 39,
-                              height: 39,
-                              fit: BoxFit.scaleDown,
+                          Expanded(
+                            child: SizedBox(
+                              height: 80,
+                              child: ListView.separated(
+                                  itemCount:
+                                      details.imagesBeforeReaper.length + 1,
+                                  separatorBuilder: (context, index) =>
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    if (index ==
+                                        details.imagesBeforeReaper.length) {
+                                      return Container(
+                                        width: 77,
+                                        height: 80,
+                                        decoration: BoxDecoration(
+                                            color: AppColors.neutral100,
+                                            borderRadius: BorderRadius.circular(
+                                                AppRadii.lg)),
+                                        child: SvgPicture.asset(
+                                          "assets/img/home/add_disabled.svg",
+                                          width: 39,
+                                          height: 39,
+                                          fit: BoxFit.scaleDown,
+                                        ),
+                                      );
+                                    }
+                                    return AddedImage(
+                                      path: details.imagesBeforeReaper[index],
+                                    );
+                                  }),
                             ),
                           ),
                         ],
@@ -203,18 +229,18 @@ class BookingScreen extends ConsumerWidget {
                           color: AppColors.secondaryRefix,
                           borderRadius: BorderRadius.circular(AppRadii.lg),
                         ),
-                        child: const Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               "Cost Of Service",
                               style: TextStyle(
                                   fontSize: AppTextSize.two,
                                   color: Colors.white),
                             ),
                             Text(
-                              "12.5 SAR",
-                              style: TextStyle(
+                              "${details.cost} SAR",
+                              style: const TextStyle(
                                   fontSize: AppTextSize.two,
                                   color: Colors.white),
                             ),
@@ -245,23 +271,38 @@ class BookingScreen extends ConsumerWidget {
                     ),
                     Row(
                       children: [
-                        const AddedImage(
-                          path: "",
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Container(
-                          width: 77,
-                          height: 80,
-                          decoration: BoxDecoration(
-                              color: AppColors.neutral100,
-                              borderRadius: BorderRadius.circular(AppRadii.lg)),
-                          child: SvgPicture.asset(
-                            "assets/img/home/add_disabled.svg",
-                            width: 39,
-                            height: 39,
-                            fit: BoxFit.scaleDown,
+                        Expanded(
+                          child: SizedBox(
+                            height: 80,
+                            child: ListView.separated(
+                                itemCount: details.imagesAfterReaper.length + 1,
+                                separatorBuilder: (context, index) =>
+                                    const SizedBox(
+                                      width: 16,
+                                    ),
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  if (index ==
+                                      details.imagesAfterReaper.length) {
+                                    return Container(
+                                      width: 77,
+                                      height: 80,
+                                      decoration: BoxDecoration(
+                                          color: AppColors.neutral100,
+                                          borderRadius: BorderRadius.circular(
+                                              AppRadii.lg)),
+                                      child: SvgPicture.asset(
+                                        "assets/img/home/add_disabled.svg",
+                                        width: 39,
+                                        height: 39,
+                                        fit: BoxFit.scaleDown,
+                                      ),
+                                    );
+                                  }
+                                  return AddedImage(
+                                    path: details.imagesAfterReaper[index],
+                                  );
+                                }),
                           ),
                         ),
                       ],
@@ -273,6 +314,8 @@ class BookingScreen extends ConsumerWidget {
                       height: 16,
                     ),
                     TextFormField(
+                      readOnly: true,
+                      initialValue: details.worker?.username,
                       decoration: const InputDecoration(
                         hintText: "Worker Name",
                         filled: true,
@@ -292,7 +335,27 @@ class BookingScreen extends ConsumerWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    SecondaryButton(text: "Complete", onPressed: () {})
+                    SecondaryButton(
+                      loading: loading,
+                        text: "Complete",
+                        onPressed: () async {
+                          setState(() {
+                            loading = true;
+                          });
+                          if (loading == true) {
+                            final response = await ref.read(
+                                updateBookingProvider(
+                                        booking:
+                                            details.copyWith(status: "CLOSED"))
+                                    .future);
+                            ref.read(scaffoldMessengerPod).showSnackBar(
+                                SnackBar(content: Text(response)));
+                          }
+
+                          setState(() {
+                            loading = false;
+                          });
+                        })
                   ],
                 ),
               ))

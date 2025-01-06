@@ -86,18 +86,6 @@ class Navbar extends ConsumerWidget {
                           title: Text("Workers"),
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 3;
-                        },
-                        child: const ListTile(
-                          leading: CircleAvatar(
-                            radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
-                          ),
-                          title: Text("Clients requested deletion"),
-                        ),
-                      ),
                     ],
                   ),
                   const Divider(),
@@ -125,7 +113,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 5;
+                          ref.read(currentIndexProvider.notifier).state = 6;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -137,7 +125,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 6;
+                          ref.read(currentIndexProvider.notifier).state = 7;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -152,9 +140,9 @@ class Navbar extends ConsumerWidget {
                   NavMenu(
                     text: "Points",
                     svgPath: "assets/img/navbar/points.svg",
-                    isSelected: currentIndex == 8 || currentIndex == 9,
+                    isSelected: currentIndex == 9 || currentIndex == 10,
                     onTap: () {
-                      ref.read(currentIndexProvider.notifier).state = 8;
+                      ref.read(currentIndexProvider.notifier).state = 9;
                     },
                   ),
                   ExpansionMenu(
@@ -163,7 +151,7 @@ class Navbar extends ConsumerWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 10;
+                          ref.read(currentIndexProvider.notifier).state = 11;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -175,7 +163,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 12;
+                          ref.read(currentIndexProvider.notifier).state = 13;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -193,7 +181,7 @@ class Navbar extends ConsumerWidget {
                     children: [
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 14;
+                          ref.read(currentIndexProvider.notifier).state = 15;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -205,7 +193,7 @@ class Navbar extends ConsumerWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          ref.read(currentIndexProvider.notifier).state = 15;
+                          ref.read(currentIndexProvider.notifier).state = 16;
                         },
                         child: const ListTile(
                           leading: CircleAvatar(
@@ -227,16 +215,24 @@ class Navbar extends ConsumerWidget {
                   NavMenu(
                     text: "Services",
                     svgPath: "assets/img/navbar/services.svg",
-                    isSelected: currentIndex == 16,
+                    isSelected: currentIndex == 17,
                     onTap: () {
-                      ref.read(currentIndexProvider.notifier).state = 16;
+                      ref.read(currentIndexProvider.notifier).state = 17;
                     },
                   ),
                   NavMenu(
-                    isSelected: currentIndex == 17,
+                    isSelected: currentIndex == 18,
                     text: "Permissions",
                     onTap: () {
-                      ref.read(currentIndexProvider.notifier).state = 17;
+                      ref.read(currentIndexProvider.notifier).state = 18;
+                    },
+                    svgPath: "assets/img/navbar/permissions.svg",
+                  ),
+                   NavMenu(
+                    isSelected: currentIndex == 19,
+                    text: "Roles",
+                    onTap: () {
+                      ref.read(currentIndexProvider.notifier).state = 19;
                     },
                     svgPath: "assets/img/navbar/permissions.svg",
                   ),

@@ -26,8 +26,11 @@ class User with _$User {
     @JsonKey(name: "phone") String? phone,
     @JsonKey(name: "lang") double? longitude,
     @JsonKey(name: "lat") double? latitude,
-    @JsonKey(name: "role") required Role role,
-    @JsonKey(name: "is_verified") required bool isVerified,
+    @JsonKey(
+      name: "role",
+    )
+    required Role role,
+    @JsonKey(name: "is_verified", defaultValue: false) required bool isVerified,
     @JsonKey(name: "createdAt") required DateTime createdAt,
   }) = _User;
 
@@ -39,9 +42,22 @@ class Role with _$Role {
   const factory Role({
     @JsonKey(name: "_id") required String id,
     @JsonKey(name: "name") required String name,
+    @PermissionConverter() List<Permission>? permissions,
   }) = _Role;
 
   factory Role.fromJson(Map<String, dynamic> json) => _$RoleFromJson(json);
+}
+
+@unfreezed
+class Permission with _$Permission {
+  factory Permission(
+      {@JsonKey(name: "_id") required String id,
+      @JsonKey(name: "name") required String name,
+      String? target,
+      @Default(false) bool isSelected}) = _Permission;
+
+  factory Permission.fromJson(Map<String, dynamic> json) =>
+      _$PermissionFromJson(json);
 }
 
 @freezed
@@ -53,8 +69,31 @@ class Worker with _$Worker {
     @JsonKey(name: "username") required String username,
     @JsonKey(name: "company_name") required String companyName,
     @JsonKey(name: "phone") String? phone,
-    @JsonKey(name: "role") required Role role,
   }) = _Worker;
 
   factory Worker.fromJson(Map<String, dynamic> json) => _$WorkerFromJson(json);
+}
+
+class PermissionConverter implements JsonConverter<List<Permission>, dynamic> {
+  const PermissionConverter();
+
+  @override
+  List<Permission> fromJson(Object? json) {
+    if (json is List) {
+      return json.map((item) {
+        if (item is Map<String, dynamic>) {
+          return Permission.fromJson(item);
+        } else if (item is String) {
+          return Permission(id: item, name: '');
+        }
+        throw Exception('Invalid permission format');
+      }).toList();
+    }
+    return [];
+  }
+
+  @override
+  dynamic toJson(List<Permission> permissions) {
+    return permissions.map((permission) => permission.toJson()).toList();
+  }
 }

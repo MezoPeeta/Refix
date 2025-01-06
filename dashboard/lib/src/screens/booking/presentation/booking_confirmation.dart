@@ -50,49 +50,51 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
               ),
               bookings.when(
                   data: (data) {
-                    return PaginatedDataTable(
-                      showCheckboxColumn: true,
-                      showFirstLastButtons: false,
-                      showEmptyRows: false,
-                      onPageChanged: (page) {
-                        setState(() {
-                          _page = page;
-                        });
-                      },
-                      columns: const [
-                        DataColumn(
-                            label: Text(
-                          "ID",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Service Name",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Customer Name",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Cost",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Created",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Status",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(label: SizedBox.shrink()),
-                      ],
-                      source: BookingConfDataSource(ref, data),
+                    return Expanded(
+                      child: PaginatedDataTable(
+                        showCheckboxColumn: true,
+                        showFirstLastButtons: false,
+                        showEmptyRows: false,
+                        onPageChanged: (page) {
+                          setState(() {
+                            _page = page;
+                          });
+                        },
+                        columns: const [
+                          DataColumn(
+                              label: Text(
+                            "ID",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Service Name",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Customer Name",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Cost",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Created",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Status",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(label: SizedBox.shrink()),
+                        ],
+                        source: BookingConfDataSource(ref, data),
+                      ),
                     );
                   },
                   error: (e, s) {

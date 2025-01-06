@@ -11,8 +11,8 @@ class Boarding with _$Boarding {
   const factory Boarding({
     @JsonKey(name: "_id") required String id,
     required String image,
-    required String heading,
-    required String details,
+    required Localized heading,
+    required Localized details,
   }) = _Boarding;
 
   factory Boarding.fromJson(Map<String, Object?> json) =>
@@ -36,3 +36,15 @@ class BoardingUpdate {
     required this.detailsAr,
   });
 }
+
+@freezed
+class Localized with _$Localized {
+  const factory Localized({
+    required String en,
+    required String ar,
+  }) = _Localized;
+
+  factory Localized.fromJson(Map<String, Object?> json) =>
+      _$LocalizedFromJson(json);
+}
+

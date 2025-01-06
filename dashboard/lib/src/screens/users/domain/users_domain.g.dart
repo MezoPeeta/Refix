@@ -711,7 +711,7 @@ class _UpdateWorkerProviderElement
   String get companyName => (origin as UpdateWorkerProvider).companyName;
 }
 
-String _$createUserHash() => r'e3071b2464b6433cb6f42fae48b5722465a4597f';
+String _$createUserHash() => r'b1c9a4b67807ab8fb0c56673c9c5b8e27648831b';
 
 /// See also [createUser].
 @ProviderFor(createUser)
@@ -890,7 +890,7 @@ class _CreateUserProviderElement
   String get phone => (origin as CreateUserProvider).phone;
 }
 
-String _$updateUserHash() => r'0e5b6b00f11d724c72618fc9ff36180215ba01b3';
+String _$updateUserHash() => r'c916286d47cc71b3e54e8dbea36eb5a9cb2f7e2d';
 
 /// See also [updateUser].
 @ProviderFor(updateUser)

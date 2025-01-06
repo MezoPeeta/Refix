@@ -265,7 +265,7 @@ mixin _$User {
   double? get latitude => throw _privateConstructorUsedError;
   @JsonKey(name: "role")
   Role get role => throw _privateConstructorUsedError;
-  @JsonKey(name: "is_verified")
+  @JsonKey(name: "is_verified", defaultValue: false)
   bool get isVerified => throw _privateConstructorUsedError;
   @JsonKey(name: "createdAt")
   DateTime get createdAt => throw _privateConstructorUsedError;
@@ -293,7 +293,7 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "lang") double? longitude,
       @JsonKey(name: "lat") double? latitude,
       @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified") bool isVerified,
+      @JsonKey(name: "is_verified", defaultValue: false) bool isVerified,
       @JsonKey(name: "createdAt") DateTime createdAt});
 
   $RoleCopyWith<$Res> get role;
@@ -396,7 +396,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "lang") double? longitude,
       @JsonKey(name: "lat") double? latitude,
       @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified") bool isVerified,
+      @JsonKey(name: "is_verified", defaultValue: false) bool isVerified,
       @JsonKey(name: "createdAt") DateTime createdAt});
 
   @override
@@ -483,7 +483,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       @JsonKey(name: "lang") this.longitude,
       @JsonKey(name: "lat") this.latitude,
       @JsonKey(name: "role") required this.role,
-      @JsonKey(name: "is_verified") required this.isVerified,
+      @JsonKey(name: "is_verified", defaultValue: false)
+      required this.isVerified,
       @JsonKey(name: "createdAt") required this.createdAt});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
@@ -514,7 +515,7 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
   @JsonKey(name: "role")
   final Role role;
   @override
-  @JsonKey(name: "is_verified")
+  @JsonKey(name: "is_verified", defaultValue: false)
   final bool isVerified;
   @override
   @JsonKey(name: "createdAt")
@@ -596,7 +597,8 @@ abstract class _User implements User {
           @JsonKey(name: "lang") final double? longitude,
           @JsonKey(name: "lat") final double? latitude,
           @JsonKey(name: "role") required final Role role,
-          @JsonKey(name: "is_verified") required final bool isVerified,
+          @JsonKey(name: "is_verified", defaultValue: false)
+          required final bool isVerified,
           @JsonKey(name: "createdAt") required final DateTime createdAt}) =
       _$UserImpl;
 
@@ -627,7 +629,7 @@ abstract class _User implements User {
   @JsonKey(name: "role")
   Role get role;
   @override
-  @JsonKey(name: "is_verified")
+  @JsonKey(name: "is_verified", defaultValue: false)
   bool get isVerified;
   @override
   @JsonKey(name: "createdAt")
@@ -651,6 +653,8 @@ mixin _$Role {
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: "name")
   String get name => throw _privateConstructorUsedError;
+  @PermissionConverter()
+  List<Permission>? get permissions => throw _privateConstructorUsedError;
 
   /// Serializes this Role to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -667,7 +671,9 @@ abstract class $RoleCopyWith<$Res> {
       _$RoleCopyWithImpl<$Res, Role>;
   @useResult
   $Res call(
-      {@JsonKey(name: "_id") String id, @JsonKey(name: "name") String name});
+      {@JsonKey(name: "_id") String id,
+      @JsonKey(name: "name") String name,
+      @PermissionConverter() List<Permission>? permissions});
 }
 
 /// @nodoc
@@ -687,6 +693,7 @@ class _$RoleCopyWithImpl<$Res, $Val extends Role>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? permissions = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -697,6 +704,10 @@ class _$RoleCopyWithImpl<$Res, $Val extends Role>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      permissions: freezed == permissions
+          ? _value.permissions
+          : permissions // ignore: cast_nullable_to_non_nullable
+              as List<Permission>?,
     ) as $Val);
   }
 }
@@ -709,7 +720,9 @@ abstract class _$$RoleImplCopyWith<$Res> implements $RoleCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "_id") String id, @JsonKey(name: "name") String name});
+      {@JsonKey(name: "_id") String id,
+      @JsonKey(name: "name") String name,
+      @PermissionConverter() List<Permission>? permissions});
 }
 
 /// @nodoc
@@ -726,6 +739,7 @@ class __$$RoleImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? permissions = freezed,
   }) {
     return _then(_$RoleImpl(
       id: null == id
@@ -736,6 +750,10 @@ class __$$RoleImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
+      permissions: freezed == permissions
+          ? _value._permissions
+          : permissions // ignore: cast_nullable_to_non_nullable
+              as List<Permission>?,
     ));
   }
 }
@@ -745,7 +763,9 @@ class __$$RoleImplCopyWithImpl<$Res>
 class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
   const _$RoleImpl(
       {@JsonKey(name: "_id") required this.id,
-      @JsonKey(name: "name") required this.name});
+      @JsonKey(name: "name") required this.name,
+      @PermissionConverter() final List<Permission>? permissions})
+      : _permissions = permissions;
 
   factory _$RoleImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoleImplFromJson(json);
@@ -756,10 +776,20 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
   @override
   @JsonKey(name: "name")
   final String name;
+  final List<Permission>? _permissions;
+  @override
+  @PermissionConverter()
+  List<Permission>? get permissions {
+    final value = _permissions;
+    if (value == null) return null;
+    if (_permissions is EqualUnmodifiableListView) return _permissions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Role(id: $id, name: $name)';
+    return 'Role(id: $id, name: $name, permissions: $permissions)';
   }
 
   @override
@@ -768,7 +798,8 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
     properties
       ..add(DiagnosticsProperty('type', 'Role'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('name', name));
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('permissions', permissions));
   }
 
   @override
@@ -777,12 +808,15 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
         (other.runtimeType == runtimeType &&
             other is _$RoleImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality()
+                .equals(other._permissions, _permissions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, const DeepCollectionEquality().hash(_permissions));
 
   /// Create a copy of Role
   /// with the given fields replaced by the non-null parameter values.
@@ -803,7 +837,8 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
 abstract class _Role implements Role {
   const factory _Role(
       {@JsonKey(name: "_id") required final String id,
-      @JsonKey(name: "name") required final String name}) = _$RoleImpl;
+      @JsonKey(name: "name") required final String name,
+      @PermissionConverter() final List<Permission>? permissions}) = _$RoleImpl;
 
   factory _Role.fromJson(Map<String, dynamic> json) = _$RoleImpl.fromJson;
 
@@ -813,12 +848,243 @@ abstract class _Role implements Role {
   @override
   @JsonKey(name: "name")
   String get name;
+  @override
+  @PermissionConverter()
+  List<Permission>? get permissions;
 
   /// Create a copy of Role
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RoleImplCopyWith<_$RoleImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Permission _$PermissionFromJson(Map<String, dynamic> json) {
+  return _Permission.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Permission {
+  @JsonKey(name: "_id")
+  String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "_id")
+  set id(String value) => throw _privateConstructorUsedError;
+  @JsonKey(name: "name")
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: "name")
+  set name(String value) => throw _privateConstructorUsedError;
+  String? get target => throw _privateConstructorUsedError;
+  set target(String? value) => throw _privateConstructorUsedError;
+  bool get isSelected => throw _privateConstructorUsedError;
+  set isSelected(bool value) => throw _privateConstructorUsedError;
+
+  /// Serializes this Permission to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Permission
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PermissionCopyWith<Permission> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PermissionCopyWith<$Res> {
+  factory $PermissionCopyWith(
+          Permission value, $Res Function(Permission) then) =
+      _$PermissionCopyWithImpl<$Res, Permission>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      @JsonKey(name: "name") String name,
+      String? target,
+      bool isSelected});
+}
+
+/// @nodoc
+class _$PermissionCopyWithImpl<$Res, $Val extends Permission>
+    implements $PermissionCopyWith<$Res> {
+  _$PermissionCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Permission
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? target = freezed,
+    Object? isSelected = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: freezed == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSelected: null == isSelected
+          ? _value.isSelected
+          : isSelected // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PermissionImplCopyWith<$Res>
+    implements $PermissionCopyWith<$Res> {
+  factory _$$PermissionImplCopyWith(
+          _$PermissionImpl value, $Res Function(_$PermissionImpl) then) =
+      __$$PermissionImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      @JsonKey(name: "name") String name,
+      String? target,
+      bool isSelected});
+}
+
+/// @nodoc
+class __$$PermissionImplCopyWithImpl<$Res>
+    extends _$PermissionCopyWithImpl<$Res, _$PermissionImpl>
+    implements _$$PermissionImplCopyWith<$Res> {
+  __$$PermissionImplCopyWithImpl(
+      _$PermissionImpl _value, $Res Function(_$PermissionImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Permission
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? name = null,
+    Object? target = freezed,
+    Object? isSelected = null,
+  }) {
+    return _then(_$PermissionImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      target: freezed == target
+          ? _value.target
+          : target // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isSelected: null == isSelected
+          ? _value.isSelected
+          : isSelected // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$PermissionImpl with DiagnosticableTreeMixin implements _Permission {
+  _$PermissionImpl(
+      {@JsonKey(name: "_id") required this.id,
+      @JsonKey(name: "name") required this.name,
+      this.target,
+      this.isSelected = false});
+
+  factory _$PermissionImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PermissionImplFromJson(json);
+
+  @override
+  @JsonKey(name: "_id")
+  String id;
+  @override
+  @JsonKey(name: "name")
+  String name;
+  @override
+  String? target;
+  @override
+  @JsonKey()
+  bool isSelected;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Permission(id: $id, name: $name, target: $target, isSelected: $isSelected)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Permission'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('target', target))
+      ..add(DiagnosticsProperty('isSelected', isSelected));
+  }
+
+  /// Create a copy of Permission
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PermissionImplCopyWith<_$PermissionImpl> get copyWith =>
+      __$$PermissionImplCopyWithImpl<_$PermissionImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PermissionImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Permission implements Permission {
+  factory _Permission(
+      {@JsonKey(name: "_id") required String id,
+      @JsonKey(name: "name") required String name,
+      String? target,
+      bool isSelected}) = _$PermissionImpl;
+
+  factory _Permission.fromJson(Map<String, dynamic> json) =
+      _$PermissionImpl.fromJson;
+
+  @override
+  @JsonKey(name: "_id")
+  String get id;
+  @JsonKey(name: "_id")
+  set id(String value);
+  @override
+  @JsonKey(name: "name")
+  String get name;
+  @JsonKey(name: "name")
+  set name(String value);
+  @override
+  String? get target;
+  set target(String? value);
+  @override
+  bool get isSelected;
+  set isSelected(bool value);
+
+  /// Create a copy of Permission
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PermissionImplCopyWith<_$PermissionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -840,8 +1106,6 @@ mixin _$Worker {
   String get companyName => throw _privateConstructorUsedError;
   @JsonKey(name: "phone")
   String? get phone => throw _privateConstructorUsedError;
-  @JsonKey(name: "role")
-  Role get role => throw _privateConstructorUsedError;
 
   /// Serializes this Worker to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -863,10 +1127,7 @@ abstract class $WorkerCopyWith<$Res> {
       @JsonKey(name: "email") String email,
       @JsonKey(name: "username") String username,
       @JsonKey(name: "company_name") String companyName,
-      @JsonKey(name: "phone") String? phone,
-      @JsonKey(name: "role") Role role});
-
-  $RoleCopyWith<$Res> get role;
+      @JsonKey(name: "phone") String? phone});
 }
 
 /// @nodoc
@@ -890,7 +1151,6 @@ class _$WorkerCopyWithImpl<$Res, $Val extends Worker>
     Object? username = null,
     Object? companyName = null,
     Object? phone = freezed,
-    Object? role = null,
   }) {
     return _then(_value.copyWith(
       notificationToken: freezed == notificationToken
@@ -917,21 +1177,7 @@ class _$WorkerCopyWithImpl<$Res, $Val extends Worker>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
     ) as $Val);
-  }
-
-  /// Create a copy of Worker
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $RoleCopyWith<$Res> get role {
-    return $RoleCopyWith<$Res>(_value.role, (value) {
-      return _then(_value.copyWith(role: value) as $Val);
-    });
   }
 }
 
@@ -948,11 +1194,7 @@ abstract class _$$WorkerImplCopyWith<$Res> implements $WorkerCopyWith<$Res> {
       @JsonKey(name: "email") String email,
       @JsonKey(name: "username") String username,
       @JsonKey(name: "company_name") String companyName,
-      @JsonKey(name: "phone") String? phone,
-      @JsonKey(name: "role") Role role});
-
-  @override
-  $RoleCopyWith<$Res> get role;
+      @JsonKey(name: "phone") String? phone});
 }
 
 /// @nodoc
@@ -974,7 +1216,6 @@ class __$$WorkerImplCopyWithImpl<$Res>
     Object? username = null,
     Object? companyName = null,
     Object? phone = freezed,
-    Object? role = null,
   }) {
     return _then(_$WorkerImpl(
       notificationToken: freezed == notificationToken
@@ -1001,10 +1242,6 @@ class __$$WorkerImplCopyWithImpl<$Res>
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
               as String?,
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as Role,
     ));
   }
 }
@@ -1018,8 +1255,7 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
       @JsonKey(name: "email") required this.email,
       @JsonKey(name: "username") required this.username,
       @JsonKey(name: "company_name") required this.companyName,
-      @JsonKey(name: "phone") this.phone,
-      @JsonKey(name: "role") required this.role});
+      @JsonKey(name: "phone") this.phone});
 
   factory _$WorkerImpl.fromJson(Map<String, dynamic> json) =>
       _$$WorkerImplFromJson(json);
@@ -1042,13 +1278,10 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
   @override
   @JsonKey(name: "phone")
   final String? phone;
-  @override
-  @JsonKey(name: "role")
-  final Role role;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Worker(notificationToken: $notificationToken, id: $id, email: $email, username: $username, companyName: $companyName, phone: $phone, role: $role)';
+    return 'Worker(notificationToken: $notificationToken, id: $id, email: $email, username: $username, companyName: $companyName, phone: $phone)';
   }
 
   @override
@@ -1061,8 +1294,7 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('username', username))
       ..add(DiagnosticsProperty('companyName', companyName))
-      ..add(DiagnosticsProperty('phone', phone))
-      ..add(DiagnosticsProperty('role', role));
+      ..add(DiagnosticsProperty('phone', phone));
   }
 
   @override
@@ -1078,14 +1310,13 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
                 other.username == username) &&
             (identical(other.companyName, companyName) ||
                 other.companyName == companyName) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
-            (identical(other.role, role) || other.role == role));
+            (identical(other.phone, phone) || other.phone == phone));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, notificationToken, id, email,
-      username, companyName, phone, role);
+  int get hashCode => Object.hash(
+      runtimeType, notificationToken, id, email, username, companyName, phone);
 
   /// Create a copy of Worker
   /// with the given fields replaced by the non-null parameter values.
@@ -1110,8 +1341,7 @@ abstract class _Worker implements Worker {
       @JsonKey(name: "email") required final String email,
       @JsonKey(name: "username") required final String username,
       @JsonKey(name: "company_name") required final String companyName,
-      @JsonKey(name: "phone") final String? phone,
-      @JsonKey(name: "role") required final Role role}) = _$WorkerImpl;
+      @JsonKey(name: "phone") final String? phone}) = _$WorkerImpl;
 
   factory _Worker.fromJson(Map<String, dynamic> json) = _$WorkerImpl.fromJson;
 
@@ -1133,9 +1363,6 @@ abstract class _Worker implements Worker {
   @override
   @JsonKey(name: "phone")
   String? get phone;
-  @override
-  @JsonKey(name: "role")
-  Role get role;
 
   /// Create a copy of Worker
   /// with the given fields replaced by the non-null parameter values.

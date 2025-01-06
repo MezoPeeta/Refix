@@ -31,57 +31,58 @@ class _PointsScreenState extends ConsumerState<PointsScreen> {
                       child: SecondaryButton(
                           text: "Add New +",
                           onPressed: () {
-                            ref.read(currentIndexProvider.notifier).state = 9;
+                            ref.read(currentIndexProvider.notifier).state = 10;
                           })),
                 ],
               ),
               points.when(
                   data: (data) {
-                    return PaginatedDataTable(
-                      columns: const [
-                        DataColumn(
-                            label: Text(
-                          "ID",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Package Name",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Offer",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Available Number of Days",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Points",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Created",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Status",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(label: SizedBox.shrink()),
-                      ],
-                      source: PointsDataSource(data, ref),
+                    return Expanded(
+                      child: PaginatedDataTable(
+                        columns: const [
+                          DataColumn(
+                              label: Text(
+                            "ID",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Package Name",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Offer",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Available Number of Days",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Points",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Created",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Status",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(label: SizedBox.shrink()),
+                        ],
+                        source: PointsDataSource(data, ref),
+                      ),
                     );
                   },
                   error: (e, s) {
-                    debugPrint("Points Error: $e");
-                    return const Text("Error");
+                    return Text("Error: $e,str:$s");
                   },
                   loading: () =>
                       const Center(child: CircularProgressIndicator())),

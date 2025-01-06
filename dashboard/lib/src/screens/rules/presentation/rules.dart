@@ -1,26 +1,23 @@
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:dashboard/src/core/theme/radii.dart';
+import 'package:dashboard/src/screens/rules/domain/rules_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../navbar/navbar.dart';
-import '../users/domain/source.dart';
+import '../../users/domain/source.dart';
 
-class PermissionsScreen extends ConsumerStatefulWidget {
-  const PermissionsScreen({super.key});
+class RulesScreen extends ConsumerStatefulWidget {
+  const RulesScreen({super.key});
 
   @override
-  ConsumerState<PermissionsScreen> createState() => _PermissionsScreenState();
+  ConsumerState<RulesScreen> createState() => _RulesScreenState();
 }
 
-class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
-  int _page = 1;
-  String? query;
-
+class _RulesScreenState extends ConsumerState<RulesScreen> {
   @override
   Widget build(BuildContext context) {
-    final users = ref.watch(getUsersProvider(page: _page, query: query));
+    final rules = ref.watch(roleNotifierProvider);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
@@ -31,47 +28,30 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
                 spacing: 16,
                 children: [
                   Text(
-                    "All (${users.value?.length ?? 0})",
+                    "All (${rules.value?.length ?? 0})",
                     style: const TextStyle(
                         fontSize: AppTextSize.three,
                         fontWeight: FontWeight.w500),
                   ),
                   Expanded(
                       child: SecondaryButton(
-                          text: "Add New User",
+                          text: "Add New Role",
                           onPressed: () {
-                            context.push("/permission/edit");
+                            context.push("/rule/edit");
                           })),
-                  Expanded(
-                    flex: 5,
-                    child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          query = value;
-                        });
-                      },
-                      decoration: const InputDecoration(
-                          filled: true, hintText: "Search Here"),
-                    ),
-                  )
                 ],
               ),
             ),
             const SizedBox(
               height: 8,
             ),
-            users.when(
+            rules.when(
                 data: (data) {
                   return Expanded(
                     child: PaginatedDataTable(
                       showCheckboxColumn: true,
                       showFirstLastButtons: false,
                       showEmptyRows: false,
-                      onPageChanged: (page) {
-                        setState(() {
-                          _page = page;
-                        });
-                      },
                       columns: const [
                         DataColumn(
                             label: Text(
@@ -80,27 +60,12 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
                         )),
                         DataColumn(
                             label: Text(
-                          "Username",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Email",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Rule",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        DataColumn(
-                            label: Text(
-                          "Created",
+                          "Name",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
                         DataColumn(label: SizedBox.shrink()),
                       ],
-                      source: CustomersDataSource(data, context),
+                      source: RuleDataSource(data, context),
                     ),
                   );
                 },

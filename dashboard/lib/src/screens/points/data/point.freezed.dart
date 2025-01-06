@@ -21,7 +21,9 @@ Point _$PointFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Point {
   @JsonKey(name: "name")
-  String get name => throw _privateConstructorUsedError;
+  Localized get name => throw _privateConstructorUsedError;
+  @JsonKey(name: "details")
+  Localized? get details => throw _privateConstructorUsedError;
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: "percentage")
@@ -52,7 +54,8 @@ abstract class $PointCopyWith<$Res> {
       _$PointCopyWithImpl<$Res, Point>;
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
+      {@JsonKey(name: "name") Localized name,
+      @JsonKey(name: "details") Localized? details,
       @JsonKey(name: "_id") String id,
       @JsonKey(name: "percentage") int percentage,
       @JsonKey(name: "required_points") int requiredPoints,
@@ -60,6 +63,9 @@ abstract class $PointCopyWith<$Res> {
       @JsonKey(name: "active") bool active,
       @JsonKey(name: "createdAt") DateTime createdAt,
       @JsonKey(name: "updatedAt") DateTime updatedAt});
+
+  $LocalizedCopyWith<$Res> get name;
+  $LocalizedCopyWith<$Res>? get details;
 }
 
 /// @nodoc
@@ -78,6 +84,7 @@ class _$PointCopyWithImpl<$Res, $Val extends Point>
   @override
   $Res call({
     Object? name = null,
+    Object? details = freezed,
     Object? id = null,
     Object? percentage = null,
     Object? requiredPoints = null,
@@ -90,7 +97,11 @@ class _$PointCopyWithImpl<$Res, $Val extends Point>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
+      details: freezed == details
+          ? _value.details
+          : details // ignore: cast_nullable_to_non_nullable
+              as Localized?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -121,6 +132,30 @@ class _$PointCopyWithImpl<$Res, $Val extends Point>
               as DateTime,
     ) as $Val);
   }
+
+  /// Create a copy of Point
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res> get name {
+    return $LocalizedCopyWith<$Res>(_value.name, (value) {
+      return _then(_value.copyWith(name: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Point
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res>? get details {
+    if (_value.details == null) {
+      return null;
+    }
+
+    return $LocalizedCopyWith<$Res>(_value.details!, (value) {
+      return _then(_value.copyWith(details: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -131,7 +166,8 @@ abstract class _$$PointImplCopyWith<$Res> implements $PointCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
+      {@JsonKey(name: "name") Localized name,
+      @JsonKey(name: "details") Localized? details,
       @JsonKey(name: "_id") String id,
       @JsonKey(name: "percentage") int percentage,
       @JsonKey(name: "required_points") int requiredPoints,
@@ -139,6 +175,11 @@ abstract class _$$PointImplCopyWith<$Res> implements $PointCopyWith<$Res> {
       @JsonKey(name: "active") bool active,
       @JsonKey(name: "createdAt") DateTime createdAt,
       @JsonKey(name: "updatedAt") DateTime updatedAt});
+
+  @override
+  $LocalizedCopyWith<$Res> get name;
+  @override
+  $LocalizedCopyWith<$Res>? get details;
 }
 
 /// @nodoc
@@ -155,6 +196,7 @@ class __$$PointImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? name = null,
+    Object? details = freezed,
     Object? id = null,
     Object? percentage = null,
     Object? requiredPoints = null,
@@ -167,7 +209,11 @@ class __$$PointImplCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized,
+      details: freezed == details
+          ? _value.details
+          : details // ignore: cast_nullable_to_non_nullable
+              as Localized?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -205,6 +251,7 @@ class __$$PointImplCopyWithImpl<$Res>
 class _$PointImpl implements _Point {
   const _$PointImpl(
       {@JsonKey(name: "name") required this.name,
+      @JsonKey(name: "details") this.details,
       @JsonKey(name: "_id") required this.id,
       @JsonKey(name: "percentage") required this.percentage,
       @JsonKey(name: "required_points") required this.requiredPoints,
@@ -218,7 +265,10 @@ class _$PointImpl implements _Point {
 
   @override
   @JsonKey(name: "name")
-  final String name;
+  final Localized name;
+  @override
+  @JsonKey(name: "details")
+  final Localized? details;
   @override
   @JsonKey(name: "_id")
   final String id;
@@ -243,7 +293,7 @@ class _$PointImpl implements _Point {
 
   @override
   String toString() {
-    return 'Point(name: $name, id: $id, percentage: $percentage, requiredPoints: $requiredPoints, availableDays: $availableDays, active: $active, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Point(name: $name, details: $details, id: $id, percentage: $percentage, requiredPoints: $requiredPoints, availableDays: $availableDays, active: $active, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -252,6 +302,7 @@ class _$PointImpl implements _Point {
         (other.runtimeType == runtimeType &&
             other is _$PointImpl &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.details, details) || other.details == details) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.percentage, percentage) ||
                 other.percentage == percentage) &&
@@ -268,7 +319,7 @@ class _$PointImpl implements _Point {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, id, percentage,
+  int get hashCode => Object.hash(runtimeType, name, details, id, percentage,
       requiredPoints, availableDays, active, createdAt, updatedAt);
 
   /// Create a copy of Point
@@ -289,7 +340,8 @@ class _$PointImpl implements _Point {
 
 abstract class _Point implements Point {
   const factory _Point(
-          {@JsonKey(name: "name") required final String name,
+          {@JsonKey(name: "name") required final Localized name,
+          @JsonKey(name: "details") final Localized? details,
           @JsonKey(name: "_id") required final String id,
           @JsonKey(name: "percentage") required final int percentage,
           @JsonKey(name: "required_points") required final int requiredPoints,
@@ -303,7 +355,10 @@ abstract class _Point implements Point {
 
   @override
   @JsonKey(name: "name")
-  String get name;
+  Localized get name;
+  @override
+  @JsonKey(name: "details")
+  Localized? get details;
   @override
   @JsonKey(name: "_id")
   String get id;

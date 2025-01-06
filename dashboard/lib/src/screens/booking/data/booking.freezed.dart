@@ -209,14 +209,15 @@ mixin _$BookingElement {
   List<Service> get services => throw _privateConstructorUsedError;
   @JsonKey(name: "customer")
   User get customer => throw _privateConstructorUsedError;
+  Worker? get worker => throw _privateConstructorUsedError;
   @JsonKey(name: "appointment_date")
   DateTime get appointmentDate => throw _privateConstructorUsedError;
-  @JsonKey(name: "notes")
-  String get notes => throw _privateConstructorUsedError;
+  @JsonKey(name: "note")
+  String? get note => throw _privateConstructorUsedError;
   @JsonKey(name: "images_before_reaper")
   List<String> get imagesBeforeReaper => throw _privateConstructorUsedError;
-  @JsonKey(name: "images_after_reaper")
-  List<dynamic> get imagesAfterReaper => throw _privateConstructorUsedError;
+  @JsonKey(name: "images_after_reaper", defaultValue: [])
+  List<String> get imagesAfterReaper => throw _privateConstructorUsedError;
   @JsonKey(name: "description_problem")
   dynamic get descriptionProblem => throw _privateConstructorUsedError;
   @JsonKey(name: "status")
@@ -225,10 +226,6 @@ mixin _$BookingElement {
   int get cost => throw _privateConstructorUsedError;
   @JsonKey(name: "createdAt")
   DateTime get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: "updatedAt")
-  DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey(name: "__v")
-  int get v => throw _privateConstructorUsedError;
 
   /// Serializes this BookingElement to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -250,18 +247,19 @@ abstract class $BookingElementCopyWith<$Res> {
       {@JsonKey(name: "_id") String id,
       @JsonKey(name: "services") List<Service> services,
       @JsonKey(name: "customer") User customer,
+      Worker? worker,
       @JsonKey(name: "appointment_date") DateTime appointmentDate,
-      @JsonKey(name: "notes") String notes,
+      @JsonKey(name: "note") String? note,
       @JsonKey(name: "images_before_reaper") List<String> imagesBeforeReaper,
-      @JsonKey(name: "images_after_reaper") List<dynamic> imagesAfterReaper,
+      @JsonKey(name: "images_after_reaper", defaultValue: [])
+      List<String> imagesAfterReaper,
       @JsonKey(name: "description_problem") dynamic descriptionProblem,
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost") int cost,
-      @JsonKey(name: "createdAt") DateTime createdAt,
-      @JsonKey(name: "updatedAt") DateTime updatedAt,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "createdAt") DateTime createdAt});
 
   $UserCopyWith<$Res> get customer;
+  $WorkerCopyWith<$Res>? get worker;
 }
 
 /// @nodoc
@@ -282,16 +280,15 @@ class _$BookingElementCopyWithImpl<$Res, $Val extends BookingElement>
     Object? id = null,
     Object? services = null,
     Object? customer = null,
+    Object? worker = freezed,
     Object? appointmentDate = null,
-    Object? notes = null,
+    Object? note = freezed,
     Object? imagesBeforeReaper = null,
     Object? imagesAfterReaper = null,
     Object? descriptionProblem = freezed,
     Object? status = null,
     Object? cost = null,
     Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? v = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -306,14 +303,18 @@ class _$BookingElementCopyWithImpl<$Res, $Val extends BookingElement>
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
               as User,
+      worker: freezed == worker
+          ? _value.worker
+          : worker // ignore: cast_nullable_to_non_nullable
+              as Worker?,
       appointmentDate: null == appointmentDate
           ? _value.appointmentDate
           : appointmentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
       imagesBeforeReaper: null == imagesBeforeReaper
           ? _value.imagesBeforeReaper
           : imagesBeforeReaper // ignore: cast_nullable_to_non_nullable
@@ -321,7 +322,7 @@ class _$BookingElementCopyWithImpl<$Res, $Val extends BookingElement>
       imagesAfterReaper: null == imagesAfterReaper
           ? _value.imagesAfterReaper
           : imagesAfterReaper // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<String>,
       descriptionProblem: freezed == descriptionProblem
           ? _value.descriptionProblem
           : descriptionProblem // ignore: cast_nullable_to_non_nullable
@@ -338,14 +339,6 @@ class _$BookingElementCopyWithImpl<$Res, $Val extends BookingElement>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
   }
 
@@ -356,6 +349,20 @@ class _$BookingElementCopyWithImpl<$Res, $Val extends BookingElement>
   $UserCopyWith<$Res> get customer {
     return $UserCopyWith<$Res>(_value.customer, (value) {
       return _then(_value.copyWith(customer: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BookingElement
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $WorkerCopyWith<$Res>? get worker {
+    if (_value.worker == null) {
+      return null;
+    }
+
+    return $WorkerCopyWith<$Res>(_value.worker!, (value) {
+      return _then(_value.copyWith(worker: value) as $Val);
     });
   }
 }
@@ -372,19 +379,21 @@ abstract class _$$BookingElementImplCopyWith<$Res>
       {@JsonKey(name: "_id") String id,
       @JsonKey(name: "services") List<Service> services,
       @JsonKey(name: "customer") User customer,
+      Worker? worker,
       @JsonKey(name: "appointment_date") DateTime appointmentDate,
-      @JsonKey(name: "notes") String notes,
+      @JsonKey(name: "note") String? note,
       @JsonKey(name: "images_before_reaper") List<String> imagesBeforeReaper,
-      @JsonKey(name: "images_after_reaper") List<dynamic> imagesAfterReaper,
+      @JsonKey(name: "images_after_reaper", defaultValue: [])
+      List<String> imagesAfterReaper,
       @JsonKey(name: "description_problem") dynamic descriptionProblem,
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost") int cost,
-      @JsonKey(name: "createdAt") DateTime createdAt,
-      @JsonKey(name: "updatedAt") DateTime updatedAt,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "createdAt") DateTime createdAt});
 
   @override
   $UserCopyWith<$Res> get customer;
+  @override
+  $WorkerCopyWith<$Res>? get worker;
 }
 
 /// @nodoc
@@ -403,16 +412,15 @@ class __$$BookingElementImplCopyWithImpl<$Res>
     Object? id = null,
     Object? services = null,
     Object? customer = null,
+    Object? worker = freezed,
     Object? appointmentDate = null,
-    Object? notes = null,
+    Object? note = freezed,
     Object? imagesBeforeReaper = null,
     Object? imagesAfterReaper = null,
     Object? descriptionProblem = freezed,
     Object? status = null,
     Object? cost = null,
     Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? v = null,
   }) {
     return _then(_$BookingElementImpl(
       id: null == id
@@ -427,14 +435,18 @@ class __$$BookingElementImplCopyWithImpl<$Res>
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
               as User,
+      worker: freezed == worker
+          ? _value.worker
+          : worker // ignore: cast_nullable_to_non_nullable
+              as Worker?,
       appointmentDate: null == appointmentDate
           ? _value.appointmentDate
           : appointmentDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      notes: null == notes
-          ? _value.notes
-          : notes // ignore: cast_nullable_to_non_nullable
-              as String,
+      note: freezed == note
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
       imagesBeforeReaper: null == imagesBeforeReaper
           ? _value._imagesBeforeReaper
           : imagesBeforeReaper // ignore: cast_nullable_to_non_nullable
@@ -442,7 +454,7 @@ class __$$BookingElementImplCopyWithImpl<$Res>
       imagesAfterReaper: null == imagesAfterReaper
           ? _value._imagesAfterReaper
           : imagesAfterReaper // ignore: cast_nullable_to_non_nullable
-              as List<dynamic>,
+              as List<String>,
       descriptionProblem: freezed == descriptionProblem
           ? _value.descriptionProblem
           : descriptionProblem // ignore: cast_nullable_to_non_nullable
@@ -459,14 +471,6 @@ class __$$BookingElementImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      updatedAt: null == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -478,18 +482,17 @@ class _$BookingElementImpl implements _BookingElement {
       {@JsonKey(name: "_id") required this.id,
       @JsonKey(name: "services") required final List<Service> services,
       @JsonKey(name: "customer") required this.customer,
+      this.worker,
       @JsonKey(name: "appointment_date") required this.appointmentDate,
-      @JsonKey(name: "notes") required this.notes,
+      @JsonKey(name: "note") this.note,
       @JsonKey(name: "images_before_reaper")
       required final List<String> imagesBeforeReaper,
-      @JsonKey(name: "images_after_reaper")
-      required final List<dynamic> imagesAfterReaper,
-      @JsonKey(name: "description_problem") required this.descriptionProblem,
+      @JsonKey(name: "images_after_reaper", defaultValue: [])
+      required final List<String> imagesAfterReaper,
+      @JsonKey(name: "description_problem") this.descriptionProblem,
       @JsonKey(name: "status") required this.status,
       @JsonKey(name: "cost") required this.cost,
-      @JsonKey(name: "createdAt") required this.createdAt,
-      @JsonKey(name: "updatedAt") required this.updatedAt,
-      @JsonKey(name: "__v") required this.v})
+      @JsonKey(name: "createdAt") required this.createdAt})
       : _services = services,
         _imagesBeforeReaper = imagesBeforeReaper,
         _imagesAfterReaper = imagesAfterReaper;
@@ -513,11 +516,13 @@ class _$BookingElementImpl implements _BookingElement {
   @JsonKey(name: "customer")
   final User customer;
   @override
+  final Worker? worker;
+  @override
   @JsonKey(name: "appointment_date")
   final DateTime appointmentDate;
   @override
-  @JsonKey(name: "notes")
-  final String notes;
+  @JsonKey(name: "note")
+  final String? note;
   final List<String> _imagesBeforeReaper;
   @override
   @JsonKey(name: "images_before_reaper")
@@ -528,10 +533,10 @@ class _$BookingElementImpl implements _BookingElement {
     return EqualUnmodifiableListView(_imagesBeforeReaper);
   }
 
-  final List<dynamic> _imagesAfterReaper;
+  final List<String> _imagesAfterReaper;
   @override
-  @JsonKey(name: "images_after_reaper")
-  List<dynamic> get imagesAfterReaper {
+  @JsonKey(name: "images_after_reaper", defaultValue: [])
+  List<String> get imagesAfterReaper {
     if (_imagesAfterReaper is EqualUnmodifiableListView)
       return _imagesAfterReaper;
     // ignore: implicit_dynamic_type
@@ -550,16 +555,10 @@ class _$BookingElementImpl implements _BookingElement {
   @override
   @JsonKey(name: "createdAt")
   final DateTime createdAt;
-  @override
-  @JsonKey(name: "updatedAt")
-  final DateTime updatedAt;
-  @override
-  @JsonKey(name: "__v")
-  final int v;
 
   @override
   String toString() {
-    return 'BookingElement(id: $id, services: $services, customer: $customer, appointmentDate: $appointmentDate, notes: $notes, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, updatedAt: $updatedAt, v: $v)';
+    return 'BookingElement(id: $id, services: $services, customer: $customer, worker: $worker, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt)';
   }
 
   @override
@@ -571,9 +570,10 @@ class _$BookingElementImpl implements _BookingElement {
             const DeepCollectionEquality().equals(other._services, _services) &&
             (identical(other.customer, customer) ||
                 other.customer == customer) &&
+            (identical(other.worker, worker) || other.worker == worker) &&
             (identical(other.appointmentDate, appointmentDate) ||
                 other.appointmentDate == appointmentDate) &&
-            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.note, note) || other.note == note) &&
             const DeepCollectionEquality()
                 .equals(other._imagesBeforeReaper, _imagesBeforeReaper) &&
             const DeepCollectionEquality()
@@ -583,10 +583,7 @@ class _$BookingElementImpl implements _BookingElement {
             (identical(other.status, status) || other.status == status) &&
             (identical(other.cost, cost) || other.cost == cost) &&
             (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.v, v) || other.v == v));
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -596,16 +593,15 @@ class _$BookingElementImpl implements _BookingElement {
       id,
       const DeepCollectionEquality().hash(_services),
       customer,
+      worker,
       appointmentDate,
-      notes,
+      note,
       const DeepCollectionEquality().hash(_imagesBeforeReaper),
       const DeepCollectionEquality().hash(_imagesAfterReaper),
       const DeepCollectionEquality().hash(descriptionProblem),
       status,
       cost,
-      createdAt,
-      updatedAt,
-      v);
+      createdAt);
 
   /// Create a copy of BookingElement
   /// with the given fields replaced by the non-null parameter values.
@@ -629,20 +625,19 @@ abstract class _BookingElement implements BookingElement {
       {@JsonKey(name: "_id") required final String id,
       @JsonKey(name: "services") required final List<Service> services,
       @JsonKey(name: "customer") required final User customer,
+      final Worker? worker,
       @JsonKey(name: "appointment_date")
       required final DateTime appointmentDate,
-      @JsonKey(name: "notes") required final String notes,
+      @JsonKey(name: "note") final String? note,
       @JsonKey(name: "images_before_reaper")
       required final List<String> imagesBeforeReaper,
-      @JsonKey(name: "images_after_reaper")
-      required final List<dynamic> imagesAfterReaper,
-      @JsonKey(name: "description_problem")
-      required final dynamic descriptionProblem,
+      @JsonKey(name: "images_after_reaper", defaultValue: [])
+      required final List<String> imagesAfterReaper,
+      @JsonKey(name: "description_problem") final dynamic descriptionProblem,
       @JsonKey(name: "status") required final String status,
       @JsonKey(name: "cost") required final int cost,
-      @JsonKey(name: "createdAt") required final DateTime createdAt,
-      @JsonKey(name: "updatedAt") required final DateTime updatedAt,
-      @JsonKey(name: "__v") required final int v}) = _$BookingElementImpl;
+      @JsonKey(name: "createdAt")
+      required final DateTime createdAt}) = _$BookingElementImpl;
 
   factory _BookingElement.fromJson(Map<String, dynamic> json) =
       _$BookingElementImpl.fromJson;
@@ -657,17 +652,19 @@ abstract class _BookingElement implements BookingElement {
   @JsonKey(name: "customer")
   User get customer;
   @override
+  Worker? get worker;
+  @override
   @JsonKey(name: "appointment_date")
   DateTime get appointmentDate;
   @override
-  @JsonKey(name: "notes")
-  String get notes;
+  @JsonKey(name: "note")
+  String? get note;
   @override
   @JsonKey(name: "images_before_reaper")
   List<String> get imagesBeforeReaper;
   @override
-  @JsonKey(name: "images_after_reaper")
-  List<dynamic> get imagesAfterReaper;
+  @JsonKey(name: "images_after_reaper", defaultValue: [])
+  List<String> get imagesAfterReaper;
   @override
   @JsonKey(name: "description_problem")
   dynamic get descriptionProblem;
@@ -680,12 +677,6 @@ abstract class _BookingElement implements BookingElement {
   @override
   @JsonKey(name: "createdAt")
   DateTime get createdAt;
-  @override
-  @JsonKey(name: "updatedAt")
-  DateTime get updatedAt;
-  @override
-  @JsonKey(name: "__v")
-  int get v;
 
   /// Create a copy of BookingElement
   /// with the given fields replaced by the non-null parameter values.
@@ -702,21 +693,19 @@ Service _$ServiceFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Service {
   @JsonKey(name: "name")
-  String get name => throw _privateConstructorUsedError;
+  Localized? get name => throw _privateConstructorUsedError;
   @JsonKey(name: "details")
-  String get details => throw _privateConstructorUsedError;
+  Localized? get details => throw _privateConstructorUsedError;
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: "price")
   int get price => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active")
   bool get isActive => throw _privateConstructorUsedError;
-  @JsonKey(name: "childService")
-  List<Service> get childService => throw _privateConstructorUsedError;
   @JsonKey(name: "image")
   String get image => throw _privateConstructorUsedError;
-  @JsonKey(name: "__v")
-  int get v => throw _privateConstructorUsedError;
+  @JsonKey(name: "type", defaultValue: "")
+  String? get type => throw _privateConstructorUsedError;
 
   /// Serializes this Service to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -733,14 +722,16 @@ abstract class $ServiceCopyWith<$Res> {
       _$ServiceCopyWithImpl<$Res, Service>;
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
-      @JsonKey(name: "details") String details,
+      {@JsonKey(name: "name") Localized? name,
+      @JsonKey(name: "details") Localized? details,
       @JsonKey(name: "_id") String id,
       @JsonKey(name: "price") int price,
       @JsonKey(name: "is_active") bool isActive,
-      @JsonKey(name: "childService") List<Service> childService,
       @JsonKey(name: "image") String image,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "type", defaultValue: "") String? type});
+
+  $LocalizedCopyWith<$Res>? get name;
+  $LocalizedCopyWith<$Res>? get details;
 }
 
 /// @nodoc
@@ -758,24 +749,23 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? details = null,
+    Object? name = freezed,
+    Object? details = freezed,
     Object? id = null,
     Object? price = null,
     Object? isActive = null,
-    Object? childService = null,
     Object? image = null,
-    Object? v = null,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      details: null == details
+              as Localized?,
+      details: freezed == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -788,19 +778,43 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
-      childService: null == childService
-          ? _value.childService
-          : childService // ignore: cast_nullable_to_non_nullable
-              as List<Service>,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
+  }
+
+  /// Create a copy of Service
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res>? get name {
+    if (_value.name == null) {
+      return null;
+    }
+
+    return $LocalizedCopyWith<$Res>(_value.name!, (value) {
+      return _then(_value.copyWith(name: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Service
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LocalizedCopyWith<$Res>? get details {
+    if (_value.details == null) {
+      return null;
+    }
+
+    return $LocalizedCopyWith<$Res>(_value.details!, (value) {
+      return _then(_value.copyWith(details: value) as $Val);
+    });
   }
 }
 
@@ -812,14 +826,18 @@ abstract class _$$ServiceImplCopyWith<$Res> implements $ServiceCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: "name") String name,
-      @JsonKey(name: "details") String details,
+      {@JsonKey(name: "name") Localized? name,
+      @JsonKey(name: "details") Localized? details,
       @JsonKey(name: "_id") String id,
       @JsonKey(name: "price") int price,
       @JsonKey(name: "is_active") bool isActive,
-      @JsonKey(name: "childService") List<Service> childService,
       @JsonKey(name: "image") String image,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "type", defaultValue: "") String? type});
+
+  @override
+  $LocalizedCopyWith<$Res>? get name;
+  @override
+  $LocalizedCopyWith<$Res>? get details;
 }
 
 /// @nodoc
@@ -835,24 +853,23 @@ class __$$ServiceImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? details = null,
+    Object? name = freezed,
+    Object? details = freezed,
     Object? id = null,
     Object? price = null,
     Object? isActive = null,
-    Object? childService = null,
     Object? image = null,
-    Object? v = null,
+    Object? type = freezed,
   }) {
     return _then(_$ServiceImpl(
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      details: null == details
+              as Localized?,
+      details: freezed == details
           ? _value.details
           : details // ignore: cast_nullable_to_non_nullable
-              as String,
+              as Localized?,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -865,18 +882,14 @@ class __$$ServiceImplCopyWithImpl<$Res>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool,
-      childService: null == childService
-          ? _value._childService
-          : childService // ignore: cast_nullable_to_non_nullable
-              as List<Service>,
       image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -885,25 +898,23 @@ class __$$ServiceImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ServiceImpl implements _Service {
   const _$ServiceImpl(
-      {@JsonKey(name: "name") required this.name,
-      @JsonKey(name: "details") required this.details,
+      {@JsonKey(name: "name") this.name,
+      @JsonKey(name: "details") this.details,
       @JsonKey(name: "_id") required this.id,
       @JsonKey(name: "price") required this.price,
       @JsonKey(name: "is_active") required this.isActive,
-      @JsonKey(name: "childService") required final List<Service> childService,
       @JsonKey(name: "image") required this.image,
-      @JsonKey(name: "__v") required this.v})
-      : _childService = childService;
+      @JsonKey(name: "type", defaultValue: "") this.type});
 
   factory _$ServiceImpl.fromJson(Map<String, dynamic> json) =>
       _$$ServiceImplFromJson(json);
 
   @override
   @JsonKey(name: "name")
-  final String name;
+  final Localized? name;
   @override
   @JsonKey(name: "details")
-  final String details;
+  final Localized? details;
   @override
   @JsonKey(name: "_id")
   final String id;
@@ -913,25 +924,16 @@ class _$ServiceImpl implements _Service {
   @override
   @JsonKey(name: "is_active")
   final bool isActive;
-  final List<Service> _childService;
-  @override
-  @JsonKey(name: "childService")
-  List<Service> get childService {
-    if (_childService is EqualUnmodifiableListView) return _childService;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_childService);
-  }
-
   @override
   @JsonKey(name: "image")
   final String image;
   @override
-  @JsonKey(name: "__v")
-  final int v;
+  @JsonKey(name: "type", defaultValue: "")
+  final String? type;
 
   @override
   String toString() {
-    return 'Service(name: $name, details: $details, id: $id, price: $price, isActive: $isActive, childService: $childService, image: $image, v: $v)';
+    return 'Service(name: $name, details: $details, id: $id, price: $price, isActive: $isActive, image: $image, type: $type)';
   }
 
   @override
@@ -945,16 +947,14 @@ class _$ServiceImpl implements _Service {
             (identical(other.price, price) || other.price == price) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
-            const DeepCollectionEquality()
-                .equals(other._childService, _childService) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.v, v) || other.v == v));
+            (identical(other.type, type) || other.type == type));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, details, id, price,
-      isActive, const DeepCollectionEquality().hash(_childService), image, v);
+  int get hashCode =>
+      Object.hash(runtimeType, name, details, id, price, isActive, image, type);
 
   /// Create a copy of Service
   /// with the given fields replaced by the non-null parameter values.
@@ -974,23 +974,23 @@ class _$ServiceImpl implements _Service {
 
 abstract class _Service implements Service {
   const factory _Service(
-      {@JsonKey(name: "name") required final String name,
-      @JsonKey(name: "details") required final String details,
-      @JsonKey(name: "_id") required final String id,
-      @JsonKey(name: "price") required final int price,
-      @JsonKey(name: "is_active") required final bool isActive,
-      @JsonKey(name: "childService") required final List<Service> childService,
-      @JsonKey(name: "image") required final String image,
-      @JsonKey(name: "__v") required final int v}) = _$ServiceImpl;
+          {@JsonKey(name: "name") final Localized? name,
+          @JsonKey(name: "details") final Localized? details,
+          @JsonKey(name: "_id") required final String id,
+          @JsonKey(name: "price") required final int price,
+          @JsonKey(name: "is_active") required final bool isActive,
+          @JsonKey(name: "image") required final String image,
+          @JsonKey(name: "type", defaultValue: "") final String? type}) =
+      _$ServiceImpl;
 
   factory _Service.fromJson(Map<String, dynamic> json) = _$ServiceImpl.fromJson;
 
   @override
   @JsonKey(name: "name")
-  String get name;
+  Localized? get name;
   @override
   @JsonKey(name: "details")
-  String get details;
+  Localized? get details;
   @override
   @JsonKey(name: "_id")
   String get id;
@@ -1001,14 +1001,11 @@ abstract class _Service implements Service {
   @JsonKey(name: "is_active")
   bool get isActive;
   @override
-  @JsonKey(name: "childService")
-  List<Service> get childService;
-  @override
   @JsonKey(name: "image")
   String get image;
   @override
-  @JsonKey(name: "__v")
-  int get v;
+  @JsonKey(name: "type", defaultValue: "")
+  String? get type;
 
   /// Create a copy of Service
   /// with the given fields replaced by the non-null parameter values.
