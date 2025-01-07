@@ -89,6 +89,7 @@ _$WorkerImpl _$$WorkerImplFromJson(Map<String, dynamic> json) => _$WorkerImpl(
       email: json['email'] as String,
       username: json['username'] as String,
       companyName: json['company_name'] as String,
+      tasks: const TasksConverter().fromJson(json['tasks']),
       phone: json['phone'] as String?,
     );
 
@@ -99,5 +100,26 @@ Map<String, dynamic> _$$WorkerImplToJson(_$WorkerImpl instance) =>
       'email': instance.email,
       'username': instance.username,
       'company_name': instance.companyName,
+      'tasks': _$JsonConverterToJson<dynamic, List<Tasks>>(
+          instance.tasks, const TasksConverter().toJson),
       'phone': instance.phone,
+    };
+
+_$TasksImpl _$$TasksImplFromJson(Map<String, dynamic> json) => _$TasksImpl(
+      id: json['_id'] as String,
+      services: (json['services'] as List<dynamic>)
+          .map((e) => Service.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
+      status: json['status'] as String,
+    );
+
+Map<String, dynamic> _$$TasksImplToJson(_$TasksImpl instance) =>
+    <String, dynamic>{
+      '_id': instance.id,
+      'services': instance.services,
+      'createdAt': instance.createdAt?.toIso8601String(),
+      'status': instance.status,
     };

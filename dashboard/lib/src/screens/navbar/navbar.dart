@@ -221,6 +221,14 @@ class Navbar extends ConsumerWidget {
                     },
                   ),
                   NavMenu(
+                    isSelected: currentIndex == 20,
+                    text: "Notifications",
+                    onTap: () {
+                      ref.read(currentIndexProvider.notifier).state = 20;
+                    },
+                    svgPath: "assets/img/navbar/notification.svg",
+                  ),
+                  NavMenu(
                     isSelected: currentIndex == 18,
                     text: "Permissions",
                     onTap: () {
@@ -228,7 +236,7 @@ class Navbar extends ConsumerWidget {
                     },
                     svgPath: "assets/img/navbar/permissions.svg",
                   ),
-                   NavMenu(
+                  NavMenu(
                     isSelected: currentIndex == 19,
                     text: "Roles",
                     onTap: () {

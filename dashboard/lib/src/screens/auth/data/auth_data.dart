@@ -1,3 +1,4 @@
+import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
@@ -68,10 +69,39 @@ class Worker with _$Worker {
     @JsonKey(name: "email") required String email,
     @JsonKey(name: "username") required String username,
     @JsonKey(name: "company_name") required String companyName,
+    @TasksConverter() List<Tasks>? tasks,
     @JsonKey(name: "phone") String? phone,
   }) = _Worker;
 
   factory Worker.fromJson(Map<String, dynamic> json) => _$WorkerFromJson(json);
+}
+
+class TasksConverter implements JsonConverter<List<Tasks>, dynamic> {
+  const TasksConverter();
+
+  @override
+  List<Tasks> fromJson(Object? json) {
+    if (json is List) {
+      return json.map((item) {
+        if (item is Map<String, dynamic>) {
+          return Tasks.fromJson(item);
+        } else if (item is String) {
+          return Tasks(
+            id: item,
+            status: "",
+            services: [],
+          );
+        }
+        throw Exception('Invalid Tasks format');
+      }).toList();
+    }
+    return [];
+  }
+
+  @override
+  dynamic toJson(List<Tasks> tasks) {
+    return tasks.map((tasks) => tasks.toJson()).toList();
+  }
 }
 
 class PermissionConverter implements JsonConverter<List<Permission>, dynamic> {
@@ -96,4 +126,15 @@ class PermissionConverter implements JsonConverter<List<Permission>, dynamic> {
   dynamic toJson(List<Permission> permissions) {
     return permissions.map((permission) => permission.toJson()).toList();
   }
+}
+
+@freezed
+class Tasks with _$Tasks {
+  const factory Tasks(
+      {@JsonKey(name: "_id") required String id,
+      required List<Service> services,
+      @JsonKey(name: "createdAt") DateTime? createdAt,
+      required String status}) = _Tasks;
+
+  factory Tasks.fromJson(Map<String, dynamic> json) => _$TasksFromJson(json);
 }

@@ -64,8 +64,6 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                   data: (data) {
                     return Expanded(
                       child: PaginatedDataTable(
-                        showCheckboxColumn: true,
-                        showFirstLastButtons: false,
                         showEmptyRows: false,
                         onPageChanged: (page) {
                           setState(() {
@@ -98,7 +96,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                             "Price",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
-                           DataColumn(
+                          DataColumn(
                               label: Text(
                             "Status",
                             style: TextStyle(fontWeight: FontWeight.bold),

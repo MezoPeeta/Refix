@@ -72,13 +72,13 @@ Future<String> updateWorker(Ref ref,
       .authenticatedRequest(url: "worker/$id", method: "PATCH", body: {
     "username": username,
     "email": email,
-    "password": password,
+    if (password.isNotEmpty) "password": password,
     "phone": phone,
     "company_name": companyName
   });
   final data = jsonDecode(request.body);
   if (request.statusCode == 200) {
-    return data;
+    return "Updated Successfully";
   }
   return data["message"] is List ? data["message"].first : data["message"];
 }
@@ -129,5 +129,3 @@ Future<String> updateUser(
   }
   return data["message"] is List ? data["message"].first : data["message"];
 }
-
-

@@ -15,8 +15,11 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/navigation/routes.dart';
 import '../../auth/data/auth_data.dart';
 import 'package:http/http.dart' as http;
+
+import '../tasks.dart';
 
 part 'source.g.dart';
 
@@ -354,7 +357,8 @@ Future<Role?> convertRole(Ref ref, {required Object? data}) async {
 class WorkersDataTable extends DataTableSource {
   final List<Worker> data;
   final BuildContext context;
-  WorkersDataTable(this.data, this.context);
+  final WidgetRef ref;
+  WorkersDataTable(this.data, this.context, this.ref);
 
   String formatTime(DateTime time) {
     final formattedDate = DateFormat.yMd().format(time);
@@ -371,7 +375,10 @@ class WorkersDataTable extends DataTableSource {
       DataCell(Text(data[index].companyName)),
       DataCell(Text(data[index].phone ?? "-")),
       DataCell(TextButton(
-        onPressed: () => context.push("/tasks", extra: data[index]),
+        onPressed: () {
+          ref.read(workerProvider.notifier).state = data[index];
+          ref.read(goRouterProvider).push("/tasks");
+        },
         child: const Text("Show"),
       )),
     ]);

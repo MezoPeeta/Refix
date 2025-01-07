@@ -75,6 +75,9 @@ _$ServiceImpl _$$ServiceImplFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as bool,
       image: json['image'] as String,
       type: json['type'] as String? ?? '',
+      createdAt: json['createdAt'] == null
+          ? null
+          : DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$$ServiceImplToJson(_$ServiceImpl instance) =>
@@ -86,4 +89,5 @@ Map<String, dynamic> _$$ServiceImplToJson(_$ServiceImpl instance) =>
       'is_active': instance.isActive,
       'image': instance.image,
       'type': instance.type,
+      'createdAt': instance.createdAt?.toIso8601String(),
     };

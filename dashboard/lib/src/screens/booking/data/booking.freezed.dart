@@ -706,6 +706,8 @@ mixin _$Service {
   String get image => throw _privateConstructorUsedError;
   @JsonKey(name: "type", defaultValue: "")
   String? get type => throw _privateConstructorUsedError;
+  @JsonKey(name: "createdAt")
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this Service to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -728,7 +730,8 @@ abstract class $ServiceCopyWith<$Res> {
       @JsonKey(name: "price") int price,
       @JsonKey(name: "is_active") bool isActive,
       @JsonKey(name: "image") String image,
-      @JsonKey(name: "type", defaultValue: "") String? type});
+      @JsonKey(name: "type", defaultValue: "") String? type,
+      @JsonKey(name: "createdAt") DateTime? createdAt});
 
   $LocalizedCopyWith<$Res>? get name;
   $LocalizedCopyWith<$Res>? get details;
@@ -756,6 +759,7 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
     Object? isActive = null,
     Object? image = null,
     Object? type = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       name: freezed == name
@@ -786,6 +790,10 @@ class _$ServiceCopyWithImpl<$Res, $Val extends Service>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 
@@ -832,7 +840,8 @@ abstract class _$$ServiceImplCopyWith<$Res> implements $ServiceCopyWith<$Res> {
       @JsonKey(name: "price") int price,
       @JsonKey(name: "is_active") bool isActive,
       @JsonKey(name: "image") String image,
-      @JsonKey(name: "type", defaultValue: "") String? type});
+      @JsonKey(name: "type", defaultValue: "") String? type,
+      @JsonKey(name: "createdAt") DateTime? createdAt});
 
   @override
   $LocalizedCopyWith<$Res>? get name;
@@ -860,6 +869,7 @@ class __$$ServiceImplCopyWithImpl<$Res>
     Object? isActive = null,
     Object? image = null,
     Object? type = freezed,
+    Object? createdAt = freezed,
   }) {
     return _then(_$ServiceImpl(
       name: freezed == name
@@ -890,6 +900,10 @@ class __$$ServiceImplCopyWithImpl<$Res>
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -904,7 +918,8 @@ class _$ServiceImpl implements _Service {
       @JsonKey(name: "price") required this.price,
       @JsonKey(name: "is_active") required this.isActive,
       @JsonKey(name: "image") required this.image,
-      @JsonKey(name: "type", defaultValue: "") this.type});
+      @JsonKey(name: "type", defaultValue: "") this.type,
+      @JsonKey(name: "createdAt") this.createdAt});
 
   factory _$ServiceImpl.fromJson(Map<String, dynamic> json) =>
       _$$ServiceImplFromJson(json);
@@ -930,10 +945,13 @@ class _$ServiceImpl implements _Service {
   @override
   @JsonKey(name: "type", defaultValue: "")
   final String? type;
+  @override
+  @JsonKey(name: "createdAt")
+  final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'Service(name: $name, details: $details, id: $id, price: $price, isActive: $isActive, image: $image, type: $type)';
+    return 'Service(name: $name, details: $details, id: $id, price: $price, isActive: $isActive, image: $image, type: $type, createdAt: $createdAt)';
   }
 
   @override
@@ -948,13 +966,15 @@ class _$ServiceImpl implements _Service {
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.image, image) || other.image == image) &&
-            (identical(other.type, type) || other.type == type));
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, name, details, id, price, isActive, image, type);
+  int get hashCode => Object.hash(
+      runtimeType, name, details, id, price, isActive, image, type, createdAt);
 
   /// Create a copy of Service
   /// with the given fields replaced by the non-null parameter values.
@@ -974,14 +994,14 @@ class _$ServiceImpl implements _Service {
 
 abstract class _Service implements Service {
   const factory _Service(
-          {@JsonKey(name: "name") final Localized? name,
-          @JsonKey(name: "details") final Localized? details,
-          @JsonKey(name: "_id") required final String id,
-          @JsonKey(name: "price") required final int price,
-          @JsonKey(name: "is_active") required final bool isActive,
-          @JsonKey(name: "image") required final String image,
-          @JsonKey(name: "type", defaultValue: "") final String? type}) =
-      _$ServiceImpl;
+      {@JsonKey(name: "name") final Localized? name,
+      @JsonKey(name: "details") final Localized? details,
+      @JsonKey(name: "_id") required final String id,
+      @JsonKey(name: "price") required final int price,
+      @JsonKey(name: "is_active") required final bool isActive,
+      @JsonKey(name: "image") required final String image,
+      @JsonKey(name: "type", defaultValue: "") final String? type,
+      @JsonKey(name: "createdAt") final DateTime? createdAt}) = _$ServiceImpl;
 
   factory _Service.fromJson(Map<String, dynamic> json) = _$ServiceImpl.fromJson;
 
@@ -1006,6 +1026,9 @@ abstract class _Service implements Service {
   @override
   @JsonKey(name: "type", defaultValue: "")
   String? get type;
+  @override
+  @JsonKey(name: "createdAt")
+  DateTime? get createdAt;
 
   /// Create a copy of Service
   /// with the given fields replaced by the non-null parameter values.

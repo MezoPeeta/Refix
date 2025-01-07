@@ -51,6 +51,7 @@ class Service with _$Service {
     @JsonKey(name: "is_active") required bool isActive,
     @JsonKey(name: "image") required String image,
     @JsonKey(name: "type", defaultValue: "") String? type,
+    @JsonKey(name: "createdAt") DateTime? createdAt,
   }) = _Service;
 
   factory Service.fromJson(Map<String, dynamic> json) =>

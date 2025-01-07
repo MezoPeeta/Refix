@@ -1,8 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:csv/csv.dart';
 import 'package:dashboard/src/core/theme/btns.dart';
+import 'package:file_saver/file_saver.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
+import '../auth/data/auth_data.dart';
 import 'domain/source.dart';
 
 class ClientScreen extends ConsumerStatefulWidget {
@@ -15,6 +22,43 @@ class ClientScreen extends ConsumerStatefulWidget {
 class _ClientScreenState extends ConsumerState<ClientScreen> {
   int _page = 1;
   String? query;
+  final TextEditingController _fileNameController =
+      TextEditingController(text: 'users');
+  String formatTime(DateTime time) {
+    final formattedDate = DateFormat.yMd().format(time);
+    final formattedTime = DateFormat('jm').format(time);
+    return "$formattedTime $formattedDate";
+  }
+
+  void saveUserCSV(List<User>? users, String filePath) async {
+    List<List<dynamic>> rows = [];
+
+    rows.add(["ID", 'Name', 'Email', 'Phone Number', "Role", "Created At"]);
+    if (users != null) {
+      for (var user in users) {
+        rows.add([
+          user.id,
+          user.username,
+          user.email,
+          user.phone,
+          user.role.name,
+          formatTime(user.createdAt)
+        ]);
+        String csv = const ListToCsvConverter().convert(rows);
+        final bytes = utf8.encode(csv);
+        String fileName = _fileNameController.text.trim();
+        if (fileName.isEmpty) {
+          fileName = 'users';
+        }
+        await FileSaver.instance.saveFile(
+          name: fileName,
+          bytes: bytes,
+          ext: 'csv',
+          mimeType: MimeType.csv,
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +79,9 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
                           onPressed: () => context.push("/user/edit"))),
                   Expanded(
                       child: SecondaryButton(
-                          text: "Download User", onPressed: () {})),
+                          text: "Download Users",
+                          onPressed: () =>
+                              saveUserCSV(customers.value, "users.csv"))),
                   Expanded(
                     flex: 4,
                     child: TextField(
@@ -59,7 +105,6 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
                       child: PaginatedDataTable(
                         showCheckboxColumn: true,
                         showFirstLastButtons: false,
-                        columnSpacing: 10,
                         showEmptyRows: false,
                         onPageChanged: (page) {
                           setState(() {

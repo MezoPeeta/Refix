@@ -6,6 +6,7 @@ import 'package:dashboard/src/screens/content/onetime.dart';
 import 'package:dashboard/src/screens/content/onetime_edit.dart';
 import 'package:dashboard/src/screens/discount/presentation/discount.dart';
 import 'package:dashboard/src/screens/navbar/navbar.dart';
+import 'package:dashboard/src/screens/notification/notification.dart';
 import 'package:dashboard/src/screens/points/points.dart';
 import 'package:dashboard/src/screens/rules/presentation/rules.dart';
 import 'package:dashboard/src/screens/users/client.dart';
@@ -43,7 +44,7 @@ class BaseScreen extends StatelessWidget {
     const ServicesScreen(),
     const PermissionsScreen(),
     const RulesScreen(),
-
+    const NotificationScreen()
     // const AddEditUser()
   ];
   @override

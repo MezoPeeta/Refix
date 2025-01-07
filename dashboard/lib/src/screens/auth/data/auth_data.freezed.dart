@@ -1104,6 +1104,8 @@ mixin _$Worker {
   String get username => throw _privateConstructorUsedError;
   @JsonKey(name: "company_name")
   String get companyName => throw _privateConstructorUsedError;
+  @TasksConverter()
+  List<Tasks>? get tasks => throw _privateConstructorUsedError;
   @JsonKey(name: "phone")
   String? get phone => throw _privateConstructorUsedError;
 
@@ -1127,6 +1129,7 @@ abstract class $WorkerCopyWith<$Res> {
       @JsonKey(name: "email") String email,
       @JsonKey(name: "username") String username,
       @JsonKey(name: "company_name") String companyName,
+      @TasksConverter() List<Tasks>? tasks,
       @JsonKey(name: "phone") String? phone});
 }
 
@@ -1150,6 +1153,7 @@ class _$WorkerCopyWithImpl<$Res, $Val extends Worker>
     Object? email = null,
     Object? username = null,
     Object? companyName = null,
+    Object? tasks = freezed,
     Object? phone = freezed,
   }) {
     return _then(_value.copyWith(
@@ -1173,6 +1177,10 @@ class _$WorkerCopyWithImpl<$Res, $Val extends Worker>
           ? _value.companyName
           : companyName // ignore: cast_nullable_to_non_nullable
               as String,
+      tasks: freezed == tasks
+          ? _value.tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as List<Tasks>?,
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -1194,6 +1202,7 @@ abstract class _$$WorkerImplCopyWith<$Res> implements $WorkerCopyWith<$Res> {
       @JsonKey(name: "email") String email,
       @JsonKey(name: "username") String username,
       @JsonKey(name: "company_name") String companyName,
+      @TasksConverter() List<Tasks>? tasks,
       @JsonKey(name: "phone") String? phone});
 }
 
@@ -1215,6 +1224,7 @@ class __$$WorkerImplCopyWithImpl<$Res>
     Object? email = null,
     Object? username = null,
     Object? companyName = null,
+    Object? tasks = freezed,
     Object? phone = freezed,
   }) {
     return _then(_$WorkerImpl(
@@ -1238,6 +1248,10 @@ class __$$WorkerImplCopyWithImpl<$Res>
           ? _value.companyName
           : companyName // ignore: cast_nullable_to_non_nullable
               as String,
+      tasks: freezed == tasks
+          ? _value._tasks
+          : tasks // ignore: cast_nullable_to_non_nullable
+              as List<Tasks>?,
       phone: freezed == phone
           ? _value.phone
           : phone // ignore: cast_nullable_to_non_nullable
@@ -1255,7 +1269,9 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
       @JsonKey(name: "email") required this.email,
       @JsonKey(name: "username") required this.username,
       @JsonKey(name: "company_name") required this.companyName,
-      @JsonKey(name: "phone") this.phone});
+      @TasksConverter() final List<Tasks>? tasks,
+      @JsonKey(name: "phone") this.phone})
+      : _tasks = tasks;
 
   factory _$WorkerImpl.fromJson(Map<String, dynamic> json) =>
       _$$WorkerImplFromJson(json);
@@ -1275,13 +1291,24 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
   @override
   @JsonKey(name: "company_name")
   final String companyName;
+  final List<Tasks>? _tasks;
+  @override
+  @TasksConverter()
+  List<Tasks>? get tasks {
+    final value = _tasks;
+    if (value == null) return null;
+    if (_tasks is EqualUnmodifiableListView) return _tasks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "phone")
   final String? phone;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Worker(notificationToken: $notificationToken, id: $id, email: $email, username: $username, companyName: $companyName, phone: $phone)';
+    return 'Worker(notificationToken: $notificationToken, id: $id, email: $email, username: $username, companyName: $companyName, tasks: $tasks, phone: $phone)';
   }
 
   @override
@@ -1294,6 +1321,7 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('username', username))
       ..add(DiagnosticsProperty('companyName', companyName))
+      ..add(DiagnosticsProperty('tasks', tasks))
       ..add(DiagnosticsProperty('phone', phone));
   }
 
@@ -1310,13 +1338,21 @@ class _$WorkerImpl with DiagnosticableTreeMixin implements _Worker {
                 other.username == username) &&
             (identical(other.companyName, companyName) ||
                 other.companyName == companyName) &&
+            const DeepCollectionEquality().equals(other._tasks, _tasks) &&
             (identical(other.phone, phone) || other.phone == phone));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, notificationToken, id, email, username, companyName, phone);
+      runtimeType,
+      notificationToken,
+      id,
+      email,
+      username,
+      companyName,
+      const DeepCollectionEquality().hash(_tasks),
+      phone);
 
   /// Create a copy of Worker
   /// with the given fields replaced by the non-null parameter values.
@@ -1341,6 +1377,7 @@ abstract class _Worker implements Worker {
       @JsonKey(name: "email") required final String email,
       @JsonKey(name: "username") required final String username,
       @JsonKey(name: "company_name") required final String companyName,
+      @TasksConverter() final List<Tasks>? tasks,
       @JsonKey(name: "phone") final String? phone}) = _$WorkerImpl;
 
   factory _Worker.fromJson(Map<String, dynamic> json) = _$WorkerImpl.fromJson;
@@ -1361,6 +1398,9 @@ abstract class _Worker implements Worker {
   @JsonKey(name: "company_name")
   String get companyName;
   @override
+  @TasksConverter()
+  List<Tasks>? get tasks;
+  @override
   @JsonKey(name: "phone")
   String? get phone;
 
@@ -1369,5 +1409,240 @@ abstract class _Worker implements Worker {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$WorkerImplCopyWith<_$WorkerImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Tasks _$TasksFromJson(Map<String, dynamic> json) {
+  return _Tasks.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Tasks {
+  @JsonKey(name: "_id")
+  String get id => throw _privateConstructorUsedError;
+  List<Service> get services => throw _privateConstructorUsedError;
+  @JsonKey(name: "createdAt")
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  String get status => throw _privateConstructorUsedError;
+
+  /// Serializes this Tasks to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Tasks
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $TasksCopyWith<Tasks> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TasksCopyWith<$Res> {
+  factory $TasksCopyWith(Tasks value, $Res Function(Tasks) then) =
+      _$TasksCopyWithImpl<$Res, Tasks>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      List<Service> services,
+      @JsonKey(name: "createdAt") DateTime? createdAt,
+      String status});
+}
+
+/// @nodoc
+class _$TasksCopyWithImpl<$Res, $Val extends Tasks>
+    implements $TasksCopyWith<$Res> {
+  _$TasksCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Tasks
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? services = null,
+    Object? createdAt = freezed,
+    Object? status = null,
+  }) {
+    return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      services: null == services
+          ? _value.services
+          : services // ignore: cast_nullable_to_non_nullable
+              as List<Service>,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$TasksImplCopyWith<$Res> implements $TasksCopyWith<$Res> {
+  factory _$$TasksImplCopyWith(
+          _$TasksImpl value, $Res Function(_$TasksImpl) then) =
+      __$$TasksImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      List<Service> services,
+      @JsonKey(name: "createdAt") DateTime? createdAt,
+      String status});
+}
+
+/// @nodoc
+class __$$TasksImplCopyWithImpl<$Res>
+    extends _$TasksCopyWithImpl<$Res, _$TasksImpl>
+    implements _$$TasksImplCopyWith<$Res> {
+  __$$TasksImplCopyWithImpl(
+      _$TasksImpl _value, $Res Function(_$TasksImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Tasks
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? services = null,
+    Object? createdAt = freezed,
+    Object? status = null,
+  }) {
+    return _then(_$TasksImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      services: null == services
+          ? _value._services
+          : services // ignore: cast_nullable_to_non_nullable
+              as List<Service>,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$TasksImpl with DiagnosticableTreeMixin implements _Tasks {
+  const _$TasksImpl(
+      {@JsonKey(name: "_id") required this.id,
+      required final List<Service> services,
+      @JsonKey(name: "createdAt") this.createdAt,
+      required this.status})
+      : _services = services;
+
+  factory _$TasksImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TasksImplFromJson(json);
+
+  @override
+  @JsonKey(name: "_id")
+  final String id;
+  final List<Service> _services;
+  @override
+  List<Service> get services {
+    if (_services is EqualUnmodifiableListView) return _services;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_services);
+  }
+
+  @override
+  @JsonKey(name: "createdAt")
+  final DateTime? createdAt;
+  @override
+  final String status;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Tasks(id: $id, services: $services, createdAt: $createdAt, status: $status)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Tasks'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('services', services))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('status', status));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TasksImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            const DeepCollectionEquality().equals(other._services, _services) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.status, status) || other.status == status));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id,
+      const DeepCollectionEquality().hash(_services), createdAt, status);
+
+  /// Create a copy of Tasks
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$TasksImplCopyWith<_$TasksImpl> get copyWith =>
+      __$$TasksImplCopyWithImpl<_$TasksImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$TasksImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Tasks implements Tasks {
+  const factory _Tasks(
+      {@JsonKey(name: "_id") required final String id,
+      required final List<Service> services,
+      @JsonKey(name: "createdAt") final DateTime? createdAt,
+      required final String status}) = _$TasksImpl;
+
+  factory _Tasks.fromJson(Map<String, dynamic> json) = _$TasksImpl.fromJson;
+
+  @override
+  @JsonKey(name: "_id")
+  String get id;
+  @override
+  List<Service> get services;
+  @override
+  @JsonKey(name: "createdAt")
+  DateTime? get createdAt;
+  @override
+  String get status;
+
+  /// Create a copy of Tasks
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$TasksImplCopyWith<_$TasksImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

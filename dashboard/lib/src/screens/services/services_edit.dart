@@ -274,6 +274,7 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
                             return;
                           }
                           final service = Service(
+                              createdAt: DateTime.now(),
                               price: int.parse(priceController.text),
                               id: "",
                               image: "",

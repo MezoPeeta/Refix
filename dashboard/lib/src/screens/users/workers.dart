@@ -87,13 +87,13 @@ class _WorkersScreenState extends ConsumerState<WorkersScreen> {
                           )),
                           DataColumn(label: SizedBox.shrink()),
                         ],
-                        source: WorkersDataTable(data, context),
+                        source: WorkersDataTable(data, context, ref),
                       ),
                     );
                   },
                   error: (e, s) {
                     debugPrint("Error: $e");
-                    return const Text("Error");
+                    return Text("Error: $e,str:$s");
                   },
                   loading: () =>
                       const Center(child: CircularProgressIndicator())),

@@ -193,7 +193,7 @@ final getServicesTypesProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetServicesTypesRef = AutoDisposeFutureProviderRef<List<dynamic>>;
-String _$createServiceHash() => r'5384835d2f05feee777e82cbe937f140c608319e';
+String _$createServiceHash() => r'905524d70e1654bff8d623b12730b972e65f4710';
 
 /// See also [createService].
 @ProviderFor(createService)
@@ -340,7 +340,7 @@ class _CreateServiceProviderElement
   Uint8List get image => (origin as CreateServiceProvider).image;
 }
 
-String _$updateServiceHash() => r'dbd9d27a643ab159d40a21604c566f5301e88484';
+String _$updateServiceHash() => r'aa3eb1afb0a3962b274cf72b876e1d6dadd31db2';
 
 /// See also [updateService].
 @ProviderFor(updateService)
@@ -354,7 +354,7 @@ class UpdateServiceFamily extends Family<AsyncValue<String>> {
   /// See also [updateService].
   UpdateServiceProvider call({
     required Service service,
-    required Uint8List image,
+    Uint8List? image,
   }) {
     return UpdateServiceProvider(
       service: service,
@@ -392,7 +392,7 @@ class UpdateServiceProvider extends AutoDisposeFutureProvider<String> {
   /// See also [updateService].
   UpdateServiceProvider({
     required Service service,
-    required Uint8List image,
+    Uint8List? image,
   }) : this._internal(
           (ref) => updateService(
             ref as UpdateServiceRef,
@@ -424,7 +424,7 @@ class UpdateServiceProvider extends AutoDisposeFutureProvider<String> {
   }) : super.internal();
 
   final Service service;
-  final Uint8List image;
+  final Uint8List? image;
 
   @override
   Override overrideWith(
@@ -474,7 +474,7 @@ mixin UpdateServiceRef on AutoDisposeFutureProviderRef<String> {
   Service get service;
 
   /// The parameter `image` of this provider.
-  Uint8List get image;
+  Uint8List? get image;
 }
 
 class _UpdateServiceProviderElement
@@ -484,7 +484,7 @@ class _UpdateServiceProviderElement
   @override
   Service get service => (origin as UpdateServiceProvider).service;
   @override
-  Uint8List get image => (origin as UpdateServiceProvider).image;
+  Uint8List? get image => (origin as UpdateServiceProvider).image;
 }
 
 String _$deleteServiceHash() => r'c81f3951b1c08bb50c8515bd08bbdf5b2bc06253';

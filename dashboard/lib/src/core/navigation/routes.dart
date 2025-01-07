@@ -35,10 +35,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         GoRoute(
             path: "/login", builder: (context, state) => const LoginScreen()),
         GoRoute(
-            path: "/tasks",
-            builder: (context, state) => TasksScreen(
-                  worker: state.extra as Worker,
-                )),
+            path: "/tasks", builder: (context, state) => const TasksScreen()),
         GoRoute(
             path: "/worker/edit",
             builder: (context, state) => AddEditWorker(

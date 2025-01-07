@@ -500,7 +500,7 @@ class _CreateWorkerProviderElement
   String get companyName => (origin as CreateWorkerProvider).companyName;
 }
 
-String _$updateWorkerHash() => r'97d2b987bfef6f5df4bb8aaf54b67e54722c56b4';
+String _$updateWorkerHash() => r'a9afd60220c9a42e3944a093233aea6fbdcc38dc';
 
 /// See also [updateWorker].
 @ProviderFor(updateWorker)

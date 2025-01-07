@@ -2,6 +2,7 @@ import 'package:dashboard/src/screens/users/domain/users_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/btns.dart';
 import '../auth/data/auth_data.dart';
@@ -34,7 +35,8 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
         isEditting = true;
         nameController.text = widget.worker!.username;
         companyController.text = widget.worker!.companyName;
-        phoneController.text = widget.worker!.phone ?? "-";
+        phoneController.text =
+            widget.worker!.phone!.replaceAll("+966", "") ?? "-";
         emailController.text = widget.worker!.email;
       });
     }
@@ -105,6 +107,9 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
                 TextFormField(
                   controller: passwordController,
                   validator: (v) {
+                    if (isEditting) {
+                      return null;
+                    }
                     if (v!.isEmpty) {
                       return "Please add password";
                     }
