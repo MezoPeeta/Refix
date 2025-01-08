@@ -1,6 +1,5 @@
 import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:dashboard/src/screens/services/domain/services_domain.dart';
-import 'package:dashboard/src/screens/users/domain/users_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -27,6 +26,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 spacing: 16,

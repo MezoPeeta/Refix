@@ -61,7 +61,7 @@ class HttpAPI {
     required String method,
     Map<String, dynamic>? body,
   }) async {
-    const r = RetryOptions(maxAttempts: 8);
+    const r = RetryOptions(maxAttempts: 2);
     final accessToken = await ref.read(authProvider).getAccessToken();
 
     Future<Response> makeRequest() async {

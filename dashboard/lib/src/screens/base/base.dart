@@ -9,6 +9,7 @@ import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:dashboard/src/screens/notification/notification.dart';
 import 'package:dashboard/src/screens/points/points.dart';
 import 'package:dashboard/src/screens/rules/presentation/rules.dart';
+import 'package:dashboard/src/screens/support/rates/rates_screen.dart';
 import 'package:dashboard/src/screens/users/client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,6 +20,7 @@ import '../home/home.dart';
 import '../permission/permissions.dart';
 import '../points/add_point.dart';
 import '../services/services.dart';
+import '../support/report_screen.dart';
 import '../users/workers.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -39,8 +41,8 @@ class BaseScreen extends StatelessWidget {
     const BookingScreen(),
     const BookingConfirmation(),
     const BookingConfShow(),
-    const SizedBox.shrink(),
-    const SizedBox.shrink(),
+    const RatesScreen(),
+    const ReportsScreen(),
     const ServicesScreen(),
     const PermissionsScreen(),
     const RulesScreen(),

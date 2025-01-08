@@ -216,6 +216,8 @@
     "addReview": "Add Review",
     "costOfService": "Cost Of Service",
     "choosePaymentMethod": "Choose Payment Method",
+    "sendReview": "Send Review",
+    "addStars": "Please drag or click on the stars for rating",
     "cost": "{cost} SAR",
     "@cost": {
         "description": "The cost of the service with the currency symbol.",

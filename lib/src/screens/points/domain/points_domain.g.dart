@@ -174,11 +174,11 @@ class _ClaimPointsProviderElement extends AutoDisposeFutureProviderElement<int>
   String get pointsID => (origin as ClaimPointsProvider).pointsID;
 }
 
-String _$getCustomerOfferHash() => r'1b6f3a326543dce04f17667f1b0d2d2ded99ce73';
+String _$getCustomerOfferHash() => r'd7327b97c2c8e8fd94441321c5bcd9246358456e';
 
 /// See also [getCustomerOffer].
 @ProviderFor(getCustomerOffer)
-final getCustomerOfferProvider = AutoDisposeFutureProvider<Offer>.internal(
+final getCustomerOfferProvider = AutoDisposeFutureProvider<Offer?>.internal(
   getCustomerOffer,
   name: r'getCustomerOfferProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -190,6 +190,6 @@ final getCustomerOfferProvider = AutoDisposeFutureProvider<Offer>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef GetCustomerOfferRef = AutoDisposeFutureProviderRef<Offer>;
+typedef GetCustomerOfferRef = AutoDisposeFutureProviderRef<Offer?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

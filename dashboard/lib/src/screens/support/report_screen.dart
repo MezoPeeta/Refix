@@ -1,36 +1,33 @@
-import 'package:dashboard/src/core/theme/radii.dart';
-import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class BookingConfirmation extends ConsumerStatefulWidget {
-  const BookingConfirmation({super.key});
+import '../../core/theme/radii.dart';
+import '../points/domain/points_domain.dart';
+import '../users/domain/source.dart';
+
+class ReportsScreen extends ConsumerStatefulWidget {
+  const ReportsScreen({super.key});
 
   @override
-  ConsumerState<BookingConfirmation> createState() =>
-      _BookingConfirmationState();
+  ConsumerState<ReportsScreen> createState() => _ReportsScreenState();
 }
 
-class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
-  int _page = 1;
-  String? query;
+class _ReportsScreenState extends ConsumerState<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
-    final bookings =
-        ref.watch(getUnAssignedBookingsProvider(page: _page, query: query));
+    final points = ref.watch(getPointsProvider);
 
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 spacing: 20,
                 children: [
                   Text(
-                    "All (${bookings.value?.length ?? 0})",
+                    "All (${points.value?.length ?? 0})",
                     style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: AppTextSize.three),
@@ -38,29 +35,18 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                   Expanded(
                     flex: 4,
                     child: TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          query = value;
-                        });
-                      },
+                      onChanged: (value) {},
                       decoration: const InputDecoration(
                           filled: true, hintText: "Search Here"),
                     ),
                   )
                 ],
               ),
-              bookings.when(
+              points.when(
                   data: (data) {
                     return Expanded(
                       child: PaginatedDataTable(
-                        showCheckboxColumn: true,
-                        showFirstLastButtons: false,
-                        showEmptyRows: false,
-                        onPageChanged: (page) {
-                          setState(() {
-                            _page = page;
-                          });
-                        },
+                        columnSpacing: 95,
                         columns: const [
                           DataColumn(
                               label: Text(
@@ -69,17 +55,22 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                           )),
                           DataColumn(
                               label: Text(
-                            "Service Name",
+                            "Package Name",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(
                               label: Text(
-                            "Customer Name",
+                            "Offer",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(
                               label: Text(
-                            "Cost",
+                            "Available Number of Days",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Points",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(
@@ -94,13 +85,12 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                           )),
                           DataColumn(label: SizedBox.shrink()),
                         ],
-                        source: BookingConfDataSource(ref, data),
+                        source: PointsDataSource(data, ref),
                       ),
                     );
                   },
                   error: (e, s) {
-                    debugPrint("Error: $e");
-                    return const Text("Error");
+                    return Text("Error: $e,str:$s");
                   },
                   loading: () =>
                       const Center(child: CircularProgressIndicator())),

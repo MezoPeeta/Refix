@@ -23,7 +23,6 @@ class Booking with _$Booking {
     @JsonKey(name: "cost") required int cost,
     @JsonKey(name: "createdAt") required DateTime createdAt,
     @JsonKey(name: "updatedAt") required DateTime updatedAt,
-    @JsonKey(name: "__v") required int v,
   }) = _Booking;
 
   factory Booking.fromJson(Map<String, dynamic> json) =>

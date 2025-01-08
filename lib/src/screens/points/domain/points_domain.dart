@@ -33,10 +33,13 @@ Future<int> claimPoints(Ref ref, {required String pointsID}) async {
 }
 
 @riverpod
-Future<Offer> getCustomerOffer(Ref ref) async {
+Future<Offer?> getCustomerOffer(Ref ref) async {
   final response = await ref
       .read(httpProvider)
       .authenticatedRequest(method: "GET", url: "points/customer");
+  if (response.body == "{}") {
+    return null;
+  }
   log("Customer Offer: ${jsonDecode(response.body)["offer"]}");
   return Offer.fromJson(jsonDecode(response.body)["offer"]);
 }

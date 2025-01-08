@@ -9,11 +9,20 @@ import 'package:refix/src/screens/services/domain/booking_domain.dart';
 
 import '../../../core/ui/theme/colors.dart';
 
-class PaymentMethods extends ConsumerWidget {
+final bookingIDProvider = StateProvider<String?>((ref) => null);
+
+class PaymentMethods extends ConsumerStatefulWidget {
   const PaymentMethods({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<PaymentMethods> createState() => _PaymentMethodsState();
+}
+
+class _PaymentMethodsState extends ConsumerState<PaymentMethods> {
+  String method = "CASH";
+  bool loading = false;
+  @override
+  Widget build(BuildContext context) {
     final discount =
         ref.watch(getDiscountProvider(pageName: "New User Add Card"));
     return Scaffold(
@@ -47,10 +56,16 @@ class PaymentMethods extends ConsumerWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(AppRadii.lg)),
-              child: CheckboxListTile.adaptive(
-                value: false,
+              child: RadioListTile.adaptive(
+                value: "CASH",
+                groupValue: method,
+                controlAffinity: ListTileControlAffinity.trailing,
                 contentPadding: EdgeInsets.zero,
-                onChanged: (v) {},
+                onChanged: (v) {
+                  setState(() {
+                    method = "CASH";
+                  });
+                },
                 title: Row(
                   spacing: 8,
                   children: [
@@ -78,10 +93,16 @@ class PaymentMethods extends ConsumerWidget {
                   borderRadius: BorderRadius.circular(AppRadii.lg)),
               child: Column(
                 children: [
-                  CheckboxListTile.adaptive(
-                    value: false,
+                  RadioListTile<String>.adaptive(
+                    value: "CARD",
+                    groupValue: method,
+                    controlAffinity: ListTileControlAffinity.trailing,
                     contentPadding: EdgeInsets.zero,
-                    onChanged: (v) {},
+                    onChanged: (v) {
+                      setState(() {
+                        method = "CARD";
+                      });
+                    },
                     title: Row(
                       spacing: 8,
                       children: [
@@ -95,47 +116,6 @@ class PaymentMethods extends ConsumerWidget {
                       ],
                     ),
                   ),
-                  const Divider(
-                    color: AppColors.neutral300,
-                  ),
-                  CheckboxListTile.adaptive(
-                    value: true,
-                    contentPadding: EdgeInsets.zero,
-                    onChanged: (v) {},
-                    title: Row(
-                      spacing: 8,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/img/profile/mastercard.svg",
-                        ),
-                        Text(
-                          context.tr.visa,
-                          style: const TextStyle(fontSize: AppTextSize.three),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(
-                    color: AppColors.neutral300,
-                  ),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const CircleAvatar(
-                      backgroundColor: AppColors.primary50,
-                      child: Icon(
-                        Icons.add,
-                        color: AppColors.primaryRefix,
-                      ),
-                    ),
-                    title: Text(
-                      context.tr.addCard,
-                      style: const TextStyle(fontSize: AppTextSize.three),
-                    ),
-                    trailing: const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 16,
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -145,7 +125,27 @@ class PaymentMethods extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: PrimaryButton(
                 text: context.tr.continuee,
-                onPressed: () => context.go("/bookingfinalDone")),
+                loading: loading,
+                onPressed: () async {
+                  setState(() {
+                    loading = true;
+                  });
+
+                  final bookingID = ref.read(bookingIDProvider);
+                  final result = await ref.read(updateBookingMethodProvider(
+                          bookingID: bookingID!, method: method)
+                      .future);
+
+                  if (result == true) {
+                    if (method == "CASH") {
+                      return context.go("/success");
+                    }
+                    ref.read(paymentBookingProvider(bookingID: bookingID));
+                    setState(() {
+                      loading = false;
+                    });
+                  }
+                }),
           )
         ],
       ),

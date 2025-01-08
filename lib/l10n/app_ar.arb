@@ -239,7 +239,9 @@
     "addReview": "أضف مراجعة",
     "costOfService": "تكلفة الخدمة",
     "cost": "{cost} ريال",
+    "sendReview": "ارسالة مراجعة",
     "choosePaymentMethod": "اختر طريقة الدفع",
+    "addStars": "يُرجى سحب النجوم أو النقر عليها للتقييم",
     "@cost": {
         "description": "The cost of the service with the currency symbol.",
         "placeholders": {

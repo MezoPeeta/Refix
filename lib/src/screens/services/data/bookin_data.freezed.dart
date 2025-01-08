@@ -44,8 +44,6 @@ mixin _$Booking {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "updatedAt")
   DateTime get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey(name: "__v")
-  int get v => throw _privateConstructorUsedError;
 
   /// Serializes this Booking to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -73,8 +71,7 @@ abstract class $BookingCopyWith<$Res> {
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost") int cost,
       @JsonKey(name: "createdAt") DateTime createdAt,
-      @JsonKey(name: "updatedAt") DateTime updatedAt,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "updatedAt") DateTime updatedAt});
 
   $UserCopyWith<$Res> get customer;
 }
@@ -106,7 +103,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? cost = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? v = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -157,10 +153,6 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
     ) as $Val);
   }
 
@@ -194,8 +186,7 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost") int cost,
       @JsonKey(name: "createdAt") DateTime createdAt,
-      @JsonKey(name: "updatedAt") DateTime updatedAt,
-      @JsonKey(name: "__v") int v});
+      @JsonKey(name: "updatedAt") DateTime updatedAt});
 
   @override
   $UserCopyWith<$Res> get customer;
@@ -226,7 +217,6 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? cost = null,
     Object? createdAt = null,
     Object? updatedAt = null,
-    Object? v = null,
   }) {
     return _then(_$BookingImpl(
       id: null == id
@@ -277,10 +267,6 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      v: null == v
-          ? _value.v
-          : v // ignore: cast_nullable_to_non_nullable
-              as int,
     ));
   }
 }
@@ -302,8 +288,7 @@ class _$BookingImpl implements _Booking {
       @JsonKey(name: "status") required this.status,
       @JsonKey(name: "cost") required this.cost,
       @JsonKey(name: "createdAt") required this.createdAt,
-      @JsonKey(name: "updatedAt") required this.updatedAt,
-      @JsonKey(name: "__v") required this.v})
+      @JsonKey(name: "updatedAt") required this.updatedAt})
       : _services = services,
         _imagesBeforeReaper = imagesBeforeReaper,
         _imagesAfterReaper = imagesAfterReaper;
@@ -367,13 +352,10 @@ class _$BookingImpl implements _Booking {
   @override
   @JsonKey(name: "updatedAt")
   final DateTime updatedAt;
-  @override
-  @JsonKey(name: "__v")
-  final int v;
 
   @override
   String toString() {
-    return 'Booking(id: $id, services: $services, customer: $customer, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, updatedAt: $updatedAt, v: $v)';
+    return 'Booking(id: $id, services: $services, customer: $customer, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -399,8 +381,7 @@ class _$BookingImpl implements _Booking {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.v, v) || other.v == v));
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -418,8 +399,7 @@ class _$BookingImpl implements _Booking {
       status,
       cost,
       createdAt,
-      updatedAt,
-      v);
+      updatedAt);
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.
@@ -439,23 +419,23 @@ class _$BookingImpl implements _Booking {
 
 abstract class _Booking implements Booking {
   const factory _Booking(
-      {@JsonKey(name: "_id") required final String id,
-      @JsonKey(name: "services") required final List<Service> services,
-      @JsonKey(name: "customer") required final User customer,
-      @JsonKey(name: "appointment_date")
-      required final DateTime appointmentDate,
-      @JsonKey(name: "note") final String? note,
-      @JsonKey(name: "images_before_reaper")
-      required final List<String> imagesBeforeReaper,
-      @JsonKey(name: "images_after_reaper")
-      required final List<dynamic> imagesAfterReaper,
-      @JsonKey(name: "description_problem")
-      required final dynamic descriptionProblem,
-      @JsonKey(name: "status") required final String status,
-      @JsonKey(name: "cost") required final int cost,
-      @JsonKey(name: "createdAt") required final DateTime createdAt,
-      @JsonKey(name: "updatedAt") required final DateTime updatedAt,
-      @JsonKey(name: "__v") required final int v}) = _$BookingImpl;
+          {@JsonKey(name: "_id") required final String id,
+          @JsonKey(name: "services") required final List<Service> services,
+          @JsonKey(name: "customer") required final User customer,
+          @JsonKey(name: "appointment_date")
+          required final DateTime appointmentDate,
+          @JsonKey(name: "note") final String? note,
+          @JsonKey(name: "images_before_reaper")
+          required final List<String> imagesBeforeReaper,
+          @JsonKey(name: "images_after_reaper")
+          required final List<dynamic> imagesAfterReaper,
+          @JsonKey(name: "description_problem")
+          required final dynamic descriptionProblem,
+          @JsonKey(name: "status") required final String status,
+          @JsonKey(name: "cost") required final int cost,
+          @JsonKey(name: "createdAt") required final DateTime createdAt,
+          @JsonKey(name: "updatedAt") required final DateTime updatedAt}) =
+      _$BookingImpl;
 
   factory _Booking.fromJson(Map<String, dynamic> json) = _$BookingImpl.fromJson;
 
@@ -495,9 +475,6 @@ abstract class _Booking implements Booking {
   @override
   @JsonKey(name: "updatedAt")
   DateTime get updatedAt;
-  @override
-  @JsonKey(name: "__v")
-  int get v;
 
   /// Create a copy of Booking
   /// with the given fields replaced by the non-null parameter values.

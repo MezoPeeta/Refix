@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:refix/src/core/navigation/routes.dart';
 import 'package:refix/src/screens/boarding/data/boarding_data.dart';
 import 'package:refix/src/screens/services/data/bookin_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,6 +29,7 @@ List<String> convertPhotosToBase64(List<String> images) {
 Future<String> addBooking(Ref ref,
     {required List<String> services,
     required DateTime date,
+    required String notes,
     required List<String> images}) async {
   try {
     final response = await ref
@@ -35,14 +37,13 @@ Future<String> addBooking(Ref ref,
         .authenticatedRequest(method: "POST", url: "booking", body: {
       "services": services,
       "appointment_date": date.toIso8601String(),
-      "notes": "ssds",
+      "notes": notes,
       "images_before_reaper": convertPhotosToBase64(images),
-      "payment_method": "CASH"
     });
 
     log("Booking Request: ${response.body}");
     if (response.statusCode == 201) {
-      return response.body;
+      return jsonDecode(response.body)["bookingId"];
     }
     return jsonDecode(response.body)["message"];
   } catch (e) {
@@ -111,14 +112,56 @@ String getResponseMessage(dynamic message) {
 }
 
 @riverpod
-Future<Discount?> getDiscount(Ref ref,
-    {required String pageName}) async {
+Future<Discount?> getDiscount(Ref ref, {required String pageName}) async {
   final request = await ref
       .read(httpProvider)
       .authenticatedRequest(url: "discount/page/$pageName", method: "GET");
-  log(request.body);
   if (request.statusCode == 200) {
     return Discount.fromJson(jsonDecode(request.body));
   }
   return null;
+}
+
+@riverpod
+Future<bool> updateBookingMethod(Ref ref,
+    {required String bookingID, required String method}) async {
+  final request = await ref.read(httpProvider).authenticatedRequest(
+      url: "booking/$bookingID/payment-method",
+      method: "PATCH",
+      body: {"payment_method": method});
+  if (request.statusCode == 200) {
+    return true;
+  }
+  return false;
+}
+
+@riverpod
+Future<void> paymentBooking(Ref ref, {required String bookingID}) async {
+  final request = await ref.read(httpProvider).authenticatedRequest(
+        url: "payment/pay/$bookingID",
+        method: "POST",
+      );
+
+  if (request.statusCode == 201) {
+    final paymentURL = jsonDecode(request.body)["result"]["paymentUrl"];
+    log("Payment: $paymentURL");
+
+    ref.read(goRouterProvider).push("/payment_web", extra: paymentURL);
+  }
+}
+
+@riverpod
+Future<String> addBookingReview(Ref ref,
+    {required double rating,
+    required String comment,
+    required String bookingID}) async {
+  try {
+    final response = await ref.read(httpProvider).authenticatedRequest(
+        method: "POST",
+        url: "review",
+        body: {"rating": rating, "comment": comment, "booking": bookingID});
+    log("Response: ${response.body}");
+    return jsonDecode(response.body);
+  } catch (e) {}
+  return "Error";
 }

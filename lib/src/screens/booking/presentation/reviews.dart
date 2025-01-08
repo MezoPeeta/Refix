@@ -1,40 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/services/data/bookin_data.dart';
+import 'package:refix/src/screens/services/domain/booking_domain.dart';
 
-class BookingReviews extends StatelessWidget {
-  const BookingReviews({super.key});
+class BookingReviews extends StatefulWidget {
+  const BookingReviews({super.key, required this.booking});
+  final Booking booking;
 
+  @override
+  State<BookingReviews> createState() => _BookingReviewsState();
+}
+
+class _BookingReviewsState extends State<BookingReviews> {
+  double bookingRating = 0;
+  final noteController = TextEditingController();
+  bool loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SafeArea(
+      appBar: AppBar(
+        title: Text(context.tr.addReview),
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircleAvatar(),
+                CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://refix-api.onrender.com/${widget.booking.services.first.image}"),
+                ),
                 const SizedBox(
                   width: 16,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width: 184,
-                      height: 40,
-                      child: ListView.builder(
-                          padding: EdgeInsets.zero,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5,
-                          itemBuilder: (context, index) => const Icon(
-                                Icons.star_rounded,
-                                color: AppColors.primaryRefix,
-                              )),
+                    RatingBar.builder(
+                      initialRating: 0,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      itemSize: 25,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star_rounded,
+                        color: AppColors.primaryRefix,
+                      ),
+                      onRatingUpdate: (rating) {
+                        setState(() {
+                          bookingRating = rating;
+                        });
+                      },
                     ),
                     const Text(
                       "Great!",
@@ -47,132 +73,49 @@ class BookingReviews extends StatelessWidget {
             const SizedBox(
               height: 24,
             ),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text("Feature Here")
-                  ],
-                ),
-                Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text("Feature Here")
-                  ],
-                ),
-                Column(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text("Feature Here")
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 24,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: TextFormField(
                 maxLength: 200,
                 maxLines: 5,
-                decoration: const InputDecoration(hintText: "Add Notes here"),
+                controller: noteController,
+                decoration: InputDecoration(hintText: context.tr.add_notes),
               ),
             ),
             const SizedBox(
               height: 24,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  SvgPicture.asset("assets/img/booking/coing.svg"),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Thank the Worker name here",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: AppTextSize.two),
-                      ),
-                      Text(
-                        "Worker will receive 100% of the tip",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: AppTextSize.one),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Container(
-                padding: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    border: Border.all(),
-                    borderRadius: BorderRadius.circular(AppRadii.lg)),
-                child: const IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Text(
-                        "3 SAR",
-                        style: TextStyle(fontSize: AppTextSize.two),
-                      ),
-                      VerticalDivider(
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      Text(
-                        "6 SAR",
-                        style: TextStyle(fontSize: AppTextSize.two),
-                      ),
-                      VerticalDivider(
-                        thickness: 1,
-                        color: Colors.black,
-                      ),
-                      Text(
-                        "9 SAR",
-                        style: TextStyle(fontSize: AppTextSize.two),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: PrimaryButton(text: "Send", onPressed: () {}),
-            )
+            Consumer(builder: (context, ref, child) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: PrimaryButton(
+                    text: context.tr.sendReview,
+                    loading: loading,
+                    onPressed: () async {
+                      if (bookingRating == 0) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(context.tr.addStars)));
+                        return;
+                      }
+                      setState(() {
+                        loading = true;
+                      });
+                      final result = await ref.read(addBookingReviewProvider(
+                              rating: bookingRating,
+                              comment: noteController.text,
+                              bookingID: widget.booking.id)
+                          .future);
+
+                      setState(() {
+                        loading = false;
+                      });
+                      if (!context.mounted) return;
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(result)));
+                      context.pop();
+                    }),
+              );
+            })
           ],
         ),
       ),

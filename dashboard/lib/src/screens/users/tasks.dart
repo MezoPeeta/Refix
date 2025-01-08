@@ -3,9 +3,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 
-import '../../core/theme/btns.dart';
 import '../../core/theme/colors.dart';
 import '../../core/theme/radii.dart';
 

@@ -7,6 +7,7 @@ import 'colors.dart';
 class AppTheme {
   static ThemeData customTheme = ThemeData(
       useMaterial3: true,
+      
       outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
               foregroundColor: const WidgetStatePropertyAll(AppColors.white),

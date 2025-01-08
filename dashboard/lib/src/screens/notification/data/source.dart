@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../../auth/data/auth_data.dart';
-
 part 'source.freezed.dart';
 part 'source.g.dart';
 

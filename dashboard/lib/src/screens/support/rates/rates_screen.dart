@@ -1,23 +1,22 @@
-import 'package:dashboard/src/core/theme/radii.dart';
-import 'package:dashboard/src/screens/users/domain/source.dart';
+import 'package:dashboard/src/screens/support/rates/domain/rates_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../core/theme/radii.dart';
+import 'domain/rates_source.dart';
 
-class BookingConfirmation extends ConsumerStatefulWidget {
-  const BookingConfirmation({super.key});
+class RatesScreen extends ConsumerStatefulWidget {
+  const RatesScreen({super.key});
 
   @override
-  ConsumerState<BookingConfirmation> createState() =>
-      _BookingConfirmationState();
+  ConsumerState<RatesScreen> createState() => _RatesScreenState();
 }
 
-class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
+class _RatesScreenState extends ConsumerState<RatesScreen> {
   int _page = 1;
   String? query;
   @override
   Widget build(BuildContext context) {
-    final bookings =
-        ref.watch(getUnAssignedBookingsProvider(page: _page, query: query));
+    final points = ref.watch(getRatesProvider(page: _page, query: query));
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -30,7 +29,7 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                 spacing: 20,
                 children: [
                   Text(
-                    "All (${bookings.value?.length ?? 0})",
+                    "All (${points.value?.length ?? 0})",
                     style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: AppTextSize.three),
@@ -49,16 +48,14 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                   )
                 ],
               ),
-              bookings.when(
+              points.when(
                   data: (data) {
                     return Expanded(
                       child: PaginatedDataTable(
-                        showCheckboxColumn: true,
-                        showFirstLastButtons: false,
-                        showEmptyRows: false,
-                        onPageChanged: (page) {
+                        columnSpacing: 95,
+                        onPageChanged: (newPage) {
                           setState(() {
-                            _page = page;
+                            _page = newPage;
                           });
                         },
                         columns: const [
@@ -74,12 +71,22 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                           )),
                           DataColumn(
                               label: Text(
-                            "Customer Name",
+                            "Worker Name",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(
                               label: Text(
-                            "Cost",
+                            "Client Name",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Rating",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          )),
+                          DataColumn(
+                              label: Text(
+                            "Date of order",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(
@@ -87,20 +94,14 @@ class _BookingConfirmationState extends ConsumerState<BookingConfirmation> {
                             "Created",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
-                          DataColumn(
-                              label: Text(
-                            "Status",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
                           DataColumn(label: SizedBox.shrink()),
                         ],
-                        source: BookingConfDataSource(ref, data),
+                        source: RatesDataSource(data, ref),
                       ),
                     );
                   },
                   error: (e, s) {
-                    debugPrint("Error: $e");
-                    return const Text("Error");
+                    return Text("Error: $e,str:$s");
                   },
                   loading: () =>
                       const Center(child: CircularProgressIndicator())),

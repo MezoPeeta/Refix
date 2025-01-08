@@ -111,7 +111,7 @@ class BookingdoneScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: PrimaryButton(
                 text: context.tr.choosePaymentMethod,
-                onPressed: () => context.push("/payment_method")),
+                onPressed: () => context.push("/payment_method", extra: "")),
           )
         ],
       ),

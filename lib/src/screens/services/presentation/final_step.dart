@@ -18,6 +18,7 @@ import '../../../core/ui/theme/radii.dart';
 import '../../../core/ui/widgets/header.dart';
 import '../../home/data/home_data.dart';
 import '../../home/domain/home_domain.dart';
+import '../../profile/presentation/payment_methods.dart';
 import 'services.dart';
 
 final imageProvider = StateProvider<XFile?>((ref) => null);
@@ -41,6 +42,8 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
   final _key = GlobalKey<FormState>();
   final locationController = TextEditingController();
   final timeController = TextEditingController();
+  final notesController = TextEditingController();
+
   bool loading = false;
   DateTime? dateTime;
   List<String> photos = [];
@@ -90,9 +93,9 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                   text: context.tr.selectServiceName,
                   fontWeight: FontWeight.w500,
                 ),
-                const Text(
-                  "you can add more services in this booking",
-                  style: TextStyle(
+                Text(
+                  context.tr.addMoreServices,
+                  style: const TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: AppTextSize.one,
                       color: AppColors.neutralRefix),
@@ -329,6 +332,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                 TextFormField(
                   maxLength: 200,
                   maxLines: 5,
+                  controller: notesController,
                   decoration: InputDecoration(
                     hintText: context.tr.add_notes,
                   ),
@@ -349,10 +353,11 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                 loading = true;
               });
               if (loading == true) {
-                await ref
+                final bookingID = await ref
                     .read(addBookingProvider(
                         images: capturedPhotos,
                         date: dateTime!,
+                        notes: notesController.text,
                         services: [service.id]).future)
                     .catchError((v) {
                   ScaffoldMessenger.of(context)
@@ -361,15 +366,16 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                     loading = false;
                   });
                 });
+                ref.read(bookingIDProvider.notifier).state = bookingID;
 
-                setState(() {
-                  loading = false;
-                });
                 if (!context.mounted) return;
                 final discount = await ref
                     .read(getDiscountProvider(pageName: "Booking Done").future);
                 final offer = await ref.read(getCustomerOfferProvider.future);
-                if (discount != null) {
+                setState(() {
+                  loading = false;
+                });
+                if (discount != null && offer != null) {
                   return context.goNamed("BookingDone",
                       extra: discount,
                       pathParameters: {

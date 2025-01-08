@@ -24,7 +24,6 @@ _$BookingImpl _$$BookingImplFromJson(Map<String, dynamic> json) =>
       cost: (json['cost'] as num).toInt(),
       createdAt: DateTime.parse(json['createdAt'] as String),
       updatedAt: DateTime.parse(json['updatedAt'] as String),
-      v: (json['__v'] as num).toInt(),
     );
 
 Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
@@ -41,5 +40,4 @@ Map<String, dynamic> _$$BookingImplToJson(_$BookingImpl instance) =>
       'cost': instance.cost,
       'createdAt': instance.createdAt.toIso8601String(),
       'updatedAt': instance.updatedAt.toIso8601String(),
-      '__v': instance.v,
     };

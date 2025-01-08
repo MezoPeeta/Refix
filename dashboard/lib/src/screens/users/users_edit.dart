@@ -33,7 +33,7 @@ class _AddEditUserState extends ConsumerState<AddEditUser> {
         isEditting = true;
         nameController.text = widget.user!.username;
         phoneController.text =
-            widget.user!.phone!.replaceAll("+966", "") ?? "-";
+            widget.user!.phone!.replaceAll("+966", "");
         emailController.text = widget.user!.email;
       });
     }

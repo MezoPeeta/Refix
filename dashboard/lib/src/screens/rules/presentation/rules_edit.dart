@@ -1,9 +1,7 @@
 import 'package:dashboard/src/screens/auth/data/auth_data.dart';
 import 'package:dashboard/src/screens/navbar/widgets/header_text.dart';
 import 'package:dashboard/src/screens/rules/domain/rules_domain.dart';
-import 'package:dashboard/src/screens/users/domain/users_domain.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/btns.dart';

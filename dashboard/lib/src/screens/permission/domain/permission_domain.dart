@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/navigation/api.dart';
-import '../../auth/data/auth_data.dart';
 
 part 'permission_domain.g.dart';
 

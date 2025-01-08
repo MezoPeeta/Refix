@@ -193,12 +193,14 @@ Future<String?> updateCurrentUser(Ref ref, {required User user}) async {
 Future<void> deleteCurrentUser(
   Ref ref,
 ) async {
-  final currentUser = await ref.read(getCurrentUserProvider.future);
-  final response = await ref.read(httpProvider).authenticatedRequest(
-      method: "DELETE", url: "customer/${currentUser?.id}");
+  final response = await ref
+      .read(httpProvider)
+      .authenticatedRequest(method: "DELETE", url: "customer");
   log("Response: ${response.body}");
   if (response.statusCode == 200) {
-    return ref.read(goRouterProvider).go("/");
+    await SecureStorage().delete(key: 'access_token');
+    await SecureStorage().delete(key: 'refresh_token');
+    return ref.read(goRouterProvider).go("/login");
   }
 
   return;

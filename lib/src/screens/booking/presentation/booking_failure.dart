@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/profile/presentation/payment_methods.dart';
 
 import '../../../core/ui/theme/radii.dart';
 
-class BookingSuccess extends StatelessWidget {
-  const BookingSuccess({super.key});
+class BookingFailure extends StatelessWidget {
+  const BookingFailure({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +49,9 @@ class BookingSuccess extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             spacing: 16,
             children: [
-              SvgPicture.asset("assets/img/check.svg"),
+              SvgPicture.asset("assets/img/failure.svg"),
               const Text(
-                "Booking Done",
+                "Error with pay",
                 style: TextStyle(
                     fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
               ),
@@ -61,10 +63,11 @@ class BookingSuccess extends StatelessWidget {
                     color: AppColors.neutralRefix,
                     fontWeight: FontWeight.w300),
               ),
-              PrimaryButton(
-                  text: "Show your booking", onPressed: () => context.go("/")),
-              SecondaryButton(
-                  text: "Back to home", onPressed: () => context.go("/"))
+              Consumer(builder: (context, ref, child) {
+                return PrimaryButton(
+                    text: "Try Another Card",
+                    onPressed: () => context.go("/payment_method"));
+              }),
             ],
           ),
         ),

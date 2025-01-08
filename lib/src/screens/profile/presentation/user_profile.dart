@@ -54,7 +54,8 @@ class UserProfile extends ConsumerWidget {
                       onTap: () {
                         if (user == null) return;
 
-                        context.push("/switch_phone", extra: user.phone);
+                        context.push("/new_phone",
+                            extra: user.phone.replaceAll("+966", ""));
                       },
                       child: ProfileOption(
                         title: context.tr.phone,

@@ -46,17 +46,6 @@ class Privacy extends StatelessWidget {
                   const Divider(
                     color: AppColors.neutralRefix,
                   ),
-                  ProfileOption(
-                    title: context.tr.email,
-                    trailing: Switch.adaptive(
-                        inactiveTrackColor: AppColors.white,
-                        activeTrackColor: AppColors.primaryRefix,
-                        value: false,
-                        onChanged: (value) {}),
-                  ),
-                  const Divider(
-                    color: AppColors.neutralRefix,
-                  ),
                   Consumer(builder: (context, ref, child) {
                     final isGranted =
                         ref.watch(getNotificationPermissionProvider).value ??

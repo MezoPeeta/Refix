@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:csv/csv.dart';
 import 'package:dashboard/src/core/theme/btns.dart';
@@ -69,6 +68,8 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+
             children: [
               Row(
                 spacing: 16,

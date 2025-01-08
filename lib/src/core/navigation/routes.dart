@@ -9,12 +9,14 @@ import 'package:refix/src/screens/auth/presentation/login.dart';
 import 'package:refix/src/screens/auth/presentation/notifications.dart';
 import 'package:refix/src/screens/auth/presentation/otp_verification.dart';
 import 'package:refix/src/screens/boarding/data/boarding_data.dart';
+import 'package:refix/src/screens/booking/presentation/booking_failure.dart';
 import 'package:refix/src/screens/booking/presentation/booking_final.dart';
 import 'package:refix/src/screens/points/presentation/redeem_points.dart';
 import 'package:refix/src/screens/profile/presentation/about_refix.dart';
 import 'package:refix/src/screens/profile/presentation/new_email.dart';
 import 'package:refix/src/screens/profile/presentation/new_phone.dart';
 import 'package:refix/src/screens/profile/presentation/payment_methods.dart';
+import 'package:refix/src/screens/profile/presentation/payment_web_view.dart';
 import 'package:refix/src/screens/profile/presentation/privacy.dart';
 import 'package:refix/src/screens/profile/presentation/switch_phone.dart';
 import 'package:refix/src/screens/profile/presentation/terms.dart';
@@ -119,7 +121,9 @@ final routes = GoRouter(
           builder: (context, state) => const CancelReasonScreen()),
       GoRoute(
           path: "/booking_reviews",
-          builder: (context, state) => const BookingReviews()),
+          builder: (context, state) => BookingReviews(
+                booking: state.extra as Booking,
+              )),
       GoRoute(
           path: "/booking_report",
           builder: (context, state) => const ReportBooking()),
@@ -154,9 +158,17 @@ final routes = GoRouter(
           builder: (context, state) => const TermsAndConditions()),
       GoRoute(path: "/about", builder: (context, state) => const AboutRefix()),
       GoRoute(
+          path: "/payment_web",
+          builder: (context, state) => PaymentWebView(
+                url: state.extra as String,
+              )),
+      GoRoute(
           path: "/notifications",
           builder: (context, state) => const NotificationsScreen()),
       GoRoute(
-          path: "/bookingfinalDone",
-          builder: (context, state) => const BookingFinalDone()),
+          path: "/success",
+          builder: (context, state) => const BookingSuccess()),
+      GoRoute(
+          path: "/failure",
+          builder: (context, state) => const BookingFailure()),
     ]);

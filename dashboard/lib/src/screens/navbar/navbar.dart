@@ -176,7 +176,7 @@ class Navbar extends ConsumerWidget {
                     ],
                   ),
                   ExpansionMenu(
-                    title: "Support & Help",
+                    title: "Rate & Support",
                     svgPath: "assets/img/navbar/support.svg",
                     children: [
                       InkWell(
@@ -188,7 +188,7 @@ class Navbar extends ConsumerWidget {
                             radius: 5,
                             backgroundColor: AppColors.neutralRefix,
                           ),
-                          title: Text("Help Clients"),
+                          title: Text("Rates"),
                         ),
                       ),
                       InkWell(
@@ -200,7 +200,7 @@ class Navbar extends ConsumerWidget {
                             radius: 5,
                             backgroundColor: AppColors.neutralRefix,
                           ),
-                          title: Text("Support Workers"),
+                          title: Text("Reports"),
                         ),
                       ),
                     ],

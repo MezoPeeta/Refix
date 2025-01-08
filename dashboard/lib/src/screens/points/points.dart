@@ -23,6 +23,8 @@ class _PointsScreenState extends ConsumerState<PointsScreen> {
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+
             children: [
               Row(
                 spacing: 20,

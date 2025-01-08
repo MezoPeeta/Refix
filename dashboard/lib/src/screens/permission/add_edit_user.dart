@@ -8,7 +8,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/theme/btns.dart';
 import '../auth/data/auth_data.dart';
-import '../users/domain/users_domain.dart';
 
 class AddEditPermission extends ConsumerStatefulWidget {
   const AddEditPermission({super.key, required this.user});
@@ -38,7 +37,7 @@ class _AddEditPermissionState extends ConsumerState<AddEditPermission> {
         nameController.text = widget.user!.username;
         selectedRole = widget.user!.role.id;
         phoneController.text =
-            widget.user!.phone!.replaceAll("+966", "") ?? "-";
+            widget.user!.phone!.replaceAll("+966", "");
         emailController.text = widget.user!.email;
       });
     }

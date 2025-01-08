@@ -2,7 +2,6 @@ import 'package:dashboard/src/core/theme/colors.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/content/data/boarding_data.dart';
 import 'package:dashboard/src/screens/services/domain/services_domain.dart';
-import 'package:dashboard/src/screens/users/domain/users_domain.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,7 +11,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../app.dart';
 import '../../core/theme/btns.dart';
-import '../auth/data/auth_data.dart';
 
 class AddEditService extends ConsumerStatefulWidget {
   const AddEditService({super.key, required this.service});

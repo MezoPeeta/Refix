@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../navbar/navbar.dart';
 import '../users/domain/source.dart';
 
 class PermissionsScreen extends ConsumerStatefulWidget {
@@ -24,6 +23,7 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),

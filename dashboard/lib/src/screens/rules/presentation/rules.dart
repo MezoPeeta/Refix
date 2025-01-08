@@ -21,6 +21,7 @@ class _RulesScreenState extends ConsumerState<RulesScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -51,6 +52,7 @@ class _RulesScreenState extends ConsumerState<RulesScreen> {
                     child: PaginatedDataTable(
                       showCheckboxColumn: true,
                       showFirstLastButtons: false,
+                      // columnSpacing: 700,
                       showEmptyRows: false,
                       columns: const [
                         DataColumn(

@@ -153,6 +153,7 @@ class BookingScreen extends ConsumerWidget {
                 data: (data) {
                   final bookings =
                       data.where((e) => e.status == status).toList();
+                  log("Data: $bookings");
                   if (bookings.isEmpty) {
                     return const Center(
                       child: Text("You haven't booked yet"),
@@ -229,16 +230,7 @@ class BookingScreen extends ConsumerWidget {
                               status == "PENDING"
                                   ? SecondaryButton(
                                       text: context.tr.show,
-                                      onPressed: () async {
-                                        final location = await ref.read(
-                                            getLocationProvider(
-                                                    latitude: data[index]
-                                                        .customer
-                                                        .latitude!,
-                                                    longitude: data[index]
-                                                        .customer
-                                                        .longitude!)
-                                                .future);
+                                      onPressed: () {
                                         context.pushNamed(
                                           "InBooking",
                                           extra: data[index],
@@ -248,8 +240,10 @@ class BookingScreen extends ConsumerWidget {
                                     )
                                   : SecondaryButton(
                                       text: context.tr.addReview,
-                                      onPressed: () async {},
-                                      size: const Size(74, 40),
+                                      onPressed: () => context.push(
+                                          "/booking_reviews",
+                                          extra: data[index]),
+                                      size: const Size(105, 40),
                                     )
                             ],
                           ),
