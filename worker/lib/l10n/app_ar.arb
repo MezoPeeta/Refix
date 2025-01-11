@@ -1,0 +1,254 @@
+{
+    "title": "يكتب هنا عنوان",
+    "sentence": "تستخدم هذه الجملة كبديل للنصوص الحقيقية في مجالات الطباعة والتصميم.",
+    "next": "التالي",
+    "get_started": "هيا نبدا",
+    "sign_in": "تسجيل الدخول",
+    "skip": "تخطي ",
+    "hello": "مرحباً! قم بالتسجيل للبدء",
+    "username": "اسم المستخدم",
+    "email": "البريد الاكتروني",
+    "password": "كلمة المرور",
+    "confirm_password": "تاكيد كلمة المرور",
+    "sign_up": "انشاء حساب جديد",
+    "or_register": "أو قم بالتسجيل ب ",
+    "otp_verification": "التحقق من OTP",
+    "verify_code": "أدخل رمز التحقق الذي أرسلناه للتو على رقم هاتفك +966XXX XXX XXXX",
+    "resend_code": "اعادة ارسال الكود بعد",
+    "second": "ثانية",
+    "confirm": "تحقق",
+    "your_profile": "حسابك",
+    "language": "لغة البرنامج",
+    "first_name": "الاسم الاول",
+    "last_name": "الاسم الاخير",
+    "phone": "رقم المحمول",
+    "delete_account": "مسح الحساب",
+    "enter_email": "ادخل بريد الاكتروني الجديد",
+    "payment_methods": "طرق الدفع",
+    "privacy": "خصوصية",
+    "logout": "تسجيل الخروج",
+    "home": "الرئيسية",
+    "booking": "الحجز",
+    "points": "النقاط",
+    "enter_email": "الرجاء إدخال البريد الإلكتروني الخاص بك",
+    "enter_password": "الرجاء إدخال كلمة المرور الخاصة بك",
+    "password_8": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+    "confirm_valid": "تأكيد كلمة المرور يجب أن يكون بالضبط مثل كلمة المرور الخاصة بك",
+    "renter": "الرجاء إعادة إدخال كلمة المرور الخاصة بك",
+    "forgot_pass": "هل نسيت كلمة السر",
+    "address": "العنوان",
+    "enter_address": "الرجاء الضعط لاضافة عنوانك",
+    "add_notes": "أضف ملاحظات",
+    "have_account": "ليس لديك حساب?",
+    "register_now": "سجل الآن",
+    "enter_phone": "الرجاء ادخال هاتفك المحموك",
+    "or_login": "أو تسجيل الدخول باستخدام",
+    "not_account": "هل لديك حساب بالفعل؟",
+    "signup_welcome": "مرحبا! قم بالتسجيل للبدء",
+    "enter_username": "الرجاء ادخال اسم المستخدم",
+    "sign_in_hello": "مرحبًا بعودتك! سعيد لرؤيتك، مرة أخرى!",
+    "electrical_systems": "الأنظمة الكهربائية",
+    "plumbing_systems": "الأنظمة السباكة",
+    "air": "تكييف",
+    "control": "التحكم والأتمتة",
+    "fire": "أنظمة مكافحة الحرائق",
+    "emergency": "خدمات الطوارئ",
+    "other": "اخري",
+    "chat": "الدردشة معنا",
+    "not_available": "تريد خدمة غير متوفرة",
+    "not_available2": "لديك مشكلة أو خدمة تريدها غير متوفرة في الخيارات",
+    "search": "ابحث عن 'صيانة تكييف الهواء'",
+    "save": "حفظ",
+    "select": "حدد وسوف يتغير في جميع أنحاء التطبيق",
+    "reviews": "التعليقات",
+    "get_discount": "احصل على خصم {percentage} إذا طلبت الآن",
+    "@get_discount": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "40%"
+            }
+        }
+    },
+    "order_now": "اطلب الآن",
+    "choose_service": "الرجاء اختيار الخدمة",
+    "fillInputBox": "إذا كان لديك أي أسئلة، يرجى ملء مربع الإدخال أدناه.",
+    "selectServiceName": "اختر اسم الخدمة",
+    "@selectServiceName": {
+        "description": "رسالة تطلب من المستخدم اختيار اسم الخدمة"
+    },
+    "appTrackPhotoIssue": "يرجى إضافة/تتبع صورة للمشكلة.",
+    "@appTrackPhotoIssue": {
+        "description": "رسالة تطلب من المستخدم إضافة أو تتبع صورة تتعلق بالمشكلة"
+    },
+    "substituteTextExplanation": "تُستخدم هذه الجملة كبديل للنص الحقيقي في مجالات الطباعة والتصميم.",
+    "@substituteTextExplanation": {
+        "description": "نص بديل يُستخدم عادةً في الطباعة والتصميم لمحاكاة المحتوى الفعلي"
+    },
+    "addTrackPhoto": "أضف/تتبع صورة",
+    "@addTrackPhoto": {
+        "description": "خيار لإضافة أو تتبع صورة"
+    },
+    "addAddress": "أضف عنوانًا",
+    "@addAddress": {
+        "description": "خيار لإضافة عنوان جديد"
+    },
+    "pickDate": "اختر التاريخ",
+    "@pickDate": {
+        "description": "رسالة لاختيار التاريخ"
+    },
+    "bookNow": "احجز الآن",
+    "@bookNow": {
+        "description": "زر أو خيار لحجز الخدمة فورًا"
+    },
+    "photoYourProblem": "صوّر مشكلتك",
+    "@photoYourProblem": {
+        "description": "تعليمات لتصوير أو تحميل صورة تتعلق بمشكلة المستخدم"
+    },
+    "pleaseAddAddress": "يرجى إضافة عنوان",
+    "@pleaseAddAddress": {
+        "description": "رسالة تطلب من المستخدم إضافة عنوان"
+    },
+    "pleaseAddDate": "يرجى إضافة تاريخ",
+    "@pleaseAddDate": {
+        "description": "رسالة تطلب من المستخدم إضافة تاريخ"
+    },
+    "addMoreServices": "يمكنك إضافة المزيد من الخدمات في هذا الحجز",
+    "@addMoreServices": {
+        "description": "رسالة تخبر المستخدم بإمكانية إضافة المزيد من الخدمات إلى الحجز الحالي"
+    },
+    "notifications": "اشعارات",
+    "markAllRead": "اقرا الكل",
+    "noNotifications": "لا توجد إشعارات في الوقت الحالي، تحقق لاحقًا.",
+    "@noNotifications": {
+        "description": "رسالة تُعرض عندما لا توجد إشعارات متاحة"
+    },
+    "enterNewEmail": "أدخل بريدًا إلكترونيًا جديدًا",
+    "@enterNewEmail": {
+        "description": "رسالة تطلب من المستخدم إدخال بريد إلكتروني جديد"
+    },
+    "enterNewPhone": "أدخل رقم هاتف جديد",
+    "@enterNewPhone": {
+        "description": "رسالة تطلب من المستخدم إدخال رقم هاتف جديد"
+    },
+    "cash": "نقدًا",
+    "@cash": {
+        "description": "خيار طريقة الدفع نقدًا"
+    },
+    "visa": "فيزا",
+    "@visa": {
+        "description": "خيار طريقة الدفع باستخدام فيزا"
+    },
+    "addCard": "أضف بطاقة ائتمان/خصم",
+    "@addCard": {
+        "description": "رسالة تطلب من المستخدم إضافة بطاقة ائتمان أو خصم"
+    },
+    "continuee": "استمر",
+    "@continuee": {
+        "description": "زر لمتابعة العملية"
+    },
+    "discount_next": "احصل على خصم {percentage} على حجزك التالي",
+    "@discount_next": {
+        "placeholders": {
+            "percentage": {
+                "type": "String",
+                "example": "60%"
+            }
+        }
+    },
+    "pointsBalance": "رصيد النقاط",
+    "endsWithin": "ينتهي خلال {days} يوم",
+    "@endsWithin": {
+        "placeholders": {
+            "days": {
+                "type": "String",
+                "example": "20"
+            }
+        }
+    },
+    "terms_and_conditions": "الشروط والأحكام",
+    "about_refix": "حول ريفيكس",
+    "current": "الحالي",
+    "closed": "مغلق",
+    "discounts_and_updates": "الخصومات والتحديثات",
+    "sms_message": "رسالة نصية قصيرة",
+    "pop_up_notifications": "الإشعارات المنبثقة",
+    "share_locations": "مشاركة المواقع",
+    "access_permissions_to_the_system": "أذونات الوصول إلى النظام",
+    "location_sharing_info": "تساعد مشاركة الموقع السائق في تقديم خدمات أفضل لك. إذا تم تعطيل مشاركة الموقع، فلن يتمكن السائق من رؤية موقعك في الوقت الفعلي.",
+    "show": "عرض",
+    "searchResult": "نتائج البحث عن: {query}",
+    "@searchResult": {
+        "placeholders": {
+            "query": {
+                "type": "String"
+            }
+        }
+    },
+    "fineBooking": "سيتم إضافة غرامة قدرها {fine} ريال في حالة الإلغاء بعد",
+    "@fineBooking": {
+        "placeholders": {
+            "fine": {
+                "type": "String",
+                "example": "20"
+            }
+        }
+    },
+    "changeEmail": "لم تقم بتغيير البريد الإلكتروني الخاص بك",
+    "@switchToNewNumber": {
+        "description": "Title for switching to a new number",
+        "type": "text",
+        "placeholders": {}
+    },
+    "switchToNewNumber": "التبديل إلى رقم جديد",
+    "@currentlyRegisteredNumber": {
+        "description": "Message showing the currently registered number and assurance about account data",
+        "type": "text",
+        "placeholders": {
+            "phone": {}
+        }
+    },
+    "currentlyRegisteredNumber": "رقم الهاتف المسجل حاليًا هو {phone}. لن تتأثر رصيدك أو بياناتك أو أي معلومات أخرى متعلقة بالحساب.",
+    "@switchNow": {
+        "description": "Button text for switching to a new number",
+        "type": "text",
+        "placeholders": {}
+    },
+    "switchNow": "التبديل الآن",
+    "changePhone": "لم تقم بتغيير رقم هاتفك",
+    "@deleteAccountQuestion": {
+        "description": "Question asking if the user wants to delete their account",
+        "type": "text",
+        "placeholders": {}
+    },
+    "deleteAccountQuestion": "هل تريد حذف الحساب؟",
+    "@deleteAccountWarning": {
+        "description": "Warning message about account deletion timeline",
+        "type": "text",
+        "placeholders": {}
+    },
+    "deleteAccountWarning": "سيتم حذف حسابك خلال 4 أيام من الآن.",
+    "@backButton": {
+        "description": "Text for the back button",
+        "type": "text",
+        "placeholders": {}
+    },
+    "backButton": "رجوع",
+    "addNoteForWorker": "إضافة ملاحظة للعامل",
+    "cancelBooking": "إلغاء الحجز",
+    "addReview": "أضف مراجعة",
+    "costOfService": "تكلفة الخدمة",
+    "cost": "{cost} ريال",
+    "sendReview": "ارسالة مراجعة",
+    "choosePaymentMethod": "اختر طريقة الدفع",
+    "addStars": "يُرجى سحب النجوم أو النقر عليها للتقييم",
+    "@cost": {
+        "description": "The cost of the service with the currency symbol.",
+        "placeholders": {
+            "cost": {
+                "type": "String",
+                "example": "١٠٠"
+            }
+        }
+    }
+}
