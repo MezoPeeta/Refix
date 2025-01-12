@@ -25,7 +25,6 @@ class _DiscountScreenState extends ConsumerState<DiscountScreen> {
                 child: SizedBox(
                   height: MediaQuery.sizeOf(context).height,
                   width: MediaQuery.sizeOf(context).width,
-
                   child: PaginatedDataTable(
                     columns: const [
                       DataColumn(
