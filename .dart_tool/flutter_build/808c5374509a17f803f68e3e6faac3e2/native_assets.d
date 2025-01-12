@@ -1,0 +1,1 @@
+ /home/mazen/projects/Refix/.dart_tool/flutter_build/808c5374509a17f803f68e3e6faac3e2/native_assets.yaml: 
