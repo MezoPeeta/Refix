@@ -3,14 +3,14 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"main.dart.wasm": "25d8deb0b513413dd2e50b485533285e",
+const RESOURCES = {"main.dart.wasm": "e1923d675a7bb442c74e3e15b414f1e0",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "manifest.json": "d37c4da88379fe0a558eae1a785147b2",
-"main.dart.js": "818254d08231795c1f63408a4bea7761",
+"main.dart.js": "cad58336f3dafae0e74f2bc29a78ac7d",
 "main.dart.mjs": "8940dc67276b29f0297a090159be3fd7",
 "canvaskit/canvaskit.js.symbols": "efc2cd87d1ff6c586b7d4c7083063a40",
 "canvaskit/skwasm.wasm": "828c26a0b1cc8eb1adacbdd0c5e8bcfa",
@@ -48,7 +48,7 @@ const RESOURCES = {"main.dart.wasm": "25d8deb0b513413dd2e50b485533285e",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
 "assets/fonts/MaterialIcons-Regular.otf": "e5834331788f99822aa34bdd2f313f7b",
 "assets/AssetManifest.bin": "64ca13426e467fdb4902f92beae4e5cc",
-"flutter_bootstrap.js": "c82ad07682a6642b22332f6d34e85e47",
+"flutter_bootstrap.js": "d92d7b1b4f90afb499a09613b3a7ed92",
 "index.html": "1cab58a0d84cd2ea892f343e5fe3ce4a",
 "/": "1cab58a0d84cd2ea892f343e5fe3ce4a"};
 // The application shell files that are downloaded before a service worker can
