@@ -19,57 +19,49 @@ class _DiscountScreenState extends ConsumerState<DiscountScreen> {
     final discounts = ref.watch(getDiscountsProvider);
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: discounts.when(
-                  data: (data) {
-                    return Expanded(
-                      child: PaginatedDataTable(
-                        showFirstLastButtons: false,
-                        showEmptyRows: false,
-                        columns: const [
-                          DataColumn(
-                              label: Text(
-                            "Page Name",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(
-                              label: Text(
-                            "Heading (English)",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(
-                              label: Text(
-                            "Heading (Arabic)",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(
-                              label: Text(
-                            "Details (English)",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(
-                              label: Text(
-                            "Details (Arabic)",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(label: SizedBox.shrink()),
-                        ],
-                        source: DiscountTableSource(data, context),
-                      ),
-                    );
-                  },
-                  error: (e, s) {
-                    debugPrint("Error: $e");
-                    return Text("Error: $e,St:$s");
-                  },
-                  loading: () =>
-                      const Center(child: CircularProgressIndicator())),
-            ),
-          ],
-        ));
+        body: discounts.when(
+            data: (data) {
+              return SingleChildScrollView(
+                child: SizedBox(
+                  height: MediaQuery.sizeOf(context).height,
+                  child: PaginatedDataTable(
+                    columns: const [
+                      DataColumn(
+                          label: Text(
+                        "Page Name",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(
+                          label: Text(
+                        "Heading (English)",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(
+                          label: Text(
+                        "Heading (Arabic)",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(
+                          label: Text(
+                        "Details (English)",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(
+                          label: Text(
+                        "Details (Arabic)",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(label: SizedBox.shrink()),
+                    ],
+                    source: DiscountTableSource(data, context),
+                  ),
+                ),
+              );
+            },
+            error: (e, s) {
+              debugPrint("Error: $e");
+              return Text("Error: $e,St:$s");
+            },
+            loading: () => const Center(child: CircularProgressIndicator())));
   }
 }
