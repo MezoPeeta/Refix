@@ -20,6 +20,7 @@ import '../home/home.dart';
 import '../permission/permissions.dart';
 import '../points/add_point.dart';
 import '../services/services.dart';
+import '../support/report.dart';
 import '../support/report_screen.dart';
 import '../users/workers.dart';
 
@@ -43,6 +44,7 @@ class BaseScreen extends StatelessWidget {
     const BookingConfShow(),
     const RatesScreen(),
     const ReportsScreen(),
+    const ReportDetailsScreen(),
     const ServicesScreen(),
     const PermissionsScreen(),
     const RulesScreen(),

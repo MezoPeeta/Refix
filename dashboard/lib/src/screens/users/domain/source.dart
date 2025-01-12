@@ -39,11 +39,10 @@ class UsersDataSource extends DataTableSource {
     if (index >= data.length) return null;
 
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].username)),
-      DataCell(Text(data[index].email)),
-      DataCell(Text(data[index].phone ?? "-")),
-      DataCell(Text(formatTime(data[index].createdAt))),
+      DataCell(SelectableText(data[index].id)),
+      DataCell(SelectableText(data[index].username)),
+      DataCell(SelectableText(data[index].email)),
+      DataCell(SelectableText(data[index].phone ?? "-")),
       DataCell(TextButton(
         onPressed: () => context.push("/user/edit", extra: data[index]),
         child: const Text("Edit"),
@@ -128,11 +127,10 @@ class CustomersDataSource extends UsersDataSource {
     if (index >= data.length) return null;
 
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].username)),
-      DataCell(Text(data[index].email)),
-      DataCell(Text(data[index].role.name)),
-      DataCell(Text(formatTime(data[index].createdAt))),
+      DataCell(SelectableText(data[index].id)),
+      DataCell(SelectableText(data[index].username)),
+      DataCell(SelectableText(data[index].email)),
+      DataCell(SelectableText(data[index].role.name)),
       DataCell(TextButton(
         onPressed: () => context.push("/permission/edit", extra: data[index]),
         child: const Text("Edit"),
@@ -158,12 +156,12 @@ class BookingDataSource extends DataTableSource {
     if (index >= bookings.length) return null;
 
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(bookings[index].id)),
-      DataCell(Text(bookings[index].services.first.name?.en ?? "-")),
-      DataCell(Text(bookings[index].customer.username)),
-      DataCell(Text(bookings[index].cost.toString())),
-      DataCell(Text(formatTime(bookings[index].createdAt))),
-      DataCell(Text(bookings[index].status)),
+      DataCell(SelectableText(bookings[index].id)),
+      DataCell(SelectableText(bookings[index].services.first.name?.en ?? "-")),
+      DataCell(SelectableText(bookings[index].customer.username)),
+      DataCell(SelectableText(bookings[index].cost.toString())),
+      DataCell(SelectableText(formatTime(bookings[index].createdAt))),
+      DataCell(SelectableText(bookings[index].status)),
       DataCell(TextButton(
         onPressed: () {
           ref.read(currentIndexProvider.notifier).state = 12;
@@ -200,12 +198,12 @@ class BookingConfDataSource extends DataTableSource {
     if (index >= bookings.length) return null;
 
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(bookings[index].id)),
-      DataCell(Text(bookings[index].services.first.name?.en ?? "-")),
-      DataCell(Text(bookings[index].customer.username)),
-      DataCell(Text(bookings[index].cost.toString())),
-      DataCell(Text(formatTime(bookings[index].createdAt))),
-      DataCell(Text(bookings[index].status)),
+      DataCell(SelectableText(bookings[index].id)),
+      DataCell(SelectableText(bookings[index].services.first.name?.en ?? "-")),
+      DataCell(SelectableText(bookings[index].customer.username)),
+      DataCell(SelectableText(bookings[index].cost.toString())),
+      DataCell(SelectableText(formatTime(bookings[index].createdAt))),
+      DataCell(SelectableText(bookings[index].status)),
       DataCell(TextButton(
         onPressed: () {
           ref.read(currentIndexProvider.notifier).state = 14;
@@ -241,13 +239,13 @@ class PointsDataSource extends DataTableSource {
     if (index >= data.length) return null;
 
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].name.en)),
-      DataCell(Text("${data[index].percentage}%")),
-      DataCell(Text(data[index].availableDays.toString())),
-      DataCell(Text(data[index].requiredPoints.toString())),
-      DataCell(Text(formatTime(data[index].createdAt))),
-      DataCell(Text(data[index].active ? "Active" : "Inactive")),
+      DataCell(SelectableText(data[index].id)),
+      DataCell(SelectableText(data[index].name.en)),
+      DataCell(SelectableText("${data[index].percentage}%")),
+      DataCell(SelectableText(data[index].availableDays.toString())),
+      DataCell(SelectableText(data[index].requiredPoints.toString())),
+      DataCell(SelectableText(formatTime(data[index].createdAt))),
+      DataCell(SelectableText(data[index].active ? "Active" : "Inactive")),
       DataCell(TextButton(
         onPressed: () {
           ref.read(pointIDProvider.notifier).state = data[index];
@@ -368,12 +366,11 @@ class WorkersDataTable extends DataTableSource {
 
   @override
   DataRow? getRow(int index) {
-    if (index >= data.length) return null;
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].username)),
-      DataCell(Text(data[index].companyName)),
-      DataCell(Text(data[index].phone ?? "-")),
+      DataCell(SelectableText(data[index].id)),
+      DataCell(SelectableText(data[index].username)),
+      DataCell(SelectableText(data[index].companyName)),
+      DataCell(SelectableText(data[index].phone ?? "-")),
       DataCell(TextButton(
         onPressed: () {
           ref.read(workerProvider.notifier).state = data[index];
@@ -417,7 +414,7 @@ class DiscountTableSource extends DataTableSource {
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].pageName ?? "")),
+      DataCell(SelectableText(data[index].pageName ?? "")),
       DataCell(SizedBox(
           width: 200,
           child: Text(
@@ -467,6 +464,10 @@ Future<String> updateBooking(Ref ref, {required BookingElement booking}) async {
 }
 
 String getResponseMessage(dynamic message) {
+  if ( message is String) {
+    return message;
+  }
+  
   if (message is Map<String, dynamic>) {
     final mess = message["message"];
     if (mess is List) {
@@ -487,8 +488,8 @@ class RuleDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].name)),
+      DataCell(SelectableText(data[index].id)),
+      DataCell(SelectableText(data[index].name)),
       DataCell(TextButton(
         onPressed: () => context.push("/rule/edit", extra: data[index]),
         child: const Text("Edit"),
@@ -520,15 +521,15 @@ class ServicesDataTable extends DataTableSource {
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
+      DataCell(SelectableText(data[index].id)),
       DataCell(CircleAvatar(
         backgroundImage:
             NetworkImage("https://refix-api.onrender.com/${data[index].image}"),
       )),
-      DataCell(Text(data[index].name?.en ?? "-")),
-      DataCell(Text(data[index].type ?? "-")),
-      DataCell(Text("${data[index].price} SAR")),
-      DataCell(Text(data[index].isActive ? "Active" : "Inactive")),
+      DataCell(SelectableText(data[index].name?.en ?? "-")),
+      DataCell(SelectableText(data[index].type ?? "-")),
+      DataCell(SelectableText("${data[index].price} SAR")),
+      DataCell(SelectableText(data[index].isActive ? "Active" : "Inactive")),
       DataCell(TextButton(
         onPressed: () => context.push("/services/edit", extra: data[index]),
         child: const Text("Edit"),

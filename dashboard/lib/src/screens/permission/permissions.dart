@@ -93,11 +93,6 @@ class _PermissionsScreenState extends ConsumerState<PermissionsScreen> {
                           "Rule",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
-                        DataColumn(
-                            label: Text(
-                          "Created",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
                         DataColumn(label: SizedBox.shrink()),
                       ],
                       source: CustomersDataSource(data, context),

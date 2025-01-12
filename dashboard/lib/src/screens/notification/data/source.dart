@@ -12,8 +12,8 @@ class NotificationDataSource extends DataTableSource {
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].name)),
-      DataCell(Text(data[index].details)),
+      DataCell(SelectableText(data[index].name)),
+      DataCell(SelectableText(data[index].details)),
       const DataCell(Text("")),
     ]);
   }

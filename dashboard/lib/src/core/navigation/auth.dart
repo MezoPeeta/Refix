@@ -36,7 +36,6 @@ class AuthDomain {
   Future<String?> refreshAccessToken() async {
     try {
       String? refreshToken = await getRefreshToken();
-      print("RefreshToken: $refreshToken");
       if (refreshToken == null) {
         return null;
       }
@@ -87,16 +86,10 @@ class AuthDomain {
   }
 
   Future<void> logout() async {
-    try {
-      await revokeRefreshToken();
-    } catch (e) {
-      print('Error during logout: $e');
-    } finally {
-      await storage.delete(key: 'access_token');
-      await storage.delete(key: 'refresh_token');
+    await storage.delete(key: 'access_token');
+    await storage.delete(key: 'refresh_token');
 
-      ref.read(goRouterProvider).go("/login");
-    }
+    ref.read(goRouterProvider).go("/login");
   }
 
   Future<Either<String, UserAccount>> signin({

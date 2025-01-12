@@ -33,8 +33,9 @@ class BookingElement with _$BookingElement {
     required List<String> imagesAfterReaper,
     @JsonKey(name: "description_problem") dynamic descriptionProblem,
     @JsonKey(name: "status") required String status,
-    @JsonKey(name: "cost") required int cost,
+    @JsonKey(name: "cost",defaultValue: 0) required int cost,
     @JsonKey(name: "createdAt") required DateTime createdAt,
+    @Default(false) bool resolved
   }) = _BookingElement;
 
   factory BookingElement.fromJson(Map<String, dynamic> json) =>

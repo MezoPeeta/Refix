@@ -265,10 +265,6 @@ mixin _$User {
   double? get latitude => throw _privateConstructorUsedError;
   @JsonKey(name: "role")
   Role get role => throw _privateConstructorUsedError;
-  @JsonKey(name: "is_verified", defaultValue: false)
-  bool get isVerified => throw _privateConstructorUsedError;
-  @JsonKey(name: "createdAt")
-  DateTime get createdAt => throw _privateConstructorUsedError;
 
   /// Serializes this User to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -292,9 +288,7 @@ abstract class $UserCopyWith<$Res> {
       @JsonKey(name: "phone") String? phone,
       @JsonKey(name: "lang") double? longitude,
       @JsonKey(name: "lat") double? latitude,
-      @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified", defaultValue: false) bool isVerified,
-      @JsonKey(name: "createdAt") DateTime createdAt});
+      @JsonKey(name: "role") Role role});
 
   $RoleCopyWith<$Res> get role;
 }
@@ -322,8 +316,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
     Object? longitude = freezed,
     Object? latitude = freezed,
     Object? role = null,
-    Object? isVerified = null,
-    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       notificationToken: freezed == notificationToken
@@ -358,14 +350,6 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as Role,
-      isVerified: null == isVerified
-          ? _value.isVerified
-          : isVerified // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ) as $Val);
   }
 
@@ -395,9 +379,7 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
       @JsonKey(name: "phone") String? phone,
       @JsonKey(name: "lang") double? longitude,
       @JsonKey(name: "lat") double? latitude,
-      @JsonKey(name: "role") Role role,
-      @JsonKey(name: "is_verified", defaultValue: false) bool isVerified,
-      @JsonKey(name: "createdAt") DateTime createdAt});
+      @JsonKey(name: "role") Role role});
 
   @override
   $RoleCopyWith<$Res> get role;
@@ -423,8 +405,6 @@ class __$$UserImplCopyWithImpl<$Res>
     Object? longitude = freezed,
     Object? latitude = freezed,
     Object? role = null,
-    Object? isVerified = null,
-    Object? createdAt = null,
   }) {
     return _then(_$UserImpl(
       notificationToken: freezed == notificationToken
@@ -459,14 +439,6 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as Role,
-      isVerified: null == isVerified
-          ? _value.isVerified
-          : isVerified // ignore: cast_nullable_to_non_nullable
-              as bool,
-      createdAt: null == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
     ));
   }
 }
@@ -482,10 +454,7 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       @JsonKey(name: "phone") this.phone,
       @JsonKey(name: "lang") this.longitude,
       @JsonKey(name: "lat") this.latitude,
-      @JsonKey(name: "role") required this.role,
-      @JsonKey(name: "is_verified", defaultValue: false)
-      required this.isVerified,
-      @JsonKey(name: "createdAt") required this.createdAt});
+      @JsonKey(name: "role") required this.role});
 
   factory _$UserImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserImplFromJson(json);
@@ -514,16 +483,10 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
   @override
   @JsonKey(name: "role")
   final Role role;
-  @override
-  @JsonKey(name: "is_verified", defaultValue: false)
-  final bool isVerified;
-  @override
-  @JsonKey(name: "createdAt")
-  final DateTime createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(notificationToken: $notificationToken, id: $id, username: $username, email: $email, phone: $phone, longitude: $longitude, latitude: $latitude, role: $role, isVerified: $isVerified, createdAt: $createdAt)';
+    return 'User(notificationToken: $notificationToken, id: $id, username: $username, email: $email, phone: $phone, longitude: $longitude, latitude: $latitude, role: $role)';
   }
 
   @override
@@ -538,9 +501,7 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('phone', phone))
       ..add(DiagnosticsProperty('longitude', longitude))
       ..add(DiagnosticsProperty('latitude', latitude))
-      ..add(DiagnosticsProperty('role', role))
-      ..add(DiagnosticsProperty('isVerified', isVerified))
-      ..add(DiagnosticsProperty('createdAt', createdAt));
+      ..add(DiagnosticsProperty('role', role));
   }
 
   @override
@@ -559,17 +520,13 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
                 other.longitude == longitude) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.isVerified, isVerified) ||
-                other.isVerified == isVerified) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt));
+            (identical(other.role, role) || other.role == role));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, notificationToken, id, username,
-      email, phone, longitude, latitude, role, isVerified, createdAt);
+      email, phone, longitude, latitude, role);
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -589,18 +546,14 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 
 abstract class _User implements User {
   const factory _User(
-          {@JsonKey(name: "notification_token") final String? notificationToken,
-          @JsonKey(name: "_id") required final String id,
-          @JsonKey(name: "username") required final String username,
-          @JsonKey(name: "email") required final String email,
-          @JsonKey(name: "phone") final String? phone,
-          @JsonKey(name: "lang") final double? longitude,
-          @JsonKey(name: "lat") final double? latitude,
-          @JsonKey(name: "role") required final Role role,
-          @JsonKey(name: "is_verified", defaultValue: false)
-          required final bool isVerified,
-          @JsonKey(name: "createdAt") required final DateTime createdAt}) =
-      _$UserImpl;
+      {@JsonKey(name: "notification_token") final String? notificationToken,
+      @JsonKey(name: "_id") required final String id,
+      @JsonKey(name: "username") required final String username,
+      @JsonKey(name: "email") required final String email,
+      @JsonKey(name: "phone") final String? phone,
+      @JsonKey(name: "lang") final double? longitude,
+      @JsonKey(name: "lat") final double? latitude,
+      @JsonKey(name: "role") required final Role role}) = _$UserImpl;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$UserImpl.fromJson;
 
@@ -628,12 +581,6 @@ abstract class _User implements User {
   @override
   @JsonKey(name: "role")
   Role get role;
-  @override
-  @JsonKey(name: "is_verified", defaultValue: false)
-  bool get isVerified;
-  @override
-  @JsonKey(name: "createdAt")
-  DateTime get createdAt;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

@@ -1,3 +1,5 @@
+import 'package:dashboard/src/screens/booking/data/booking.dart';
+import 'package:dashboard/src/screens/support/rates/domain/rates_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,20 +13,21 @@ import '../../core/theme/radii.dart';
 import '../booking/presentation/booking.dart';
 import '../users/domain/source.dart';
 
+final reportProvider = StateProvider<BookingElement?>((ref) => null);
+
 class ReportDetailsScreen extends ConsumerStatefulWidget {
   const ReportDetailsScreen({super.key});
 
   @override
-  ConsumerState<ReportDetailsScreen> createState() => _ReportDetailsScreenState();
+  ConsumerState<ReportDetailsScreen> createState() =>
+      _ReportDetailsScreenState();
 }
 
 class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
   bool loading = false;
   @override
-  Widget build(
-    BuildContext context,
-  ) {
-    final details = ref.watch(getBookingInfoProvider);
+  Widget build(BuildContext context) {
+    final details = ref.watch(reportProvider);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -330,27 +333,29 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                     const SizedBox(
                       height: 16,
                     ),
-                    SecondaryButton(
-                        loading: loading,
-                        text: "Complete",
-                        onPressed: () async {
-                          setState(() {
-                            loading = true;
-                          });
-                          if (loading == true) {
-                            final response = await ref.read(
-                                updateBookingProvider(
-                                        booking:
-                                            details.copyWith(status: "CLOSED"))
-                                    .future);
-                            ref.read(scaffoldMessengerPod).showSnackBar(
-                                SnackBar(content: Text(response)));
-                          }
+                    details.resolved
+                        ? SecondaryButton(
+                            text: "It's already solved", onPressed: () {})
+                        : SecondaryButton(
+                            loading: loading,
+                            text: "Mark as solved",
+                            onPressed: () async {
+                              setState(() {
+                                loading = true;
+                              });
+                              if (loading == true) {
+                                final response = await ref.read(
+                                    resolveBookingProvider(
+                                            bookingID: details.id)
+                                        .future);
+                                ref.read(scaffoldMessengerPod).showSnackBar(
+                                    SnackBar(content: Text(response)));
+                              }
 
-                          setState(() {
-                            loading = false;
-                          });
-                        })
+                              setState(() {
+                                loading = false;
+                              });
+                            })
                   ],
                 ),
               ))

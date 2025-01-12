@@ -29,8 +29,6 @@ _$UserImpl _$$UserImplFromJson(Map<String, dynamic> json) => _$UserImpl(
       longitude: (json['lang'] as num?)?.toDouble(),
       latitude: (json['lat'] as num?)?.toDouble(),
       role: Role.fromJson(json['role'] as Map<String, dynamic>),
-      isVerified: json['is_verified'] as bool? ?? false,
-      createdAt: DateTime.parse(json['createdAt'] as String),
     );
 
 Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
@@ -43,8 +41,6 @@ Map<String, dynamic> _$$UserImplToJson(_$UserImpl instance) =>
       'lang': instance.longitude,
       'lat': instance.latitude,
       'role': instance.role,
-      'is_verified': instance.isVerified,
-      'createdAt': instance.createdAt.toIso8601String(),
     };
 
 _$RoleImpl _$$RoleImplFromJson(Map<String, dynamic> json) => _$RoleImpl(

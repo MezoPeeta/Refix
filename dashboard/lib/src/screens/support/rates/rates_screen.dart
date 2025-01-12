@@ -94,7 +94,6 @@ class _RatesScreenState extends ConsumerState<RatesScreen> {
                             "Created",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
-                          DataColumn(label: SizedBox.shrink()),
                         ],
                         source: RatesDataSource(data, ref),
                       ),

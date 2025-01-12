@@ -97,7 +97,6 @@ class HttpAPI {
 
       if (response.statusCode == 401) {
         await ref.read(authProvider).refreshAccessToken();
-        throw UnauthorizedException();
       }
       return response;
     }

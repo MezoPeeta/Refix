@@ -3,6 +3,7 @@ import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/theme/colors.dart';
 import '../../core/theme/radii.dart';
@@ -21,8 +22,13 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
   String selectedState = "ASSIGNED";
   @override
   Widget build(BuildContext context) {
-    final tasks = ref.watch(workerProvider)?.tasks?[0].services;
-    
+    final tasks = ref.watch(workerProvider)?.tasks ?? [];
+    final tasksByStatus = tasks
+        .where((element) =>
+            element.status == selectedState &&
+            DateFormat.yMd().format(element.createdAt!) ==
+                DateFormat.yMd().format(selectedDate))
+        .toList();
     return Scaffold(
       appBar: AppBar(),
       body: SingleChildScrollView(
@@ -125,49 +131,57 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                 ],
               ),
             ),
-            ListView.builder(
-                itemCount: tasks?.length ?? 0,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                    ),
-                    child: Row(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          height: 66,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(AppRadii.lg),
-                              color: AppColors.neutral50),
+            tasksByStatus.isEmpty
+                ? const Text("No Tasks")
+                : ListView.builder(
+                    itemCount: tasksByStatus.first.services.length ?? 0,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
                         ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
                           children: [
-                            Text(
-                              tasks?[index].name!.en ?? "Unnamed",
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              height: 66,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.circular(AppRadii.lg),
+                                  color: AppColors.neutral50),
                             ),
-                            Text(
-                              tasks?[index].details!.en ?? "No details",
-                              style: const TextStyle(
-                                fontSize: AppTextSize.two,
-                              ),
-                            )
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  tasksByStatus
+                                          .first.services[index].name?.en ??
+                                      "Unnamed",
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Text(
+                                  tasksByStatus
+                                          .first.services[index].details?.en ??
+                                      "No details",
+                                  style: const TextStyle(
+                                    fontSize: AppTextSize.two,
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
-                      ],
-                    ),
-                  );
-                })
+                      );
+                    })
           ],
         ),
       ),

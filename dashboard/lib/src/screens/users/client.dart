@@ -32,7 +32,7 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
   void saveUserCSV(List<User>? users, String filePath) async {
     List<List<dynamic>> rows = [];
 
-    rows.add(["ID", 'Name', 'Email', 'Phone Number', "Role", "Created At"]);
+    rows.add(["ID", 'Name', 'Email', 'Phone Number', "Role"]);
     if (users != null) {
       for (var user in users) {
         rows.add([
@@ -41,7 +41,6 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
           user.email,
           user.phone,
           user.role.name,
-          formatTime(user.createdAt)
         ]);
         String csv = const ListToCsvConverter().convert(rows);
         final bytes = utf8.encode(csv);
@@ -68,8 +67,7 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Row(
                 spacing: 16,
@@ -131,11 +129,6 @@ class _ClientScreenState extends ConsumerState<ClientScreen> {
                           DataColumn(
                               label: Text(
                             "Phone Number",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
-                          DataColumn(
-                              label: Text(
-                            "Created",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
                           DataColumn(label: SizedBox.shrink()),

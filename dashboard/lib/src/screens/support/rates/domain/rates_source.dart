@@ -18,13 +18,13 @@ class RatesDataSource extends DataTableSource {
     if (index >= data.length) return null;
 
     return DataRow.byIndex(index: index, cells: [
-      DataCell(Text(data[index].id)),
-      DataCell(Text(data[index].booking.services.first.name?.en ?? "-")),
-      DataCell(Text(data[index].booking.worker?.username ?? "-")),
-      DataCell(Text(data[index].booking.customer.username)),
-      DataCell(Text("${data[index].rating}" " /5")),
-      DataCell(Text(formatTime(data[index].booking.createdAt))),
-      DataCell(Text(formatTime(data[index].createdAt))),
+      DataCell(SelectableText(data[index].id)),
+      DataCell(SelectableText(data[index].booking.services.first.name?.en ?? "-")),
+      DataCell(SelectableText(data[index].booking.worker?.username ?? "-")),
+      DataCell(SelectableText(data[index].booking.customer.username)),
+      DataCell(SelectableText("${data[index].rating}" " /5")),
+      DataCell(SelectableText(formatTime(data[index].booking.createdAt))),
+      DataCell(SelectableText(formatTime(data[index].createdAt))),
     ]);
   }
 

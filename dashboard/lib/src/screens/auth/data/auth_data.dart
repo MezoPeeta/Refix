@@ -27,12 +27,7 @@ class User with _$User {
     @JsonKey(name: "phone") String? phone,
     @JsonKey(name: "lang") double? longitude,
     @JsonKey(name: "lat") double? latitude,
-    @JsonKey(
-      name: "role",
-    )
-    required Role role,
-    @JsonKey(name: "is_verified", defaultValue: false) required bool isVerified,
-    @JsonKey(name: "createdAt") required DateTime createdAt,
+    @JsonKey(name: "role") required Role role,
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -109,6 +104,9 @@ class PermissionConverter implements JsonConverter<List<Permission>, dynamic> {
 
   @override
   List<Permission> fromJson(Object? json) {
+    if (json == null) {
+      return [];
+    }
     if (json is List) {
       return json.map((item) {
         if (item is Map<String, dynamic>) {

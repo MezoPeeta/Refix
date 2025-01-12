@@ -94,7 +94,6 @@ Future<String?> updateAdsById(Ref ref,
   if (request.statusCode == 413) {
     return Future.error("Entity is too large");
   }
-  print(request.body);
   final errorMessage = jsonDecode(request.body)["message"];
   if (errorMessage is List) {
     return Future.error(errorMessage.first);

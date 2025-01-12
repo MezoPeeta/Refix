@@ -433,7 +433,7 @@ class _GetAdsByIdProviderElement
   String get id => (origin as GetAdsByIdProvider).id;
 }
 
-String _$updateAdsByIdHash() => r'7b085638820d703dac40eff75e71eb75cb2be8f2';
+String _$updateAdsByIdHash() => r'03982f4d1983f7d4dfe5098219d75d3837197f4e';
 
 /// See also [updateAdsById].
 @ProviderFor(updateAdsById)
