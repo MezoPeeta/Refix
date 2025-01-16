@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 
@@ -12,34 +13,6 @@ class BookingSuccess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          children: [
-            const Text(
-              "English Arabic 3",
-              style: TextStyle(fontSize: AppTextSize.two),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset("assets/img/services/progress_fill.svg"),
-                const SizedBox(
-                  width: 16,
-                ),
-                SvgPicture.asset("assets/img/services/progress_fill.svg"),
-                const SizedBox(
-                  width: 16,
-                ),
-                SvgPicture.asset("assets/img/services/progress_fill.svg")
-              ],
-            )
-          ],
-        ),
-        centerTitle: true,
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -48,23 +21,22 @@ class BookingSuccess extends StatelessWidget {
             spacing: 16,
             children: [
               SvgPicture.asset("assets/img/check.svg"),
-              const Text(
-                "Booking Done",
-                style: TextStyle(
+              Text(
+                context.tr.booking_done_title,
+                style: const TextStyle(
                     fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
               ),
-              const Text(
-                "Your reservation has been added, and you will be contacted soon to confirm the reservation at the phone number we have on file.",
+              Text(
+                context.tr.reservation_added_message,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: AppTextSize.two,
                     color: AppColors.neutralRefix,
                     fontWeight: FontWeight.w300),
               ),
-              PrimaryButton(
-                  text: "Show your booking", onPressed: () => context.go("/")),
               SecondaryButton(
-                  text: "Back to home", onPressed: () => context.go("/"))
+                  text: context.tr.back_to_home,
+                  onPressed: () => context.go("/"))
             ],
           ),
         ),

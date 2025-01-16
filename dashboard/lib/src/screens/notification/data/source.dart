@@ -1,20 +1,29 @@
+import 'dart:convert';
+import 'dart:developer';
+
+import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../core/navigation/api.dart';
 part 'source.freezed.dart';
 part 'source.g.dart';
 
 class NotificationDataSource extends DataTableSource {
   final List<Notifications> data;
   final BuildContext context;
-  NotificationDataSource(this.data, this.context);
+  final WidgetRef ref;
+  NotificationDataSource(this.data, this.context, this.ref);
 
   @override
   DataRow? getRow(int index) {
     if (index >= data.length) return null;
     return DataRow.byIndex(index: index, cells: [
-      DataCell(SelectableText(data[index].name)),
-      DataCell(SelectableText(data[index].details)),
-      const DataCell(Text("")),
+      DataCell(SelectableText(data[index].title)),
+      DataCell(SelectableText(data[index].data ?? "")),
+     
     ]);
   }
 
@@ -30,11 +39,52 @@ class NotificationDataSource extends DataTableSource {
 
 @freezed
 class Notifications with _$Notifications {
-  const factory Notifications(
-      {required String name,
-      required String details,
-      @JsonKey(name: "created_at") required DateTime dateSent}) = _Notifications;
+  const factory Notifications({
+    @JsonKey(name: "_id") required String id,
+    required String title,
+    String? data,
+  }) = _Notifications;
 
   factory Notifications.fromJson(Map<String, dynamic> json) =>
       _$NotificationsFromJson(json);
+}
+
+@riverpod
+class NotificationsNotifier extends _$NotificationsNotifier {
+  Future<List<Notifications>> getNotifications() async {
+    final response = await ref
+        .read(httpProvider)
+        .authenticatedRequest(url: "notification", method: "GET");
+    final data = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return data.map<Notifications>((e) => Notifications.fromJson(e)).toList();
+    }
+
+    return [];
+  }
+
+  @override
+  FutureOr<List<Notifications>> build() => getNotifications();
+
+  Future<void> delete({required String id}) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final request = await ref
+          .read(httpProvider)
+          .authenticatedRequest(url: "notification/$id", method: "DELETE");
+      return getNotifications();
+    });
+  }
+
+  Future<void> send({required String title, required String body}) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      await ref.read(httpProvider).authenticatedRequest(
+          url: "notification/customers",
+          method: "POST",
+          body: {"title": title, "body": body});
+      return getNotifications();
+    });
+  }
 }

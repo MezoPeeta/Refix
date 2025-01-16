@@ -107,6 +107,9 @@ class BookingScreen extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: discount.when(
                     data: (data) {
+                      if (data?.active == false) {
+                        return const SizedBox.shrink();
+                      }
                       return Container(
                         height: 144,
                         decoration: BoxDecoration(
@@ -153,7 +156,6 @@ class BookingScreen extends ConsumerWidget {
                 data: (data) {
                   final bookings =
                       data.where((e) => e.status == status).toList();
-                  log("Data: $bookings");
                   if (bookings.isEmpty) {
                     return const Center(
                       child: Text("You haven't booked yet"),
@@ -227,24 +229,14 @@ class BookingScreen extends ConsumerWidget {
                                 ],
                               ),
                               const Spacer(),
-                              status == "PENDING"
-                                  ? SecondaryButton(
-                                      text: context.tr.show,
-                                      onPressed: () {
-                                        context.pushNamed(
-                                          "InBooking",
-                                          extra: data[index],
-                                        );
-                                      },
-                                      size: const Size(74, 40),
-                                    )
-                                  : SecondaryButton(
-                                      text: context.tr.addReview,
-                                      onPressed: () => context.push(
-                                          "/booking_reviews",
-                                          extra: data[index]),
-                                      size: const Size(105, 40),
-                                    )
+                              SecondaryButton(
+                                text: status == "PENDING"
+                                    ? context.tr.show
+                                    : context.tr.addReview,
+                                onPressed: () => context.pushNamed("InBooking",
+                                    extra: bookings[index]),
+                                size: const Size(105, 40),
+                              )
                             ],
                           ),
                         );
@@ -254,8 +246,7 @@ class BookingScreen extends ConsumerWidget {
                   log("Booking Error", error: e, stackTrace: s);
                   return Text("Error: $e");
                 },
-                loading: () =>
-                    const Center(child: CircularProgressIndicator.adaptive()))
+                loading: () => const Center(child: SizedBox.shrink()))
           ],
         ),
       ),

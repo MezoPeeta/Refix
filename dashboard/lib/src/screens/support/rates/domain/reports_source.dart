@@ -22,7 +22,7 @@ class ReportsDataSource extends DataTableSource {
 
     return DataRow.byIndex(index: index, cells: [
       DataCell(SelectableText(data[index].id)),
-      DataCell(SelectableText(data[index].services.first.name?.en ?? "-")),
+      DataCell(SelectableText(data[index].services.first.name?.en ?? "")),
       DataCell(SelectableText("${data[index].worker?.username}%")),
       DataCell(SelectableText(data[index].customer.username)),
       DataCell(SelectableText(formatTime(data[index].createdAt))),

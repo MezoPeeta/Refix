@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/profile/presentation/payment_methods.dart';
@@ -14,35 +15,7 @@ class BookingFailure extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          children: [
-            const Text(
-              "English Arabic 3",
-              style: TextStyle(fontSize: AppTextSize.two),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset("assets/img/services/progress_fill.svg"),
-                const SizedBox(
-                  width: 16,
-                ),
-                SvgPicture.asset("assets/img/services/progress_fill.svg"),
-                const SizedBox(
-                  width: 16,
-                ),
-                SvgPicture.asset("assets/img/services/progress_fill.svg")
-              ],
-            )
-          ],
-        ),
-        centerTitle: true,
-      ),
-      body: Center(
+      body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -50,22 +23,14 @@ class BookingFailure extends StatelessWidget {
             spacing: 16,
             children: [
               SvgPicture.asset("assets/img/failure.svg"),
-              const Text(
-                "Error with pay",
-                style: TextStyle(
+              Text(
+                context.tr.error_with_pay_title,
+                style: const TextStyle(
                     fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
-              ),
-              const Text(
-                "Your reservation has been added, and you will be contacted soon to confirm the reservation at the phone number we have on file.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: AppTextSize.two,
-                    color: AppColors.neutralRefix,
-                    fontWeight: FontWeight.w300),
               ),
               Consumer(builder: (context, ref, child) {
                 return PrimaryButton(
-                    text: "Try Another Card",
+                    text: context.tr.try_another_card,
                     onPressed: () => context.go("/payment_method"));
               }),
             ],

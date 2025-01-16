@@ -16,10 +16,11 @@ class NotificationScreen extends ConsumerStatefulWidget {
 class _NotificationScreenState extends ConsumerState<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
-    const rules = AsyncValue<List<Notifications>>.data([]);
+    final notifications = ref.watch(notificationsNotifierProvider);
     return Scaffold(
         backgroundColor: Colors.white,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
@@ -27,7 +28,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                 spacing: 16,
                 children: [
                   Text(
-                    "All (${rules.value?.length ?? 0})",
+                    "All (${notifications.value?.length ?? 0})",
                     style: const TextStyle(
                         fontSize: AppTextSize.three,
                         fontWeight: FontWeight.w500),
@@ -36,7 +37,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                       child: SecondaryButton(
                           text: "Add New Notification +",
                           onPressed: () {
-                            context.push("/notification/edit");
+                            context.push("/notification/add");
                           })),
                 ],
               ),
@@ -44,7 +45,7 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
             const SizedBox(
               height: 8,
             ),
-            rules.when(
+            notifications.when(
                 data: (data) {
                   return Expanded(
                     child: PaginatedDataTable(
@@ -62,13 +63,8 @@ class _NotificationScreenState extends ConsumerState<NotificationScreen> {
                           "Details",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         )),
-                        DataColumn(
-                            label: Text(
-                          "Date",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        )),
                       ],
-                      source: NotificationDataSource(data, context),
+                      source: NotificationDataSource(data, context, ref),
                     ),
                   );
                 },

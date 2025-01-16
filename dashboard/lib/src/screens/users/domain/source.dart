@@ -42,7 +42,7 @@ class UsersDataSource extends DataTableSource {
       DataCell(SelectableText(data[index].id)),
       DataCell(SelectableText(data[index].username)),
       DataCell(SelectableText(data[index].email)),
-      DataCell(SelectableText(data[index].phone ?? "-")),
+      DataCell(SelectableText(data[index].phone ?? "")),
       DataCell(TextButton(
         onPressed: () => context.push("/user/edit", extra: data[index]),
         child: const Text("Edit"),
@@ -157,7 +157,7 @@ class BookingDataSource extends DataTableSource {
 
     return DataRow.byIndex(index: index, cells: [
       DataCell(SelectableText(bookings[index].id)),
-      DataCell(SelectableText(bookings[index].services.first.name?.en ?? "-")),
+      DataCell(SelectableText(bookings[index].services.first.name?.en ?? "")),
       DataCell(SelectableText(bookings[index].customer.username)),
       DataCell(SelectableText(bookings[index].cost.toString())),
       DataCell(SelectableText(formatTime(bookings[index].createdAt))),
@@ -199,7 +199,7 @@ class BookingConfDataSource extends DataTableSource {
 
     return DataRow.byIndex(index: index, cells: [
       DataCell(SelectableText(bookings[index].id)),
-      DataCell(SelectableText(bookings[index].services.first.name?.en ?? "-")),
+      DataCell(SelectableText(bookings[index].services.first.name?.en ?? "")),
       DataCell(SelectableText(bookings[index].customer.username)),
       DataCell(SelectableText(bookings[index].cost.toString())),
       DataCell(SelectableText(formatTime(bookings[index].createdAt))),
@@ -370,7 +370,7 @@ class WorkersDataTable extends DataTableSource {
       DataCell(SelectableText(data[index].id)),
       DataCell(SelectableText(data[index].username)),
       DataCell(SelectableText(data[index].companyName)),
-      DataCell(SelectableText(data[index].phone ?? "-")),
+      DataCell(SelectableText(data[index].phone ?? "")),
       DataCell(TextButton(
         onPressed: () {
           ref.read(workerProvider.notifier).state = data[index];
@@ -418,27 +418,31 @@ class DiscountTableSource extends DataTableSource {
       DataCell(SizedBox(
           width: 200,
           child: Text(
-            data[index].heading?.en ?? "-",
+            data[index].heading?.en ?? "",
             overflow: TextOverflow.ellipsis,
           ))),
       DataCell(SizedBox(
           width: 200,
           child: Text(
-            data[index].heading?.ar ?? "-",
+            data[index].heading?.ar ?? "",
             overflow: TextOverflow.ellipsis,
           ))),
       DataCell(SizedBox(
           width: 200,
           child: Text(
-            data[index].details?.en ?? "-",
+            data[index].details?.en ?? "",
             overflow: TextOverflow.ellipsis,
           ))),
       DataCell(SizedBox(
           width: 200,
           child: Text(
-            data[index].details?.ar ?? "-",
+            data[index].details?.ar ?? "",
             overflow: TextOverflow.ellipsis,
           ))),
+      DataCell(SizedBox(
+          child: Text(
+        data[index].active ? "Active" : "Inactive",
+      ))),
       DataCell(TextButton(
         onPressed: () => context.push("/discount/edit", extra: data[index]),
         child: const Text("Edit"),
@@ -464,10 +468,10 @@ Future<String> updateBooking(Ref ref, {required BookingElement booking}) async {
 }
 
 String getResponseMessage(dynamic message) {
-  if ( message is String) {
+  if (message is String) {
     return message;
   }
-  
+
   if (message is Map<String, dynamic>) {
     final mess = message["message"];
     if (mess is List) {
@@ -526,8 +530,8 @@ class ServicesDataTable extends DataTableSource {
         backgroundImage:
             NetworkImage("https://refix-api.onrender.com/${data[index].image}"),
       )),
-      DataCell(SelectableText(data[index].name?.en ?? "-")),
-      DataCell(SelectableText(data[index].type ?? "-")),
+      DataCell(SelectableText(data[index].name?.en ?? "")),
+      DataCell(SelectableText(data[index].type ?? "")),
       DataCell(SelectableText("${data[index].price} SAR")),
       DataCell(SelectableText(data[index].isActive ? "Active" : "Inactive")),
       DataCell(TextButton(

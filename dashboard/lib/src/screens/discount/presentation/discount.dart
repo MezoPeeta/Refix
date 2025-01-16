@@ -47,9 +47,14 @@ class _DiscountScreenState extends ConsumerState<DiscountScreen> {
                         "Details (English)",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
-                      DataColumn(
+                         DataColumn(
                           label: Text(
                         "Details (Arabic)",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )),
+                      DataColumn(
+                          label: Text(
+                        "Status",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       )),
                       DataColumn(label: SizedBox.shrink()),

@@ -6,7 +6,7 @@ part of 'ads_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addAdsHash() => r'6601946bb06660c38fea5bd271dc1d4f7853a0d3';
+String _$addAdsHash() => r'868809fb6ac882cc8ca90afd401fceee70cc10d9';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -41,7 +41,7 @@ class AddAdsFamily extends Family<AsyncValue<String>> {
   /// See also [addAds].
   AddAdsProvider call({
     required Uint8List image,
-    required AdsType type,
+    required String type,
   }) {
     return AddAdsProvider(
       image: image,
@@ -79,7 +79,7 @@ class AddAdsProvider extends AutoDisposeFutureProvider<String> {
   /// See also [addAds].
   AddAdsProvider({
     required Uint8List image,
-    required AdsType type,
+    required String type,
   }) : this._internal(
           (ref) => addAds(
             ref as AddAdsRef,
@@ -110,7 +110,7 @@ class AddAdsProvider extends AutoDisposeFutureProvider<String> {
   }) : super.internal();
 
   final Uint8List image;
-  final AdsType type;
+  final String type;
 
   @override
   Override overrideWith(
@@ -160,7 +160,7 @@ mixin AddAdsRef on AutoDisposeFutureProviderRef<String> {
   Uint8List get image;
 
   /// The parameter `type` of this provider.
-  AdsType get type;
+  String get type;
 }
 
 class _AddAdsProviderElement extends AutoDisposeFutureProviderElement<String>
@@ -170,7 +170,7 @@ class _AddAdsProviderElement extends AutoDisposeFutureProviderElement<String>
   @override
   Uint8List get image => (origin as AddAdsProvider).image;
   @override
-  AdsType get type => (origin as AddAdsProvider).type;
+  String get type => (origin as AddAdsProvider).type;
 }
 
 String _$getAdsHash() => r'77d2b7a3fbf8776f71a885fd1cd8e83b70994429';
@@ -594,6 +594,135 @@ class _UpdateAdsByIdProviderElement
   String get type => (origin as UpdateAdsByIdProvider).type;
   @override
   Uint8List get image => (origin as UpdateAdsByIdProvider).image;
+}
+
+String _$deleteAdHash() => r'4ea49cd1da353ca23f2193bab59f9ac85590ea42';
+
+/// See also [deleteAd].
+@ProviderFor(deleteAd)
+const deleteAdProvider = DeleteAdFamily();
+
+/// See also [deleteAd].
+class DeleteAdFamily extends Family<AsyncValue<void>> {
+  /// See also [deleteAd].
+  const DeleteAdFamily();
+
+  /// See also [deleteAd].
+  DeleteAdProvider call({
+    required String id,
+  }) {
+    return DeleteAdProvider(
+      id: id,
+    );
+  }
+
+  @override
+  DeleteAdProvider getProviderOverride(
+    covariant DeleteAdProvider provider,
+  ) {
+    return call(
+      id: provider.id,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'deleteAdProvider';
+}
+
+/// See also [deleteAd].
+class DeleteAdProvider extends AutoDisposeFutureProvider<void> {
+  /// See also [deleteAd].
+  DeleteAdProvider({
+    required String id,
+  }) : this._internal(
+          (ref) => deleteAd(
+            ref as DeleteAdRef,
+            id: id,
+          ),
+          from: deleteAdProvider,
+          name: r'deleteAdProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$deleteAdHash,
+          dependencies: DeleteAdFamily._dependencies,
+          allTransitiveDependencies: DeleteAdFamily._allTransitiveDependencies,
+          id: id,
+        );
+
+  DeleteAdProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+  }) : super.internal();
+
+  final String id;
+
+  @override
+  Override overrideWith(
+    FutureOr<void> Function(DeleteAdRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: DeleteAdProvider._internal(
+        (ref) => create(ref as DeleteAdRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<void> createElement() {
+    return _DeleteAdProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is DeleteAdProvider && other.id == id;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin DeleteAdRef on AutoDisposeFutureProviderRef<void> {
+  /// The parameter `id` of this provider.
+  String get id;
+}
+
+class _DeleteAdProviderElement extends AutoDisposeFutureProviderElement<void>
+    with DeleteAdRef {
+  _DeleteAdProviderElement(super.provider);
+
+  @override
+  String get id => (origin as DeleteAdProvider).id;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

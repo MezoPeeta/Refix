@@ -41,7 +41,7 @@ final markNotificationReadProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef MarkNotificationReadRef = AutoDisposeFutureProviderRef<Object?>;
-String _$notificationsHash() => r'b4bc84fea7e1dac23dc77839d53e86d486c4b2a8';
+String _$notificationsHash() => r'a22c335b4a9ed286349bd632a5cee260220842b5';
 
 /// See also [Notifications].
 @ProviderFor(Notifications)

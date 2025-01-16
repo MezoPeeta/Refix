@@ -12,7 +12,7 @@ import '../../core/theme/colors.dart';
 import '../base/base.dart';
 
 final adInfoProvider =
-    StateProvider<({String id, String type, Uint8List? image})>((ref) {
+    StateProvider<({String id, String type, Uint8List? image})?>((ref) {
   return (id: "", type: "", image: null);
 });
 
@@ -27,13 +27,25 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
   Uint8List? picture;
   late DropzoneViewController controller;
   bool loading = false;
+  List<String> adsTypes = ["slider", "banner"];
+  String? adType;
+  bool isEditing = false;
   @override
   void initState() {
     super.initState();
     final data = ref.read(adInfoProvider);
-    setState(() {
-      picture = data.image;
-    });
+
+    if (data != null) {
+      setState(() {
+        isEditing = true;
+        picture = data.image;
+        adType = data.type;
+      });
+    } else {
+      setState(() {
+        adType = adsTypes.first;
+      });
+    }
   }
 
   @override
@@ -46,10 +58,23 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const PrevButton(),
+              isEditing
+                  ? Row(
+                      children: [
+                        const Text(
+                          "Edit Ad",
+                        ),
+                        TextButton(
+                            child: const Text("Delete Service"),
+                            onPressed: () => ref.read(deleteAdProvider(
+                                id: ref.read(adInfoProvider)!.id)))
+                      ],
+                    )
+                  : const Text("Add Ad"),
               Center(
                 child: Container(
                   width: 925,
-                  height: 300,
+                  height: 380,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.all(32),
                   decoration: BoxDecoration(
@@ -59,6 +84,19 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     spacing: 24,
                     children: [
+                      DropdownButtonFormField(
+                          value: adType,
+                          items: adsTypes
+                              .map((e) => DropdownMenuItem(
+                                    value: e,
+                                    child: Text(e),
+                                  ))
+                              .toList(),
+                          onChanged: (value) {
+                            setState(() {
+                              adType = value!;
+                            });
+                          }),
                       Expanded(
                         child: Stack(
                           children: [
@@ -116,8 +154,6 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                                       ),
                                     ],
                                   ),
-                                  const Text(
-                                      "The image size must be 430 * 681."),
                                 ],
                               ),
                             ),
@@ -134,22 +170,34 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                                 setState(() {
                                   loading = true;
                                 });
-                                final res = await ref
-                                    .read(updateAdsByIdProvider(
-                                            id: info.id,
-                                            image: picture!,
-                                            type: info.type)
-                                        .future)
-                                    .onError((e, s) {
+                                if (isEditing) {
+                                  final res = await ref
+                                      .read(updateAdsByIdProvider(
+                                              id: info!.id,
+                                              image: picture!,
+                                              type: adType!)
+                                          .future)
+                                      .onError((e, s) {
+                                    ref.read(scaffoldMessengerPod).showSnackBar(
+                                        SnackBar(content: Text(e.toString())));
+                                    return null;
+                                  });
+                                  setState(() {
+                                    loading = false;
+                                  });
                                   ref.read(scaffoldMessengerPod).showSnackBar(
-                                      SnackBar(content: Text(e.toString())));
-                                  return null;
-                                });
+                                      SnackBar(content: Text(res!)));
+                                }
+                                final res = await ref.read(addAdsProvider(
+                                        image: picture!, type: adType!)
+                                    .future);
+
                                 setState(() {
                                   loading = false;
                                 });
-                                ref.read(scaffoldMessengerPod).showSnackBar(
-                                    SnackBar(content: Text(res!)));
+                                ref
+                                    .read(scaffoldMessengerPod)
+                                    .showSnackBar(SnackBar(content: Text(res)));
                               }
                             });
                       }),

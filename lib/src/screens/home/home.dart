@@ -326,111 +326,55 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               Visibility(
                 visible: searchControntroller.text == "",
-                child: Container(
-                  color: AppColors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.x),
-                    child: Column(
-                      children: [
-                        Consumer(builder: (context, ref, child) {
-                          final ads =
-                              ref.watch(getAdsProvider(type: AdsType.slider));
-                          return ads.when(
-                              data: (data) {
-                                if (data.isEmpty) {
-                                  return const Center(
-                                      child: Text("No Ads at the moment"));
-                                }
-                                return CarouselSlider(
-                                  options: CarouselOptions(
-                                      height: 143.0,
-                                      initialPage: 0,
-                                      enlargeFactor: 0,
-                                      padEnds: false,
-                                      enableInfiniteScroll: false),
-                                  items: data.map((i) {
-                                    return Builder(
-                                      builder: (BuildContext context) {
-                                        return Container(
-                                          padding: EdgeInsets.zero,
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 16.0),
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: CachedNetworkImageProvider(
-                                                      "https://refix-api.onrender.com/${i.image}")),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppRadii.lg),
-                                              border: Border.all(
-                                                  color:
-                                                      AppColors.neutralRefix)),
-                                        );
-                                      },
-                                    );
-                                  }).toList(),
-                                );
-                              },
-                              error: (e, s) {
-                                log("Search Error", error: e, stackTrace: s);
-                                return const Text("Error");
-                              },
-                              loading: () => const Center(
-                                  child: CircularProgressIndicator.adaptive()));
-                        })
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: AppSpacing.lg,
-              ),
-              Visibility(
-                visible: searchControntroller.text == "",
-                child: Container(
-                  color: AppColors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.x),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    context.tr.not_available,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: AppTextSize.two.toDouble()),
-                                  ),
-                                  Text(
-                                    context.tr.not_available2,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w300,
-                                        fontSize: AppTextSize.one.toDouble()),
-                                  )
-                                ],
+                child: Consumer(builder: (context, ref, child) {
+                  final ads = ref.watch(getAdsProvider(type: AdsType.slider));
+                  return ads.when(
+                      data: (data) {
+                        if (data.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+                        return Container(
+                            color: AppColors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: AppSpacing.x),
+                              child: CarouselSlider(
+                                options: CarouselOptions(
+                                    height: 143.0,
+                                    initialPage: 0,
+                                    enlargeFactor: 0,
+                                    padEnds: false,
+                                    enableInfiniteScroll: false),
+                                items: data.map((i) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        padding: EdgeInsets.zero,
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 16.0),
+                                        decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: CachedNetworkImageProvider(
+                                                    "https://refix-api.onrender.com/${i.image}")),
+                                            borderRadius: BorderRadius.circular(
+                                                AppRadii.lg),
+                                            border: Border.all(
+                                                color: AppColors.neutralRefix)),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
                               ),
-                            ),
-                            SvgPicture.asset("assets/img/home/chat.svg")
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 22,
-                        ),
-                        PrimaryButton(
-                          text: context.tr.chat,
-                          onPressed: () {},
-                        )
-                      ],
-                    ),
-                  ),
-                ),
+                            ));
+                      },
+                      error: (e, s) {
+                        log("Search Error", error: e, stackTrace: s);
+                        return const Text("Error");
+                      },
+                      loading: () => const Center(
+                          child: CircularProgressIndicator.adaptive()));
+                }),
               ),
               const SizedBox(
                 height: AppSpacing.lg,
@@ -472,58 +416,53 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               Visibility(
                 visible: searchControntroller.text == "",
-                child: Container(
-                  color: AppColors.white,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: AppSpacing.x),
-                    child: Column(
-                      children: [
-                        Consumer(builder: (context, ref, child) {
-                          final ads =
-                              ref.watch(getAdsProvider(type: AdsType.slider));
+                child: Consumer(builder: (context, ref, child) {
+                  final ads = ref.watch(getAdsProvider(type: AdsType.slider));
 
-                          return ads.when(
-                              data: (data) {
-                                return CarouselSlider(
-                                  options: CarouselOptions(
-                                      height: 143.0,
-                                      initialPage: 0,
-                                      enlargeFactor: 0,
-                                      padEnds: false,
-                                      enableInfiniteScroll: false),
-                                  items: data.map((i) {
-                                    return Builder(
-                                      builder: (BuildContext context) {
-                                        return Container(
-                                          padding: EdgeInsets.zero,
-                                          margin: const EdgeInsets.symmetric(
-                                              horizontal: 16.0),
-                                          decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  fit: BoxFit.cover,
-                                                  image: CachedNetworkImageProvider(
-                                                      "https://refix-api.onrender.com/${i.image}")),
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      AppRadii.lg),
-                                              border: Border.all(
-                                                  color:
-                                                      AppColors.neutralRefix)),
-                                        );
-                                      },
+                  return ads.when(
+                    data: (data) {
+                      if (data.isEmpty) {
+                        return const SizedBox.shrink();
+                      }
+                      return Container(
+                          color: AppColors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: AppSpacing.x),
+                            child: CarouselSlider(
+                              options: CarouselOptions(
+                                  height: 143.0,
+                                  initialPage: 0,
+                                  enlargeFactor: 0,
+                                  padEnds: false,
+                                  enableInfiniteScroll: false),
+                              items: data.map((i) {
+                                return Builder(
+                                  builder: (BuildContext context) {
+                                    return Container(
+                                      padding: EdgeInsets.zero,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      decoration: BoxDecoration(
+                                          image: DecorationImage(
+                                              fit: BoxFit.cover,
+                                              image: CachedNetworkImageProvider(
+                                                  "https://refix-api.onrender.com/${i.image}")),
+                                          borderRadius: BorderRadius.circular(
+                                              AppRadii.lg),
+                                          border: Border.all(
+                                              color: AppColors.neutralRefix)),
                                     );
-                                  }).toList(),
+                                  },
                                 );
-                              },
-                              error: (e, s) =>
-                                  const Center(child: Text("Error")),
-                              loading: () =>
-                                  const CircularProgressIndicator.adaptive());
-                        })
-                      ],
-                    ),
-                  ),
-                ),
+                              }).toList(),
+                            ),
+                          ));
+                    },
+                    error: (e, s) => const Center(child: Text("Error")),
+                    loading: () => const CircularProgressIndicator.adaptive(),
+                  );
+                }),
               ),
             ],
           ),

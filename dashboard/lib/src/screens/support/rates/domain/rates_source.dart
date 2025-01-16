@@ -19,8 +19,9 @@ class RatesDataSource extends DataTableSource {
 
     return DataRow.byIndex(index: index, cells: [
       DataCell(SelectableText(data[index].id)),
-      DataCell(SelectableText(data[index].booking.services.first.name?.en ?? "-")),
-      DataCell(SelectableText(data[index].booking.worker?.username ?? "-")),
+      DataCell(
+          SelectableText(data[index].booking.services.first.name?.en ?? "")),
+      DataCell(SelectableText(data[index].booking.worker?.username ?? "")),
       DataCell(SelectableText(data[index].booking.customer.username)),
       DataCell(SelectableText("${data[index].rating}" " /5")),
       DataCell(SelectableText(formatTime(data[index].booking.createdAt))),

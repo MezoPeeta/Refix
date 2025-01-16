@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
@@ -47,7 +48,11 @@ class HttpAPI {
     required String method,
     Map<String, dynamic>? body,
   }) async {
-    const r = RetryOptions(maxAttempts: 8);
+    const r = RetryOptions(
+        maxAttempts: 3,
+        randomizationFactor: 1,
+        maxDelay: Duration(minutes: 2),
+        delayFactor: Duration(seconds: 50));
     final accessToken = await ref.read(authProvider).getAccessToken();
     final currentLocale = ref.read(localeNotifierProvider).languageCode;
 
@@ -63,6 +68,7 @@ class HttpAPI {
       switch (method.toUpperCase()) {
         case 'GET':
           response = await http.get(bUrl, headers: headers);
+
           break;
         case 'POST':
           response = await http.post(bUrl,
@@ -82,17 +88,19 @@ class HttpAPI {
         default:
           throw Exception('Unsupported HTTP method');
       }
-
       if (response.statusCode == 401) {
         await ref.read(authProvider).refreshAccessToken();
         throw UnauthorizedException();
       }
+
       return response;
     }
 
     return await r.retry(
       makeRequest,
-      onRetry: (e) => e is UnauthorizedException,
+      onRetry: (e) {
+        log("Retrying Request: $e");
+      },
       retryIf: (e) => e is UnauthorizedException,
     );
   }

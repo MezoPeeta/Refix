@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dashboard/src/core/navigation/routes.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:flutter/services.dart';
@@ -58,7 +59,10 @@ Future<String> createService(Ref ref,
     "type": service.type,
     "image": base64Encode(await compressImage(image))
   });
-  if (response.statusCode == 200) {
+  if (response.statusCode == 201) {
+    ref.invalidate(getServicesProvider);
+    ref.read(goRouterProvider).pop();
+
     return "Service created successfully";
   }
   return "Error in creating service";
@@ -81,6 +85,8 @@ Future<String> updateService(Ref ref,
   final response = await ref.read(httpProvider).authenticatedRequest(
       url: "service/${service.id}", method: "PUT", body: serviceMap);
   if (response.statusCode == 200) {
+    ref.invalidate(getServicesProvider);
+    ref.read(goRouterProvider).pop();
     return "Service updated successfully";
   }
   return "Error in creating service";
@@ -91,5 +97,8 @@ Future<String> deleteService(Ref ref, {required String id}) async {
   final response = await ref
       .read(httpProvider)
       .authenticatedRequest(url: "service/$id", method: "DELETE");
+  ref.invalidate(getServicesProvider);
+  ref.read(goRouterProvider).pop();
+
   return getResponseMessage(jsonDecode(response.body));
 }

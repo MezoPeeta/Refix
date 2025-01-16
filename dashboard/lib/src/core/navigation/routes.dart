@@ -1,6 +1,7 @@
 import 'package:dashboard/src/screens/auth/data/auth_data.dart';
 import 'package:dashboard/src/screens/base/base.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
+import 'package:dashboard/src/screens/notification/notification_edit.dart';
 import 'package:dashboard/src/screens/users/tasks.dart';
 import 'package:dashboard/src/screens/users/users_edit.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       },
       routes: [
         GoRoute(path: "/", builder: (context, state) => const BaseScreen()),
+        GoRoute(
+            path: "/notification/add",
+            builder: (context, state) => const NotificationAdd()),
         GoRoute(
             path: "/login", builder: (context, state) => const LoginScreen()),
         GoRoute(

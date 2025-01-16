@@ -25,7 +25,6 @@ import 'package:refix/src/screens/auth/presentation/sign_up.dart';
 import 'package:refix/src/screens/boarding/presentation/boarding.dart';
 import 'package:refix/src/screens/booking/presentation/cancel_reason.dart';
 import 'package:refix/src/screens/booking/presentation/inbooking.dart';
-import 'package:refix/src/screens/booking/presentation/report_booking.dart';
 import 'package:refix/src/screens/booking/presentation/reviews.dart';
 import 'package:refix/src/screens/reviews/presentation/reviews.dart';
 import 'package:refix/src/screens/services/data/bookin_data.dart';
@@ -124,9 +123,6 @@ final routes = GoRouter(
           builder: (context, state) => BookingReviews(
                 booking: state.extra as Booking,
               )),
-      GoRoute(
-          path: "/booking_report",
-          builder: (context, state) => const ReportBooking()),
       GoRoute(
           path: "/boarding",
           builder: (context, state) => const BoardingScreen()),

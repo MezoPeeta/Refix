@@ -32,7 +32,6 @@ class ProfileScreen extends StatelessWidget {
                           title: context.tr.your_profile,
                         ),
                       ),
-                     
                     ],
                   ),
                 ),
@@ -160,15 +159,6 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         );
                       }),
-                      const Divider(
-                        color: AppColors.neutral300,
-                      ),
-                      GestureDetector(
-                        onTap: () => context.push("/privacy"),
-                        child: ProfileOption(
-                          title: context.tr.privacy,
-                        ),
-                      ),
                       const Divider(
                         color: AppColors.neutral300,
                       ),

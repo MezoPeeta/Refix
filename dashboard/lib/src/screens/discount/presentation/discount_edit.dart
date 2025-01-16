@@ -28,15 +28,15 @@ class _DiscountEditState extends State<DiscountEdit> {
 
   static final _formKey = GlobalKey<FormState>();
   bool loading = false;
-  bool isActive = false;
+  bool isActive = true;
   @override
   void initState() {
     super.initState();
     setState(() {
-      headingController.text = widget.discount.heading?.en ?? "-";
-      headingARController.text = widget.discount.heading?.ar ?? "-";
-      detailsController.text = widget.discount.details?.en ?? "-";
-      detailsARController.text = widget.discount.details?.ar ?? "-";
+      headingController.text = widget.discount.heading?.en ?? "";
+      headingARController.text = widget.discount.heading?.ar ?? "";
+      detailsController.text = widget.discount.details?.en ?? "";
+      detailsARController.text = widget.discount.details?.ar ?? "";
       discountController.text = widget.discount.discount.toString();
       isActive = widget.discount.active;
     });

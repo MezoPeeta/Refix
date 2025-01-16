@@ -20,10 +20,10 @@ Notifications _$NotificationsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Notifications {
-  String get name => throw _privateConstructorUsedError;
-  String get details => throw _privateConstructorUsedError;
-  @JsonKey(name: "created_at")
-  DateTime get dateSent => throw _privateConstructorUsedError;
+  @JsonKey(name: "_id")
+  String get id => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
+  String? get data => throw _privateConstructorUsedError;
 
   /// Serializes this Notifications to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,10 +41,7 @@ abstract class $NotificationsCopyWith<$Res> {
           Notifications value, $Res Function(Notifications) then) =
       _$NotificationsCopyWithImpl<$Res, Notifications>;
   @useResult
-  $Res call(
-      {String name,
-      String details,
-      @JsonKey(name: "created_at") DateTime dateSent});
+  $Res call({@JsonKey(name: "_id") String id, String title, String? data});
 }
 
 /// @nodoc
@@ -62,23 +59,23 @@ class _$NotificationsCopyWithImpl<$Res, $Val extends Notifications>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? details = null,
-    Object? dateSent = null,
+    Object? id = null,
+    Object? title = null,
+    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      details: null == details
-          ? _value.details
-          : details // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      dateSent: null == dateSent
-          ? _value.dateSent
-          : dateSent // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -91,10 +88,7 @@ abstract class _$$NotificationsImplCopyWith<$Res>
       __$$NotificationsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      String details,
-      @JsonKey(name: "created_at") DateTime dateSent});
+  $Res call({@JsonKey(name: "_id") String id, String title, String? data});
 }
 
 /// @nodoc
@@ -110,23 +104,23 @@ class __$$NotificationsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? name = null,
-    Object? details = null,
-    Object? dateSent = null,
+    Object? id = null,
+    Object? title = null,
+    Object? data = freezed,
   }) {
     return _then(_$NotificationsImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      details: null == details
-          ? _value.details
-          : details // ignore: cast_nullable_to_non_nullable
+      title: null == title
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
-      dateSent: null == dateSent
-          ? _value.dateSent
-          : dateSent // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -135,24 +129,22 @@ class __$$NotificationsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$NotificationsImpl implements _Notifications {
   const _$NotificationsImpl(
-      {required this.name,
-      required this.details,
-      @JsonKey(name: "created_at") required this.dateSent});
+      {@JsonKey(name: "_id") required this.id, required this.title, this.data});
 
   factory _$NotificationsImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationsImplFromJson(json);
 
   @override
-  final String name;
+  @JsonKey(name: "_id")
+  final String id;
   @override
-  final String details;
+  final String title;
   @override
-  @JsonKey(name: "created_at")
-  final DateTime dateSent;
+  final String? data;
 
   @override
   String toString() {
-    return 'Notifications(name: $name, details: $details, dateSent: $dateSent)';
+    return 'Notifications(id: $id, title: $title, data: $data)';
   }
 
   @override
@@ -160,15 +152,14 @@ class _$NotificationsImpl implements _Notifications {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NotificationsImpl &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.details, details) || other.details == details) &&
-            (identical(other.dateSent, dateSent) ||
-                other.dateSent == dateSent));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.title, title) || other.title == title) &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, name, details, dateSent);
+  int get hashCode => Object.hash(runtimeType, id, title, data);
 
   /// Create a copy of Notifications
   /// with the given fields replaced by the non-null parameter values.
@@ -188,21 +179,20 @@ class _$NotificationsImpl implements _Notifications {
 
 abstract class _Notifications implements Notifications {
   const factory _Notifications(
-          {required final String name,
-          required final String details,
-          @JsonKey(name: "created_at") required final DateTime dateSent}) =
-      _$NotificationsImpl;
+      {@JsonKey(name: "_id") required final String id,
+      required final String title,
+      final String? data}) = _$NotificationsImpl;
 
   factory _Notifications.fromJson(Map<String, dynamic> json) =
       _$NotificationsImpl.fromJson;
 
   @override
-  String get name;
+  @JsonKey(name: "_id")
+  String get id;
   @override
-  String get details;
+  String get title;
   @override
-  @JsonKey(name: "created_at")
-  DateTime get dateSent;
+  String? get data;
 
   /// Create a copy of Notifications
   /// with the given fields replaced by the non-null parameter values.

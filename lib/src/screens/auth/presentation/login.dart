@@ -21,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool loading = false;
   static final passwordController = TextEditingController();
   static final emailController = TextEditingController();
-  static final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -69,8 +69,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     const Spacer(),
-                    Text(context.tr.forgot_pass,
-                        style: const TextStyle(fontSize: AppTextSize.two))
+                    GestureDetector(
+                      onTap: () => context.push("/forget_password"),
+                      child: Text(context.tr.forgot_pass,
+                          style: const TextStyle(fontSize: AppTextSize.two)),
+                    )
                   ],
                 ),
                 const SizedBox(
@@ -106,34 +109,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 64,
                 ),
-                DividerWithText(
-                  name: context.tr.or_login,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Row(
-                  children: [
-                    SocialButton(
-                      svgPath: "assets/img/auth/facebook.svg",
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    SocialButton(
-                      svgPath: "assets/img/auth/google.svg",
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    SocialButton(
-                      svgPath: "assets/img/auth/apple.svg",
-                      onTap: () {},
-                    ),
-                  ],
-                )
               ],
             ),
           ),

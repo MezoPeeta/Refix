@@ -151,7 +151,7 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                 ),
                 TextFormField(
                   maxLength: 200,
-                  initialValue: details.note ?? "-",
+                  initialValue: details.note ?? "",
                   maxLines: 8,
                   decoration: const InputDecoration(
                     hintText: "Add Notes",

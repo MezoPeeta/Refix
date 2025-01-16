@@ -19,13 +19,6 @@ class NotificationsScreen extends ConsumerWidget {
         appBar: AppBar(
           centerTitle: false,
           title: Text(context.tr.notifications),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  ref.read(notificationsProvider.notifier).markRead();
-                },
-                child: Text(context.tr.markAllRead))
-          ],
         ),
         body: Padding(
             padding: const EdgeInsets.all(16.0),

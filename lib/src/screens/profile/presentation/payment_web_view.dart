@@ -27,6 +27,7 @@ class PaymentWebView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Payment"),
+        leading: const SizedBox.shrink(),
       ),
       body: WebViewWidget(controller: controller),
     );

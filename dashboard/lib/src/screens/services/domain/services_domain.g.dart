@@ -193,7 +193,7 @@ final getServicesTypesProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetServicesTypesRef = AutoDisposeFutureProviderRef<List<dynamic>>;
-String _$createServiceHash() => r'905524d70e1654bff8d623b12730b972e65f4710';
+String _$createServiceHash() => r'f1ce01b3aae546ba1ed25b94a282b4a62ba58cff';
 
 /// See also [createService].
 @ProviderFor(createService)
@@ -340,7 +340,7 @@ class _CreateServiceProviderElement
   Uint8List get image => (origin as CreateServiceProvider).image;
 }
 
-String _$updateServiceHash() => r'aa3eb1afb0a3962b274cf72b876e1d6dadd31db2';
+String _$updateServiceHash() => r'3055cd3e969f0f72b89a9f52eb88db96996ec8fb';
 
 /// See also [updateService].
 @ProviderFor(updateService)
@@ -487,7 +487,7 @@ class _UpdateServiceProviderElement
   Uint8List? get image => (origin as UpdateServiceProvider).image;
 }
 
-String _$deleteServiceHash() => r'c81f3951b1c08bb50c8515bd08bbdf5b2bc06253';
+String _$deleteServiceHash() => r'0baa0d3e1bf52dd47e9fefe5be571ba7237aeb98';
 
 /// See also [deleteService].
 @ProviderFor(deleteService)

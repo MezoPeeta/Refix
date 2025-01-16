@@ -35,7 +35,7 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
         nameController.text = widget.worker!.username;
         companyController.text = widget.worker!.companyName;
         phoneController.text =
-            widget.worker!.phone!.replaceAll("+966", "") ?? "-";
+            widget.worker!.phone!.replaceAll("+966", "") ?? "";
         emailController.text = widget.worker!.email;
       });
     }

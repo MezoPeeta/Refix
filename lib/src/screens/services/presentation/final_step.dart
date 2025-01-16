@@ -10,6 +10,8 @@ import 'package:intl/intl.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/boarding/data/boarding_data.dart';
+import 'package:refix/src/screens/points/data/points.dart';
 import 'package:refix/src/screens/points/domain/points_domain.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:refix/src/screens/services/domain/location.dart';
@@ -47,11 +49,13 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
   bool loading = false;
   DateTime? dateTime;
   List<String> photos = [];
+  List<Service> addedServices = [];
 
   @override
   Widget build(BuildContext context) {
     final service = Service.fromJson(jsonDecode(widget.service));
     List<String> capturedPhotos = [widget.photo, ...photos];
+    List<Service> allServices = [service, ...addedServices];
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -103,77 +107,113 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                 const SizedBox(height: 24),
                 Row(
                   children: [
-                    ServiceContainer(
-                      service: service,
-                      isSelected: true,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(
-                      width: 24,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        final services = ref
-                                .watch(
-                                    getSubServicesProvider(type: widget.type))
-                                .value ??
-                            [];
-                        showModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: services.isNotEmpty
-                                    ? Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            child: GridView.builder(
-                                              shrinkWrap: true,
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemCount: services.length,
-                                              gridDelegate:
-                                                  const SliverGridDelegateWithMaxCrossAxisExtent(
-                                                      crossAxisSpacing: 24,
-                                                      mainAxisSpacing: 24,
-                                                      maxCrossAxisExtent:
-                                                          116.67),
-                                              itemBuilder: (context, index) {
-                                                return ServiceContainer(
-                                                  service: services[index],
-                                                  onPressed: () {},
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                          PrimaryButton(
-                                              text: "Add Services",
-                                              onPressed: () {})
-                                        ],
-                                      )
-                                    : const Center(
-                                        child: Text(
-                                            "No other subservice at the moment"),
-                                      ),
+                    Expanded(
+                      child: SizedBox(
+                        height: 110,
+                        child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            separatorBuilder: (context, index) =>
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                            itemCount: allServices.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index == allServices.length) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    final services = ref
+                                            .watch(getSubServicesProvider(
+                                                type: widget.type))
+                                            .value ??
+                                        [];
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return Padding(
+                                            padding: const EdgeInsets.all(16),
+                                            child: services.isNotEmpty
+                                                ? Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      SizedBox(
+                                                        child: GridView.builder(
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemCount:
+                                                              services.length,
+                                                          gridDelegate:
+                                                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                                                  crossAxisSpacing:
+                                                                      24,
+                                                                  mainAxisSpacing:
+                                                                      24,
+                                                                  maxCrossAxisExtent:
+                                                                      116.67),
+                                                          itemBuilder:
+                                                              (context, index) {
+                                                            return ServiceContainer(
+                                                              service: services[
+                                                                  index],
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  addedServices.add(
+                                                                      services[
+                                                                          index]);
+                                                                });
+                                                              },
+                                                            );
+                                                          },
+                                                        ),
+                                                      ),
+                                                      PrimaryButton(
+                                                          text: "Add Services",
+                                                          onPressed: () {
+                                                            context.pop();
+                                                          })
+                                                    ],
+                                                  )
+                                                : const Center(
+                                                    child: Text(
+                                                        "No other subservice at the moment"),
+                                                  ),
+                                          );
+                                        });
+                                  },
+                                  child: Container(
+                                    width: 116.67,
+                                    height: 101,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.neutral100,
+                                        borderRadius:
+                                            BorderRadius.circular(AppRadii.lg)),
+                                    child: SvgPicture.asset(
+                                      "assets/img/home/add_disabled.svg",
+                                      width: 39,
+                                      height: 39,
+                                      fit: BoxFit.scaleDown,
+                                    ),
+                                  ),
+                                );
+                              }
+                              return GestureDetector(
+                                onDoubleTap: () {
+                                  setState(() {
+                                    addedServices.removeAt(index - 1);
+                                  });
+                                },
+                                child: ServiceContainer(
+                                  service: allServices[index],
+                                  isSelected: true,
+                                  onPressed: () {},
+                                ),
                               );
-                            });
-                      },
-                      child: Container(
-                        width: 116.67,
-                        height: 101,
-                        decoration: BoxDecoration(
-                            color: AppColors.neutral100,
-                            borderRadius: BorderRadius.circular(AppRadii.lg)),
-                        child: SvgPicture.asset(
-                          "assets/img/home/add_disabled.svg",
-                          width: 39,
-                          height: 39,
-                          fit: BoxFit.scaleDown,
-                        ),
+                            }),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 const SizedBox(
@@ -202,6 +242,13 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                               if (index == capturedPhotos.length) {
                                 return GestureDetector(
                                   onTap: () async {
+                                    if (photos.length > 2) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "You can only add 4 photos")));
+                                      return;
+                                    }
                                     final ImagePicker picker = ImagePicker();
                                     final XFile? photo = await picker.pickImage(
                                         source: ImageSource.camera);
@@ -285,6 +332,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                   },
                   decoration: InputDecoration(
                       hintText: context.tr.addAddress,
+                      fillColor: Colors.white,
                       suffixIcon: SvgPicture.asset(
                         "assets/img/services/location.svg",
                         width: 11,
@@ -320,6 +368,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                   readOnly: true,
                   decoration: InputDecoration(
                       hintText: context.tr.pickDate,
+                      fillColor: Colors.white,
                       suffixIcon: SvgPicture.asset(
                         "assets/img/services/calendar.svg",
                         width: 11,
@@ -334,6 +383,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                   maxLines: 5,
                   controller: notesController,
                   decoration: InputDecoration(
+                    fillColor: Colors.white,
                     hintText: context.tr.add_notes,
                   ),
                 ),
@@ -348,42 +398,58 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
           text: context.tr.bookNow,
           loading: loading,
           onPressed: () async {
+            final addedServicesID = allServices.map((e) => e.id).toList();
             if (_key.currentState!.validate()) {
               setState(() {
                 loading = true;
               });
-              if (loading == true) {
-                final bookingID = await ref
-                    .read(addBookingProvider(
-                        images: capturedPhotos,
-                        date: dateTime!,
-                        notes: notesController.text,
-                        services: [service.id]).future)
-                    .catchError((v) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(v)));
-                  setState(() {
-                    loading = false;
-                  });
-                });
+
+              try {
+                final bookingID = await ref.read(addBookingProvider(
+                  images: capturedPhotos,
+                  date: dateTime!,
+                  notes: notesController.text,
+                  services: addedServicesID,
+                ).future);
+
                 ref.read(bookingIDProvider.notifier).state = bookingID;
 
                 if (!context.mounted) return;
-                final discount = await ref
-                    .read(getDiscountProvider(pageName: "Booking Done").future);
-                final offer = await ref.read(getCustomerOfferProvider.future);
-                setState(() {
-                  loading = false;
-                });
+
+                final results = await Future.wait([
+                  ref.read(
+                      getDiscountProvider(pageName: "Booking Done").future),
+                  ref.read(getCustomerOfferProvider.future),
+                ]);
+
+                final discount = results[0] as Discount?;
+                final offer = results[1] as Offer?;
+
+                if (mounted) {
+                  setState(() {
+                    loading = false;
+                  });
+                }
+
                 if (discount != null && offer != null) {
-                  return context.goNamed("BookingDone",
+                  if (discount.active == true || offer.isUsed == false) {
+                    return context.goNamed(
+                      "BookingDone",
                       extra: discount,
                       pathParameters: {
                         "cost": service.price.toString(),
-                        "points": offer.point.percentage.toString()
-                      });
+                        "points": offer.point.percentage.toString(),
+                      },
+                    );
+                  }
                 }
                 context.go("/payment_method");
+              } catch (e) {
+                if (mounted) {
+                  setState(() {
+                    loading = false;
+                  });
+                }
               }
             }
           },

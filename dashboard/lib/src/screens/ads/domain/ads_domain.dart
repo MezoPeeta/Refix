@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/auth.dart';
+import 'package:dashboard/src/core/navigation/routes.dart';
 import 'package:dashboard/src/screens/ads/data/ads.dart';
 import 'package:dashboard/src/screens/content/domain/onetime_domain.dart';
+import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
@@ -15,27 +17,18 @@ enum AdsType { slider, banner }
 
 @riverpod
 Future<String> addAds(Ref ref,
-    {required Uint8List image, required AdsType type}) async {
+    {required Uint8List image, required String type}) async {
   final request = await ref.read(httpProvider).authenticatedRequest(
       url: "ads",
       method: "POST",
-      body: {
-        "type": type.name,
-        "image": base64Encode(await compressImage(image))
-      });
+      body: {"type": type, "image": base64Encode(await compressImage(image))});
+  print(request.statusCode);
 
   if (request.statusCode == 201) {
+    ref.watch(currentIndexProvider.notifier).state = 7;
+    ref.invalidate(getAdsProvider);
+
     return "Ad created successfully";
-  }
-  if (request.statusCode == 401) {
-    ref.read(authProvider).refreshAccessToken();
-  } else {
-    print(request.body);
-    final errorMessage = jsonDecode(request.body)["message"];
-    if (errorMessage is List) {
-      return Future.error(errorMessage);
-    }
-    return Future.error(errorMessage);
   }
 
   return Future.error("Ad Creation Failed");
@@ -99,4 +92,15 @@ Future<String?> updateAdsById(Ref ref,
     return Future.error(errorMessage.first);
   }
   return Future.error(errorMessage);
+}
+
+@riverpod
+Future<void> deleteAd(Ref ref, {required String id}) async {
+  final request = await ref
+      .read(httpProvider)
+      .authenticatedRequest(url: "ads/$id", method: "DELETE");
+  final data = json.decode(request.body);
+
+  ref.watch(currentIndexProvider.notifier).state = 7;
+  ref.invalidate(getAdsProvider);
 }

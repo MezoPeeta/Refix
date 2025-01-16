@@ -11,6 +11,7 @@ import 'package:refix/src/screens/home/data/home_data.dart';
 import 'package:refix/src/screens/home/domain/home_domain.dart';
 
 import '../../../core/ui/widgets/button.dart';
+import '../domain/services_domain.dart';
 
 final serviceProvider = StateProvider<List<Service>>((ref) {
   return [];
@@ -30,6 +31,8 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
     final services = ref.watch(getSubServicesProvider(type: widget.type));
+    final avgRating =
+        ref.watch(getAvgReviewsProvider(type: widget.type)).value ?? 0.0;
     return Scaffold(
       backgroundColor: AppColors.neutral50,
       body: SafeArea(
@@ -66,10 +69,18 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                     Padding(
                       padding: const EdgeInsets.all(16),
                       child: IconButton.filled(
+                          iconSize: 10,
                           alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          padding:
+                              ref.watch(localeNotifierProvider).languageCode ==
+                                      "en"
+                                  ? const EdgeInsets.only(left: 8)
+                                  : const EdgeInsets.only(right: 8),
                           onPressed: () => context.pop(),
-                          icon: const Icon(Icons.arrow_back_ios)),
+                          icon: const Icon(
+                            Icons.arrow_back_ios,
+                            size: 20,
+                          )),
                     ),
                   ],
                 ),
@@ -98,64 +109,31 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                             borderRadius: BorderRadius.circular(AppRadii.md),
                             color: AppColors.primaryRefix,
                           ),
-                          child: const Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.star_rounded,
                                 color: AppColors.white,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 8,
                               ),
                               Text(
-                                "4.77",
-                                style: TextStyle(
+                                "$avgRating",
+                                style: const TextStyle(
                                   color: AppColors.white,
                                 ),
                               )
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Text(
-                          "45K ${context.tr.reviews}",
-                          style:
-                              TextStyle(fontSize: AppTextSize.one.toDouble()),
-                        )
                       ],
                     ),
                   ),
                 ),
                 const SizedBox(
                   height: 24,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Container(
-                    padding: const EdgeInsets.all(AppSpacing.x),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(AppRadii.lg),
-                        color: AppColors.neutral50),
-                    child: Row(
-                      children: [
-                        SvgPicture.asset("assets/img/services/star.svg"),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Expanded(
-                          child: Text(
-                            context.tr.get_discount("40%"),
-                            style: TextStyle(
-                                fontSize: AppTextSize.three.toDouble(),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                 ),
                 services.when(
                     data: (data) {

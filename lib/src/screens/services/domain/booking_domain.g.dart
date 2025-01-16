@@ -1186,7 +1186,7 @@ class _PaymentBookingProviderElement
   String get bookingID => (origin as PaymentBookingProvider).bookingID;
 }
 
-String _$addBookingReviewHash() => r'5931fd8757ad019a75152594845ac6cd2ff18300';
+String _$addBookingReviewHash() => r'5108e1a3568d7217135286e6a7c0eff2e5641f39';
 
 /// See also [addBookingReview].
 @ProviderFor(addBookingReview)

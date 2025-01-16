@@ -119,7 +119,6 @@ class _SignupScreenState extends State<SignupScreen> {
                       loading: loading,
                       text: context.tr.sign_up,
                       onPressed: () async {
-                        print(phoneNumber);
                         if (_formKey.currentState!.validate()) {
                           setState(() {
                             loading = true;
@@ -131,14 +130,12 @@ class _SignupScreenState extends State<SignupScreen> {
                               password: confirmPasswordController.text);
 
                           user.fold((value) {
-                            print(value);
                             ScaffoldMessenger.of(context)
                                 .showSnackBar(SnackBar(content: Text(value)));
                             setState(() {
                               loading = false;
                             });
                           }, (value) {
-                            print(value);
                             setState(() {
                               loading = false;
                             });
@@ -147,37 +144,6 @@ class _SignupScreenState extends State<SignupScreen> {
                         }
                       });
                 }),
-                const SizedBox(
-                  height: 32,
-                ),
-                DividerWithText(
-                  name: context.tr.sign_up,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                Row(
-                  children: [
-                    SocialButton(
-                      svgPath: "assets/img/auth/facebook.svg",
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    SocialButton(
-                      svgPath: "assets/img/auth/google.svg",
-                      onTap: () {},
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    SocialButton(
-                      svgPath: "assets/img/auth/apple.svg",
-                      onTap: () {},
-                    ),
-                  ],
-                ),
                 const SizedBox(
                   height: 24,
                 ),

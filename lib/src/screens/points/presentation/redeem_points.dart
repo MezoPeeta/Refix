@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 
@@ -22,13 +23,14 @@ class RedeemPoints extends StatelessWidget {
             children: [
               SvgPicture.asset("assets/img/check.svg"),
               Text(
-                "Points were Redeemed and $percentage% Discount was obtained",
+                context.tr.points_redeemed_message(percentage),
                 textAlign: TextAlign.center,
                 style: const TextStyle(
                     fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
               ),
               PrimaryButton(
-                  text: "Back To Home", onPressed: () => context.go("/")),
+                  text: context.tr.back_to_home,
+                  onPressed: () => context.go("/")),
             ],
           ),
         ),

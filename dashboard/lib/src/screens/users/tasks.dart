@@ -232,7 +232,7 @@ class UserInfoCard extends StatelessWidget {
           const SizedBox(height: 12),
           _buildInfoRow("Username", worker.username, Colors.green),
           const SizedBox(height: 8),
-          _buildInfoRow("Phone Number", worker.phone ?? "-"),
+          _buildInfoRow("Phone Number", worker.phone ?? ""),
           const SizedBox(height: 8),
           _buildInfoRow("Company User Name", worker.companyName),
         ],

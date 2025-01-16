@@ -205,3 +205,18 @@ Future<void> deleteCurrentUser(
 
   return;
 }
+
+@riverpod
+Future<String> forgetPassword(Ref ref, {required String email}) async {
+  try {
+    final response = await ref
+        .read(httpProvider)
+        .post(apiName: "forget-password", body: {"email": email});
+    log("Response ${response.body}");
+    if (response.statusCode == 200) {
+      ref.read(goRouterProvider).go("/otp_verify");
+      return jsonDecode(response.body)["message"];
+    }
+  } catch (e) {}
+  return "";
+}

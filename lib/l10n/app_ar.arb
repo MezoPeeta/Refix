@@ -23,7 +23,6 @@
     "last_name": "الاسم الاخير",
     "phone": "رقم المحمول",
     "delete_account": "مسح الحساب",
-    "enter_email": "ادخل بريد الاكتروني الجديد",
     "payment_methods": "طرق الدفع",
     "privacy": "خصوصية",
     "logout": "تسجيل الخروج",
@@ -250,5 +249,22 @@
                 "example": "١٠٠"
             }
         }
-    }
+    },
+    "error_with_pay_title": "خطأ في الدفع",
+    "reservation_added_message": "تمت إضافة حجزك، وسيتم الاتصال بك قريبًا لتأكيد الحجز على رقم الهاتف المسجل لدينا.",
+    "try_another_card": "جرب بطاقة أخرى",
+    "booking_done_title": "تم الحجز!",
+    "show_your_booking": "عرض حجزك",
+    "back_to_home": "العودة إلى الصفحة الرئيسية",
+    "dont_worry_title": "لا تقلق، هذا يحدث.",
+    "enter_email_message": "يرجى إدخال عنوان البريد الإلكتروني المرتبط بحسابك.",
+    "phone_number": "رقم الهاتف",
+    "send_code": "إرسال الرمز",
+    "password_changed_title": "تم تغيير كلمة المرور!",
+    "password_changed_message": "تم تغيير كلمة المرور بنجاح.",
+    "back_to_login": "العودة لتسجيل الدخول",
+    "otp_verification_title": "التحقق من الرمز",
+    "otp_verification_message": "أدخل رمز التحقق الذي أرسلناه للتو إلى بريدك الإلكتروني",
+    "points_redeemed_message": "تم استرداد النقاط والحصول على خصم {percentage}%",
+    "report_problem_not_resolved": "الإبلاغ عن المشكلة لم يتم حلها"
 }

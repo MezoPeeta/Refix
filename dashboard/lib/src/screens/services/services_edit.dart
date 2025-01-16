@@ -35,7 +35,7 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
 
   final priceController = TextEditingController();
 
-  bool isActive = false;
+  bool isActive = true;
 
   @override
   void initState() {
@@ -69,9 +69,19 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
               child: Column(
                 spacing: 16,
                 children: [
-                  Text(
-                    isEditting ? "Edit Service" : "Add Service",
-                  ),
+                  isEditting
+                      ? Row(
+                          children: [
+                            const Text(
+                              "Edit Service",
+                            ),
+                            TextButton(
+                                child: const Text("Delete Service"),
+                                onPressed: () => ref.read(deleteServiceProvider(
+                                    id: widget.service!.id)))
+                          ],
+                        )
+                      : const Text("Add Service"),
                   TextFormField(
                     controller: nameController,
                     validator: (v) {
@@ -146,28 +156,22 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
                               const SizedBox(
                                 height: 8,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text("Drag & drop files or"),
-                                  TextButton(
-                                    child: const Text("Upload Image"),
-                                    onPressed: () async {
-                                      FilePickerResult? result =
-                                          await FilePicker.platform
-                                              .pickFiles(type: FileType.image);
-                                      if (result != null) {
-                                        final file = result.files.single.bytes;
+                              const Text("Drag & drop files or"),
+                              TextButton(
+                                child: const Text("Upload Image"),
+                                onPressed: () async {
+                                  FilePickerResult? result = await FilePicker
+                                      .platform
+                                      .pickFiles(type: FileType.image);
+                                  if (result != null) {
+                                    final file = result.files.single.bytes;
 
-                                        setState(() {
-                                          picture = file;
-                                        });
-                                      }
-                                    },
-                                  ),
-                                ],
+                                    setState(() {
+                                      picture = file;
+                                    });
+                                  }
+                                },
                               ),
-                              const Text("The image size must be 430 * 681."),
                             ],
                           ),
                         ),

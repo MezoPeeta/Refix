@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,10 +10,12 @@ import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:refix/src/screens/services/presentation/final_step.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../core/ui/theme/colors.dart';
 import '../../../core/ui/widgets/header.dart';
 import '../../services/data/bookin_data.dart';
+import '../../services/presentation/services.dart';
 
 class InbookingScreen extends StatelessWidget {
   const InbookingScreen({super.key, required this.booking});
@@ -38,6 +42,38 @@ class InbookingScreen extends StatelessWidget {
                   color: AppColors.neutralRefix),
             ),
             const SizedBox(height: 24),
+            SizedBox(
+              height: 100,
+              child: ListView.separated(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  separatorBuilder: (context, index) => const SizedBox(
+                        width: 10,
+                      ),
+                  itemCount: booking.services.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == booking.services.length) {
+                      return Container(
+                        width: 116.67,
+                        height: 101,
+                        decoration: BoxDecoration(
+                            color: AppColors.neutral100,
+                            borderRadius: BorderRadius.circular(AppRadii.lg)),
+                        child: SvgPicture.asset(
+                          "assets/img/home/add_disabled.svg",
+                          width: 39,
+                          height: 39,
+                          fit: BoxFit.scaleDown,
+                        ),
+                      );
+                    }
+                    return ServiceContainer(
+                      service: booking.services[index],
+                      isSelected: true,
+                      onPressed: () {},
+                    );
+                  }),
+            ),
             const SizedBox(
               height: 24,
             ),
@@ -157,26 +193,46 @@ class InbookingScreen extends StatelessWidget {
       bottomNavigationBar: Consumer(builder: (context, ref, child) {
         return Padding(
           padding: const EdgeInsets.all(16),
-          child: Visibility(
-            visible: booking.status != "PENDING",
-            child: TextButton(
-                onPressed: () async {
-                  final result = await ref.read(updateBookingProvider(
-                          booking: booking.copyWith(status: "CANCELLED"))
-                      .future);
-                  if (!context.mounted) return;
+          child: booking.status == "CLOSED"
+              ? Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    PrimaryButton(
+                      onPressed: () =>
+                          context.push("/booking_reviews", extra: booking),
+                      text: context.tr.addReview,
+                    ),
+                    ErrorButton(
+                        text: context.tr.report_problem_not_resolved,
+                        onPressed: () async {
+                          final url = "tel:${booking.customer.phone}";
+                          if (!await launchUrlString(url)) {
+                            throw Exception('Could not launch $url');
+                          }
+                        })
+                  ],
+                )
+              : Visibility(
+                  visible: booking.status != "PENDING",
+                  child: TextButton(
+                      onPressed: () async {
+                        final result = await ref.read(updateBookingProvider(
+                                booking: booking.copyWith(status: "CANCELLED"))
+                            .future);
+                        if (!context.mounted) return;
 
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(result)));
-                },
-                child: Text(
-                  context.tr.cancelBooking,
-                  style: const TextStyle(
-                      color: AppColors.errorRefix,
-                      fontSize: AppTextSize.three,
-                      fontWeight: FontWeight.w500),
-                )),
-          ),
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(SnackBar(content: Text(result)));
+                      },
+                      child: Text(
+                        context.tr.cancelBooking,
+                        style: const TextStyle(
+                            color: AppColors.errorRefix,
+                            fontSize: AppTextSize.three,
+                            fontWeight: FontWeight.w500),
+                      )),
+                ),
         );
       }),
     );

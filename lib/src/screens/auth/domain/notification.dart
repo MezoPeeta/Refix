@@ -60,17 +60,12 @@ class Notifications extends _$Notifications {
         .authenticatedRequest(url: "customer/notification", method: "GET");
     final data = jsonDecode(request.body);
     if (request.statusCode == 200) {
+      if (data == null) {
+        return [];
+      }
       return data.map<Notification>((e) => Notification.fromJson(e)).toList();
     }
-    if (request.statusCode == 401) {
-      ref.read(authProvider).refreshAccessToken();
-      return [];
-    }
-    return [];
-  }
 
-  Future<void> markRead() async {
-    await ref.read(httpProvider).authenticatedRequest(
-        url: "customer/notification/read", method: "PATCH");
+    return [];
   }
 }

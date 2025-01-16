@@ -68,3 +68,4 @@ Future<void> updateLatLong(Ref ref) async {
   ref.read(updateCustomerProvider(customer: updatedCustomerLocation));
   debugPrint("Updated Customer");
 }
+

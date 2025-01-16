@@ -31,7 +31,6 @@
     "last_name": "Last Name",
     "phone": "Phone Number",
     "delete_account": "Delete Account",
-    "enter_email": "Enter your new email",
     "payment_methods": "Payment Methods",
     "privacy": "Privacy",
     "logout": "Logout",
@@ -227,5 +226,22 @@
                 "example": "100"
             }
         }
-    }
+    },
+    "error_with_pay_title": "Error With Pay",
+    "reservation_added_message": "Your Reservation Has Been Added, And You Will Be Contacted Soon To Confirm The Reservation At The Phone Number We Have On File.",
+    "try_another_card": "Try Another Card",
+    "booking_done_title": "Booking Done!",
+    "show_your_booking": "Show Your Booking",
+    "back_to_home": "Back To Home",
+    "dont_worry_title": "Don't Worry It Occurs.",
+    "enter_email_message": "Please Enter The Email Address Linked With Your Account.",
+    "phone_number": "Phone Number",
+    "send_code": "Send Code",
+    "password_changed_title": "Password Changed!",
+    "password_changed_message": "Your Password Has Been Changed Successfully.",
+    "back_to_login": "Back To Login",
+    "otp_verification_title": "OTP Verification",
+    "otp_verification_message": "Enter the verification code we just sent to your email",
+    "points_redeemed_message": "Points were Redeemed and {percentage}% Discount was obtained",
+    "report_problem_not_resolved": "Report the problem not resolved"
 }
