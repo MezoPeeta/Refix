@@ -82,7 +82,7 @@ class _NewPhoneState extends State<NewPhone> {
                                   await ref
                                       .read(customerNotifierProvider.notifier)
                                       .updateCustomer(currentUser.copyWith(
-                                          email:
+                                          phone:
                                               "+966${phoneController.text}"));
                                   ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(content: Text("Updated")));

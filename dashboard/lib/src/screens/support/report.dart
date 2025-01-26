@@ -1,3 +1,4 @@
+import 'package:dashboard/src/screens/base/base.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/support/rates/domain/rates_domain.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const PrevButton(),
                       const Center(child: Text("Client Details")),
                       const Divider(),
                       const TextHeader(
@@ -341,17 +343,13 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                               setState(() {
                                 loading = true;
                               });
-                              if (loading == true) {
-                                final response = await ref.read(
-                                    resolveBookingProvider(
-                                            bookingID: details.id)
-                                        .future);
-                                ref.invalidate(getReportsProvider);
-                                context.pop();
-
-                                ref.read(scaffoldMessengerPod).showSnackBar(
-                                    SnackBar(content: Text(response)));
-                              }
+                              final response = await ref.read(
+                                  resolveBookingProvider(bookingID: details.id)
+                                      .future);
+                              ref.invalidate(getReportsProvider);
+                              context.pop();
+                              ref.read(scaffoldMessengerPod).showSnackBar(
+                                  SnackBar(content: Text(response)));
 
                               setState(() {
                                 loading = false;

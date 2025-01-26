@@ -215,7 +215,7 @@ class InbookingScreen extends StatelessWidget {
                   ],
                 )
               : Visibility(
-                  visible: booking.status != "PENDING",
+                  visible: booking.status == "PENDING",
                   child: TextButton(
                       onPressed: () async {
                         final result = await ref.read(updateBookingProvider(

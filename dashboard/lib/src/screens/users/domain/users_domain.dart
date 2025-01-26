@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/api.dart';
 import 'package:dashboard/src/core/navigation/routes.dart';
+import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -83,9 +84,6 @@ Future<String> updateWorker(Ref ref,
     "company_name": companyName
   });
   if (request.statusCode == 200) {
-    ref.invalidate(getAllWorkersProvider);
-    ref.read(goRouterProvider).pop();
-
     return "Updated Successfully";
   }
   final data = jsonDecode(request.body);
@@ -111,7 +109,7 @@ Future<String> createUser(
   });
   final data = jsonDecode(request.body);
   if (request.statusCode == 201) {
-    ref.invalidate(getAllWorkersProvider);
+    ref.invalidate(getUsersProvider);
     ref.read(goRouterProvider).pop();
 
     return data;
@@ -138,7 +136,7 @@ Future<String> updateUser(
   });
   final data = jsonDecode(request.body);
   if (request.statusCode == 200) {
-    ref.invalidate(getAllWorkersProvider);
+    ref.invalidate(getUsersProvider);
     ref.read(goRouterProvider).pop();
 
     return data;

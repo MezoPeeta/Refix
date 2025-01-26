@@ -4,6 +4,7 @@ import 'package:dashboard/src/screens/points/domain/points_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../app.dart';
 import '../base/base.dart';
@@ -224,6 +225,8 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                             ref
                                 .read(scaffoldMessengerPod)
                                 .showSnackBar(SnackBar(content: Text(status!)));
+                            ref.invalidate(getPointsProvider);
+                            context.pop();
 
                             return;
                           }
@@ -250,6 +253,8 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                           setState(() {
                             loading = false;
                           });
+                          ref.invalidate(getPointsProvider);
+                          context.pop();
                           ref
                               .read(scaffoldMessengerPod)
                               .showSnackBar(SnackBar(content: Text(status!)));

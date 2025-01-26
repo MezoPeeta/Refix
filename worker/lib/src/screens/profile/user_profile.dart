@@ -32,54 +32,11 @@ class UserProfile extends ConsumerWidget {
                     borderRadius: BorderRadius.circular(AppRadii.lg)),
                 child: TextFormField(
                   controller: userController,
+                  readOnly: true,
                   decoration: InputDecoration(
                       labelText: context.tr.username,
                       filled: false,
                       hintText: context.tr.username),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                      backgroundColor: Colors.white,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            spacing: 16,
-                            children: [
-                              PasswordFormField(
-                                  passwordController: TextEditingController()),
-                              PasswordFormField(
-                                  passwordController: TextEditingController()),
-                              PasswordFormField(
-                                  passwordController: TextEditingController()),
-                              Column(
-                                spacing: 16,
-                                children: [
-                                  PrimaryButton(
-                                      text: "Change Password",
-                                      onPressed: () {}),
-                                  TextButton(
-                                      onPressed: () {}, child: Text("Back"))
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      });
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(AppRadii.lg)),
-                  child: ProfileOption(title: "Change password"),
                 ),
               ),
             ],

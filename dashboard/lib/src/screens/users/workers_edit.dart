@@ -2,6 +2,7 @@ import 'package:dashboard/src/screens/users/domain/users_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../core/theme/btns.dart';
 import '../auth/data/auth_data.dart';
@@ -149,6 +150,8 @@ class _AddEditWorkerState extends ConsumerState<AddEditWorker> {
                         setState(() {
                           loading = false;
                         });
+                        ref.invalidate(getAllWorkersProvider);
+                        context.pop();
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(status)));
                       }

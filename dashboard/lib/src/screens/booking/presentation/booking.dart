@@ -430,7 +430,8 @@ class _ServiceContainerState extends State<ServiceContainer> {
             width: isSelected ? 110.67 : 116.67,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppRadii.lg),
-                image: DecorationImage(image: NetworkImage(widget.image)),
+                image: DecorationImage(
+                    image: NetworkImage(widget.image), fit: BoxFit.cover),
                 color: AppColors.primaryRefix),
           ),
           const SizedBox(height: 5),

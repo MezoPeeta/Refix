@@ -34,8 +34,7 @@ Future<String?> addPoints(Ref ref,
     required String detailsAr,
     required int points,
     required int days,
-        required bool isActive,
-
+    required bool isActive,
     required int offers}) async {
   final response = await ref
       .read(httpProvider)
@@ -49,8 +48,6 @@ Future<String?> addPoints(Ref ref,
   });
 
   if (response.statusCode == 201) {
-    ref.invalidate(getPointsProvider);
-    ref.read(goRouterProvider).pop();
     return "Successful";
   }
 
@@ -79,8 +76,6 @@ Future<String?> updatePoint(Ref ref,
     "active": isActive
   });
   if (response.statusCode == 200) {
-    ref.invalidate(getPointsProvider);
-    ref.read(goRouterProvider).pop();
     return "Successful";
   }
 

@@ -5,6 +5,7 @@ import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
 import 'package:refix/src/screens/home/domain/home_domain.dart';
 import 'package:refix/src/screens/services/data/bookin_data.dart';
+import 'package:refix/src/screens/services/domain/booking_domain.dart';
 
 class ReportBooking extends StatefulWidget {
   const ReportBooking({super.key, required this.booking});
@@ -62,6 +63,7 @@ class _ReportBookingState extends State<ReportBooking> {
                       if (result != null) {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(result)));
+                        ref.invalidate(getUserBookingProvider);
                         context.go("/");
                       }
                       setState(() {

@@ -112,7 +112,8 @@ class _BookingReviewsState extends State<BookingReviews> {
                       if (!context.mounted) return;
                       ScaffoldMessenger.of(context)
                           .showSnackBar(SnackBar(content: Text(result)));
-                      context.pop();
+                      ref.invalidate(getUserBookingProvider);
+                      context.go("/");
                     }),
               );
             })
