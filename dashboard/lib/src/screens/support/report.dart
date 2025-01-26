@@ -1,17 +1,17 @@
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/support/rates/domain/rates_domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../app.dart';
 import '../../core/theme/btns.dart';
 import '../../core/theme/colors.dart';
 import '../../core/theme/radii.dart';
 import '../booking/presentation/booking.dart';
-import '../users/domain/source.dart';
 
 final reportProvider = StateProvider<BookingElement?>((ref) => null);
 
@@ -57,7 +57,9 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                       Row(
                         children: [
                           ServiceContainer(
-                              name: details!.services.first.name?.en ?? ""),
+                              image:
+                                  "https://api.refixapp.com/${details!.services.first.image}",
+                              name: details.services.first.name?.en ?? ""),
                           const SizedBox(
                             width: 24,
                           ),
@@ -166,11 +168,9 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                         children: [
                           Expanded(
                             child: TextFormField(
-                              readOnly: true,
-                              initialValue:
-                                  details.customer.longitude.toString(),
+                              initialValue: details.customer.phone,
                               decoration: const InputDecoration(
-                                hintText: "Add Address",
+                                hintText: "Phone Number",
                                 filled: true,
                               ),
                             ),
@@ -180,15 +180,14 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                           ),
                           IconButton(
                               onPressed: () async {
-                                final lat = details.customer.latitude;
-                                final long = details.customer.longitude;
-
-                                if (!await launchUrl(Uri.parse(
-                                    "https://maps.google.com/?q=$lat,$long"))) {
-                                  throw Exception('Could not launch URL');
-                                }
+                                await Clipboard.setData(ClipboardData(
+                                    text: details.customer.phone.toString()));
+                                if (!context.mounted) return;
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content: Text("Copied to clipboard!")));
                               },
-                              icon: const Icon(Icons.location_city))
+                              icon: const Icon(Icons.phone))
                         ],
                       ),
                       const SizedBox(
@@ -309,9 +308,6 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                     const SizedBox(
                       height: 40,
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
                     TextFormField(
                       readOnly: true,
                       initialValue: details.worker?.username,
@@ -350,6 +346,9 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                                     resolveBookingProvider(
                                             bookingID: details.id)
                                         .future);
+                                ref.invalidate(getReportsProvider);
+                                context.pop();
+
                                 ref.read(scaffoldMessengerPod).showSnackBar(
                                     SnackBar(content: Text(response)));
                               }

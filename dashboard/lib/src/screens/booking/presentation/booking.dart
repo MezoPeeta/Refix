@@ -61,7 +61,10 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                       Row(
                         children: [
                           ServiceContainer(
-                              name: details!.services.first.name?.en ?? ""),
+                            name: details!.services.first.name?.en ?? "",
+                            image:
+                                "https://api.refixapp.com/${details.services.first.image}",
+                          ),
                           const SizedBox(
                             width: 24,
                           ),
@@ -401,9 +404,10 @@ class AddedImage extends StatelessWidget {
 }
 
 class ServiceContainer extends StatefulWidget {
-  const ServiceContainer({super.key, required this.name});
+  const ServiceContainer({super.key, required this.name, required this.image});
 
   final String name;
+  final String image;
 
   @override
   State<ServiceContainer> createState() => _ServiceContainerState();
@@ -426,6 +430,7 @@ class _ServiceContainerState extends State<ServiceContainer> {
             width: isSelected ? 110.67 : 116.67,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppRadii.lg),
+                image: DecorationImage(image: NetworkImage(widget.image)),
                 color: AppColors.primaryRefix),
           ),
           const SizedBox(height: 5),

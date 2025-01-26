@@ -55,6 +55,8 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                   children: [
                     ServiceContainer(
                       name: details!.services.first.name?.en ?? "",
+                      image:
+                          "https://api.refixapp.com/${details.services.first.image}",
                     ),
                     const SizedBox(
                       width: 24,
