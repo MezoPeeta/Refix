@@ -10,6 +10,7 @@ import '../../app.dart';
 import '../../core/theme/btns.dart';
 import '../../core/theme/colors.dart';
 import '../base/base.dart';
+import '../navbar/navbar.dart';
 
 final adInfoProvider =
     StateProvider<({String id, String type, Uint8List? image})?>((ref) {
@@ -66,8 +67,13 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                         ),
                         TextButton(
                             child: const Text("Delete Ad"),
-                            onPressed: () => ref.read(deleteAdProvider(
-                                id: ref.read(adInfoProvider)!.id)))
+                            onPressed: () {
+                              ref.read(deleteAdProvider(
+                                  id: ref.read(adInfoProvider)!.id));
+                              ref.watch(currentIndexProvider.notifier).state =
+                                  7;
+                              ref.invalidate(getAdsProvider);
+                            })
                       ],
                     )
                   : const Text("Add Ad"),

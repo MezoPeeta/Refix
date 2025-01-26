@@ -883,7 +883,7 @@ class _ConvertRoleProviderElement
 }
 
 String _$assignWorkerToBookingHash() =>
-    r'e8409ec33a2c4f10bd2f1da25cbac893b4bf1ff5';
+    r'109e2ee59d6f18013b3f263b15d17fee7a63c9d7';
 
 /// See also [assignWorkerToBooking].
 @ProviderFor(assignWorkerToBooking)

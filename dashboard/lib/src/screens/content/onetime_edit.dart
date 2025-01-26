@@ -195,49 +195,30 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                                     loading = true;
                                   });
                                   final info = ref.read(boardingInfoProvider);
-                                  if (descriptionArController.text !=
-                                          info?.detailsAr ||
-                                      descriptionController.text !=
-                                          info?.detailsEn ||
-                                      headingController.text !=
-                                          info?.headingEn ||
-                                      headingArController.text !=
-                                          info?.headingAr ||
-                                      picture != info!.image) {
-                                    final res = await ref.read(
-                                        updateBoardingProvider(
-                                                detailsAr:
-                                                    descriptionArController
-                                                        .text,
-                                                detailsEn:
-                                                    descriptionController.text,
-                                                headingAr:
-                                                    headingArController.text,
-                                                headingEn:
-                                                    headingController.text,
-                                                image: picture!,
-                                                id: info!.id)
-                                            .future);
-                                    setState(() {
-                                      loading = false;
-                                    });
-                                    res.fold((v) {
-                                      ref
-                                          .read(scaffoldMessengerPod)
-                                          .showSnackBar(
-                                              SnackBar(content: Text(v)));
-                                    }, (v) {
-                                      ref
-                                          .read(scaffoldMessengerPod)
-                                          .showSnackBar(
-                                              SnackBar(content: Text(v)));
-                                    });
-                                    return;
-                                  }
-                                  ref.read(scaffoldMessengerPod).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              "You haven't changed anything")));
+
+                                  final res = await ref.read(
+                                      updateBoardingProvider(
+                                              detailsAr:
+                                                  descriptionArController.text,
+                                              detailsEn:
+                                                  descriptionController.text,
+                                              headingAr:
+                                                  headingArController.text,
+                                              headingEn: headingController.text,
+                                              image: picture!,
+                                              id: info!.id)
+                                          .future);
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  res.fold((v) {
+                                    ref.read(scaffoldMessengerPod).showSnackBar(
+                                        SnackBar(content: Text(v)));
+                                  }, (v) {
+                                    ref.read(scaffoldMessengerPod).showSnackBar(
+                                        SnackBar(content: Text(v)));
+                                  });
+                                  return;
                                 }
                               });
                         }),

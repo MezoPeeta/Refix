@@ -22,7 +22,7 @@ final getPointsProvider = AutoDisposeFutureProvider<List<Point>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetPointsRef = AutoDisposeFutureProviderRef<List<Point>>;
-String _$addPointsHash() => r'1855a882f6b517c856e9c94d1ec5c602fca24ccb';
+String _$addPointsHash() => r'43b8593b43c42e8b56ddd3058d10b0ce72a69c01';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -62,6 +62,7 @@ class AddPointsFamily extends Family<AsyncValue<String?>> {
     required String detailsAr,
     required int points,
     required int days,
+    required bool isActive,
     required int offers,
   }) {
     return AddPointsProvider(
@@ -71,6 +72,7 @@ class AddPointsFamily extends Family<AsyncValue<String?>> {
       detailsAr: detailsAr,
       points: points,
       days: days,
+      isActive: isActive,
       offers: offers,
     );
   }
@@ -86,6 +88,7 @@ class AddPointsFamily extends Family<AsyncValue<String?>> {
       detailsAr: provider.detailsAr,
       points: provider.points,
       days: provider.days,
+      isActive: provider.isActive,
       offers: provider.offers,
     );
   }
@@ -115,6 +118,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
     required String detailsAr,
     required int points,
     required int days,
+    required bool isActive,
     required int offers,
   }) : this._internal(
           (ref) => addPoints(
@@ -125,6 +129,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
             detailsAr: detailsAr,
             points: points,
             days: days,
+            isActive: isActive,
             offers: offers,
           ),
           from: addPointsProvider,
@@ -141,6 +146,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
           detailsAr: detailsAr,
           points: points,
           days: days,
+          isActive: isActive,
           offers: offers,
         );
 
@@ -157,6 +163,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
     required this.detailsAr,
     required this.points,
     required this.days,
+    required this.isActive,
     required this.offers,
   }) : super.internal();
 
@@ -166,6 +173,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
   final String detailsAr;
   final int points;
   final int days;
+  final bool isActive;
   final int offers;
 
   @override
@@ -187,6 +195,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
         detailsAr: detailsAr,
         points: points,
         days: days,
+        isActive: isActive,
         offers: offers,
       ),
     );
@@ -206,6 +215,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
         other.detailsAr == detailsAr &&
         other.points == points &&
         other.days == days &&
+        other.isActive == isActive &&
         other.offers == offers;
   }
 
@@ -218,6 +228,7 @@ class AddPointsProvider extends AutoDisposeFutureProvider<String?> {
     hash = _SystemHash.combine(hash, detailsAr.hashCode);
     hash = _SystemHash.combine(hash, points.hashCode);
     hash = _SystemHash.combine(hash, days.hashCode);
+    hash = _SystemHash.combine(hash, isActive.hashCode);
     hash = _SystemHash.combine(hash, offers.hashCode);
 
     return _SystemHash.finish(hash);
@@ -245,6 +256,9 @@ mixin AddPointsRef on AutoDisposeFutureProviderRef<String?> {
   /// The parameter `days` of this provider.
   int get days;
 
+  /// The parameter `isActive` of this provider.
+  bool get isActive;
+
   /// The parameter `offers` of this provider.
   int get offers;
 }
@@ -266,10 +280,12 @@ class _AddPointsProviderElement
   @override
   int get days => (origin as AddPointsProvider).days;
   @override
+  bool get isActive => (origin as AddPointsProvider).isActive;
+  @override
   int get offers => (origin as AddPointsProvider).offers;
 }
 
-String _$updatePointHash() => r'6b2d8dd03adb7b85c94bb24bac0ce4d6c270ef66';
+String _$updatePointHash() => r'4194df2d611db449a431909f66e24f823ccb3846';
 
 /// See also [updatePoint].
 @ProviderFor(updatePoint)
@@ -288,6 +304,7 @@ class UpdatePointFamily extends Family<AsyncValue<String?>> {
     required String detailsEn,
     required String detailsAr,
     required int points,
+    required bool isActive,
     required int days,
     required int offers,
   }) {
@@ -298,6 +315,7 @@ class UpdatePointFamily extends Family<AsyncValue<String?>> {
       detailsEn: detailsEn,
       detailsAr: detailsAr,
       points: points,
+      isActive: isActive,
       days: days,
       offers: offers,
     );
@@ -314,6 +332,7 @@ class UpdatePointFamily extends Family<AsyncValue<String?>> {
       detailsEn: provider.detailsEn,
       detailsAr: provider.detailsAr,
       points: provider.points,
+      isActive: provider.isActive,
       days: provider.days,
       offers: provider.offers,
     );
@@ -344,6 +363,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
     required String detailsEn,
     required String detailsAr,
     required int points,
+    required bool isActive,
     required int days,
     required int offers,
   }) : this._internal(
@@ -355,6 +375,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
             detailsEn: detailsEn,
             detailsAr: detailsAr,
             points: points,
+            isActive: isActive,
             days: days,
             offers: offers,
           ),
@@ -373,6 +394,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
           detailsEn: detailsEn,
           detailsAr: detailsAr,
           points: points,
+          isActive: isActive,
           days: days,
           offers: offers,
         );
@@ -390,6 +412,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
     required this.detailsEn,
     required this.detailsAr,
     required this.points,
+    required this.isActive,
     required this.days,
     required this.offers,
   }) : super.internal();
@@ -400,6 +423,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
   final String detailsEn;
   final String detailsAr;
   final int points;
+  final bool isActive;
   final int days;
   final int offers;
 
@@ -422,6 +446,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
         detailsEn: detailsEn,
         detailsAr: detailsAr,
         points: points,
+        isActive: isActive,
         days: days,
         offers: offers,
       ),
@@ -442,6 +467,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
         other.detailsEn == detailsEn &&
         other.detailsAr == detailsAr &&
         other.points == points &&
+        other.isActive == isActive &&
         other.days == days &&
         other.offers == offers;
   }
@@ -455,6 +481,7 @@ class UpdatePointProvider extends AutoDisposeFutureProvider<String?> {
     hash = _SystemHash.combine(hash, detailsEn.hashCode);
     hash = _SystemHash.combine(hash, detailsAr.hashCode);
     hash = _SystemHash.combine(hash, points.hashCode);
+    hash = _SystemHash.combine(hash, isActive.hashCode);
     hash = _SystemHash.combine(hash, days.hashCode);
     hash = _SystemHash.combine(hash, offers.hashCode);
 
@@ -483,6 +510,9 @@ mixin UpdatePointRef on AutoDisposeFutureProviderRef<String?> {
   /// The parameter `points` of this provider.
   int get points;
 
+  /// The parameter `isActive` of this provider.
+  bool get isActive;
+
   /// The parameter `days` of this provider.
   int get days;
 
@@ -506,6 +536,8 @@ class _UpdatePointProviderElement
   String get detailsAr => (origin as UpdatePointProvider).detailsAr;
   @override
   int get points => (origin as UpdatePointProvider).points;
+  @override
+  bool get isActive => (origin as UpdatePointProvider).isActive;
   @override
   int get days => (origin as UpdatePointProvider).days;
   @override

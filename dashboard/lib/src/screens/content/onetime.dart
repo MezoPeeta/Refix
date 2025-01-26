@@ -57,7 +57,7 @@ class OnetimeScreen extends ConsumerWidget {
                       );
                     });
               },
-              error: (e, s) => const Center(child: Text("Error")),
+              error: (e, s) => Center(child: Text("Error: $e")),
               loading: () => const Center(child: CircularProgressIndicator()))),
     );
   }

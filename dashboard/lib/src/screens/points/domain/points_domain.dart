@@ -34,6 +34,8 @@ Future<String?> addPoints(Ref ref,
     required String detailsAr,
     required int points,
     required int days,
+        required bool isActive,
+
     required int offers}) async {
   final response = await ref
       .read(httpProvider)
@@ -43,7 +45,7 @@ Future<String?> addPoints(Ref ref,
     "percentage": offers,
     "required_points": points,
     "available_days": days,
-    "active": true
+    "active": isActive
   });
 
   if (response.statusCode == 201) {
@@ -63,6 +65,7 @@ Future<String?> updatePoint(Ref ref,
     required String detailsEn,
     required String detailsAr,
     required int points,
+    required bool isActive,
     required int days,
     required int offers}) async {
   final response = await ref
@@ -73,11 +76,10 @@ Future<String?> updatePoint(Ref ref,
     "percentage": offers,
     "required_points": points,
     "available_days": days,
-    "active": true
+    "active": isActive
   });
   if (response.statusCode == 200) {
     ref.invalidate(getPointsProvider);
-
     ref.read(goRouterProvider).pop();
     return "Successful";
   }

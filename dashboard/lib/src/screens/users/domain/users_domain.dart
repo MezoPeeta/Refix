@@ -110,7 +110,10 @@ Future<String> createUser(
     "phone": phone,
   });
   final data = jsonDecode(request.body);
-  if (request.statusCode == 200) {
+  if (request.statusCode == 201) {
+    ref.invalidate(getAllWorkersProvider);
+    ref.read(goRouterProvider).pop();
+
     return data;
   }
   return data["message"] is List ? data["message"].first : data["message"];
@@ -135,6 +138,9 @@ Future<String> updateUser(
   });
   final data = jsonDecode(request.body);
   if (request.statusCode == 200) {
+    ref.invalidate(getAllWorkersProvider);
+    ref.read(goRouterProvider).pop();
+
     return data;
   }
   return data["message"] is List ? data["message"].first : data["message"];

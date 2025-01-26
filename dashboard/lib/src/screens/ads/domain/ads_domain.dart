@@ -100,7 +100,4 @@ Future<void> deleteAd(Ref ref, {required String id}) async {
       .read(httpProvider)
       .authenticatedRequest(url: "ads/$id", method: "DELETE");
   final data = json.decode(request.body);
-
-  ref.watch(currentIndexProvider.notifier).state = 7;
-  ref.invalidate(getAdsProvider);
 }

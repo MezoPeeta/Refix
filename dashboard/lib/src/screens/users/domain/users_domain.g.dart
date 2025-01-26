@@ -305,7 +305,7 @@ class _GetWorkerByIDProviderElement
   String get id => (origin as GetWorkerByIDProvider).id;
 }
 
-String _$createWorkerHash() => r'd3347be39ce002e87c58ea90a5c313c67b9883f2';
+String _$createWorkerHash() => r'e8a13c89922946506cea8a5121a06e67cb51c772';
 
 /// See also [createWorker].
 @ProviderFor(createWorker)
@@ -500,7 +500,7 @@ class _CreateWorkerProviderElement
   String get companyName => (origin as CreateWorkerProvider).companyName;
 }
 
-String _$updateWorkerHash() => r'a9afd60220c9a42e3944a093233aea6fbdcc38dc';
+String _$updateWorkerHash() => r'9077c0570b2836e80702d90e7d1b7845e59b3abd';
 
 /// See also [updateWorker].
 @ProviderFor(updateWorker)

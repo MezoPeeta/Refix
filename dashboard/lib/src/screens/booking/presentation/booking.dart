@@ -332,30 +332,6 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                         filled: true,
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    SecondaryButton(
-                        loading: loading,
-                        text: "Complete",
-                        onPressed: () async {
-                          setState(() {
-                            loading = true;
-                          });
-                          if (loading == true) {
-                            final response = await ref.read(
-                                updateBookingProvider(
-                                        booking:
-                                            details.copyWith(status: "CLOSED"))
-                                    .future);
-                            ref.read(scaffoldMessengerPod).showSnackBar(
-                                SnackBar(content: Text(response)));
-                          }
-
-                          setState(() {
-                            loading = false;
-                          });
-                        })
                   ],
                 ),
               ))

@@ -22,7 +22,7 @@ final getDiscountsProvider = AutoDisposeFutureProvider<List<Discount>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetDiscountsRef = AutoDisposeFutureProviderRef<List<Discount>>;
-String _$updateDiscountHash() => r'6822786062e15f9e68e664f1324c8cd9fd5f6b54';
+String _$updateDiscountHash() => r'a0e1e76dd92b153c342a502e1e629ed189d59741';
 
 /// Copied from Dart SDK
 class _SystemHash {
