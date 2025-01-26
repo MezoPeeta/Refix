@@ -192,7 +192,7 @@ final deleteCurrentUserProvider = AutoDisposeFutureProvider<void>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef DeleteCurrentUserRef = AutoDisposeFutureProviderRef<void>;
-String _$forgetPasswordHash() => r'1635545c85b21424635781433e96e73c1a085989';
+String _$forgetPasswordHash() => r'de9825af709bc0cda51078efa638bef6902748a9';
 
 /// See also [forgetPassword].
 @ProviderFor(forgetPassword)
@@ -320,6 +320,282 @@ class _ForgetPasswordProviderElement
 
   @override
   String get email => (origin as ForgetPasswordProvider).email;
+}
+
+String _$verifyOTPHash() => r'c91e3df4a297f13382e66a9828d4092728eb9e2a';
+
+/// See also [verifyOTP].
+@ProviderFor(verifyOTP)
+const verifyOTPProvider = VerifyOTPFamily();
+
+/// See also [verifyOTP].
+class VerifyOTPFamily extends Family<AsyncValue<bool>> {
+  /// See also [verifyOTP].
+  const VerifyOTPFamily();
+
+  /// See also [verifyOTP].
+  VerifyOTPProvider call({
+    required String otp,
+  }) {
+    return VerifyOTPProvider(
+      otp: otp,
+    );
+  }
+
+  @override
+  VerifyOTPProvider getProviderOverride(
+    covariant VerifyOTPProvider provider,
+  ) {
+    return call(
+      otp: provider.otp,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'verifyOTPProvider';
+}
+
+/// See also [verifyOTP].
+class VerifyOTPProvider extends AutoDisposeFutureProvider<bool> {
+  /// See also [verifyOTP].
+  VerifyOTPProvider({
+    required String otp,
+  }) : this._internal(
+          (ref) => verifyOTP(
+            ref as VerifyOTPRef,
+            otp: otp,
+          ),
+          from: verifyOTPProvider,
+          name: r'verifyOTPProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$verifyOTPHash,
+          dependencies: VerifyOTPFamily._dependencies,
+          allTransitiveDependencies: VerifyOTPFamily._allTransitiveDependencies,
+          otp: otp,
+        );
+
+  VerifyOTPProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.otp,
+  }) : super.internal();
+
+  final String otp;
+
+  @override
+  Override overrideWith(
+    FutureOr<bool> Function(VerifyOTPRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: VerifyOTPProvider._internal(
+        (ref) => create(ref as VerifyOTPRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        otp: otp,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<bool> createElement() {
+    return _VerifyOTPProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is VerifyOTPProvider && other.otp == otp;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, otp.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin VerifyOTPRef on AutoDisposeFutureProviderRef<bool> {
+  /// The parameter `otp` of this provider.
+  String get otp;
+}
+
+class _VerifyOTPProviderElement extends AutoDisposeFutureProviderElement<bool>
+    with VerifyOTPRef {
+  _VerifyOTPProviderElement(super.provider);
+
+  @override
+  String get otp => (origin as VerifyOTPProvider).otp;
+}
+
+String _$resetPasswordHash() => r'd563f4f1f123a7870a1938c1e9911c006512210b';
+
+/// See also [resetPassword].
+@ProviderFor(resetPassword)
+const resetPasswordProvider = ResetPasswordFamily();
+
+/// See also [resetPassword].
+class ResetPasswordFamily extends Family<AsyncValue<String>> {
+  /// See also [resetPassword].
+  const ResetPasswordFamily();
+
+  /// See also [resetPassword].
+  ResetPasswordProvider call({
+    required String otp,
+    required String password,
+  }) {
+    return ResetPasswordProvider(
+      otp: otp,
+      password: password,
+    );
+  }
+
+  @override
+  ResetPasswordProvider getProviderOverride(
+    covariant ResetPasswordProvider provider,
+  ) {
+    return call(
+      otp: provider.otp,
+      password: provider.password,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'resetPasswordProvider';
+}
+
+/// See also [resetPassword].
+class ResetPasswordProvider extends AutoDisposeFutureProvider<String> {
+  /// See also [resetPassword].
+  ResetPasswordProvider({
+    required String otp,
+    required String password,
+  }) : this._internal(
+          (ref) => resetPassword(
+            ref as ResetPasswordRef,
+            otp: otp,
+            password: password,
+          ),
+          from: resetPasswordProvider,
+          name: r'resetPasswordProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$resetPasswordHash,
+          dependencies: ResetPasswordFamily._dependencies,
+          allTransitiveDependencies:
+              ResetPasswordFamily._allTransitiveDependencies,
+          otp: otp,
+          password: password,
+        );
+
+  ResetPasswordProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.otp,
+    required this.password,
+  }) : super.internal();
+
+  final String otp;
+  final String password;
+
+  @override
+  Override overrideWith(
+    FutureOr<String> Function(ResetPasswordRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ResetPasswordProvider._internal(
+        (ref) => create(ref as ResetPasswordRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        otp: otp,
+        password: password,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String> createElement() {
+    return _ResetPasswordProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ResetPasswordProvider &&
+        other.otp == otp &&
+        other.password == password;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, otp.hashCode);
+    hash = _SystemHash.combine(hash, password.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ResetPasswordRef on AutoDisposeFutureProviderRef<String> {
+  /// The parameter `otp` of this provider.
+  String get otp;
+
+  /// The parameter `password` of this provider.
+  String get password;
+}
+
+class _ResetPasswordProviderElement
+    extends AutoDisposeFutureProviderElement<String> with ResetPasswordRef {
+  _ResetPasswordProviderElement(super.provider);
+
+  @override
+  String get otp => (origin as ResetPasswordProvider).otp;
+  @override
+  String get password => (origin as ResetPasswordProvider).password;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

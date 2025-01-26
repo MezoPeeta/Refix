@@ -243,5 +243,19 @@
     "otp_verification_title": "OTP Verification",
     "otp_verification_message": "Enter the verification code we just sent to your email",
     "points_redeemed_message": "Points were Redeemed and {percentage}% Discount was obtained",
-    "report_problem_not_resolved": "Report the problem not resolved"
+    "report_problem_not_resolved": "Report the problem not resolved",
+    "upload_images": "Uploading images..",
+    "check_discount": "Checking discounts..",
+    "resetPassword": "Reset Password",
+    "passwordUniqueness": "Your new password must be unique from those previously used.",
+    "createNewPassword": "Create New Password",
+    "photoLimit": "You can only add 4 photos",
+    "addServices": "Add Services",
+    "fillOtp": "Please fill OTP",
+    "otpVerified": "Verified OTP successfully",
+    "updatedSuccessfully": "Updated Successfully",
+    "otpLimit": "You can't send more OTPs, maximum 3",
+    "notBookedYet": "You haven't booked yet",
+    "pay": "Pay",
+    "noReviews": "No reviews for the current service"
 }

@@ -70,16 +70,8 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
                 spacing: 16,
                 children: [
                   isEditting
-                      ? Row(
-                          children: [
-                            const Text(
-                              "Edit Service",
-                            ),
-                            TextButton(
-                                child: const Text("Delete Service"),
-                                onPressed: () => ref.read(deleteServiceProvider(
-                                    id: widget.service!.id)))
-                          ],
+                      ? const Text(
+                          "Edit Service",
                         )
                       : const Text("Add Service"),
                   TextFormField(
@@ -242,6 +234,12 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
                       text: isEditting ? "Edit Service" : "Add Service",
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          if (picture == null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text("Photo shouldn't be empty")));
+                            return;
+                          }
                           setState(() {
                             loading = true;
                           });

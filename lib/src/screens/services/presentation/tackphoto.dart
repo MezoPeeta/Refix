@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/screens/home/data/home_data.dart';
+import 'package:refix/src/screens/services/domain/booking_domain.dart';
 
 import '../../../core/ui/widgets/button.dart';
 
@@ -77,11 +78,12 @@ class TackphotoScreen extends ConsumerWidget {
               if (photo == null) {
                 return context.pop();
               }
+              final compressedPhoto = await compressImage(photo);
               if (!context.mounted) return;
               context.pushNamed("FinalStep", pathParameters: {
                 "service": jsonEncode(service),
                 "type": type,
-                "photo": photo.path
+                "photo": compressedPhoto
               });
             },
           );

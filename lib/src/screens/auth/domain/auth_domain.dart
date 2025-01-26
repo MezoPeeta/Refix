@@ -10,6 +10,7 @@ import 'package:refix/src/screens/auth/data/auth_data.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/cache/helper.dart';
 import '../../../core/navigation/routes.dart';
 
 part 'auth_domain.g.dart';
@@ -208,15 +209,60 @@ Future<void> deleteCurrentUser(
 
 @riverpod
 Future<String> forgetPassword(Ref ref, {required String email}) async {
-  try {
+  final response = await ref
+      .read(httpProvider)
+      .post(apiName: "forget-password", body: {"email": email});
+  log("Response ${response.statusCode}");
+  if (response.statusCode == 204) {
+    ref.read(goRouterProvider).go("/otp_verify", extra: email);
+    return jsonDecode(response.body)["message"];
+  }
+
+  return jsonDecode(response.body)["message"];
+}
+
+@riverpod
+Future<bool> verifyOTP(Ref ref, {required String otp}) async {
+  int retryStatus = preventReset();
+  if (retryStatus != -1) {
     final response = await ref
         .read(httpProvider)
-        .post(apiName: "forget-password", body: {"email": email});
-    log("Response ${response.body}");
+        .post(apiName: "verify-otp", body: {"otp": otp});
+    log("Response: ${response.statusCode}");
     if (response.statusCode == 200) {
-      ref.read(goRouterProvider).go("/otp_verify");
-      return jsonDecode(response.body)["message"];
+      ref.read(goRouterProvider).go("/create_pass", extra: otp);
+      return true;
     }
-  } catch (e) {}
-  return "";
+  }
+
+  return false;
+}
+
+@riverpod
+Future<String> resetPassword(Ref ref,
+    {required String otp, required String password}) async {
+  final response = await ref.read(httpProvider).post(
+      apiName: "reset-password", body: {"password": password, "otp": otp});
+  log("Reset Password: ${response.statusCode}| Body: ${response.body}");
+
+  if (response.statusCode == 200) {
+    ref.read(goRouterProvider).go("/login");
+  }
+
+  return jsonDecode(response.body)["message"];
+}
+
+int preventReset() {
+  const int maxRetries = 3;
+  final int? preventNum = CacheHelper.getInt("prevent");
+
+  if (preventNum == null) {
+    CacheHelper.setInt("prevent", 1);
+    return 1;
+  }
+  if (preventNum < maxRetries) {
+    CacheHelper.setInt("prevent", preventNum + 1);
+    return preventNum + 1;
+  }
+  return -1;
 }

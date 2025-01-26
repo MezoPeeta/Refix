@@ -36,8 +36,7 @@ class _AddEditPermissionState extends ConsumerState<AddEditPermission> {
         isEditting = true;
         nameController.text = widget.user!.username;
         selectedRole = widget.user!.role.id;
-        phoneController.text =
-            widget.user!.phone!.replaceAll("+966", "");
+        phoneController.text = widget.user!.phone!.replaceAll("+966", "");
         emailController.text = widget.user!.email;
       });
     }
@@ -111,7 +110,12 @@ class _AddEditPermissionState extends ConsumerState<AddEditPermission> {
                   decoration: const InputDecoration(
                       hintText: "Phone Number", icon: Text("+966")),
                 ),
-                PasswordFormField(passwordController: passwordController),
+                PasswordFormField(
+                  passwordController: passwordController,
+                  validator: (v) {
+                    return;
+                  },
+                ),
                 PrimaryButton(
                     text: "Save",
                     onPressed: () async {

@@ -32,6 +32,9 @@ mixin _$Booking {
   String? get note => throw _privateConstructorUsedError;
   @JsonKey(name: "images_before_reaper")
   List<String> get imagesBeforeReaper => throw _privateConstructorUsedError;
+  bool get reviewed => throw _privateConstructorUsedError;
+  @JsonKey(name: "problem_not_resolved")
+  String? get problemResolved => throw _privateConstructorUsedError;
   @JsonKey(name: "images_after_reaper")
   List<dynamic> get imagesAfterReaper => throw _privateConstructorUsedError;
   @JsonKey(name: "description_problem")
@@ -40,6 +43,10 @@ mixin _$Booking {
   String get status => throw _privateConstructorUsedError;
   @JsonKey(name: "cost")
   int get cost => throw _privateConstructorUsedError;
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_paid", defaultValue: false)
+  bool get isPaid => throw _privateConstructorUsedError;
   @JsonKey(name: "createdAt")
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "updatedAt")
@@ -66,10 +73,14 @@ abstract class $BookingCopyWith<$Res> {
       @JsonKey(name: "appointment_date") DateTime appointmentDate,
       @JsonKey(name: "note") String? note,
       @JsonKey(name: "images_before_reaper") List<String> imagesBeforeReaper,
+      bool reviewed,
+      @JsonKey(name: "problem_not_resolved") String? problemResolved,
       @JsonKey(name: "images_after_reaper") List<dynamic> imagesAfterReaper,
       @JsonKey(name: "description_problem") dynamic descriptionProblem,
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost") int cost,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "is_paid", defaultValue: false) bool isPaid,
       @JsonKey(name: "createdAt") DateTime createdAt,
       @JsonKey(name: "updatedAt") DateTime updatedAt});
 
@@ -97,10 +108,14 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
     Object? appointmentDate = null,
     Object? note = freezed,
     Object? imagesBeforeReaper = null,
+    Object? reviewed = null,
+    Object? problemResolved = freezed,
     Object? imagesAfterReaper = null,
     Object? descriptionProblem = freezed,
     Object? status = null,
     Object? cost = null,
+    Object? paymentMethod = freezed,
+    Object? isPaid = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -129,6 +144,14 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.imagesBeforeReaper
           : imagesBeforeReaper // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      reviewed: null == reviewed
+          ? _value.reviewed
+          : reviewed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      problemResolved: freezed == problemResolved
+          ? _value.problemResolved
+          : problemResolved // ignore: cast_nullable_to_non_nullable
+              as String?,
       imagesAfterReaper: null == imagesAfterReaper
           ? _value.imagesAfterReaper
           : imagesAfterReaper // ignore: cast_nullable_to_non_nullable
@@ -145,6 +168,14 @@ class _$BookingCopyWithImpl<$Res, $Val extends Booking>
           ? _value.cost
           : cost // ignore: cast_nullable_to_non_nullable
               as int,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPaid: null == isPaid
+          ? _value.isPaid
+          : isPaid // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -181,10 +212,14 @@ abstract class _$$BookingImplCopyWith<$Res> implements $BookingCopyWith<$Res> {
       @JsonKey(name: "appointment_date") DateTime appointmentDate,
       @JsonKey(name: "note") String? note,
       @JsonKey(name: "images_before_reaper") List<String> imagesBeforeReaper,
+      bool reviewed,
+      @JsonKey(name: "problem_not_resolved") String? problemResolved,
       @JsonKey(name: "images_after_reaper") List<dynamic> imagesAfterReaper,
       @JsonKey(name: "description_problem") dynamic descriptionProblem,
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost") int cost,
+      @JsonKey(name: "payment_method") String? paymentMethod,
+      @JsonKey(name: "is_paid", defaultValue: false) bool isPaid,
       @JsonKey(name: "createdAt") DateTime createdAt,
       @JsonKey(name: "updatedAt") DateTime updatedAt});
 
@@ -211,10 +246,14 @@ class __$$BookingImplCopyWithImpl<$Res>
     Object? appointmentDate = null,
     Object? note = freezed,
     Object? imagesBeforeReaper = null,
+    Object? reviewed = null,
+    Object? problemResolved = freezed,
     Object? imagesAfterReaper = null,
     Object? descriptionProblem = freezed,
     Object? status = null,
     Object? cost = null,
+    Object? paymentMethod = freezed,
+    Object? isPaid = null,
     Object? createdAt = null,
     Object? updatedAt = null,
   }) {
@@ -243,6 +282,14 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value._imagesBeforeReaper
           : imagesBeforeReaper // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      reviewed: null == reviewed
+          ? _value.reviewed
+          : reviewed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      problemResolved: freezed == problemResolved
+          ? _value.problemResolved
+          : problemResolved // ignore: cast_nullable_to_non_nullable
+              as String?,
       imagesAfterReaper: null == imagesAfterReaper
           ? _value._imagesAfterReaper
           : imagesAfterReaper // ignore: cast_nullable_to_non_nullable
@@ -259,6 +306,14 @@ class __$$BookingImplCopyWithImpl<$Res>
           ? _value.cost
           : cost // ignore: cast_nullable_to_non_nullable
               as int,
+      paymentMethod: freezed == paymentMethod
+          ? _value.paymentMethod
+          : paymentMethod // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isPaid: null == isPaid
+          ? _value.isPaid
+          : isPaid // ignore: cast_nullable_to_non_nullable
+              as bool,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -282,11 +337,15 @@ class _$BookingImpl implements _Booking {
       @JsonKey(name: "note") this.note,
       @JsonKey(name: "images_before_reaper")
       required final List<String> imagesBeforeReaper,
+      this.reviewed = false,
+      @JsonKey(name: "problem_not_resolved") this.problemResolved,
       @JsonKey(name: "images_after_reaper")
       required final List<dynamic> imagesAfterReaper,
       @JsonKey(name: "description_problem") required this.descriptionProblem,
       @JsonKey(name: "status") required this.status,
       @JsonKey(name: "cost") required this.cost,
+      @JsonKey(name: "payment_method") this.paymentMethod,
+      @JsonKey(name: "is_paid", defaultValue: false) required this.isPaid,
       @JsonKey(name: "createdAt") required this.createdAt,
       @JsonKey(name: "updatedAt") required this.updatedAt})
       : _services = services,
@@ -327,6 +386,12 @@ class _$BookingImpl implements _Booking {
     return EqualUnmodifiableListView(_imagesBeforeReaper);
   }
 
+  @override
+  @JsonKey()
+  final bool reviewed;
+  @override
+  @JsonKey(name: "problem_not_resolved")
+  final String? problemResolved;
   final List<dynamic> _imagesAfterReaper;
   @override
   @JsonKey(name: "images_after_reaper")
@@ -347,6 +412,12 @@ class _$BookingImpl implements _Booking {
   @JsonKey(name: "cost")
   final int cost;
   @override
+  @JsonKey(name: "payment_method")
+  final String? paymentMethod;
+  @override
+  @JsonKey(name: "is_paid", defaultValue: false)
+  final bool isPaid;
+  @override
   @JsonKey(name: "createdAt")
   final DateTime createdAt;
   @override
@@ -355,7 +426,7 @@ class _$BookingImpl implements _Booking {
 
   @override
   String toString() {
-    return 'Booking(id: $id, services: $services, customer: $customer, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Booking(id: $id, services: $services, customer: $customer, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, reviewed: $reviewed, problemResolved: $problemResolved, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, paymentMethod: $paymentMethod, isPaid: $isPaid, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -372,12 +443,19 @@ class _$BookingImpl implements _Booking {
             (identical(other.note, note) || other.note == note) &&
             const DeepCollectionEquality()
                 .equals(other._imagesBeforeReaper, _imagesBeforeReaper) &&
+            (identical(other.reviewed, reviewed) ||
+                other.reviewed == reviewed) &&
+            (identical(other.problemResolved, problemResolved) ||
+                other.problemResolved == problemResolved) &&
             const DeepCollectionEquality()
                 .equals(other._imagesAfterReaper, _imagesAfterReaper) &&
             const DeepCollectionEquality()
                 .equals(other.descriptionProblem, descriptionProblem) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.cost, cost) || other.cost == cost) &&
+            (identical(other.paymentMethod, paymentMethod) ||
+                other.paymentMethod == paymentMethod) &&
+            (identical(other.isPaid, isPaid) || other.isPaid == isPaid) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -394,10 +472,14 @@ class _$BookingImpl implements _Booking {
       appointmentDate,
       note,
       const DeepCollectionEquality().hash(_imagesBeforeReaper),
+      reviewed,
+      problemResolved,
       const DeepCollectionEquality().hash(_imagesAfterReaper),
       const DeepCollectionEquality().hash(descriptionProblem),
       status,
       cost,
+      paymentMethod,
+      isPaid,
       createdAt,
       updatedAt);
 
@@ -419,23 +501,27 @@ class _$BookingImpl implements _Booking {
 
 abstract class _Booking implements Booking {
   const factory _Booking(
-          {@JsonKey(name: "_id") required final String id,
-          @JsonKey(name: "services") required final List<Service> services,
-          @JsonKey(name: "customer") required final User customer,
-          @JsonKey(name: "appointment_date")
-          required final DateTime appointmentDate,
-          @JsonKey(name: "note") final String? note,
-          @JsonKey(name: "images_before_reaper")
-          required final List<String> imagesBeforeReaper,
-          @JsonKey(name: "images_after_reaper")
-          required final List<dynamic> imagesAfterReaper,
-          @JsonKey(name: "description_problem")
-          required final dynamic descriptionProblem,
-          @JsonKey(name: "status") required final String status,
-          @JsonKey(name: "cost") required final int cost,
-          @JsonKey(name: "createdAt") required final DateTime createdAt,
-          @JsonKey(name: "updatedAt") required final DateTime updatedAt}) =
-      _$BookingImpl;
+      {@JsonKey(name: "_id") required final String id,
+      @JsonKey(name: "services") required final List<Service> services,
+      @JsonKey(name: "customer") required final User customer,
+      @JsonKey(name: "appointment_date")
+      required final DateTime appointmentDate,
+      @JsonKey(name: "note") final String? note,
+      @JsonKey(name: "images_before_reaper")
+      required final List<String> imagesBeforeReaper,
+      final bool reviewed,
+      @JsonKey(name: "problem_not_resolved") final String? problemResolved,
+      @JsonKey(name: "images_after_reaper")
+      required final List<dynamic> imagesAfterReaper,
+      @JsonKey(name: "description_problem")
+      required final dynamic descriptionProblem,
+      @JsonKey(name: "status") required final String status,
+      @JsonKey(name: "cost") required final int cost,
+      @JsonKey(name: "payment_method") final String? paymentMethod,
+      @JsonKey(name: "is_paid", defaultValue: false) required final bool isPaid,
+      @JsonKey(name: "createdAt") required final DateTime createdAt,
+      @JsonKey(name: "updatedAt")
+      required final DateTime updatedAt}) = _$BookingImpl;
 
   factory _Booking.fromJson(Map<String, dynamic> json) = _$BookingImpl.fromJson;
 
@@ -458,6 +544,11 @@ abstract class _Booking implements Booking {
   @JsonKey(name: "images_before_reaper")
   List<String> get imagesBeforeReaper;
   @override
+  bool get reviewed;
+  @override
+  @JsonKey(name: "problem_not_resolved")
+  String? get problemResolved;
+  @override
   @JsonKey(name: "images_after_reaper")
   List<dynamic> get imagesAfterReaper;
   @override
@@ -469,6 +560,12 @@ abstract class _Booking implements Booking {
   @override
   @JsonKey(name: "cost")
   int get cost;
+  @override
+  @JsonKey(name: "payment_method")
+  String? get paymentMethod;
+  @override
+  @JsonKey(name: "is_paid", defaultValue: false)
+  bool get isPaid;
   @override
   @JsonKey(name: "createdAt")
   DateTime get createdAt;

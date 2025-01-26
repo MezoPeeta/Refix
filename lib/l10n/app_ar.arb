@@ -266,5 +266,19 @@
     "otp_verification_title": "التحقق من الرمز",
     "otp_verification_message": "أدخل رمز التحقق الذي أرسلناه للتو إلى بريدك الإلكتروني",
     "points_redeemed_message": "تم استرداد النقاط والحصول على خصم {percentage}%",
-    "report_problem_not_resolved": "الإبلاغ عن المشكلة لم يتم حلها"
+    "report_problem_not_resolved": "الإبلاغ عن المشكلة لم يتم حلها",
+    "upload_images": "جاري رفع الصور..",
+    "check_discount": "التحقق من الخصومات..",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "passwordUniqueness": "يجب أن تكون كلمة المرور الجديدة فريدة من نوعها ولا تشبه أي كلمة مرور مستخدمة سابقًا.",
+    "createNewPassword": "إنشاء كلمة مرور جديدة",
+    "photoLimit": "يمكنك إضافة 4 صور فقط",
+    "addServices": "إضافة خدمات",
+    "fillOtp": "الرجاء تعبئة رمز التحقق (OTP)",
+    "otpVerified": "تم التحقق من رمز التحقق بنجاح",
+    "updatedSuccessfully": "تم التحديث بنجاح",
+    "otpLimit": "لا يمكنك إرسال أكثر من 3 رموز تحقق",
+    "notBookedYet": "لم تحجز بعد",
+    "pay": "ادفع",
+    "noReviews": "لا توجد مراجعات للخدمة الحالية"
 }

@@ -30,8 +30,6 @@ class User with _$User {
     @JsonKey(name: "is_verified") required bool isVerified,
     @JsonKey(name: "have_point_offer") required bool havePointsOffer,
     @JsonKey(name: "have_discount") required bool haveDiscount,
-
-
   }) = _User;
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
@@ -51,8 +49,7 @@ class Role with _$Role {
 class Notification with _$Notification {
   factory Notification({
     @JsonKey(name: "title") required String title,
-    @JsonKey(name: "body") required String body,
-    @JsonKey(name: "read") required bool read,
+
   }) = _Notification;
 
   factory Notification.fromJson(Map<String, dynamic> json) =>

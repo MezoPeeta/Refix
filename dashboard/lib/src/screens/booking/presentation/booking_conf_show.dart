@@ -2,10 +2,12 @@ import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../core/theme/btns.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/radii.dart';
+import '../../base/base.dart';
 import '../../users/domain/users_domain.dart';
 import 'booking.dart';
 
@@ -39,6 +41,7 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                const PrevButton(),
                 const Center(child: Text("Client Details")),
                 const Divider(),
                 const TextHeader(
@@ -153,6 +156,7 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                   maxLength: 200,
                   initialValue: details.note ?? "",
                   maxLines: 8,
+                  readOnly: true,
                   decoration: const InputDecoration(
                     hintText: "Add Notes",
                     filled: true,
@@ -223,6 +227,7 @@ class _BookingConfShowState extends ConsumerState<BookingConfShow> {
                                                     bookingID: details.id,
                                                     workerID: workerID ?? "")
                                                 .future);
+                                        context.pop();
                                         setState(() {
                                           loading = false;
                                         });

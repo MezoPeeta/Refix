@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dashboard/src/core/navigation/api.dart';
+import 'package:dashboard/src/core/navigation/routes.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -52,10 +53,15 @@ Future<String> createWorker(Ref ref,
     "phone": phone,
     "company_name": companyName
   });
-  final data = jsonDecode(request.body);
-  if (request.statusCode == 200) {
-    return data;
+  print("Request: ${request.body}| Status Code: ${request.statusCode}");
+
+  if (request.statusCode == 201) {
+    ref.invalidate(getAllWorkersProvider);
+    ref.read(goRouterProvider).pop();
+    return "Successfull";
   }
+  final data = jsonDecode(request.body);
+
   return data["message"] is List ? data["message"].first : data["message"];
 }
 
@@ -76,10 +82,14 @@ Future<String> updateWorker(Ref ref,
     "phone": phone,
     "company_name": companyName
   });
-  final data = jsonDecode(request.body);
   if (request.statusCode == 200) {
+    ref.invalidate(getAllWorkersProvider);
+    ref.read(goRouterProvider).pop();
+
     return "Updated Successfully";
   }
+  final data = jsonDecode(request.body);
+
   return data["message"] is List ? data["message"].first : data["message"];
 }
 

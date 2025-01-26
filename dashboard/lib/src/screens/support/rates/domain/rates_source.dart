@@ -8,8 +8,13 @@ class RatesDataSource extends DataTableSource {
   List<Reviews> data;
   RatesDataSource(this.data, this.ref);
   String formatTime(DateTime time) {
-    final formattedDate = DateFormat.yMd().format(time);
-    final formattedTime = DateFormat('jm').format(time);
+    // Convert UTC time to Saudi Arabia Time (UTC+3)
+    DateTime saudiTime = time.add(const Duration(hours: 3));
+
+    // Format the date and time
+    final formattedDate = DateFormat.yMd().format(saudiTime);
+    final formattedTime = DateFormat('jm').format(saudiTime);
+
     return "$formattedTime $formattedDate";
   }
 

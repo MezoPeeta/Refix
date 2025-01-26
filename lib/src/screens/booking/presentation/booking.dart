@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,6 +16,20 @@ final currentStatusProvider = StateProvider<String>((ref) => "PENDING");
 
 class BookingScreen extends ConsumerWidget {
   const BookingScreen({super.key});
+
+  String btnText(BuildContext context, String status, String? paymentMethod,
+      {bool isPaid = false}) {
+    if (paymentMethod == null) {
+      if (status == "PENDING") {
+        return context.tr.show;
+      }
+      return context.tr.addReview;
+    }
+    if (paymentMethod == "CARD" && isPaid == false) {
+      return context.tr.pay;
+    }
+    return context.tr.show;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -53,201 +68,218 @@ class BookingScreen extends ConsumerWidget {
         ),
         centerTitle: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      ref.read(currentStatusProvider.notifier).state =
-                          "PENDING";
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: status == "PENDING"
-                              ? AppColors.primaryRefix
-                              : AppColors.neutralRefix,
-                          borderRadius: BorderRadius.circular(AppRadii.lg)),
-                      child: Text(
-                        context.tr.current,
-                        style: const TextStyle(color: AppColors.white),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      ref.read(currentStatusProvider.notifier).state = "CLOSED";
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                          color: status == "CLOSED"
-                              ? AppColors.primaryRefix
-                              : AppColors.neutralRefix,
-                          borderRadius: BorderRadius.circular(AppRadii.lg)),
-                      child: Text(
-                        context.tr.closed,
-                        style: const TextStyle(color: AppColors.white),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: discount.when(
-                    data: (data) {
-                      if (data?.active == false) {
-                        return const SizedBox.shrink();
-                      }
-                      return Container(
-                        height: 144,
+      body: RefreshIndicator.adaptive(
+        onRefresh: () async => ref.invalidate(getUserBookingProvider),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        ref.read(currentStatusProvider.notifier).state =
+                            "PENDING";
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                            color: AppColors.secondaryRefix,
+                            color: status == "PENDING"
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                             borderRadius: BorderRadius.circular(AppRadii.lg)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  data?.heading?.localized ?? "",
-                                  style: const TextStyle(
-                                      color: AppColors.white,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ),
-                              Stack(
-                                alignment: Alignment.bottomCenter,
-                                children: [
-                                  const CircleAvatar(
-                                    backgroundColor: AppColors.primaryRefix,
-                                    radius: 40,
-                                  ),
-                                  Lottie.asset(
-                                      "assets/img/services/present_lottie.json",
-                                      width: 80)
-                                ],
-                              ),
-                            ],
-                          ),
+                        child: Text(
+                          context.tr.current,
+                          style: const TextStyle(color: AppColors.white),
                         ),
-                      );
-                    },
-                    error: (e, s) {
-                      return const Text("Error loading discount");
-                    },
-                    loading: () => const CircularProgressIndicator.adaptive())),
-            const SizedBox(
-              height: 16,
-            ),
-            bookings.when(
-                data: (data) {
-                  final bookings =
-                      data.where((e) => e.status == status).toList();
-                  if (bookings.isEmpty) {
-                    return const Center(
-                      child: Text("You haven't booked yet"),
-                    );
-                  }
-                  return ListView.separated(
-                      itemCount: bookings.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      separatorBuilder: (context, _) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 16, horizontal: 16),
-                          child: Text(
-                            context.tr.fineBooking("20"),
-                            style: const TextStyle(
-                                color: AppColors.neutral300,
-                                fontSize: AppTextSize.one),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        ref.read(currentStatusProvider.notifier).state =
+                            "CLOSED";
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                            color: status == "CLOSED"
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
+                            borderRadius: BorderRadius.circular(AppRadii.lg)),
+                        child: Text(
+                          context.tr.closed,
+                          style: const TextStyle(color: AppColors.white),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: discount.when(
+                      data: (data) {
+                        if (data?.active == false) {
+                          return const SizedBox.shrink();
+                        }
+                        return Container(
+                          height: 144,
+                          decoration: BoxDecoration(
+                              color: AppColors.secondaryRefix,
+                              borderRadius: BorderRadius.circular(AppRadii.lg)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    data?.heading?.localized ?? "",
+                                    style: const TextStyle(
+                                        color: AppColors.white,
+                                        fontWeight: FontWeight.w700),
+                                  ),
+                                ),
+                                Stack(
+                                  alignment: Alignment.bottomCenter,
+                                  children: [
+                                    const CircleAvatar(
+                                      backgroundColor: AppColors.primaryRefix,
+                                      radius: 40,
+                                    ),
+                                    Lottie.asset(
+                                        "assets/img/services/present_lottie.json",
+                                        width: 80)
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         );
                       },
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(16),
-                                height: 66,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.circular(AppRadii.lg),
-                                    color: AppColors.neutral50),
-                                child: SvgPicture.asset(
-                                  "assets/img/home/fire.svg",
-                                  width: 33,
-                                  height: 34,
-                                  fit: BoxFit.scaleDown,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 16,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    bookings[index]
-                                        .services
-                                        .first
-                                        .name
-                                        .localized,
-                                    style: const TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w500),
+                      error: (e, s) {
+                        return const Text("Error loading discount");
+                      },
+                      loading: () =>
+                          const CircularProgressIndicator.adaptive())),
+              const SizedBox(
+                height: 16,
+              ),
+              bookings.when(
+                  data: (data) {
+                    final bookings = data.where((e) {
+                      if (status == "PENDING") {
+                        return e.status == "PENDING" || e.status == "ASSIGNED";
+                      }
+                      return e.status == "CLOSED";
+                    }).toList();
+                    if (bookings.isEmpty) {
+                      return Center(
+                        child: Text(context.tr.notBookedYet),
+                      );
+                    }
+                    return ListView.separated(
+                        itemCount: bookings.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        separatorBuilder: (context, _) {
+                          return const SizedBox(
+                            height: 10,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                            ),
+                            child: Row(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(16),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.circular(AppRadii.lg),
+                                      color: AppColors.neutral50),
+                                  child: CachedNetworkImage(
+                                    imageUrl:
+                                        "https://api.refixapp.com/${data[index].services.first.image}",
+                                    width: 33,
+                                    height: 34,
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.broken_image),
+                                    fit: BoxFit.cover,
                                   ),
-                                  Text(
-                                    bookings[index]
-                                        .services
-                                        .first
-                                        .details
-                                        .localized,
-                                    style: const TextStyle(
-                                      fontSize: AppTextSize.two,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              const Spacer(),
-                              SecondaryButton(
-                                text: status == "PENDING"
-                                    ? context.tr.show
-                                    : context.tr.addReview,
-                                onPressed: () => context.pushNamed("InBooking",
-                                    extra: bookings[index]),
-                                size: const Size(105, 40),
-                              )
-                            ],
-                          ),
-                        );
-                      });
-                },
-                error: (e, s) {
-                  log("Booking Error", error: e, stackTrace: s);
-                  return Text("Error: $e");
-                },
-                loading: () => const Center(child: SizedBox.shrink()))
-          ],
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        bookings[index]
+                                            .services
+                                            .first
+                                            .name
+                                            .localized,
+                                        style: const TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                      Text(
+                                        bookings[index]
+                                            .services
+                                            .first
+                                            .details
+                                            .localized,
+                                        style: const TextStyle(
+                                          fontSize: AppTextSize.two,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                const Spacer(),
+                                SecondaryButton(
+                                  text: btnText(context, status,
+                                      bookings[index].paymentMethod,
+                                      isPaid: bookings[index].isPaid),
+                                  onPressed: () {
+                                    if (bookings[index].isPaid == false &&
+                                        bookings[index].paymentMethod ==
+                                            "CARD") {
+                                      context.push("/payment_method");
+                                      return;
+                                    }
+                                    context.pushNamed("InBooking",
+                                        extra: bookings[index]);
+                                  },
+                                  size: const Size(75, 40),
+                                )
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  error: (e, s) {
+                    log("Booking Error", error: e, stackTrace: s);
+                    return Text("Error: $e");
+                  },
+                  loading: () => const Center(child: SizedBox.shrink()))
+            ],
+          ),
         ),
       ),
     );

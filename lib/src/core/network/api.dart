@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:retry/retry.dart';
 
@@ -12,7 +14,7 @@ import '../../screens/auth/domain/auth_domain.dart';
 final httpProvider = Provider<HttpAPI>(HttpAPI.new);
 
 class HttpAPI {
-  final String baseAPI = "https://refix-api.onrender.com/api/v1/";
+  final String baseAPI = "https://api.refixapp.com/api/v1/";
   Ref ref;
   HttpAPI(this.ref);
   Future<Response> post({
@@ -50,10 +52,9 @@ class HttpAPI {
   }) async {
     const r = RetryOptions(
         maxAttempts: 3,
-        randomizationFactor: 1,
-        maxDelay: Duration(minutes: 2),
+        maxDelay: Duration(minutes: 1),
         delayFactor: Duration(seconds: 50));
-    final accessToken = await ref.read(authProvider).getAccessToken();
+    String? accessToken = await ref.read(authProvider).getAccessToken();
     final currentLocale = ref.read(localeNotifierProvider).languageCode;
 
     Future<Response> makeRequest() async {
@@ -89,7 +90,7 @@ class HttpAPI {
           throw Exception('Unsupported HTTP method');
       }
       if (response.statusCode == 401) {
-        await ref.read(authProvider).refreshAccessToken();
+        accessToken = await ref.read(authProvider).refreshAccessToken();
         throw UnauthorizedException();
       }
 
@@ -103,6 +104,27 @@ class HttpAPI {
       },
       retryIf: (e) => e is UnauthorizedException,
     );
+  }
+
+  Future<MultipartRequest> sendMultipart(
+      {required String url,
+      required List<String> filePaths,
+      required String fieldName}) async {
+    var bUrl = Uri.parse("$baseAPI$url");
+    var request = http.MultipartRequest('POST', bUrl);
+    for (final image in filePaths) {
+      request.files.add(await http.MultipartFile.fromPath(
+        fieldName,
+        image,
+        contentType: MediaType('image', 'webp'),
+      ));
+    }
+
+    final accessToken = await ref.read(authProvider).getAccessToken();
+
+    // Add headers
+    request.headers['Authorization'] = 'Bearer $accessToken';
+    return request;
   }
 }
 

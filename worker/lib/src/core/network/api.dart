@@ -11,7 +11,7 @@ import '../../screens/auth/domain/auth_domain.dart';
 final httpProvider = Provider<HttpAPI>(HttpAPI.new);
 
 class HttpAPI {
-  final String baseAPI = "https://refix-api.onrender.com/api/v1/";
+  final String baseAPI = "https://api.refixapp.com/api/v1/";
   Ref ref;
   HttpAPI(this.ref);
   Future<Response> post({

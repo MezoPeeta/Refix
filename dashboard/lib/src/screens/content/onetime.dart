@@ -6,7 +6,6 @@ import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:image_network/image_network.dart';
 
 import 'data/boarding_data.dart';
 
@@ -37,7 +36,7 @@ class OnetimeScreen extends ConsumerWidget {
                           id: data[index].id,
                           onPressed: () async {
                             final imageN = await http.get(Uri.parse(
-                                "https://refix-api.onrender.com/${data[index].image}"));
+                                "https://api.refixapp.com/${data[index].image}"));
                             final bytesImage = imageN.bodyBytes;
                             ref.read(boardingInfoProvider.notifier).state =
                                 BoardingUpdate(
@@ -52,7 +51,7 @@ class OnetimeScreen extends ConsumerWidget {
                           title: data[index].heading.en,
                           description: data[index].details.en,
                           networkImage:
-                              "https://refix-api.onrender.com/${data[index].image}",
+                              "https://api.refixapp.com/${data[index].image}",
                           text: "Screen ${index + 1}",
                         ),
                       );
@@ -102,11 +101,11 @@ class BoardingInfo extends StatelessWidget {
                     topRight: Radius.circular(16)),
                 child: networkImage == null
                     ? const Icon(Icons.broken_image)
-                    : ImageNetwork(
+                    : Image.network(
                         height: 270,
                         width: 408,
-                        fitWeb: BoxFitWeb.cover,
-                        image: networkImage!,
+                        fit: BoxFit.cover,
+                        networkImage!,
                       ),
               ),
               Text(title,

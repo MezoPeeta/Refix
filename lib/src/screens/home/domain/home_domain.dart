@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/network/api.dart';
 import '../../auth/domain/auth_domain.dart';
+import '../../services/domain/booking_domain.dart';
 import '../data/home_data.dart';
 
 part 'home_domain.g.dart';
@@ -17,7 +19,6 @@ Future<List<Ad>> getAds(Ref ref, {AdsType type = AdsType.slider}) async {
         apiName: "ads?type=${type.name}",
       );
   final data = json.decode(request.body);
-
   if (request.statusCode == 200) {
     final List<Ad> a = data.map<Ad>((e) => Ad.fromJson(e)).toList();
     return a;
@@ -75,4 +76,21 @@ Future<List<Service>> getSubServices(
     return [];
   }
   return [];
+}
+
+@riverpod
+Future<String?> reportBooking(Ref ref,
+    {required String id, required String body}) async {
+  try {
+    final request = await ref.read(httpProvider).authenticatedRequest(
+        url: "booking/$id/problem-not-resolved",
+        method: "POST",
+        body: {"problem_not_resolved": body});
+    if (request.statusCode == 201) {
+      ref.invalidate(getUserBookingProvider);
+      return request.body;
+    }
+  } catch (e) {}
+
+  return null;
 }

@@ -417,5 +417,152 @@ class _GetSubServicesProviderElement
   @override
   String? get type => (origin as GetSubServicesProvider).type;
 }
+
+String _$reportBookingHash() => r'98bc9f9e4f8886852a5358973f0df4ff3f189518';
+
+/// See also [reportBooking].
+@ProviderFor(reportBooking)
+const reportBookingProvider = ReportBookingFamily();
+
+/// See also [reportBooking].
+class ReportBookingFamily extends Family<AsyncValue<String?>> {
+  /// See also [reportBooking].
+  const ReportBookingFamily();
+
+  /// See also [reportBooking].
+  ReportBookingProvider call({
+    required String id,
+    required String body,
+  }) {
+    return ReportBookingProvider(
+      id: id,
+      body: body,
+    );
+  }
+
+  @override
+  ReportBookingProvider getProviderOverride(
+    covariant ReportBookingProvider provider,
+  ) {
+    return call(
+      id: provider.id,
+      body: provider.body,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'reportBookingProvider';
+}
+
+/// See also [reportBooking].
+class ReportBookingProvider extends AutoDisposeFutureProvider<String?> {
+  /// See also [reportBooking].
+  ReportBookingProvider({
+    required String id,
+    required String body,
+  }) : this._internal(
+          (ref) => reportBooking(
+            ref as ReportBookingRef,
+            id: id,
+            body: body,
+          ),
+          from: reportBookingProvider,
+          name: r'reportBookingProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$reportBookingHash,
+          dependencies: ReportBookingFamily._dependencies,
+          allTransitiveDependencies:
+              ReportBookingFamily._allTransitiveDependencies,
+          id: id,
+          body: body,
+        );
+
+  ReportBookingProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.id,
+    required this.body,
+  }) : super.internal();
+
+  final String id;
+  final String body;
+
+  @override
+  Override overrideWith(
+    FutureOr<String?> Function(ReportBookingRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ReportBookingProvider._internal(
+        (ref) => create(ref as ReportBookingRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        id: id,
+        body: body,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<String?> createElement() {
+    return _ReportBookingProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ReportBookingProvider &&
+        other.id == id &&
+        other.body == body;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
+    hash = _SystemHash.combine(hash, body.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ReportBookingRef on AutoDisposeFutureProviderRef<String?> {
+  /// The parameter `id` of this provider.
+  String get id;
+
+  /// The parameter `body` of this provider.
+  String get body;
+}
+
+class _ReportBookingProviderElement
+    extends AutoDisposeFutureProviderElement<String?> with ReportBookingRef {
+  _ReportBookingProviderElement(super.provider);
+
+  @override
+  String get id => (origin as ReportBookingProvider).id;
+  @override
+  String get body => (origin as ReportBookingProvider).body;
+}
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

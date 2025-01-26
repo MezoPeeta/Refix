@@ -11,6 +11,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../core/theme/btns.dart';
 import '../../../core/theme/colors.dart';
 import '../../../core/theme/radii.dart';
+import '../../base/base.dart';
 
 final getBookingInfoProvider = StateProvider<BookingElement?>((ref) {
   return null;
@@ -47,6 +48,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      const PrevButton(),
                       const Center(child: Text("Client Details")),
                       const Divider(),
                       const TextHeader(
@@ -200,13 +202,9 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                         readOnly: true,
                         initialValue:
                             DateFormat.yMd().format(details.appointmentDate),
-                        decoration: InputDecoration(
-                            hintText: "Pick Date",
-                            suffixIcon: SvgPicture.asset(
-                              "assets/img/services/calendar.svg",
-                              width: 11,
-                              fit: BoxFit.scaleDown,
-                            )),
+                        decoration: const InputDecoration(
+                          hintText: "Pick Date",
+                        ),
                       ),
                       const SizedBox(
                         height: 16,
@@ -214,6 +212,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                       TextFormField(
                         maxLength: 200,
                         maxLines: 8,
+                        readOnly: true,
                         decoration: const InputDecoration(
                           hintText: "Add Notes",
                           filled: true,
@@ -327,6 +326,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                     TextFormField(
                       maxLength: 200,
                       maxLines: 8,
+                      readOnly: true,
                       decoration: const InputDecoration(
                         hintText: "Add Notes",
                         filled: true,
@@ -336,7 +336,7 @@ class _BookingScreenState extends ConsumerState<BookingScreen> {
                       height: 16,
                     ),
                     SecondaryButton(
-                      loading: loading,
+                        loading: loading,
                         text: "Complete",
                         onPressed: () async {
                           setState(() {
@@ -403,7 +403,7 @@ class AddedImage extends StatelessWidget {
               image: DecorationImage(
                   fit: BoxFit.cover,
                   image: NetworkImage(
-                    "https://refix-api.onrender.com/$path",
+                    "https://api.refixapp.com/$path",
                   )),
               borderRadius: BorderRadius.circular(AppRadii.lg)),
         ),
@@ -441,29 +441,20 @@ class _ServiceContainerState extends State<ServiceContainer> {
     return DottedBorder(
       borderType: BorderType.RRect,
       radius: const Radius.circular(AppRadii.md),
-      padding: isSelected ? const EdgeInsets.all(8) : EdgeInsets.zero,
-      color: isSelected ? AppColors.primaryRefix : Colors.transparent,
-      child: GestureDetector(
-        onTap: () {
-          setState(() {
-            isSelected = !isSelected;
-          });
-        },
-        child: Column(
-          children: [
-            Container(
-              height: 52,
-              width: isSelected ? 110.67 : 116.67,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(AppRadii.lg),
-                  color: isSelected
-                      ? AppColors.primaryRefix
-                      : AppColors.neutral100),
-            ),
-            SizedBox(height: isSelected ? 5 : 13),
-            Text(widget.name)
-          ],
-        ),
+      padding: const EdgeInsets.all(8),
+      color: AppColors.primaryRefix,
+      child: Column(
+        children: [
+          Container(
+            height: 52,
+            width: isSelected ? 110.67 : 116.67,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(AppRadii.lg),
+                color: AppColors.primaryRefix),
+          ),
+          const SizedBox(height: 5),
+          Text(widget.name)
+        ],
       ),
     );
   }

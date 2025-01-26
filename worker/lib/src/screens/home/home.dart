@@ -169,7 +169,7 @@ class HomeScreen extends ConsumerWidget {
                                         decoration: BoxDecoration(
                                             image: DecorationImage(
                                                 image: NetworkImage(
-                                                    "https://refix-api.onrender.com/${tasks.first.services[index].image}")),
+                                                    "https://api.refixapp.com/${tasks.first.services[index].image}")),
                                             borderRadius: BorderRadius.circular(
                                                 AppRadii.lg),
                                             color: AppColors.neutral50),

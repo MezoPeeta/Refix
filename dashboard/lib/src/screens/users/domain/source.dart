@@ -17,6 +17,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/navigation/routes.dart';
 import '../../auth/data/auth_data.dart';
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
 import '../tasks.dart';
@@ -146,8 +147,13 @@ class BookingDataSource extends DataTableSource {
   BookingDataSource(this.ref, this.bookings);
 
   String formatTime(DateTime time) {
-    final formattedDate = DateFormat.yMd().format(time);
-    final formattedTime = DateFormat('jm').format(time);
+    // Convert UTC time to Saudi Arabia Time (UTC+3)
+    DateTime saudiTime = time.add(const Duration(hours: 3));
+
+    // Format the date and time
+    final formattedDate = DateFormat.yMd().format(saudiTime);
+    final formattedTime = DateFormat('jm').format(saudiTime);
+
     return "$formattedTime $formattedDate";
   }
 
@@ -188,8 +194,13 @@ class BookingConfDataSource extends DataTableSource {
   WidgetRef ref;
   BookingConfDataSource(this.ref, this.bookings);
   String formatTime(DateTime time) {
-    final formattedDate = DateFormat.yMd().format(time);
-    final formattedTime = DateFormat('jm').format(time);
+    // Convert UTC time to Saudi Arabia Time (UTC+3)
+    DateTime saudiTime = time.add(const Duration(hours: 3));
+
+    // Format the date and time
+    final formattedDate = DateFormat.yMd().format(saudiTime);
+    final formattedTime = DateFormat('jm').format(saudiTime);
+
     return "$formattedTime $formattedDate";
   }
 
@@ -229,8 +240,13 @@ class PointsDataSource extends DataTableSource {
   List<Point> data;
   PointsDataSource(this.data, this.ref);
   String formatTime(DateTime time) {
-    final formattedDate = DateFormat.yMd().format(time);
-    final formattedTime = DateFormat('jm').format(time);
+    // Convert UTC time to Saudi Arabia Time (UTC+3)
+    DateTime saudiTime = time.add(const Duration(hours: 3));
+
+    // Format the date and time
+    final formattedDate = DateFormat.yMd().format(saudiTime);
+    final formattedTime = DateFormat('jm').format(saudiTime);
+
     return "$formattedTime $formattedDate";
   }
 
@@ -399,6 +415,7 @@ Future<String?> assignWorkerToBooking(Ref ref,
   final data = response.body;
 
   if (response.statusCode == 200) {
+    ref.read(goRouterProvider).pop();
     return data;
   }
 
@@ -528,7 +545,7 @@ class ServicesDataTable extends DataTableSource {
       DataCell(SelectableText(data[index].id)),
       DataCell(CircleAvatar(
         backgroundImage:
-            NetworkImage("https://refix-api.onrender.com/${data[index].image}"),
+            NetworkImage("https://api.refixapp.com/${data[index].image}"),
       )),
       DataCell(SelectableText(data[index].name?.en ?? "")),
       DataCell(SelectableText(data[index].type ?? "")),

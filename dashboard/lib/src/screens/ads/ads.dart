@@ -59,7 +59,7 @@ class AdsScreen extends ConsumerWidget {
                                       child: BoardingInfo(
                                         onPressed: () async {
                                           final imageN = await http.get(Uri.parse(
-                                              "https://refix-api.onrender.com/${sliders[index].image}"));
+                                              "https://api.refixapp.com/${sliders[index].image}"));
                                           final bytesImage = imageN.bodyBytes;
                                           ref
                                               .read(adInfoProvider.notifier)
@@ -77,7 +77,7 @@ class AdsScreen extends ConsumerWidget {
                                         title: "",
                                         description: "",
                                         networkImage:
-                                            "https://refix-api.onrender.com/${sliders[index].image}",
+                                            "https://api.refixapp.com/${sliders[index].image}",
                                         text: "Screen ${index + 1}",
                                       ),
                                     );
@@ -107,7 +107,7 @@ class AdsScreen extends ConsumerWidget {
                                               onPressed: () async {
                                                 final imageN = await http.get(
                                                     Uri.parse(
-                                                        "https://refix-api.onrender.com/${banners[index].image}"));
+                                                        "https://api.refixapp.com/${banners[index].image}"));
                                                 final bytesImage =
                                                     imageN.bodyBytes;
                                                 ref
@@ -127,7 +127,7 @@ class AdsScreen extends ConsumerWidget {
                                               title: "",
                                               description: "",
                                               networkImage:
-                                                  "https://refix-api.onrender.com/${banners[index].image}",
+                                                  "https://api.refixapp.com/${banners[index].image}",
                                               text: "Screen ${index + 1}",
                                             ),
                                           );

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ import '../../../core/ui/widgets/header.dart';
 import '../../home/data/home_data.dart';
 import '../../home/domain/home_domain.dart';
 import '../../profile/presentation/payment_methods.dart';
+import 'full_screen_img.dart';
 import 'services.dart';
 
 final imageProvider = StateProvider<XFile?>((ref) => null);
@@ -46,16 +48,18 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
   final timeController = TextEditingController();
   final notesController = TextEditingController();
 
-  bool loading = false;
+  bool compressLoading = false;
   DateTime? dateTime;
   List<String> photos = [];
   List<Service> addedServices = [];
+  String? loadingText;
 
   @override
   Widget build(BuildContext context) {
     final service = Service.fromJson(jsonDecode(widget.service));
     List<String> capturedPhotos = [widget.photo, ...photos];
     List<Service> allServices = [service, ...addedServices];
+
     return Scaffold(
       appBar: AppBar(
         title: Column(
@@ -170,7 +174,7 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                                         ),
                                                       ),
                                                       PrimaryButton(
-                                                          text: "Add Services",
+                                                          text: context.tr.addServices,
                                                           onPressed: () {
                                                             context.pop();
                                                           })
@@ -244,9 +248,9 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                   onTap: () async {
                                     if (photos.length > 2) {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar(const SnackBar(
+                                          .showSnackBar( SnackBar(
                                               content: Text(
-                                                  "You can only add 4 photos")));
+                                                  context.tr.photoLimit)));
                                       return;
                                     }
                                     final ImagePicker picker = ImagePicker();
@@ -254,7 +258,15 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                         source: ImageSource.camera);
                                     if (photo != null) {
                                       setState(() {
-                                        photos.add(photo.path);
+                                        compressLoading = true;
+                                      });
+                                      final compressedPhoto =
+                                          await compressImage(photo);
+                                      setState(() {
+                                        photos.add(compressedPhoto);
+                                      });
+                                      setState(() {
+                                        compressLoading = false;
                                       });
                                     }
                                   },
@@ -274,14 +286,22 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                   ),
                                 );
                               }
-                              return AddedImage(
-                                path: capturedPhotos[index],
-                                onRemove: () {
-                                  setState(() {
-                                    photos.removeAt(index - 1);
-                                  });
-                                },
-                              );
+                              return compressLoading
+                                  ? const Center(
+                                      child: SizedBox(
+                                          width: 10,
+                                          height: 10,
+                                          child: CircularProgressIndicator
+                                              .adaptive()),
+                                    )
+                                  : AddedImage(
+                                      path: capturedPhotos[index],
+                                      onRemove: () {
+                                        setState(() {
+                                          photos.removeAt(index - 1);
+                                        });
+                                      },
+                                    );
                             }),
                       ),
                     ),
@@ -395,62 +415,52 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: PrimaryButton(
-          text: context.tr.bookNow,
-          loading: loading,
+          text: loadingText ?? context.tr.bookNow,
           onPressed: () async {
-            final addedServicesID = allServices.map((e) => e.id).toList();
             if (_key.currentState!.validate()) {
+              final addedServicesID = allServices.map((e) => e.id).toList();
+
               setState(() {
-                loading = true;
+                loadingText = context.tr.upload_images;
               });
+              final stopwatch = Stopwatch()..start();
 
-              try {
-                final bookingID = await ref.read(addBookingProvider(
-                  images: capturedPhotos,
-                  date: dateTime!,
-                  notes: notesController.text,
-                  services: addedServicesID,
-                ).future);
+              final bookingID = await ref.read(addBookingProvider(
+                imagePaths: capturedPhotos,
+                date: dateTime!,
+                notes: notesController.text,
+                services: addedServicesID,
+              ).future);
+              log('Request is executed in milliseconds: ${stopwatch.elapsed.inMilliseconds}');
+              ref.read(bookingIDProvider.notifier).state = bookingID;
 
-                ref.read(bookingIDProvider.notifier).state = bookingID;
+              if (!context.mounted) return;
+              setState(() {
+                loadingText = context.tr.check_discount;
+              });
+              setState(() {});
 
-                if (!context.mounted) return;
+              final results = await Future.wait([
+                ref.read(getDiscountProvider(pageName: "Booking Done").future),
+                ref.read(getCustomerOfferProvider.future),
+              ]);
 
-                final results = await Future.wait([
-                  ref.read(
-                      getDiscountProvider(pageName: "Booking Done").future),
-                  ref.read(getCustomerOfferProvider.future),
-                ]);
+              final discount = results[0] as Discount?;
+              final offer = results[1] as Offer?;
 
-                final discount = results[0] as Discount?;
-                final offer = results[1] as Offer?;
-
-                if (mounted) {
-                  setState(() {
-                    loading = false;
-                  });
-                }
-
-                if (discount != null && offer != null) {
-                  if (discount.active == true || offer.isUsed == false) {
-                    return context.goNamed(
-                      "BookingDone",
-                      extra: discount,
-                      pathParameters: {
-                        "cost": service.price.toString(),
-                        "points": offer.point.percentage.toString(),
-                      },
-                    );
-                  }
-                }
-                context.go("/payment_method");
-              } catch (e) {
-                if (mounted) {
-                  setState(() {
-                    loading = false;
-                  });
+              if (discount != null && offer != null) {
+                if (discount.active == true || offer.isUsed == false) {
+                  return context.goNamed(
+                    "BookingDone",
+                    extra: discount,
+                    pathParameters: {
+                      "cost": service.price.toString(),
+                      "points": offer.point.percentage.toString(),
+                    },
+                  );
                 }
               }
+              context.go("/payment_method");
             }
           },
         ),
@@ -476,14 +486,24 @@ class AddedImage extends StatelessWidget {
     return Stack(
       alignment: Alignment.topRight,
       children: [
-        Container(
-          width: 77,
-          height: 80,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: isFile ? FileImage(File(path)) : NetworkImage(path)),
-              borderRadius: BorderRadius.circular(AppRadii.lg)),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => FullScreenImage(imageUrl: path),
+              ),
+            );
+          },
+          child: Container(
+            width: 77,
+            height: 80,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover,
+                    image: isFile ? FileImage(File(path)) : NetworkImage(path)),
+                borderRadius: BorderRadius.circular(AppRadii.lg)),
+          ),
         ),
         GestureDetector(
           onTap: onRemove,

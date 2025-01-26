@@ -26,9 +26,9 @@ class MyApp extends ConsumerWidget {
     return MaterialApp.router(
         scaffoldMessengerKey: ref.read(scaffoldMessengerKeyPod),
         localizationsDelegates: const [
+          AppLocalizations.delegate,
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
-          AppLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate,
         ],
         supportedLocales: TranslationRepo.supportedLocales,

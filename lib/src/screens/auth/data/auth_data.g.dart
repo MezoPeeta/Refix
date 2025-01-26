@@ -63,13 +63,9 @@ Map<String, dynamic> _$$RoleImplToJson(_$RoleImpl instance) =>
 _$NotificationImpl _$$NotificationImplFromJson(Map<String, dynamic> json) =>
     _$NotificationImpl(
       title: json['title'] as String,
-      body: json['body'] as String,
-      read: json['read'] as bool,
     );
 
 Map<String, dynamic> _$$NotificationImplToJson(_$NotificationImpl instance) =>
     <String, dynamic>{
       'title': instance.title,
-      'body': instance.body,
-      'read': instance.read,
     };

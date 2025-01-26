@@ -16,11 +16,15 @@ class Booking with _$Booking {
     @JsonKey(name: "note") String? note,
     @JsonKey(name: "images_before_reaper")
     required List<String> imagesBeforeReaper,
+    @Default(false) bool reviewed,
+    @JsonKey(name: "problem_not_resolved") String? problemResolved,
     @JsonKey(name: "images_after_reaper")
     required List<dynamic> imagesAfterReaper,
     @JsonKey(name: "description_problem") required dynamic descriptionProblem,
     @JsonKey(name: "status") required String status,
     @JsonKey(name: "cost") required int cost,
+    @JsonKey(name: "payment_method") String? paymentMethod,
+    @JsonKey(name: "is_paid", defaultValue: false) required bool isPaid,
     @JsonKey(name: "createdAt") required DateTime createdAt,
     @JsonKey(name: "updatedAt") required DateTime updatedAt,
   }) = _Booking;

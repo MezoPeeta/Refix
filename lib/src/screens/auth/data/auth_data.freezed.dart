@@ -835,14 +835,6 @@ mixin _$Notification {
   String get title => throw _privateConstructorUsedError;
   @JsonKey(name: "title")
   set title(String value) => throw _privateConstructorUsedError;
-  @JsonKey(name: "body")
-  String get body => throw _privateConstructorUsedError;
-  @JsonKey(name: "body")
-  set body(String value) => throw _privateConstructorUsedError;
-  @JsonKey(name: "read")
-  bool get read => throw _privateConstructorUsedError;
-  @JsonKey(name: "read")
-  set read(bool value) => throw _privateConstructorUsedError;
 
   /// Serializes this Notification to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -860,10 +852,7 @@ abstract class $NotificationCopyWith<$Res> {
           Notification value, $Res Function(Notification) then) =
       _$NotificationCopyWithImpl<$Res, Notification>;
   @useResult
-  $Res call(
-      {@JsonKey(name: "title") String title,
-      @JsonKey(name: "body") String body,
-      @JsonKey(name: "read") bool read});
+  $Res call({@JsonKey(name: "title") String title});
 }
 
 /// @nodoc
@@ -882,22 +871,12 @@ class _$NotificationCopyWithImpl<$Res, $Val extends Notification>
   @override
   $Res call({
     Object? title = null,
-    Object? body = null,
-    Object? read = null,
   }) {
     return _then(_value.copyWith(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      body: null == body
-          ? _value.body
-          : body // ignore: cast_nullable_to_non_nullable
-              as String,
-      read: null == read
-          ? _value.read
-          : read // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -910,10 +889,7 @@ abstract class _$$NotificationImplCopyWith<$Res>
       __$$NotificationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {@JsonKey(name: "title") String title,
-      @JsonKey(name: "body") String body,
-      @JsonKey(name: "read") bool read});
+  $Res call({@JsonKey(name: "title") String title});
 }
 
 /// @nodoc
@@ -930,22 +906,12 @@ class __$$NotificationImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? title = null,
-    Object? body = null,
-    Object? read = null,
   }) {
     return _then(_$NotificationImpl(
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      body: null == body
-          ? _value.body
-          : body // ignore: cast_nullable_to_non_nullable
-              as String,
-      read: null == read
-          ? _value.read
-          : read // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -953,10 +919,7 @@ class __$$NotificationImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
-  _$NotificationImpl(
-      {@JsonKey(name: "title") required this.title,
-      @JsonKey(name: "body") required this.body,
-      @JsonKey(name: "read") required this.read});
+  _$NotificationImpl({@JsonKey(name: "title") required this.title});
 
   factory _$NotificationImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationImplFromJson(json);
@@ -964,16 +927,10 @@ class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
   @override
   @JsonKey(name: "title")
   String title;
-  @override
-  @JsonKey(name: "body")
-  String body;
-  @override
-  @JsonKey(name: "read")
-  bool read;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Notification(title: $title, body: $body, read: $read)';
+    return 'Notification(title: $title)';
   }
 
   @override
@@ -981,9 +938,7 @@ class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Notification'))
-      ..add(DiagnosticsProperty('title', title))
-      ..add(DiagnosticsProperty('body', body))
-      ..add(DiagnosticsProperty('read', read));
+      ..add(DiagnosticsProperty('title', title));
   }
 
   /// Create a copy of Notification
@@ -1003,10 +958,8 @@ class _$NotificationImpl with DiagnosticableTreeMixin implements _Notification {
 }
 
 abstract class _Notification implements Notification {
-  factory _Notification(
-      {@JsonKey(name: "title") required String title,
-      @JsonKey(name: "body") required String body,
-      @JsonKey(name: "read") required bool read}) = _$NotificationImpl;
+  factory _Notification({@JsonKey(name: "title") required String title}) =
+      _$NotificationImpl;
 
   factory _Notification.fromJson(Map<String, dynamic> json) =
       _$NotificationImpl.fromJson;
@@ -1016,16 +969,6 @@ abstract class _Notification implements Notification {
   String get title;
   @JsonKey(name: "title")
   set title(String value);
-  @override
-  @JsonKey(name: "body")
-  String get body;
-  @JsonKey(name: "body")
-  set body(String value);
-  @override
-  @JsonKey(name: "read")
-  bool get read;
-  @JsonKey(name: "read")
-  set read(bool value);
 
   /// Create a copy of Notification
   /// with the given fields replaced by the non-null parameter values.

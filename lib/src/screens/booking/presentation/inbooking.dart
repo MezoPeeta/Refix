@@ -114,7 +114,7 @@ class InbookingScreen extends StatelessWidget {
                           }
                           return AddedImage(
                             path:
-                                "https://refix-api.onrender.com/${booking.imagesBeforeReaper[index]}",
+                                "https://api.refixapp.com/${booking.imagesBeforeReaper[index]}",
                             onRemove: () {},
                             isFile: false,
                           );
@@ -198,19 +198,20 @@ class InbookingScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    PrimaryButton(
-                      onPressed: () =>
-                          context.push("/booking_reviews", extra: booking),
-                      text: context.tr.addReview,
-                    ),
-                    ErrorButton(
-                        text: context.tr.report_problem_not_resolved,
-                        onPressed: () async {
-                          final url = "tel:${booking.customer.phone}";
-                          if (!await launchUrlString(url)) {
-                            throw Exception('Could not launch $url');
-                          }
-                        })
+                    !booking.reviewed
+                        ? PrimaryButton(
+                            onPressed: () => context.push("/booking_reviews",
+                                extra: booking),
+                            text: context.tr.addReview,
+                          )
+                        : const SizedBox.shrink(),
+                    booking.problemResolved == null
+                        ? ErrorButton(
+                            text: context.tr.report_problem_not_resolved,
+                            onPressed: () {
+                              context.push("/booking/report", extra: booking);
+                            })
+                        : const SizedBox.shrink()
                   ],
                 )
               : Visibility(

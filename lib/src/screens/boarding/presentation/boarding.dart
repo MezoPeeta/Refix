@@ -26,6 +26,9 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
     return Scaffold(
         body: boarding.when(
             data: (data) {
+              if (data.isEmpty) {
+                return const Center(child: Text("No Boarding found"));
+              }
               return Stack(
                 children: [
                   PageView.builder(
@@ -48,7 +51,7 @@ class _BoardingScreenState extends ConsumerState<BoardingScreen> {
                                               .withValues(alpha: .8),
                                           BlendMode.darken),
                                       image: CachedNetworkImageProvider(
-                                          "https://refix-api.onrender.com/${data[index].image}"),
+                                          "https://api.refixapp.com/${data[index].image}"),
                                       fit: BoxFit.cover)),
                             ),
                             currentIndex == data.length - 1

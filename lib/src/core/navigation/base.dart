@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:refix/src/core/localization/domain.dart';
@@ -30,6 +29,7 @@ class _BaseWidgetState extends State<BaseWidget> {
       body: children[currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
+        backgroundColor: Colors.white,
         onTap: (value) {
           setState(() {
             currentIndex = value;

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:refix/src/screens/auth/data/auth_data.dart';
+import 'package:refix/src/screens/auth/domain/auth_domain.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/network/api.dart';
@@ -30,14 +31,13 @@ class CustomerNotifier extends _$CustomerNotifier {
 
     state = await AsyncValue.guard(() async {
       final response = await ref.read(httpProvider).authenticatedRequest(
-          method: "PATCH",
-          url: "customer/${user.id}",
-          body: user.toJson());
+          method: "PATCH", url: "customer/${user.id}", body: user.toJson());
       log("Updated Customer: ${response.body}");
       if (response.statusCode == 200) {
-        return User.fromJson(jsonDecode(response.body));
+        
+        ref.read(authProvider).logout();
       }
-      return null;
+      return _fetchUser();
     });
   }
 }

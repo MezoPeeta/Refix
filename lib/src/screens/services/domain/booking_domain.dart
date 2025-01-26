@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:refix/src/core/navigation/routes.dart';
 import 'package:refix/src/screens/boarding/data/boarding_data.dart';
 import 'package:refix/src/screens/services/data/bookin_data.dart';
@@ -16,13 +19,42 @@ import 'package:http/http.dart' as http;
 part 'booking_domain.g.dart';
 
 List<String> convertPhotosToBase64(List<String> images) {
+  log("Starting Converting photos");
+  final stopwatch = Stopwatch()..start();
+
   List<String> base64photos = [];
   for (var image in images) {
     final bytesImage = File(image).readAsBytesSync();
     final base64Image = base64Encode(bytesImage);
     base64photos.add(base64Image);
   }
+  log('No of Photos: ${images.length}');
+
+  log('Convertion Images executed in milliseconds: ${stopwatch.elapsed.inMilliseconds}');
+
   return base64photos;
+}
+
+Future<String> compressImage(XFile image) async {
+  final Directory tempDir = await getTemporaryDirectory();
+
+  // Read the original image bytes
+  final Uint8List bytes = await image.readAsBytes();
+
+  // Compress the image
+  final Uint8List compressedBytes = await FlutterImageCompress.compressWithList(
+    bytes,
+    minHeight: 1080,
+    minWidth: 1080,
+    quality: 70,
+    format: CompressFormat.webp,
+  );
+
+  final String fileName =
+      'compressed_${DateTime.now().millisecondsSinceEpoch}_${image.name}';
+  final File compressedFile = File('${tempDir.path}/$fileName');
+  await compressedFile.writeAsBytes(compressedBytes);
+  return compressedFile.path;
 }
 
 @riverpod
@@ -30,22 +62,26 @@ Future<String> addBooking(Ref ref,
     {required List<String> services,
     required DateTime date,
     required String notes,
-    required List<String> images}) async {
+    required List<String> imagePaths}) async {
+  log("Starting Booking");
   try {
-    final response = await ref
-        .read(httpProvider)
-        .authenticatedRequest(method: "POST", url: "booking", body: {
-      "services": services,
+    final request = await ref.read(httpProvider).sendMultipart(
+        url: "booking/v2", fieldName: "images", filePaths: imagePaths);
+
+    request.fields.addAll({
+      "services": jsonEncode(services),
       "appointment_date": date.toIso8601String(),
       "notes": notes,
-      "images_before_reaper": convertPhotosToBase64(images),
     });
+    log("Booking Fields: ${request.fields}");
 
-    log("Booking Request: ${response.body}");
+    final response = await request.send();
+    final body = await response.stream.bytesToString();
+    log("Response Body : $body");
     if (response.statusCode == 201) {
-      return jsonDecode(response.body)["bookingId"];
+      return jsonDecode(body)["bookingId"];
     }
-    return jsonDecode(response.body)["message"];
+    return jsonDecode(body)["message"];
   } catch (e) {
     return e.toString();
   }
@@ -155,13 +191,16 @@ Future<String> addBookingReview(Ref ref,
     {required double rating,
     required String comment,
     required String bookingID}) async {
-  try {
-    final response = await ref.read(httpProvider).authenticatedRequest(
-        method: "POST",
-        url: "review",
-        body: {"rating": rating, "comment": comment, "booking": bookingID});
-    log("Response: ${response.body}");
+  final response = await ref.read(httpProvider).authenticatedRequest(
+      method: "POST",
+      url: "review",
+      body: {"rating": rating, "comment": comment, "booking": bookingID});
+  log("Response: ${response.body}");
+  if (response.statusCode == 201) {
+    ref.invalidate(getUserBookingProvider);
+    ref.read(goRouterProvider).pop();
     return jsonDecode(response.body);
-  } catch (e) {}
-  return "Error";
+  }
+
+  return jsonDecode(response.body);
 }

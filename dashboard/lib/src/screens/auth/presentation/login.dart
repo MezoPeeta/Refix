@@ -134,9 +134,11 @@ class PasswordFormField extends StatefulWidget {
       {super.key,
       this.passwordText = "Password",
       this.passwordControllerText,
-      required this.passwordController});
+      required this.passwordController,
+      this.validator});
   final String passwordText;
   final String? passwordControllerText;
+  final String? Function(String?)? validator;
   final TextEditingController passwordController;
 
   @override
@@ -151,21 +153,18 @@ class _PasswordFormFieldState extends State<PasswordFormField> {
     return TextFormField(
         controller: widget.passwordController,
         obscureText: !isVisible,
-        validator: (password) {
-          if (password!.isEmpty) {
-            return "Please enter your password";
-          }
-          // if (password.length <= 8 && widget.passwordControllerText == null) {
-          //   return "Password must be atleast 8 letters";
-          // }
-          if (widget.passwordControllerText != null) {
-            if (widget.passwordControllerText !=
-                widget.passwordController.text) {
-              return "Confirm password must be exactly your password";
-            }
-          }
-          return null;
-        },
+        validator: widget.validator ??
+            (password) {
+              if (password!.isEmpty) {
+                return "Please enter your password";
+              }
+              if (password.length <= 8 &&
+                  widget.passwordControllerText == null) {
+                return "Password must be atleast 8 letters";
+              }
+
+              return null;
+            },
         decoration: InputDecoration(
             label: Text(widget.passwordText),
             suffixIcon: GestureDetector(

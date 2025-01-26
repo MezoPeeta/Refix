@@ -356,7 +356,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                             image: DecorationImage(
                                                 fit: BoxFit.cover,
                                                 image: CachedNetworkImageProvider(
-                                                    "https://refix-api.onrender.com/${i.image}")),
+                                                    "https://api.refixapp.com/${i.image}")),
                                             borderRadius: BorderRadius.circular(
                                                 AppRadii.lg),
                                             border: Border.all(
@@ -398,7 +398,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                 image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: CachedNetworkImageProvider(
-                                        "https://refix-api.onrender.com/${data.first.image}")),
+                                        "https://api.refixapp.com/${data.first.image}")),
                                 borderRadius:
                                     BorderRadius.circular(AppRadii.lg),
                                 border:
@@ -407,8 +407,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                         );
                       },
                       error: (e, s) => const Text("Error Banner Ad"),
-                      loading: () =>
-                          const CircularProgressIndicator.adaptive());
+                      loading: () => const SizedBox.shrink());
                 }),
               ),
               const SizedBox(
@@ -447,7 +446,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                                           image: DecorationImage(
                                               fit: BoxFit.cover,
                                               image: CachedNetworkImageProvider(
-                                                  "https://refix-api.onrender.com/${i.image}")),
+                                                  "https://api.refixapp.com/${i.image}")),
                                           borderRadius: BorderRadius.circular(
                                               AppRadii.lg),
                                           border: Border.all(
@@ -460,7 +459,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           ));
                     },
                     error: (e, s) => const Center(child: Text("Error")),
-                    loading: () => const CircularProgressIndicator.adaptive(),
+                    loading: () => const SizedBox.shrink(),
                   );
                 }),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/localization/domain.dart';
@@ -82,6 +83,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     }
                     return null;
                   },
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                  ],
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       icon: const Text("+966"),
                       fillColor: AppColors.neutral50,

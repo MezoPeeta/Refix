@@ -141,10 +141,10 @@ class _PaymentMethodsState extends ConsumerState<PaymentMethods> {
                       return context.go("/success");
                     }
                     ref.read(paymentBookingProvider(bookingID: bookingID));
-                    setState(() {
-                      loading = false;
-                    });
                   }
+                  setState(() {
+                    loading = false;
+                  });
                 }),
           )
         ],

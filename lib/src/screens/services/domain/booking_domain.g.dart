@@ -6,7 +6,7 @@ part of 'booking_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$addBookingHash() => r'eda644b796387e3ff63b9beddbb4144837a8cfc9';
+String _$addBookingHash() => r'8cade59db1943e15574fe528595d172e2623ad35';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -43,13 +43,13 @@ class AddBookingFamily extends Family<AsyncValue<String>> {
     required List<String> services,
     required DateTime date,
     required String notes,
-    required List<String> images,
+    required List<String> imagePaths,
   }) {
     return AddBookingProvider(
       services: services,
       date: date,
       notes: notes,
-      images: images,
+      imagePaths: imagePaths,
     );
   }
 
@@ -61,7 +61,7 @@ class AddBookingFamily extends Family<AsyncValue<String>> {
       services: provider.services,
       date: provider.date,
       notes: provider.notes,
-      images: provider.images,
+      imagePaths: provider.imagePaths,
     );
   }
 
@@ -87,14 +87,14 @@ class AddBookingProvider extends AutoDisposeFutureProvider<String> {
     required List<String> services,
     required DateTime date,
     required String notes,
-    required List<String> images,
+    required List<String> imagePaths,
   }) : this._internal(
           (ref) => addBooking(
             ref as AddBookingRef,
             services: services,
             date: date,
             notes: notes,
-            images: images,
+            imagePaths: imagePaths,
           ),
           from: addBookingProvider,
           name: r'addBookingProvider',
@@ -108,7 +108,7 @@ class AddBookingProvider extends AutoDisposeFutureProvider<String> {
           services: services,
           date: date,
           notes: notes,
-          images: images,
+          imagePaths: imagePaths,
         );
 
   AddBookingProvider._internal(
@@ -121,13 +121,13 @@ class AddBookingProvider extends AutoDisposeFutureProvider<String> {
     required this.services,
     required this.date,
     required this.notes,
-    required this.images,
+    required this.imagePaths,
   }) : super.internal();
 
   final List<String> services;
   final DateTime date;
   final String notes;
-  final List<String> images;
+  final List<String> imagePaths;
 
   @override
   Override overrideWith(
@@ -145,7 +145,7 @@ class AddBookingProvider extends AutoDisposeFutureProvider<String> {
         services: services,
         date: date,
         notes: notes,
-        images: images,
+        imagePaths: imagePaths,
       ),
     );
   }
@@ -161,7 +161,7 @@ class AddBookingProvider extends AutoDisposeFutureProvider<String> {
         other.services == services &&
         other.date == date &&
         other.notes == notes &&
-        other.images == images;
+        other.imagePaths == imagePaths;
   }
 
   @override
@@ -170,7 +170,7 @@ class AddBookingProvider extends AutoDisposeFutureProvider<String> {
     hash = _SystemHash.combine(hash, services.hashCode);
     hash = _SystemHash.combine(hash, date.hashCode);
     hash = _SystemHash.combine(hash, notes.hashCode);
-    hash = _SystemHash.combine(hash, images.hashCode);
+    hash = _SystemHash.combine(hash, imagePaths.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -188,8 +188,8 @@ mixin AddBookingRef on AutoDisposeFutureProviderRef<String> {
   /// The parameter `notes` of this provider.
   String get notes;
 
-  /// The parameter `images` of this provider.
-  List<String> get images;
+  /// The parameter `imagePaths` of this provider.
+  List<String> get imagePaths;
 }
 
 class _AddBookingProviderElement
@@ -203,7 +203,7 @@ class _AddBookingProviderElement
   @override
   String get notes => (origin as AddBookingProvider).notes;
   @override
-  List<String> get images => (origin as AddBookingProvider).images;
+  List<String> get imagePaths => (origin as AddBookingProvider).imagePaths;
 }
 
 String _$updateCustomerHash() => r'e740123cd2c1182fb965f602fbb6e91772abce5a';
@@ -1186,7 +1186,7 @@ class _PaymentBookingProviderElement
   String get bookingID => (origin as PaymentBookingProvider).bookingID;
 }
 
-String _$addBookingReviewHash() => r'5108e1a3568d7217135286e6a7c0eff2e5641f39';
+String _$addBookingReviewHash() => r'8f236b16f54c421c8c7c2e236185f9d3945b18e9';
 
 /// See also [addBookingReview].
 @ProviderFor(addBookingReview)

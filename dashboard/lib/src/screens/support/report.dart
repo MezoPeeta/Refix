@@ -212,6 +212,7 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                       TextFormField(
                         maxLength: 200,
                         maxLines: 8,
+                        readOnly: true,
                         decoration: const InputDecoration(
                           hintText: "Add Notes",
                           filled: true,
@@ -325,6 +326,7 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                     TextFormField(
                       maxLength: 200,
                       maxLines: 8,
+                      readOnly: true,
                       decoration: const InputDecoration(
                         hintText: "Add Notes",
                         filled: true,

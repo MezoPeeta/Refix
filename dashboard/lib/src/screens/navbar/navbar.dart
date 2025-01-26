@@ -78,12 +78,14 @@ class Navbar extends ConsumerWidget {
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 2;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 2
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("Workers"),
+                          title: const Text("Workers"),
                         ),
                       ),
                     ],
@@ -103,36 +105,42 @@ class Navbar extends ConsumerWidget {
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 4;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 4
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("onetime screen"),
+                          title: const Text("onetime screen"),
                         ),
                       ),
                       InkWell(
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 6;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 6
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("discount"),
+                          title: const Text("discount"),
                         ),
                       ),
                       InkWell(
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 7;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 7
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("Ads photo"),
+                          title: const Text("Ads photo"),
                         ),
                       ),
                     ],
@@ -153,24 +161,28 @@ class Navbar extends ConsumerWidget {
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 11;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 11
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("all Booking"),
+                          title: const Text("all Booking"),
                         ),
                       ),
                       InkWell(
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 13;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 13
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("Booking Confirmation"),
+                          title: const Text("Booking Confirmation"),
                         ),
                       ),
                     ],
@@ -183,24 +195,28 @@ class Navbar extends ConsumerWidget {
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 15;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 15
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("Rates"),
+                          title: const Text("Rates"),
                         ),
                       ),
                       InkWell(
                         onTap: () {
                           ref.read(currentIndexProvider.notifier).state = 16;
                         },
-                        child: const ListTile(
+                        child: ListTile(
                           leading: CircleAvatar(
                             radius: 5,
-                            backgroundColor: AppColors.neutralRefix,
+                            backgroundColor: currentIndex == 16
+                                ? AppColors.primaryRefix
+                                : AppColors.neutralRefix,
                           ),
-                          title: Text("Reports"),
+                          title: const Text("Reports"),
                         ),
                       ),
                     ],

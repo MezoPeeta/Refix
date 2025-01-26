@@ -65,7 +65,7 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
                           "Edit Ad",
                         ),
                         TextButton(
-                            child: const Text("Delete Service"),
+                            child: const Text("Delete Ad"),
                             onPressed: () => ref.read(deleteAdProvider(
                                 id: ref.read(adInfoProvider)!.id)))
                       ],

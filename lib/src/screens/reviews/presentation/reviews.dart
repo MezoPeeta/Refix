@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
-import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/header.dart';
 import 'package:refix/src/screens/reviews/domain/reviews_domain.dart';
 
@@ -23,7 +23,7 @@ class ReviewsScreen extends StatelessWidget {
             data: (data) {
               if (data.isEmpty) {
                 return const Center(
-                  child: Text("No reviews for the current service"),
+                  child: Text("context.tr.noReviews"),
                 );
               }
               return Column(

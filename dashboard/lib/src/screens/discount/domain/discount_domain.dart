@@ -25,6 +25,7 @@ Future<String?> updateDiscount(Ref ref, {required Discount discount}) async {
   final request = await ref.read(httpProvider).authenticatedRequest(
       url: "discount/${discount.id}", method: "PATCH", body: discount.toJson());
   if (request.statusCode == 200) {
+    ref.invalidate(getDiscountsProvider);
     return "Discount updated";
   }
   return null;

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:refix/src/core/navigation/base.dart';
 import 'package:refix/src/core/storage/secure_storage.dart';
 import 'package:refix/src/screens/auth/need_login.dart';
+import 'package:refix/src/screens/auth/presentation/create_password.dart';
 import 'package:refix/src/screens/auth/presentation/forget_password.dart';
 import 'package:refix/src/screens/auth/presentation/login.dart';
 import 'package:refix/src/screens/auth/presentation/notifications.dart';
@@ -11,6 +12,7 @@ import 'package:refix/src/screens/auth/presentation/otp_verification.dart';
 import 'package:refix/src/screens/boarding/data/boarding_data.dart';
 import 'package:refix/src/screens/booking/presentation/booking_failure.dart';
 import 'package:refix/src/screens/booking/presentation/booking_final.dart';
+import 'package:refix/src/screens/booking/presentation/report_booking.dart';
 import 'package:refix/src/screens/points/presentation/redeem_points.dart';
 import 'package:refix/src/screens/profile/presentation/about_refix.dart';
 import 'package:refix/src/screens/profile/presentation/new_email.dart';
@@ -106,7 +108,13 @@ final routes = GoRouter(
           builder: (context, state) => const ForgetPasswordScreen()),
       GoRoute(
           path: "/otp_verify",
-          builder: (context, state) => const OtpVerification()),
+          builder: (context, state) =>
+              OtpVerification(email: state.extra as String)),
+      GoRoute(
+          path: "/create_pass",
+          builder: (context, state) => CreatePasswordScreen(
+                otp: state.extra as String,
+              )),
       GoRoute(
           path: "/sign_up", builder: (context, state) => const SignupScreen()),
       GoRoute(
@@ -144,6 +152,11 @@ final routes = GoRouter(
           path: "/payment_method",
           builder: (context, state) => const PaymentMethods()),
       GoRoute(path: "/privacy", builder: (context, state) => const Privacy()),
+      GoRoute(
+          path: "/booking/report",
+          builder: (context, state) => ReportBooking(
+                booking: state.extra as Booking,
+              )),
       GoRoute(
           path: "/redeem",
           builder: (context, state) => RedeemPoints(

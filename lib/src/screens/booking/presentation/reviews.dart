@@ -37,7 +37,7 @@ class _BookingReviewsState extends State<BookingReviews> {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "https://refix-api.onrender.com/${widget.booking.services.first.image}"),
+                      "https://api.refixapp.com/${widget.booking.services.first.image}"),
                 ),
                 const SizedBox(
                   width: 16,
