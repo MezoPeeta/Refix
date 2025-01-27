@@ -501,7 +501,7 @@ class _GetLocationProviderElement
   double get longitude => (origin as GetLocationProvider).longitude;
 }
 
-String _$updateBookingHash() => r'931898328dca4c065d3fd3221b1ae3c680a1998f';
+String _$updateBookingHash() => r'759602b563b7155a81e1b9798c170f760b3e9846';
 
 /// See also [updateBooking].
 @ProviderFor(updateBooking)
@@ -514,10 +514,12 @@ class UpdateBookingFamily extends Family<AsyncValue<String>> {
 
   /// See also [updateBooking].
   UpdateBookingProvider call({
-    required Booking booking,
+    required String status,
+    required String id,
   }) {
     return UpdateBookingProvider(
-      booking: booking,
+      status: status,
+      id: id,
     );
   }
 
@@ -526,7 +528,8 @@ class UpdateBookingFamily extends Family<AsyncValue<String>> {
     covariant UpdateBookingProvider provider,
   ) {
     return call(
-      booking: provider.booking,
+      status: provider.status,
+      id: provider.id,
     );
   }
 
@@ -549,11 +552,13 @@ class UpdateBookingFamily extends Family<AsyncValue<String>> {
 class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
   /// See also [updateBooking].
   UpdateBookingProvider({
-    required Booking booking,
+    required String status,
+    required String id,
   }) : this._internal(
           (ref) => updateBooking(
             ref as UpdateBookingRef,
-            booking: booking,
+            status: status,
+            id: id,
           ),
           from: updateBookingProvider,
           name: r'updateBookingProvider',
@@ -564,7 +569,8 @@ class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
           dependencies: UpdateBookingFamily._dependencies,
           allTransitiveDependencies:
               UpdateBookingFamily._allTransitiveDependencies,
-          booking: booking,
+          status: status,
+          id: id,
         );
 
   UpdateBookingProvider._internal(
@@ -574,10 +580,12 @@ class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.booking,
+    required this.status,
+    required this.id,
   }) : super.internal();
 
-  final Booking booking;
+  final String status;
+  final String id;
 
   @override
   Override overrideWith(
@@ -592,7 +600,8 @@ class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        booking: booking,
+        status: status,
+        id: id,
       ),
     );
   }
@@ -604,13 +613,16 @@ class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
 
   @override
   bool operator ==(Object other) {
-    return other is UpdateBookingProvider && other.booking == booking;
+    return other is UpdateBookingProvider &&
+        other.status == status &&
+        other.id == id;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, booking.hashCode);
+    hash = _SystemHash.combine(hash, status.hashCode);
+    hash = _SystemHash.combine(hash, id.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -619,8 +631,11 @@ class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 mixin UpdateBookingRef on AutoDisposeFutureProviderRef<String> {
-  /// The parameter `booking` of this provider.
-  Booking get booking;
+  /// The parameter `status` of this provider.
+  String get status;
+
+  /// The parameter `id` of this provider.
+  String get id;
 }
 
 class _UpdateBookingProviderElement
@@ -628,7 +643,9 @@ class _UpdateBookingProviderElement
   _UpdateBookingProviderElement(super.provider);
 
   @override
-  Booking get booking => (origin as UpdateBookingProvider).booking;
+  String get status => (origin as UpdateBookingProvider).status;
+  @override
+  String get id => (origin as UpdateBookingProvider).id;
 }
 
 String _$addNoteBookingHash() => r'c7c489386736de83b484b372e3ed2d21851139ba';

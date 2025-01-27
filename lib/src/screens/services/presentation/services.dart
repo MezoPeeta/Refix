@@ -175,7 +175,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
           text: context.tr.order_now,
           onPressed: () {
             context.pushNamed("moreServices",
-                pathParameters: {"name": widget.name});
+                pathParameters: {"name": widget.name, "type": widget.type});
           },
         ),
       ),

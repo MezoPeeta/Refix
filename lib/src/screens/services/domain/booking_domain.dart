@@ -121,9 +121,10 @@ Future<String?> getLocation(Ref ref,
 }
 
 @riverpod
-Future<String> updateBooking(Ref ref, {required Booking booking}) async {
+Future<String> updateBooking(Ref ref,
+    {required String status, required String id}) async {
   final request = await ref.read(httpProvider).authenticatedRequest(
-      url: "booking/${booking.id}", method: "PATCH", body: booking.toJson());
+      url: "booking/$id", method: "PATCH", body: {"status": status});
   return getResponseMessage(jsonDecode(request.body));
 }
 

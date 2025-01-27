@@ -257,5 +257,6 @@
     "otpLimit": "You can't send more OTPs, maximum 3",
     "notBookedYet": "You haven't booked yet",
     "pay": "Pay",
-    "noReviews": "No reviews for the current service"
+    "noReviews": "No reviews for the current service",
+    "cancelled_succ": "Booking has cancelled successfully"
 }

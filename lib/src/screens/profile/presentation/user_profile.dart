@@ -33,6 +33,7 @@ class UserProfile extends ConsumerWidget {
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(AppRadii.lg)),
                 child: TextFormField(
+                  readOnly: true,
                   controller: userController,
                   decoration: InputDecoration(
                       labelText: context.tr.username,

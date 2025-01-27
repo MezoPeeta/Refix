@@ -71,9 +71,10 @@ final routes = GoRouter(
               )),
       GoRoute(
           name: "moreServices",
-          path: "/more_services/:name",
+          path: "/more_services/:name/:type",
           builder: (context, state) => MoreServicesScreen(
                 name: state.pathParameters["name"]!,
+                type: state.pathParameters["type"]!,
               )),
       GoRoute(
           path: "/need_login",

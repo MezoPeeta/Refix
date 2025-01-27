@@ -218,13 +218,14 @@ class InbookingScreen extends StatelessWidget {
                   visible: booking.status == "PENDING",
                   child: TextButton(
                       onPressed: () async {
-                        final result = await ref.read(updateBookingProvider(
-                                booking: booking.copyWith(status: "CANCELLED"))
+                        await ref.read(updateBookingProvider(
+                                id: booking.id, status: "CANCELLED")
                             .future);
-                        if (!context.mounted) return;
 
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(result)));
+                        ref.invalidate(getUserBookingProvider);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(context.tr.cancelled_succ)));
+                        context.pop();
                       },
                       child: Text(
                         context.tr.cancelBooking,

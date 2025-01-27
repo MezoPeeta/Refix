@@ -16,8 +16,9 @@ import '../../home/domain/home_domain.dart';
 final choosenService = StateProvider<Service?>((ref) => null);
 
 class MoreServicesScreen extends ConsumerStatefulWidget {
-  const MoreServicesScreen({super.key, required this.name});
+  const MoreServicesScreen({super.key, required this.name,required this.type});
   final String name;
+  final String type;
 
   @override
   ConsumerState<MoreServicesScreen> createState() => _MoreServicesScreenState();
@@ -30,7 +31,7 @@ class _MoreServicesScreenState extends ConsumerState<MoreServicesScreen> {
   Service? selectedService;
   @override
   Widget build(BuildContext context) {
-    final services = ref.watch(getSubServicesProvider(type: widget.name));
+    final services = ref.watch(getSubServicesProvider(type: widget.type));
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
