@@ -75,23 +75,26 @@ class _SignupScreenState extends State<SignupScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormField(
-                  controller: phoneController,
-                  validator: (v) {
-                    if (v!.isEmpty) {
-                      return context.tr.enter_phone;
-                    }
-                    return null;
-                  },
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(RegExp("[0-9]"))
-                  ],
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      icon: const Text("+966"),
-                      fillColor: AppColors.neutral50,
-                      filled: true,
-                      hintText: context.tr.phone),
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: TextFormField(
+                    controller: phoneController,
+                    validator: (v) {
+                      if (v!.isEmpty) {
+                        return context.tr.enter_phone;
+                      }
+                      return null;
+                    },
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp("[0-9]"))
+                    ],
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                        icon: const Text("+966"),
+                        fillColor: AppColors.neutral50,
+                        filled: true,
+                        hintText: context.tr.phone),
+                  ),
                 ),
                 const SizedBox(
                   height: 16,

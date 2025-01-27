@@ -42,19 +42,22 @@ class _NewPhoneState extends State<NewPhone> {
                   key: NewPhone._formKey,
                   child: Column(
                     children: [
-                      TextFormField(
-                        controller: phoneController,
-                        validator: (v) {
-                          if (v!.isEmpty) {
-                            return context.tr.enter_phone;
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                            icon: const Text("+966"),
-                            fillColor: AppColors.neutral50,
-                            filled: true,
-                            hintText: context.tr.phone),
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: TextFormField(
+                          controller: phoneController,
+                          validator: (v) {
+                            if (v!.isEmpty) {
+                              return context.tr.enter_phone;
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                              icon: const Text("+966"),
+                              fillColor: AppColors.neutral50,
+                              filled: true,
+                              hintText: context.tr.phone),
+                        ),
                       ),
                       const SizedBox(
                         height: 16,

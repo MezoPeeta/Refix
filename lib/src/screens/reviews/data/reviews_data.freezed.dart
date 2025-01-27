@@ -22,7 +22,7 @@ Review _$ReviewFromJson(Map<String, dynamic> json) {
 mixin _$Review {
   double get rating => throw _privateConstructorUsedError;
   String? get comment => throw _privateConstructorUsedError;
-  User get customer => throw _privateConstructorUsedError;
+  ReviewCustomer get customer => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -43,11 +43,11 @@ abstract class $ReviewCopyWith<$Res> {
   $Res call(
       {double rating,
       String? comment,
-      User customer,
+      ReviewCustomer customer,
       DateTime? createdAt,
       DateTime? updatedAt});
 
-  $UserCopyWith<$Res> get customer;
+  $ReviewCustomerCopyWith<$Res> get customer;
 }
 
 /// @nodoc
@@ -83,7 +83,7 @@ class _$ReviewCopyWithImpl<$Res, $Val extends Review>
       customer: null == customer
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
-              as User,
+              as ReviewCustomer,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -99,8 +99,8 @@ class _$ReviewCopyWithImpl<$Res, $Val extends Review>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserCopyWith<$Res> get customer {
-    return $UserCopyWith<$Res>(_value.customer, (value) {
+  $ReviewCustomerCopyWith<$Res> get customer {
+    return $ReviewCustomerCopyWith<$Res>(_value.customer, (value) {
       return _then(_value.copyWith(customer: value) as $Val);
     });
   }
@@ -116,12 +116,12 @@ abstract class _$$ReviewImplCopyWith<$Res> implements $ReviewCopyWith<$Res> {
   $Res call(
       {double rating,
       String? comment,
-      User customer,
+      ReviewCustomer customer,
       DateTime? createdAt,
       DateTime? updatedAt});
 
   @override
-  $UserCopyWith<$Res> get customer;
+  $ReviewCustomerCopyWith<$Res> get customer;
 }
 
 /// @nodoc
@@ -155,7 +155,7 @@ class __$$ReviewImplCopyWithImpl<$Res>
       customer: null == customer
           ? _value.customer
           : customer // ignore: cast_nullable_to_non_nullable
-              as User,
+              as ReviewCustomer,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -186,7 +186,7 @@ class _$ReviewImpl implements _Review {
   @override
   final String? comment;
   @override
-  final User customer;
+  final ReviewCustomer customer;
   @override
   final DateTime? createdAt;
   @override
@@ -237,7 +237,7 @@ abstract class _Review implements Review {
   const factory _Review(
       {required final double rating,
       final String? comment,
-      required final User customer,
+      required final ReviewCustomer customer,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$ReviewImpl;
 
@@ -248,7 +248,7 @@ abstract class _Review implements Review {
   @override
   String? get comment;
   @override
-  User get customer;
+  ReviewCustomer get customer;
   @override
   DateTime? get createdAt;
   @override
@@ -259,5 +259,157 @@ abstract class _Review implements Review {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ReviewImplCopyWith<_$ReviewImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ReviewCustomer _$ReviewCustomerFromJson(Map<String, dynamic> json) {
+  return _ReviewCustomer.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ReviewCustomer {
+  String get username => throw _privateConstructorUsedError;
+
+  /// Serializes this ReviewCustomer to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ReviewCustomer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ReviewCustomerCopyWith<ReviewCustomer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ReviewCustomerCopyWith<$Res> {
+  factory $ReviewCustomerCopyWith(
+          ReviewCustomer value, $Res Function(ReviewCustomer) then) =
+      _$ReviewCustomerCopyWithImpl<$Res, ReviewCustomer>;
+  @useResult
+  $Res call({String username});
+}
+
+/// @nodoc
+class _$ReviewCustomerCopyWithImpl<$Res, $Val extends ReviewCustomer>
+    implements $ReviewCustomerCopyWith<$Res> {
+  _$ReviewCustomerCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ReviewCustomer
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+  }) {
+    return _then(_value.copyWith(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ReviewCustomerImplCopyWith<$Res>
+    implements $ReviewCustomerCopyWith<$Res> {
+  factory _$$ReviewCustomerImplCopyWith(_$ReviewCustomerImpl value,
+          $Res Function(_$ReviewCustomerImpl) then) =
+      __$$ReviewCustomerImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String username});
+}
+
+/// @nodoc
+class __$$ReviewCustomerImplCopyWithImpl<$Res>
+    extends _$ReviewCustomerCopyWithImpl<$Res, _$ReviewCustomerImpl>
+    implements _$$ReviewCustomerImplCopyWith<$Res> {
+  __$$ReviewCustomerImplCopyWithImpl(
+      _$ReviewCustomerImpl _value, $Res Function(_$ReviewCustomerImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ReviewCustomer
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? username = null,
+  }) {
+    return _then(_$ReviewCustomerImpl(
+      username: null == username
+          ? _value.username
+          : username // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ReviewCustomerImpl implements _ReviewCustomer {
+  const _$ReviewCustomerImpl({required this.username});
+
+  factory _$ReviewCustomerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ReviewCustomerImplFromJson(json);
+
+  @override
+  final String username;
+
+  @override
+  String toString() {
+    return 'ReviewCustomer(username: $username)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReviewCustomerImpl &&
+            (identical(other.username, username) ||
+                other.username == username));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, username);
+
+  /// Create a copy of ReviewCustomer
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReviewCustomerImplCopyWith<_$ReviewCustomerImpl> get copyWith =>
+      __$$ReviewCustomerImplCopyWithImpl<_$ReviewCustomerImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ReviewCustomerImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ReviewCustomer implements ReviewCustomer {
+  const factory _ReviewCustomer({required final String username}) =
+      _$ReviewCustomerImpl;
+
+  factory _ReviewCustomer.fromJson(Map<String, dynamic> json) =
+      _$ReviewCustomerImpl.fromJson;
+
+  @override
+  String get username;
+
+  /// Create a copy of ReviewCustomer
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ReviewCustomerImplCopyWith<_$ReviewCustomerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

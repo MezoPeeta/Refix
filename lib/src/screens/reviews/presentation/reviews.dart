@@ -22,8 +22,8 @@ class ReviewsScreen extends StatelessWidget {
         return reviews.when(
             data: (data) {
               if (data.isEmpty) {
-                return const Center(
-                  child: Text("context.tr.noReviews"),
+                return Center(
+                  child: Text(context.tr.noReviews),
                 );
               }
               return Column(
