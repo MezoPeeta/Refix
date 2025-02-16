@@ -1,12 +1,12 @@
 import 'package:dashboard/src/screens/base/base.dart';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
+import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:dashboard/src/screens/support/rates/domain/rates_domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart'; 
 
 import '../../app.dart';
 import '../../core/theme/btns.dart';
@@ -29,6 +29,7 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final details = ref.watch(reportProvider);
+
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -81,13 +82,13 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                           )
                         ],
                       ),
-                      const Text(
-                        "If you have any questions, please fill in the input box below.If you have any questions, please fill in the input box below.",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: AppTextSize.one,
-                            color: AppColors.neutralRefix),
-                      ),
+                      // const Text(
+                      //   "If you have any questions, please fill in the input box below.If you have any questions, please fill in the input box below.",
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.w300,
+                      //       fontSize: AppTextSize.one,
+                      //       color: AppColors.neutralRefix),
+                      // ),
                       const SizedBox(height: 24),
                       const SizedBox(
                         height: 24,
@@ -152,17 +153,17 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                       const SizedBox(
                         height: 16,
                       ),
-                      const TextHeader(
-                        text: "Select Service Name",
-                        fontWeight: FontWeight.w500,
-                      ),
-                      const Text(
-                        "If you have any questions, please fill in the input box below.If you have any questions, please fill in the input box below.",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: AppTextSize.one,
-                            color: AppColors.neutralRefix),
-                      ),
+                      // const TextHeader(
+                      //   text: "Select Service Name",
+                      //   fontWeight: FontWeight.w500,
+                      // ),
+                      // const Text(
+                      //   "If you have any questions, please fill in the input box below.If you have any questions, please fill in the input box below.",
+                      //   style: TextStyle(
+                      //       fontWeight: FontWeight.w300,
+                      //       fontSize: AppTextSize.one,
+                      //       color: AppColors.neutralRefix),
+                      // ),
                       const SizedBox(
                         height: 16,
                       ),
@@ -170,9 +171,16 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                         children: [
                           Expanded(
                             child: TextFormField(
+                              readOnly: true,
                               initialValue: details.customer.phone,
                               decoration: const InputDecoration(
                                 hintText: "Phone Number",
+                                label: Text(
+                                  "Phone Number",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
                                 filled: true,
                               ),
                             ),
@@ -181,15 +189,19 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                             width: 16,
                           ),
                           IconButton(
-                              onPressed: () async {
-                                await Clipboard.setData(ClipboardData(
-                                    text: details.customer.phone.toString()));
-                                if (!context.mounted) return;
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text("Copied to clipboard!")));
-                              },
-                              icon: const Icon(Icons.phone))
+                            onPressed: () async {
+                              await Clipboard.setData(ClipboardData(
+                                  text: details.customer.phone.toString()));
+                              if (!context.mounted) return;
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text("Copied to clipboard!")));
+                            },
+                            icon: const Icon(
+                              Icons.phone,
+                              color: Colors.green,
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(
@@ -200,7 +212,13 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                         initialValue:
                             DateFormat.yMd().format(details.appointmentDate),
                         decoration: InputDecoration(
-                            hintText: "Pick Date",
+                            hintText: "Working Date",
+                            label: const Text(
+                              "Working Date",
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
+                            ),
                             suffixIcon: SvgPicture.asset(
                               "assets/img/services/calendar.svg",
                               width: 11,
@@ -214,8 +232,15 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                         maxLength: 200,
                         maxLines: 8,
                         readOnly: true,
+                        initialValue: details.problemNotResolved,
                         decoration: const InputDecoration(
-                          hintText: "Add Notes",
+                          hintText: "User problem message",
+                          label: Text(
+                            "User problem message",
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
+                          ),
                           filled: true,
                         ),
                       ),
@@ -315,6 +340,7 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                       initialValue: details.worker?.username,
                       decoration: const InputDecoration(
                         hintText: "Worker Name",
+                        label: Text("Worker Name"),
                         filled: true,
                       ),
                     ),
@@ -325,8 +351,17 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                       maxLength: 200,
                       maxLines: 8,
                       readOnly: true,
-                      decoration: const InputDecoration(
-                        hintText: "Add Notes",
+                      initialValue: details.descriptionProblem,
+                      decoration: InputDecoration(
+                        hintText: "description Problem",
+                        label: details.descriptionProblem != null
+                            ? const Text(
+                                "description Problem",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              )
+                            : null,
                         filled: true,
                       ),
                     ),
@@ -347,15 +382,15 @@ class _ReportDetailsScreenState extends ConsumerState<ReportDetailsScreen> {
                                   resolveBookingProvider(bookingID: details.id)
                                       .future);
                               ref.invalidate(getReportsProvider);
-                              context.pop();
+                              ref.read(currentIndexProvider.notifier).update((state)=>state - 1); 
                               ref.read(scaffoldMessengerPod).showSnackBar(
                                   SnackBar(content: Text(response)));
-
-                              setState(() {
+ 
+                              setState(() { 
                                 loading = false;
                               });
                             })
-                  ],
+                  ], 
                 ),
               ))
             ],

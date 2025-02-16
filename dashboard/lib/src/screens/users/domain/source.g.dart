@@ -603,7 +603,7 @@ class _GetUnAssignedBookingsProviderElement
   String? get query => (origin as GetUnAssignedBookingsProvider).query;
 }
 
-String _$getBookingsHash() => r'55a3e687c4ebeed456549a0c47c64d6c62cc7cd0';
+String _$getBookingsHash() => r'59d9f5721ddaa71e1b49e405d3be56308ec40f8e';
 
 /// See also [getBookings].
 @ProviderFor(getBookings)

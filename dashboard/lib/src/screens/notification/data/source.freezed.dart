@@ -23,7 +23,8 @@ mixin _$Notifications {
   @JsonKey(name: "_id")
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
-  String? get data => throw _privateConstructorUsedError;
+  @JsonKey(name: "body")
+  String? get body => throw _privateConstructorUsedError;
 
   /// Serializes this Notifications to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +42,10 @@ abstract class $NotificationsCopyWith<$Res> {
           Notifications value, $Res Function(Notifications) then) =
       _$NotificationsCopyWithImpl<$Res, Notifications>;
   @useResult
-  $Res call({@JsonKey(name: "_id") String id, String title, String? data});
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      String title,
+      @JsonKey(name: "body") String? body});
 }
 
 /// @nodoc
@@ -61,7 +65,7 @@ class _$NotificationsCopyWithImpl<$Res, $Val extends Notifications>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? data = freezed,
+    Object? body = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -72,9 +76,9 @@ class _$NotificationsCopyWithImpl<$Res, $Val extends Notifications>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
+      body: freezed == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -88,7 +92,10 @@ abstract class _$$NotificationsImplCopyWith<$Res>
       __$$NotificationsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({@JsonKey(name: "_id") String id, String title, String? data});
+  $Res call(
+      {@JsonKey(name: "_id") String id,
+      String title,
+      @JsonKey(name: "body") String? body});
 }
 
 /// @nodoc
@@ -106,7 +113,7 @@ class __$$NotificationsImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? data = freezed,
+    Object? body = freezed,
   }) {
     return _then(_$NotificationsImpl(
       id: null == id
@@ -117,9 +124,9 @@ class __$$NotificationsImplCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
+      body: freezed == body
+          ? _value.body
+          : body // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -129,7 +136,9 @@ class __$$NotificationsImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$NotificationsImpl implements _Notifications {
   const _$NotificationsImpl(
-      {@JsonKey(name: "_id") required this.id, required this.title, this.data});
+      {@JsonKey(name: "_id") required this.id,
+      required this.title,
+      @JsonKey(name: "body") this.body});
 
   factory _$NotificationsImpl.fromJson(Map<String, dynamic> json) =>
       _$$NotificationsImplFromJson(json);
@@ -140,11 +149,12 @@ class _$NotificationsImpl implements _Notifications {
   @override
   final String title;
   @override
-  final String? data;
+  @JsonKey(name: "body")
+  final String? body;
 
   @override
   String toString() {
-    return 'Notifications(id: $id, title: $title, data: $data)';
+    return 'Notifications(id: $id, title: $title, body: $body)';
   }
 
   @override
@@ -154,12 +164,12 @@ class _$NotificationsImpl implements _Notifications {
             other is _$NotificationsImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.body, body) || other.body == body));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, data);
+  int get hashCode => Object.hash(runtimeType, id, title, body);
 
   /// Create a copy of Notifications
   /// with the given fields replaced by the non-null parameter values.
@@ -181,7 +191,7 @@ abstract class _Notifications implements Notifications {
   const factory _Notifications(
       {@JsonKey(name: "_id") required final String id,
       required final String title,
-      final String? data}) = _$NotificationsImpl;
+      @JsonKey(name: "body") final String? body}) = _$NotificationsImpl;
 
   factory _Notifications.fromJson(Map<String, dynamic> json) =
       _$NotificationsImpl.fromJson;
@@ -192,7 +202,8 @@ abstract class _Notifications implements Notifications {
   @override
   String get title;
   @override
-  String? get data;
+  @JsonKey(name: "body")
+  String? get body;
 
   /// Create a copy of Notifications
   /// with the given fields replaced by the non-null parameter values.

@@ -202,10 +202,7 @@
     "switchToNewNumber": "التبديل إلى رقم جديد",
     "@currentlyRegisteredNumber": {
         "description": "Message showing the currently registered number and assurance about account data",
-        "type": "text",
-        "placeholders": {
-            "phone": {}
-        }
+        "type": "text"
     },
     "currentlyRegisteredNumber": "رقم الهاتف المسجل حاليًا هو {phone}. لن تتأثر رصيدك أو بياناتك أو أي معلومات أخرى متعلقة بالحساب.",
     "@switchNow": {
@@ -282,5 +279,4 @@
     "pay": "ادفع",
     "noReviews": "لا توجد مراجعات للخدمة الحالية",
     "cancelled_succ": "تم الغاء الحجز بنجاح"
-
 }

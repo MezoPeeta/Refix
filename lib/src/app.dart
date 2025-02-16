@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:refix/l10n/app_localizations.dart';
 import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/navigation/routes.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/theme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 final scaffoldMessengerKeyPod = Provider((ref) {
   return GlobalKey<ScaffoldMessengerState>();

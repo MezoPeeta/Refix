@@ -1,4 +1,5 @@
 import 'package:dashboard/src/core/theme/btns.dart';
+import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:dashboard/src/screens/points/data/point.dart';
 import 'package:dashboard/src/screens/points/domain/points_domain.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
 
   @override
   void initState() {
-    super.initState();
+    super.initState();  
     final post = ref.read(pointIDProvider);
     if (post != null) {
       setState(() {
@@ -48,7 +49,7 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
 
         offerController.text = post.percentage.toString();
         dateController.text = post.availableDays.toString();
-        pointsController.text = post.availableDays.toString();
+        pointsController.text = post.requiredPoints.toString();
       });
     }
   }
@@ -79,7 +80,9 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                       return null;
                     },
                     decoration: const InputDecoration(
-                        hintText: "Package Name (English)"),
+                        hintText: "Package Name (English)",
+                        label: Text("Package Name (English)"
+                         ))  ,
                   ),
                   TextFormField(
                     controller: nameArabicController,
@@ -90,7 +93,8 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                       return null;
                     },
                     decoration: const InputDecoration(
-                        hintText: "Package Name (Arabic)"),
+                        hintText: "Package Name (Arabic)",
+                        label: Text("Package Name (Arabic)")), 
                   ),
                   TextFormField(
                     controller: offerController,
@@ -104,7 +108,7 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                       }
                       return null;
                     },
-                    decoration: const InputDecoration(hintText: "Offer"),
+                    decoration: const InputDecoration(hintText: "Offer", label: Text("Offer")), 
                   ),
                   DropdownButtonFormField(
                       value: isActive,
@@ -133,8 +137,10 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                     },
                     maxLength: 200,
                     maxLines: 5,
-                    decoration:
-                        const InputDecoration(hintText: "Details (English)"),
+                     decoration:
+                        const InputDecoration(hintText: "Details (English)",
+                        label:   Text("Details (English)") 
+                        ),
                   ),
                   TextFormField(
                     controller: detailsArabicController,
@@ -147,7 +153,9 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                     maxLength: 200,
                     maxLines: 5,
                     decoration:
-                        const InputDecoration(hintText: "Details (Arabic)"),
+                        const InputDecoration(hintText: "Details (Arabic)",  
+                        label:   Text("Details (Arabic)") 
+                        ), 
                   ),
                   TextFormField(
                     readOnly: true,
@@ -177,8 +185,8 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                     },
                     controller: dateController,
                     decoration: const InputDecoration(
-                        hintText: "Number of available days"),
-                  ),
+                        hintText: "Number of available days",label: Text("Number of available days")), 
+                  ), 
                   TextFormField(
                     controller: pointsController,
                     validator: (v) {
@@ -191,7 +199,7 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                     inputFormatters: [
                       FilteringTextInputFormatter.allow(RegExp("[0-9]"))
                     ],
-                    decoration: const InputDecoration(hintText: "Points"),
+                    decoration: const InputDecoration(hintText: "Points", label: Text("Points")), 
                   ),
                   PrimaryButton(
                       text: isEditting ? "Edit" : "Add",
@@ -226,8 +234,8 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                                 .read(scaffoldMessengerPod)
                                 .showSnackBar(SnackBar(content: Text(status!)));
                             ref.invalidate(getPointsProvider);
-                            context.pop();
-
+                            ref.read(currentIndexProvider.notifier).update((state)=>state - 1); 
+  
                             return;
                           }
 
@@ -254,7 +262,7 @@ class _AddEditPointsState extends ConsumerState<AddEditPoints> {
                             loading = false;
                           });
                           ref.invalidate(getPointsProvider);
-                          context.pop();
+                          ref.read(currentIndexProvider.notifier).update((state)=>state - 1); 
                           ref
                               .read(scaffoldMessengerPod)
                               .showSnackBar(SnackBar(content: Text(status!)));

@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:google_api_availability/google_api_availability.dart';
 import 'package:refix/src/core/network/api.dart';
 import 'package:refix/src/screens/auth/data/auth_data.dart';
 import 'package:refix/src/screens/auth/domain/auth_domain.dart';
@@ -19,16 +18,11 @@ class FirebaseNotifications {
     if (Platform.isIOS) {
       return;
     }
-    GooglePlayServicesAvailability availability = await GoogleApiAvailability
-        .instance
-        .checkGooglePlayServicesAvailability();
-    log("[Google Play Services] $availability");
-
-    if (availability == GooglePlayServicesAvailability.success) {
-      await _messaging.requestPermission();
-      final token = await getToken();
-      log("Token $token");
-    }
+    // This break on Huawei Devices
+    // TODO: DOn't forget this
+    await _messaging.requestPermission();
+    final token = await getToken();
+    log("Token $token");
   }
 
   Future<String?> getToken() async {

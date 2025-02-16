@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:worker/src/app.dart';
+import 'package:worker/src/core/localization/domain.dart';
 import 'package:worker/src/screens/tasks/domain/tasks_domain.dart';
 
 import '../../core/theme/colors.dart';
@@ -20,7 +21,7 @@ class InspectionScreen extends StatefulWidget {
 }
 
 class _InspectionScreenState extends State<InspectionScreen> {
-  List<String> photos = [];
+  List<XFile> photos = [];
   final notesController = TextEditingController();
   final _key = GlobalKey<FormState>();
   bool loading = false;
@@ -44,7 +45,7 @@ class _InspectionScreenState extends State<InspectionScreen> {
             children: [
               SvgPicture.asset("assets/img/stepper_2.svg"),
               TextHeader(
-                text: "Photos after repair",
+                text: context.tr.photosAfterRepair,
                 fontWeight: FontWeight.w500,
               ),
               SizedBox(
@@ -65,7 +66,7 @@ class _InspectionScreenState extends State<InspectionScreen> {
                                 source: ImageSource.camera);
                             if (photo != null) {
                               setState(() {
-                                photos.add(photo.path);
+                                photos.add(photo);
                               });
                             }
                           },
@@ -86,7 +87,7 @@ class _InspectionScreenState extends State<InspectionScreen> {
                         );
                       }
                       return AddedImage(
-                        path: photos[index],
+                        path: photos[index].path,
                       );
                     }),
               ),
@@ -102,8 +103,10 @@ class _InspectionScreenState extends State<InspectionScreen> {
                   },
                   maxLines: 5,
                   maxLength: 200,
-                  decoration: const InputDecoration(
-                      hintText: "Description of the problem"),
+                  decoration: InputDecoration(
+                      hintText: context.tr.problemDescription,
+                      fillColor: Colors.white,
+                      filled: true),
                 ),
               ),
             ],
@@ -115,8 +118,13 @@ class _InspectionScreenState extends State<InspectionScreen> {
           padding: const EdgeInsets.all(16),
           child: PrimaryButton(
               loading: loading,
-              text: "Finish Work",
+              text: context.tr.finishWork,
               onPressed: () async {
+                if (photos.isEmpty) {
+                  ref.read(scaffoldMessengerPod).showSnackBar(
+                      SnackBar(content: Text(context.tr.photoEmpty)));
+                  return;
+                }
                 if (_key.currentState!.validate()) {
                   setState(() {
                     loading = true;

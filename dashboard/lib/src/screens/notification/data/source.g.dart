@@ -10,14 +10,14 @@ _$NotificationsImpl _$$NotificationsImplFromJson(Map<String, dynamic> json) =>
     _$NotificationsImpl(
       id: json['_id'] as String,
       title: json['title'] as String,
-      data: json['data'] as String?,
+      body: json['body'] as String?,
     );
 
 Map<String, dynamic> _$$NotificationsImplToJson(_$NotificationsImpl instance) =>
     <String, dynamic>{
       '_id': instance.id,
       'title': instance.title,
-      'data': instance.data,
+      'body': instance.body,
     };
 
 // **************************************************************************
@@ -25,7 +25,7 @@ Map<String, dynamic> _$$NotificationsImplToJson(_$NotificationsImpl instance) =>
 // **************************************************************************
 
 String _$notificationsNotifierHash() =>
-    r'25b545c7a8e1ab3954acdfe4435034a8cfce1d1e';
+    r'a4db528fc1fc75f697192e77f2a5b96fdd318f5c';
 
 /// See also [NotificationsNotifier].
 @ProviderFor(NotificationsNotifier)

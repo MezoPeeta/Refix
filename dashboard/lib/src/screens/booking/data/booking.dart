@@ -20,23 +20,23 @@ class Booking with _$Booking {
 
 @freezed
 class BookingElement with _$BookingElement {
-  const factory BookingElement({
-    @JsonKey(name: "_id") required String id,
-    @JsonKey(name: "services") required List<Service> services,
-    @JsonKey(name: "customer") required User customer,
-    Worker? worker,
-    @JsonKey(name: "appointment_date") required DateTime appointmentDate,
-    @JsonKey(name: "note") String? note,
-    @JsonKey(name: "images_before_reaper")
-    required List<String> imagesBeforeReaper,
-    @JsonKey(name: "images_after_reaper", defaultValue: [])
-    required List<String> imagesAfterReaper,
-    @JsonKey(name: "description_problem") dynamic descriptionProblem,
-    @JsonKey(name: "status") required String status,
-    @JsonKey(name: "cost",defaultValue: 0) required int cost,
-    @JsonKey(name: "createdAt") required DateTime createdAt,
-    @Default(false) bool resolved
-  }) = _BookingElement;
+  const factory BookingElement(
+      {@JsonKey(name: "_id") required String id,
+      @JsonKey(name: "services") required List<Service> services,
+      @JsonKey(name: "customer") required User customer,
+      Worker? worker,
+      @JsonKey(name: "appointment_date") required DateTime appointmentDate,
+      @JsonKey(name: "note") String? note,
+      @JsonKey(name: "images_before_reaper")
+      required List<String> imagesBeforeReaper,
+      @JsonKey(name: "images_after_reaper", defaultValue: [])
+      required List<String> imagesAfterReaper,
+      @JsonKey(name: "description_problem") dynamic descriptionProblem,
+      @JsonKey(name: "status") required String status,
+      @JsonKey(name: "cost", defaultValue: 0) required int cost,
+      @JsonKey(name: "createdAt") required DateTime createdAt,
+      @JsonKey(name: "problem_not_resolved") required String? problemNotResolved,
+      @Default(false) bool resolved}) = _BookingElement; 
 
   factory BookingElement.fromJson(Map<String, dynamic> json) =>
       _$BookingElementFromJson(json);

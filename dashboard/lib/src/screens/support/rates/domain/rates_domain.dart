@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dashboard/src/screens/booking/data/booking.dart';
 import 'package:dashboard/src/screens/support/rates/data/rates_data.dart';
 import 'package:dashboard/src/screens/users/domain/source.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -39,8 +40,7 @@ Future<List<BookingElement>> getReports(Ref ref,
       .authenticatedRequest(url: url, method: "GET");
   if (response.statusCode == 200) {
     final decoded = jsonDecode(response.body);
-
-    return decoded
+    return decoded   
         .map<BookingElement>((e) => BookingElement.fromJson(e))
         .toList();
   }
@@ -49,19 +49,17 @@ Future<List<BookingElement>> getReports(Ref ref,
 }
 
 @riverpod
-Future<String> resolveBooking(Ref ref,
-    {required String bookingID}) async {
+Future<String> resolveBooking(Ref ref, {required String bookingID}) async {
   final response = await ref.read(httpProvider).authenticatedRequest(
       url: "booking/$bookingID/problem-not-resolved/resolve", method: "PATCH");
   return getReMessage(response.body);
 }
 
-
 String getReMessage(dynamic message) {
-  if ( message is String) {
+  if (message is String) {
     return message;
   }
-  
+
   if (jsonDecode(message) is Map<String, dynamic>) {
     final mess = message["message"];
     if (mess is List) {

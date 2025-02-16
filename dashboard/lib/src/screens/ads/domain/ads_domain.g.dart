@@ -596,7 +596,7 @@ class _UpdateAdsByIdProviderElement
   Uint8List get image => (origin as UpdateAdsByIdProvider).image;
 }
 
-String _$deleteAdHash() => r'4ea49cd1da353ca23f2193bab59f9ac85590ea42';
+String _$deleteAdHash() => r'82b39bc7e558dd2a335272ddfd5614a96ea332b2';
 
 /// See also [deleteAd].
 @ProviderFor(deleteAd)

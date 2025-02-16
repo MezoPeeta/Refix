@@ -3,9 +3,11 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:refix/src/app.dart';
 import 'package:refix/src/core/navigation/routes.dart';
 import 'package:refix/src/screens/boarding/data/boarding_data.dart';
 import 'package:refix/src/screens/services/data/bookin_data.dart';
@@ -125,6 +127,10 @@ Future<String> updateBooking(Ref ref,
     {required String status, required String id}) async {
   final request = await ref.read(httpProvider).authenticatedRequest(
       url: "booking/$id", method: "PATCH", body: {"status": status});
+  if (request.statusCode == 200) {
+    ref.read(goRouterProvider).pop();
+    ref.invalidate(getUserBookingProvider);
+  }
   return getResponseMessage(jsonDecode(request.body));
 }
 
@@ -184,6 +190,12 @@ Future<void> paymentBooking(Ref ref, {required String bookingID}) async {
     log("Payment: $paymentURL");
 
     ref.read(goRouterProvider).push("/payment_web", extra: paymentURL);
+  }
+  if (request.statusCode == 409) {
+    ref.read(goRouterProvider).go("/");
+    ref
+        .read(scaffoldMessengerPod)
+        .showSnackBar(SnackBar(content: (Text(request.body))));
   }
 }
 

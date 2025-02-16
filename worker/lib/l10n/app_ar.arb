@@ -23,7 +23,6 @@
     "last_name": "الاسم الاخير",
     "phone": "رقم المحمول",
     "delete_account": "مسح الحساب",
-    "enter_email": "ادخل بريد الاكتروني الجديد",
     "payment_methods": "طرق الدفع",
     "privacy": "خصوصية",
     "logout": "تسجيل الخروج",
@@ -203,10 +202,9 @@
     "switchToNewNumber": "التبديل إلى رقم جديد",
     "@currentlyRegisteredNumber": {
         "description": "Message showing the currently registered number and assurance about account data",
-        "type": "text",
-        "placeholders": {
-            "phone": {}
-        }
+        "type": "text"
+    
+
     },
     "currentlyRegisteredNumber": "رقم الهاتف المسجل حاليًا هو {phone}. لن تتأثر رصيدك أو بياناتك أو أي معلومات أخرى متعلقة بالحساب.",
     "@switchNow": {
@@ -250,5 +248,24 @@
                 "example": "١٠٠"
             }
         }
-    }
+    },
+    "dateOfVisit": "تاريخ الزيارة",
+    "pleaseEnterDetails": "الرجاء إدخال التفاصيل",
+    "theDetails": "التفاصيل",
+    "clickOnMap": "انقر على الخريطة للذهاب إلى خرائط Google والبدء في التنقل إلى العميل.",
+    "startTaskNow": "بدء المهمة الآن",
+    "todaysTaskAlmostDone": "مهمة اليوم على وشك الانتهاء!",
+    "todaysTasks": "مهام اليوم",
+    "noTask": "لا توجد مهمة",
+    "cancelled": "ملغى",
+    "finishWork": "إنهاء العمل",
+    "reportProblem": "الإبلاغ عن مشكلة",
+    "pressCallButton": "اضغط على زر الاتصال للتواصل مع العميل مباشرة",
+    "startInspectionProcess": "بدء عملية التفتيش",
+    "photosAfterRepair": "الصور بعد الإصلاح",
+    "problemDescription": "وصف المشكلة",
+    "showAllTasks": "عرض جميع المهام",
+    "taskCompletionMessage": "أحسنت على إكمال المهمة! انتقل إلى المهمة التالية وأنهِ العمل المتبقي. حظًا سعيدًا!",
+    "taskCompleted": "تم إكمال المهمة",
+    "photoEmpty": "يجب ألا تكون الصور فارغة"
 }

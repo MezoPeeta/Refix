@@ -63,17 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Spacer(),
-                    Text(context.tr.forgot_pass,
-                        style: const TextStyle(fontSize: AppTextSize.two))
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
                 Consumer(builder: (context, ref, child) {
                   return PrimaryButton(
                       text: context.tr.sign_in,
@@ -93,10 +82,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               loading = false;
                             });
                           }, (value) {
+                            context.go("/");
+
                             setState(() {
                               loading = false;
                             });
-                            context.go("/");
                           });
                         }
                       });

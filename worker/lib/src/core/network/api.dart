@@ -48,7 +48,7 @@ class HttpAPI {
     Map<String, dynamic>? body,
   }) async {
     const r = RetryOptions(maxAttempts: 8);
-    final accessToken = await ref.read(authProvider).getAccessToken();
+    String? accessToken = await ref.read(authProvider).getAccessToken();
     final currentLocale = ref.read(localeNotifierProvider).languageCode;
 
     Future<Response> makeRequest() async {
@@ -84,8 +84,8 @@ class HttpAPI {
       }
 
       if (response.statusCode == 401) {
-        await ref.read(authProvider).refreshAccessToken();
-        makeRequest();
+        accessToken = await ref.read(authProvider).refreshAccessToken();
+        throw UnauthorizedException();
       }
       return response;
     }

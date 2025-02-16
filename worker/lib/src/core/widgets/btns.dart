@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../screens/tasks/in_task.dart';
 import '../theme/colors.dart';
 import '../theme/radii.dart';
 
@@ -181,14 +182,27 @@ class AddedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 77,
-      height: 80,
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.cover,
-              image: isFile ? FileImage(File(path)) : NetworkImage(path)),
-          borderRadius: BorderRadius.circular(AppRadii.lg)),
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: (context) =>
+                FullScreenImage(imageUrl: "https://api.refixapp.com/$path"),
+          ),
+        );
+      },
+      child: Container(
+        width: 77,
+        height: 80,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.cover,
+                image: isFile
+                    ? FileImage(File(path))
+                    : NetworkImage("https://api.refixapp.com/$path")),
+            borderRadius: BorderRadius.circular(AppRadii.lg)),
+      ),
     );
   }
 }

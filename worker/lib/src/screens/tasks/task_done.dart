@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
+import 'package:worker/src/core/localization/domain.dart';
 
 import '../../core/theme/colors.dart';
 import '../../core/theme/radii.dart';
@@ -21,13 +22,13 @@ class TaskDone extends StatelessWidget {
               spacing: 16,
               children: [
                 SvgPicture.asset("assets/img/check.svg"),
-                const Text(
-                  "task completed",
+                Text(
+                  context.tr.taskCompleted,
                   style: TextStyle(
                       fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
                 ),
-                const Text(
-                  "Well done on completing the task! Move on to the next task and finish the remaining work. Good luck!",
+                Text(
+                  context.tr.taskCompletionMessage,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: AppTextSize.two,
@@ -35,7 +36,8 @@ class TaskDone extends StatelessWidget {
                       fontWeight: FontWeight.w300),
                 ),
                 PrimaryButton(
-                    text: "Show All Tasks", onPressed: () => context.go("/")),
+                    text: context.tr.showAllTasks,
+                    onPressed: () => context.go("/")),
               ],
             ),
           ),

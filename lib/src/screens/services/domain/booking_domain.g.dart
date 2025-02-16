@@ -501,7 +501,7 @@ class _GetLocationProviderElement
   double get longitude => (origin as GetLocationProvider).longitude;
 }
 
-String _$updateBookingHash() => r'759602b563b7155a81e1b9798c170f760b3e9846';
+String _$updateBookingHash() => r'09985a5c8d28989b39b5f373cfe915f3355c995c';
 
 /// See also [updateBooking].
 @ProviderFor(updateBooking)
@@ -1073,7 +1073,7 @@ class _UpdateBookingMethodProviderElement
   String get method => (origin as UpdateBookingMethodProvider).method;
 }
 
-String _$paymentBookingHash() => r'b953b8143c496c836d079e2d3ac3f6a2ac4571d5';
+String _$paymentBookingHash() => r'02c0b2e2f507f833b7fd75ddb900d73dbf99d5da';
 
 /// See also [paymentBooking].
 @ProviderFor(paymentBooking)

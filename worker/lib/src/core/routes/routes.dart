@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:worker/src/screens/auth/signin/signin.dart';
+import 'package:worker/src/screens/profile/about_refix.dart';
 import 'package:worker/src/screens/profile/user_profile.dart';
 import 'package:worker/src/screens/tasks/in_task.dart';
 import 'package:worker/src/screens/tasks/inspection.dart';
@@ -18,14 +19,11 @@ final goRouterProvider = Provider<GoRouter>((ref) {
 });
 
 final routes = GoRouter(
-    initialLocation: "/",
+    initialLocation: "/login",
     redirect: (BuildContext context, GoRouterState state) async {
       final accessToken = await SecureStorage().read(key: "access_token");
-      if (accessToken != null) {
-        if (state.uri.toString() == '/login') {
-          return '/';
-        }
-        return null;
+      if (accessToken != null && state.uri.toString() == "/login") {
+        return "/";
       }
 
       return null;
@@ -49,6 +47,7 @@ final routes = GoRouter(
           builder: (context, state) => InTaskScreen(
                 data: state.extra as Map<String, dynamic>,
               )),
+      GoRoute(path: "/about", builder: (context, state) => AboutRefix()),
       GoRoute(
           path: "/payment",
           builder: (context, state) => TaskpaymentScreen(

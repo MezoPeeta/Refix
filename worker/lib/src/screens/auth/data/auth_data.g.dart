@@ -83,6 +83,13 @@ _$TasksImpl _$$TasksImplFromJson(Map<String, dynamic> json) => _$TasksImpl(
           : User.fromJson(json['customer'] as Map<String, dynamic>),
       cost: (json['cost'] as num?)?.toDouble() ?? 0,
       paymentMethod: json['payment_method'] as String? ?? 'CASH',
+      imagesBeforeRepair: (json['images_before_reaper'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          [],
+      appointmentDate: json['appointment_date'] == null
+          ? null
+          : DateTime.parse(json['appointment_date'] as String),
       createdAt: json['createdAt'] == null
           ? null
           : DateTime.parse(json['createdAt'] as String),
@@ -96,6 +103,8 @@ Map<String, dynamic> _$$TasksImplToJson(_$TasksImpl instance) =>
       'customer': instance.customer,
       'cost': instance.cost,
       'payment_method': instance.paymentMethod,
+      'images_before_reaper': instance.imagesBeforeRepair,
+      'appointment_date': instance.appointmentDate?.toIso8601String(),
       'createdAt': instance.createdAt?.toIso8601String(),
       'status': instance.status,
     };

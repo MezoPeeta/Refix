@@ -3,13 +3,14 @@ import 'package:dashboard/src/core/theme/btns.dart';
 import 'package:dashboard/src/core/theme/colors.dart';
 import 'package:dashboard/src/screens/content/data/boarding_data.dart';
 import 'package:dashboard/src/screens/content/domain/onetime_domain.dart';
+import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+ 
 import '../base/base.dart';
 
 final boardingInfoProvider = StateProvider<BoardingUpdate?>((ref) => null);
@@ -184,7 +185,7 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                           decoration: const InputDecoration(
                               hintText: "The details (Arabic)"),
                         ),
-                        Consumer(builder: (context, ref, child) {
+                        Consumer(builder: (Context, ref, child) {
                           return PrimaryButton(
                               loading: loading,
                               text: "Save",
@@ -194,6 +195,10 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                                   setState(() {
                                     loading = true;
                                   });
+
+                                  await Future.delayed(
+                                      const Duration(milliseconds: 20));
+
                                   final info = ref.read(boardingInfoProvider);
 
                                   final res = await ref.read(
@@ -208,9 +213,13 @@ class _OnetimeEditScreenState extends ConsumerState<OnetimeEditScreen> {
                                               image: picture!,
                                               id: info!.id)
                                           .future);
+
                                   setState(() {
                                     loading = false;
                                   });
+
+                                  ref.read(currentIndexProvider.notifier).update((state)=>state - 1);
+ 
                                   res.fold((v) {
                                     ref.read(scaffoldMessengerPod).showSnackBar(
                                         SnackBar(content: Text(v)));

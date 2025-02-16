@@ -22,7 +22,7 @@ final getPointsProvider = AutoDisposeFutureProvider<List<Point>>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef GetPointsRef = AutoDisposeFutureProviderRef<List<Point>>;
-String _$addPointsHash() => r'43b8593b43c42e8b56ddd3058d10b0ce72a69c01';
+String _$addPointsHash() => r'c245424b1a5ce080e431ebd69aa4bb5b4b38e777';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -285,7 +285,7 @@ class _AddPointsProviderElement
   int get offers => (origin as AddPointsProvider).offers;
 }
 
-String _$updatePointHash() => r'4194df2d611db449a431909f66e24f823ccb3846';
+String _$updatePointHash() => r'2fc4b0601c2f883841961f7a99ed1a8c369abace';
 
 /// See also [updatePoint].
 @ProviderFor(updatePoint)

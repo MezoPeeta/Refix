@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:worker/src/core/localization/domain.dart';
 
 import '../../core/theme/colors.dart';
 import '../../core/theme/radii.dart';
@@ -38,12 +39,12 @@ class TaskpaymentScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Cost Of Service",
+                  Text(
+                    context.tr.costOfService,
                     style: TextStyle(fontSize: AppTextSize.two),
                   ),
                   Text(
-                    "${task.cost} SAR",
+                    context.tr.cost(task.cost.toString()),
                     style: const TextStyle(fontSize: AppTextSize.two),
                   ),
                 ],
@@ -52,7 +53,7 @@ class TaskpaymentScreen extends StatelessWidget {
             Text(task.paymentMethod),
             Spacer(),
             PrimaryButton(
-              text: "Finish Work",
+              text: context.tr.finishWork,
               onPressed: () => context.go("/success"),
               loading: false,
             ),
@@ -63,7 +64,7 @@ class TaskpaymentScreen extends StatelessWidget {
                     throw Exception('Could not launch $url');
                   }
                 },
-                text: "Report problem")
+                text: context.tr.reportProblem)
           ],
         ),
       ),

@@ -500,7 +500,7 @@ class _CreateWorkerProviderElement
   String get companyName => (origin as CreateWorkerProvider).companyName;
 }
 
-String _$updateWorkerHash() => r'9077c0570b2836e80702d90e7d1b7845e59b3abd';
+String _$updateWorkerHash() => r'06ed38b4d8dbc457f9f7c904e49dece4f4cd4e81';
 
 /// See also [updateWorker].
 @ProviderFor(updateWorker)
@@ -711,7 +711,7 @@ class _UpdateWorkerProviderElement
   String get companyName => (origin as UpdateWorkerProvider).companyName;
 }
 
-String _$createUserHash() => r'b1c9a4b67807ab8fb0c56673c9c5b8e27648831b';
+String _$createUserHash() => r'f6b65e4dbd415ff492e7f45151458d31483b36ab';
 
 /// See also [createUser].
 @ProviderFor(createUser)
@@ -890,7 +890,7 @@ class _CreateUserProviderElement
   String get phone => (origin as CreateUserProvider).phone;
 }
 
-String _$updateUserHash() => r'c916286d47cc71b3e54e8dbea36eb5a9cb2f7e2d';
+String _$updateUserHash() => r'48a84d0969ae2ab74da5d1474ea7ad86427b6cb2';
 
 /// See also [updateUser].
 @ProviderFor(updateUser)

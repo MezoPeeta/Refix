@@ -11,7 +11,6 @@
     "hello": "Hello! Register to get started",
     "username": "Username",
     "email": "Email",
-    "enter_email": "Please enter your email",
     "password": "Password",
     "confirm_password": "Confirm password",
     "sign_up": "Sign Up",
@@ -227,5 +226,24 @@
                 "example": "100"
             }
         }
-    }
+    },
+    "dateOfVisit": "Date of visit",
+  "pleaseEnterDetails": "Please enter details",
+  "theDetails": "The details",
+  "clickOnMap": "Click on the map to go to Google Maps and start navigating to the client.",
+  "startTaskNow": "Start Task Now",
+  "todaysTaskAlmostDone": "Your today's task almost done!",
+  "todaysTasks": "Today's tasks",
+  "noTask": "No Task",
+  "cancelled": "Cancelled",
+  "finishWork": "Finish Work",
+  "reportProblem": "Report problem",
+  "pressCallButton": "Press the call button to contact the client directly",
+  "startInspectionProcess": "Start The Inspection Process",
+  "photosAfterRepair": "Photos after repair",
+  "problemDescription": "Description of the problem",
+  "showAllTasks": "Show All Tasks",
+  "taskCompletionMessage": "Well done on completing the task! Move on to the next task and finish the remaining work. Good luck!",
+  "taskCompleted": "Task completed",
+  "photoEmpty": "Photos shouldn't be empty"
 }

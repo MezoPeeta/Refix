@@ -1,4 +1,5 @@
 import 'package:dashboard/src/screens/navbar/navbar.dart';
+import 'package:dashboard/src/screens/points/add_point.dart';
 import 'package:dashboard/src/screens/points/domain/points_domain.dart';
 import 'package:dashboard/src/screens/users/domain/source.dart';
 import 'package:flutter/material.dart';
@@ -32,10 +33,11 @@ class _PointsScreenState extends ConsumerState<PointsScreen> {
                   Expanded(
                       child: SecondaryButton(
                           text: "Add New +",
-                          onPressed: () {
+                          onPressed: ( ) {
+                            ref.read(pointIDProvider.notifier).state = null;
                             ref.read(currentIndexProvider.notifier).state = 10;
                           })),
-                ],
+                ],   
               ),
               points.when(
                   data: (data) {

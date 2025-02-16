@@ -1,0 +1,2 @@
+/home/mazen/projects/Refix/worker/android/app/.cxx/Debug/1i5v144a/x86_64/CMakeFiles/edit_cache.dir
+/home/mazen/projects/Refix/worker/android/app/.cxx/Debug/1i5v144a/x86_64/CMakeFiles/rebuild_cache.dir

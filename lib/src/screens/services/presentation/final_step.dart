@@ -174,7 +174,8 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                                         ),
                                                       ),
                                                       PrimaryButton(
-                                                          text: context.tr.addServices,
+                                                          text: context
+                                                              .tr.addServices,
                                                           onPressed: () {
                                                             context.pop();
                                                           })
@@ -248,9 +249,9 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
                                   onTap: () async {
                                     if (photos.length > 2) {
                                       ScaffoldMessenger.of(context)
-                                          .showSnackBar( SnackBar(
-                                              content: Text(
-                                                  context.tr.photoLimit)));
+                                          .showSnackBar(SnackBar(
+                                              content:
+                                                  Text(context.tr.photoLimit)));
                                       return;
                                     }
                                     final ImagePicker picker = ImagePicker();
@@ -447,18 +448,27 @@ class _FinalstepScreenState extends ConsumerState<FinalstepScreen> {
 
               final discount = results[0] as Discount?;
               final offer = results[1] as Offer?;
+              log("Active Discount: $discount | Offer Used: $offer");
 
-              if (discount != null && offer != null) {
-                if (discount.active == true || offer.isUsed == false) {
-                  return context.goNamed(
-                    "BookingDone",
-                    extra: discount,
-                    pathParameters: {
-                      "cost": service.price.toString(),
-                      "points": offer.point.percentage.toString(),
-                    },
-                  );
-                }
+              if (discount != null) {
+                return context.goNamed(
+                  "BookingDone",
+                  extra: discount,
+                  pathParameters: {
+                    "cost": service.price.toString(),
+                    "points": '0',
+                  },
+                );
+              }
+              if (offer != null && offer.isUsed == false) {
+                return context.goNamed(
+                  "BookingDone",
+                  extra: discount,
+                  pathParameters: {
+                    "cost": service.price.toString(),
+                    "points": offer.point.percentage.toString(),
+                  },
+                );
               }
               context.go("/payment_method");
             }

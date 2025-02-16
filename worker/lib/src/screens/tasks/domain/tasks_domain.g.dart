@@ -6,7 +6,7 @@ part of 'tasks_domain.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateBookingHash() => r'4c4e0bd9183517c3134ffbd9b0758b4b2f152148';
+String _$updateBookingHash() => r'c200e3175270f3ec0dfaf46769a31ed86a1f53dd';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -43,7 +43,7 @@ class UpdateBookingFamily extends Family<AsyncValue<String>> {
     required String id,
     String? description,
     required String status,
-    List<String>? images,
+    List<XFile>? images,
   }) {
     return UpdateBookingProvider(
       id: id,
@@ -87,7 +87,7 @@ class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
     required String id,
     String? description,
     required String status,
-    List<String>? images,
+    List<XFile>? images,
   }) : this._internal(
           (ref) => updateBooking(
             ref as UpdateBookingRef,
@@ -127,7 +127,7 @@ class UpdateBookingProvider extends AutoDisposeFutureProvider<String> {
   final String id;
   final String? description;
   final String status;
-  final List<String>? images;
+  final List<XFile>? images;
 
   @override
   Override overrideWith(
@@ -189,7 +189,7 @@ mixin UpdateBookingRef on AutoDisposeFutureProviderRef<String> {
   String get status;
 
   /// The parameter `images` of this provider.
-  List<String>? get images;
+  List<XFile>? get images;
 }
 
 class _UpdateBookingProviderElement
@@ -203,7 +203,151 @@ class _UpdateBookingProviderElement
   @override
   String get status => (origin as UpdateBookingProvider).status;
   @override
-  List<String>? get images => (origin as UpdateBookingProvider).images;
+  List<XFile>? get images => (origin as UpdateBookingProvider).images;
+}
+
+String _$taskRequestedHash() => r'ae28d93c7424b49d65a07b7f8f711dca7f023605';
+
+abstract class _$TaskRequested extends BuildlessAutoDisposeNotifier<bool> {
+  late final String taskID;
+
+  bool build({
+    required String taskID,
+  });
+}
+
+/// See also [TaskRequested].
+@ProviderFor(TaskRequested)
+const taskRequestedProvider = TaskRequestedFamily();
+
+/// See also [TaskRequested].
+class TaskRequestedFamily extends Family<bool> {
+  /// See also [TaskRequested].
+  const TaskRequestedFamily();
+
+  /// See also [TaskRequested].
+  TaskRequestedProvider call({
+    required String taskID,
+  }) {
+    return TaskRequestedProvider(
+      taskID: taskID,
+    );
+  }
+
+  @override
+  TaskRequestedProvider getProviderOverride(
+    covariant TaskRequestedProvider provider,
+  ) {
+    return call(
+      taskID: provider.taskID,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'taskRequestedProvider';
+}
+
+/// See also [TaskRequested].
+class TaskRequestedProvider
+    extends AutoDisposeNotifierProviderImpl<TaskRequested, bool> {
+  /// See also [TaskRequested].
+  TaskRequestedProvider({
+    required String taskID,
+  }) : this._internal(
+          () => TaskRequested()..taskID = taskID,
+          from: taskRequestedProvider,
+          name: r'taskRequestedProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$taskRequestedHash,
+          dependencies: TaskRequestedFamily._dependencies,
+          allTransitiveDependencies:
+              TaskRequestedFamily._allTransitiveDependencies,
+          taskID: taskID,
+        );
+
+  TaskRequestedProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.taskID,
+  }) : super.internal();
+
+  final String taskID;
+
+  @override
+  bool runNotifierBuild(
+    covariant TaskRequested notifier,
+  ) {
+    return notifier.build(
+      taskID: taskID,
+    );
+  }
+
+  @override
+  Override overrideWith(TaskRequested Function() create) {
+    return ProviderOverride(
+      origin: this,
+      override: TaskRequestedProvider._internal(
+        () => create()..taskID = taskID,
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        taskID: taskID,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeNotifierProviderElement<TaskRequested, bool> createElement() {
+    return _TaskRequestedProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is TaskRequestedProvider && other.taskID == taskID;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, taskID.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin TaskRequestedRef on AutoDisposeNotifierProviderRef<bool> {
+  /// The parameter `taskID` of this provider.
+  String get taskID;
+}
+
+class _TaskRequestedProviderElement
+    extends AutoDisposeNotifierProviderElement<TaskRequested, bool>
+    with TaskRequestedRef {
+  _TaskRequestedProviderElement(super.provider);
+
+  @override
+  String get taskID => (origin as TaskRequestedProvider).taskID;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

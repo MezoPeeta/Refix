@@ -94,6 +94,9 @@ class Tasks with _$Tasks {
       @Default(0) double cost,
       @JsonKey(name: "payment_method", defaultValue: "CASH")
       required String paymentMethod,
+      @JsonKey(name: "images_before_reaper", defaultValue: [])
+      List<String>? imagesBeforeRepair,
+      @JsonKey(name: "appointment_date") DateTime? appointmentDate,
       @JsonKey(name: "createdAt") DateTime? createdAt,
       required String status}) = _Tasks;
 

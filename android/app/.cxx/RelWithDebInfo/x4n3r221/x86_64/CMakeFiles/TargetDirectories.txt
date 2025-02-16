@@ -1,0 +1,2 @@
+/home/mazen/projects/Refix/android/app/.cxx/RelWithDebInfo/x4n3r221/x86_64/CMakeFiles/edit_cache.dir
+/home/mazen/projects/Refix/android/app/.cxx/RelWithDebInfo/x4n3r221/x86_64/CMakeFiles/rebuild_cache.dir

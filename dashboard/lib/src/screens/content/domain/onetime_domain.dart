@@ -19,13 +19,17 @@ Future<Either<String, String>> updateBoarding(Ref ref,
     required String detailsEn,
     required String detailsAr,
     required Uint8List image}) async {
+  final compressedImage = await compressImage(image);
+  final base64Image = base64Encode(compressedImage);
+
   final request = await ref
       .read(httpProvider)
       .authenticatedRequest(url: "onboarding/$id", method: "PUT", body: {
-    "heading": jsonEncode({"en": headingEn, "ar": headingAr}),
-    "details": jsonEncode({"en": detailsEn, "ar": detailsAr}),
-    "image": base64Encode(await compressImage(image))
+    "heading": {"en": headingEn, "ar": headingAr},
+    "details": {"en": detailsEn, "ar": detailsAr},
+    "image": base64Image
   });
+
   if (request.statusCode == 200) {
     return right("Upload successful");
   } else if (request.statusCode == 401) {

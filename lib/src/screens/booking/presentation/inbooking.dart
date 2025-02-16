@@ -222,10 +222,9 @@ class InbookingScreen extends StatelessWidget {
                                 id: booking.id, status: "CANCELLED")
                             .future);
 
-                        ref.invalidate(getUserBookingProvider);
                         ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(context.tr.cancelled_succ)));
-                        context.pop();
+                       
                       },
                       child: Text(
                         context.tr.cancelBooking,

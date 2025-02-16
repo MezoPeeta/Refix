@@ -10,6 +10,7 @@ import 'package:refix/src/core/localization/domain.dart';
 import 'package:refix/src/core/ui/theme/colors.dart';
 import 'package:refix/src/core/ui/theme/radii.dart';
 import 'package:refix/src/core/ui/widgets/button.dart';
+import 'package:refix/src/screens/profile/presentation/payment_methods.dart';
 import 'package:refix/src/screens/services/domain/booking_domain.dart';
 
 final currentStatusProvider = StateProvider<String>((ref) => "PENDING");
@@ -204,7 +205,6 @@ class BookingScreen extends ConsumerWidget {
                             child: Row(
                               children: [
                                 Container(
-                                  padding: const EdgeInsets.all(16),
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                       borderRadius:
@@ -213,8 +213,8 @@ class BookingScreen extends ConsumerWidget {
                                   child: CachedNetworkImage(
                                     imageUrl:
                                         "https://api.refixapp.com/${data[index].services.first.image}",
-                                    width: 33,
-                                    height: 34,
+                                    width: 60,
+                                    height: 60,
                                     errorWidget: (context, url, error) =>
                                         const Icon(Icons.broken_image),
                                     fit: BoxFit.cover,
@@ -257,6 +257,13 @@ class BookingScreen extends ConsumerWidget {
                                       bookings[index].paymentMethod,
                                       isPaid: bookings[index].isPaid),
                                   onPressed: () {
+                                    if (bookings[index].isPaid == false &&
+                                        bookings[index].paymentMethod ==
+                                            "CARD") {
+                                      ref
+                                          .read(bookingIDProvider.notifier)
+                                          .state = bookings[index].id;
+                                    }
                                     if (bookings[index].isPaid == false &&
                                         bookings[index].paymentMethod ==
                                             "CARD") {

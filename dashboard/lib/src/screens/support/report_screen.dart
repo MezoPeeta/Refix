@@ -15,11 +15,11 @@ class ReportsScreen extends ConsumerStatefulWidget {
 }
 
 class _ReportsScreenState extends ConsumerState<ReportsScreen> {
-   int _page = 1;
+  int _page = 1;
   String? query;
   @override
   Widget build(BuildContext context) {
-    final reports = ref.watch(getReportsProvider(page: _page,query: query));
+    final reports = ref.watch(getReportsProvider(page: _page, query: query));
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -56,9 +56,9 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                     return Expanded(
                       child: PaginatedDataTable(
                         columnSpacing: 95,
-                        onPageChanged: (newp){
+                        onPageChanged: (newPage) {
                           setState(() {
-                            _page = newp;
+                            _page = newPage;
                           });
                         },
                         columns: const [
@@ -87,11 +87,11 @@ class _ReportsScreenState extends ConsumerState<ReportsScreen> {
                             "Date of order",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )),
-                          DataColumn(
-                              label: Text(
-                            "Report",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )),
+                          // DataColumn(
+                          //     label: Text(
+                          //   "Report",
+                          //   style: TextStyle(fontWeight: FontWeight.bold),
+                          // )),
                           DataColumn(
                               label: Text(
                             "Status",

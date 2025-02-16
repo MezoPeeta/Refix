@@ -12,6 +12,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../app.dart';
 import '../../core/theme/btns.dart';
 
+
+final imageBytesProvider = StateProvider<Uint8List?>((ref) => null);
+
 class AddEditService extends ConsumerStatefulWidget {
   const AddEditService({super.key, required this.service});
   final Service? service;
@@ -37,6 +40,7 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
 
   bool isActive = true;
 
+
   @override
   void initState() {
     super.initState();
@@ -49,7 +53,9 @@ class _AddEditServiceState extends ConsumerState<AddEditService> {
         detailsArController.text = widget.service!.details!.ar;
         selectedType = widget.service!.type;
         isActive = widget.service!.isActive;
+        picture = ref.read(imageBytesProvider);
         priceController.text = widget.service!.price.toString();
+       
       });
     }
   }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
@@ -39,14 +41,15 @@ class InTaskScreen extends StatelessWidget {
                 height: 80,
                 child: ListView.separated(
                     shrinkWrap: true,
-                    itemCount: task.services.length,
+                    itemCount: task.imagesBeforeRepair?.length ?? 0,
                     separatorBuilder: (context, index) => const SizedBox(
                           width: 16,
                         ),
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) {
                       return AddedImage(
-                        path: "",
+                        isFile: false,
+                        path: task.imagesBeforeRepair?[index] ?? "",
                       );
                     }),
               ),
@@ -59,7 +62,7 @@ class InTaskScreen extends StatelessWidget {
               ),
               TextFormField(
                 readOnly: true,
-                initialValue: DateFormat.yMd().format(task.createdAt!),
+                initialValue: DateFormat.yMd().format(task.appointmentDate!),
                 decoration: InputDecoration(
                   hintText: "Date of visit",
                 ),
@@ -69,20 +72,19 @@ class InTaskScreen extends StatelessWidget {
                 initialValue: service.details?.localized,
                 validator: (v) {
                   if (v!.isEmpty) {
-                    return "Please enter details in english";
+                    return context.tr.pleaseEnterDetails;
                   }
                   return null;
                 },
                 maxLines: 5,
                 maxLength: 200,
-                decoration:
-                    const InputDecoration(hintText: "The details (English)"),
+                decoration: InputDecoration(hintText: context.tr.theDetails),
               ),
               TextFormField(
                 readOnly: true,
                 initialValue: task.customer?.longitude.toString(),
                 decoration: InputDecoration(
-                  hintText: "Add Address",
+                  hintText: context.tr.addAddress,
                   filled: true,
                   suffixIcon: GestureDetector(
                     onTap: () async {
@@ -106,7 +108,7 @@ class InTaskScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                "Click on the map to go to Google Maps and start navigating to the client.",
+                context.tr.clickOnMap,
                 style: TextStyle(
                     color: AppColors.neutral300, fontSize: AppTextSize.two),
               )
@@ -117,7 +119,7 @@ class InTaskScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.all(16),
         child: PrimaryButton(
-            text: "Start Task Now",
+            text: context.tr.startTaskNow,
             onPressed: () => context
                 .push("/onward", extra: {"service": service, "task": task})),
       ),
@@ -134,5 +136,34 @@ class MapUtils {
     if (!await launchUrlString(googleUrl)) {
       throw Exception('Could not launch $googleUrl');
     }
+  }
+}
+
+class FullScreenImage extends StatelessWidget {
+  final String imageUrl;
+
+  const FullScreenImage({super.key, required this.imageUrl});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: GestureDetector(
+        onTap: () => Navigator.pop(context),
+        child: Center(
+          child: InteractiveViewer(
+            panEnabled: true,
+            minScale: 0.5,
+            maxScale: 4.0,
+            child: imageUrl.contains("http")
+                ? Image.network(
+                    imageUrl,
+                    fit: BoxFit.contain,
+                  )
+                : Image.file(File(imageUrl)),
+          ),
+        ),
+      ),
+    );
   }
 }

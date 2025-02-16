@@ -971,6 +971,10 @@ mixin _$Tasks {
   double get cost => throw _privateConstructorUsedError;
   @JsonKey(name: "payment_method", defaultValue: "CASH")
   String get paymentMethod => throw _privateConstructorUsedError;
+  @JsonKey(name: "images_before_reaper", defaultValue: [])
+  List<String>? get imagesBeforeRepair => throw _privateConstructorUsedError;
+  @JsonKey(name: "appointment_date")
+  DateTime? get appointmentDate => throw _privateConstructorUsedError;
   @JsonKey(name: "createdAt")
   DateTime? get createdAt => throw _privateConstructorUsedError;
   String get status => throw _privateConstructorUsedError;
@@ -996,6 +1000,9 @@ abstract class $TasksCopyWith<$Res> {
       double cost,
       @JsonKey(name: "payment_method", defaultValue: "CASH")
       String paymentMethod,
+      @JsonKey(name: "images_before_reaper", defaultValue: [])
+      List<String>? imagesBeforeRepair,
+      @JsonKey(name: "appointment_date") DateTime? appointmentDate,
       @JsonKey(name: "createdAt") DateTime? createdAt,
       String status});
 
@@ -1022,6 +1029,8 @@ class _$TasksCopyWithImpl<$Res, $Val extends Tasks>
     Object? customer = freezed,
     Object? cost = null,
     Object? paymentMethod = null,
+    Object? imagesBeforeRepair = freezed,
+    Object? appointmentDate = freezed,
     Object? createdAt = freezed,
     Object? status = null,
   }) {
@@ -1046,6 +1055,14 @@ class _$TasksCopyWithImpl<$Res, $Val extends Tasks>
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String,
+      imagesBeforeRepair: freezed == imagesBeforeRepair
+          ? _value.imagesBeforeRepair
+          : imagesBeforeRepair // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      appointmentDate: freezed == appointmentDate
+          ? _value.appointmentDate
+          : appointmentDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1086,6 +1103,9 @@ abstract class _$$TasksImplCopyWith<$Res> implements $TasksCopyWith<$Res> {
       double cost,
       @JsonKey(name: "payment_method", defaultValue: "CASH")
       String paymentMethod,
+      @JsonKey(name: "images_before_reaper", defaultValue: [])
+      List<String>? imagesBeforeRepair,
+      @JsonKey(name: "appointment_date") DateTime? appointmentDate,
       @JsonKey(name: "createdAt") DateTime? createdAt,
       String status});
 
@@ -1111,6 +1131,8 @@ class __$$TasksImplCopyWithImpl<$Res>
     Object? customer = freezed,
     Object? cost = null,
     Object? paymentMethod = null,
+    Object? imagesBeforeRepair = freezed,
+    Object? appointmentDate = freezed,
     Object? createdAt = freezed,
     Object? status = null,
   }) {
@@ -1135,6 +1157,14 @@ class __$$TasksImplCopyWithImpl<$Res>
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String,
+      imagesBeforeRepair: freezed == imagesBeforeRepair
+          ? _value._imagesBeforeRepair
+          : imagesBeforeRepair // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      appointmentDate: freezed == appointmentDate
+          ? _value.appointmentDate
+          : appointmentDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -1157,9 +1187,13 @@ class _$TasksImpl with DiagnosticableTreeMixin implements _Tasks {
       this.cost = 0,
       @JsonKey(name: "payment_method", defaultValue: "CASH")
       required this.paymentMethod,
+      @JsonKey(name: "images_before_reaper", defaultValue: [])
+      final List<String>? imagesBeforeRepair,
+      @JsonKey(name: "appointment_date") this.appointmentDate,
       @JsonKey(name: "createdAt") this.createdAt,
       required this.status})
-      : _services = services;
+      : _services = services,
+        _imagesBeforeRepair = imagesBeforeRepair;
 
   factory _$TasksImpl.fromJson(Map<String, dynamic> json) =>
       _$$TasksImplFromJson(json);
@@ -1183,6 +1217,21 @@ class _$TasksImpl with DiagnosticableTreeMixin implements _Tasks {
   @override
   @JsonKey(name: "payment_method", defaultValue: "CASH")
   final String paymentMethod;
+  final List<String>? _imagesBeforeRepair;
+  @override
+  @JsonKey(name: "images_before_reaper", defaultValue: [])
+  List<String>? get imagesBeforeRepair {
+    final value = _imagesBeforeRepair;
+    if (value == null) return null;
+    if (_imagesBeforeRepair is EqualUnmodifiableListView)
+      return _imagesBeforeRepair;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: "appointment_date")
+  final DateTime? appointmentDate;
   @override
   @JsonKey(name: "createdAt")
   final DateTime? createdAt;
@@ -1191,7 +1240,7 @@ class _$TasksImpl with DiagnosticableTreeMixin implements _Tasks {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Tasks(id: $id, services: $services, customer: $customer, cost: $cost, paymentMethod: $paymentMethod, createdAt: $createdAt, status: $status)';
+    return 'Tasks(id: $id, services: $services, customer: $customer, cost: $cost, paymentMethod: $paymentMethod, imagesBeforeRepair: $imagesBeforeRepair, appointmentDate: $appointmentDate, createdAt: $createdAt, status: $status)';
   }
 
   @override
@@ -1204,6 +1253,8 @@ class _$TasksImpl with DiagnosticableTreeMixin implements _Tasks {
       ..add(DiagnosticsProperty('customer', customer))
       ..add(DiagnosticsProperty('cost', cost))
       ..add(DiagnosticsProperty('paymentMethod', paymentMethod))
+      ..add(DiagnosticsProperty('imagesBeforeRepair', imagesBeforeRepair))
+      ..add(DiagnosticsProperty('appointmentDate', appointmentDate))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('status', status));
   }
@@ -1220,6 +1271,10 @@ class _$TasksImpl with DiagnosticableTreeMixin implements _Tasks {
             (identical(other.cost, cost) || other.cost == cost) &&
             (identical(other.paymentMethod, paymentMethod) ||
                 other.paymentMethod == paymentMethod) &&
+            const DeepCollectionEquality()
+                .equals(other._imagesBeforeRepair, _imagesBeforeRepair) &&
+            (identical(other.appointmentDate, appointmentDate) ||
+                other.appointmentDate == appointmentDate) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.status, status) || other.status == status));
@@ -1234,6 +1289,8 @@ class _$TasksImpl with DiagnosticableTreeMixin implements _Tasks {
       customer,
       cost,
       paymentMethod,
+      const DeepCollectionEquality().hash(_imagesBeforeRepair),
+      appointmentDate,
       createdAt,
       status);
 
@@ -1261,6 +1318,9 @@ abstract class _Tasks implements Tasks {
       final double cost,
       @JsonKey(name: "payment_method", defaultValue: "CASH")
       required final String paymentMethod,
+      @JsonKey(name: "images_before_reaper", defaultValue: [])
+      final List<String>? imagesBeforeRepair,
+      @JsonKey(name: "appointment_date") final DateTime? appointmentDate,
       @JsonKey(name: "createdAt") final DateTime? createdAt,
       required final String status}) = _$TasksImpl;
 
@@ -1278,6 +1338,12 @@ abstract class _Tasks implements Tasks {
   @override
   @JsonKey(name: "payment_method", defaultValue: "CASH")
   String get paymentMethod;
+  @override
+  @JsonKey(name: "images_before_reaper", defaultValue: [])
+  List<String>? get imagesBeforeRepair;
+  @override
+  @JsonKey(name: "appointment_date")
+  DateTime? get appointmentDate;
   @override
   @JsonKey(name: "createdAt")
   DateTime? get createdAt;

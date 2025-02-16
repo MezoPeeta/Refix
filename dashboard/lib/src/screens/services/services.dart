@@ -103,7 +103,7 @@ class _ServicesScreenState extends ConsumerState<ServicesScreen> {
                           )),
                           DataColumn(label: SizedBox.shrink()),
                         ],
-                        source: ServicesDataTable(data, context),
+                        source: ServicesDataTable(data, context,ref),
                       ),
                     );
                   },

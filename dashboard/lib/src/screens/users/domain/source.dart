@@ -10,6 +10,7 @@ import 'package:dashboard/src/screens/navbar/navbar.dart';
 import 'package:dashboard/src/screens/points/add_point.dart';
 import 'package:dashboard/src/screens/points/data/point.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -20,6 +21,7 @@ import '../../auth/data/auth_data.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 
+import '../../services/services_edit.dart';
 import '../tasks.dart';
 
 part 'source.g.dart';
@@ -345,7 +347,7 @@ Future<List<BookingElement>> getBookings(Ref ref,
           return BookingElement.fromJson(bookingData);
         },
       ),
-    );
+    ); 
 
     return bookings;
   }
@@ -531,7 +533,8 @@ class RuleDataSource extends DataTableSource {
 class ServicesDataTable extends DataTableSource {
   final List<Service> data;
   final BuildContext context;
-  ServicesDataTable(this.data, this.context);
+  final WidgetRef ref;
+  ServicesDataTable(this.data, this.context,this.ref);
   String formatTime(DateTime time) {
     final formattedDate = DateFormat.yMd().format(time);
     final formattedTime = DateFormat('jm').format(time);
@@ -552,7 +555,11 @@ class ServicesDataTable extends DataTableSource {
       DataCell(SelectableText("${data[index].price} SAR")),
       DataCell(SelectableText(data[index].isActive ? "Active" : "Inactive")),
       DataCell(TextButton(
-        onPressed: () => context.push("/services/edit", extra: data[index]),
+        onPressed: () async{
+          final image = "https://api.refixapp.com/${data[index].image}";
+          ref.read(imageBytesProvider.notifier).state = await convertNetworkImage(image);
+          context.push("/services/edit", extra: data[index]);
+        },
         child: const Text("Edit"),
       )),
     ]);
@@ -567,3 +574,8 @@ class ServicesDataTable extends DataTableSource {
   @override
   int get selectedRowCount => 10;
 }
+
+  Future<Uint8List> convertNetworkImage(String image) async{
+    http.Response response = await http.get(Uri.parse(image));
+  return response.bodyBytes;
+  }

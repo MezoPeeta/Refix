@@ -62,11 +62,25 @@ class _AdsEditScreenState extends ConsumerState<AdsEditScreen> {
               isEditing
                   ? Row(
                       children: [
+                        const SizedBox(
+                          width: 16,
+                        ),
                         const Text(
                           "Edit Ad",
                         ),
+                        const SizedBox(
+                          width: 16,
+                        ),
                         TextButton(
-                            child: const Text("Delete Ad"),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Colors.red,
+                            ),
+                            child: const Text("Delete Ad",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                )),
                             onPressed: () {
                               ref.read(deleteAdProvider(
                                   id: ref.read(adInfoProvider)!.id));

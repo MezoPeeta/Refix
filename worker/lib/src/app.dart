@@ -4,9 +4,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:worker/src/core/localization/domain.dart';
 import 'package:worker/src/core/routes/routes.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:worker/src/core/theme/theme.dart';
 
+import '../l10n/app_localizations.dart';
 import 'core/theme/colors.dart';
 
 class MyApp extends ConsumerWidget {

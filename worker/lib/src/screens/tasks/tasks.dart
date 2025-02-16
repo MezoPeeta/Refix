@@ -7,6 +7,7 @@ import 'package:worker/src/core/theme/colors.dart';
 import 'package:worker/src/screens/auth/domain/auth_domain.dart';
 import 'package:worker/src/screens/home/domain/home_domain.dart';
 
+import '../../core/localization/domain.dart';
 import '../../core/theme/radii.dart';
 
 class TasksScreen extends ConsumerStatefulWidget {
@@ -19,6 +20,16 @@ class TasksScreen extends ConsumerStatefulWidget {
 class _TasksScreenState extends ConsumerState<TasksScreen> {
   DateTime selectedDate = DateTime.now();
   String selectedState = "ASSIGNED";
+  bool isSameDate(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  bool getStates(String currentState, String elementStatus) {
+    if (currentState == "ASSIGNED") {
+      return currentState != "CLOSED" && currentState != "CANCELLED";
+    }
+    return currentState == elementStatus;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,28 +38,6 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Container(
-              width: 25,
-              height: 25,
-              decoration: BoxDecoration(
-                  color: AppColors.neutralRefix,
-                  border: Border.all(),
-                  shape: BoxShape.circle),
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                icon: const Icon(
-                  Icons.notifications,
-                  color: AppColors.neutralRefix,
-                  size: 16,
-                ),
-                onPressed: () => context.push("/notifications"),
-              ),
-            ),
-          )
-        ],
         title: Text(
           currentWorker ?? "",
           style: const TextStyle(
@@ -59,28 +48,27 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
       body: SingleChildScrollView(
           child: tasks.when(
               data: (data) {
-                final dates = data.map((e) => e.createdAt!).toList();
-                final tasksByStatus = data
-                    .where((element) =>
-                        element.status == selectedState &&
-                        DateFormat.yMd().format(element.createdAt!) ==
-                            DateFormat.yMd().format(selectedDate))
-                    .toList();
+                final tasksByStatus = data.where((element) {
+                  return getStates(selectedState, element.status) &&
+                      isSameDate(element.appointmentDate!, selectedDate);
+                }).toList();
 
                 return Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: DatePicker(
-                        DateTime.now(),
+                        DateTime.now().subtract(Duration(days: 5)),
                         height: 100,
-                        initialSelectedDate: dates.first,
+                        locale: ref.watch(localeNotifierProvider).languageCode,
+                        initialSelectedDate: DateTime.now(),
                         selectionColor: AppColors.primaryRefix,
                         selectedTextColor: Colors.white,
+                        daysCount: 15,
                         onDateChange: (selectedData) {
                           setState(() {
                             selectedDate = selectedData;
@@ -105,8 +93,8 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                                       : AppColors.neutralRefix,
                                   borderRadius:
                                       BorderRadius.circular(AppRadii.lg)),
-                              child: const Text(
-                                "Current",
+                              child: Text(
+                                context.tr.current,
                                 style: TextStyle(color: AppColors.white),
                               ),
                             ),
@@ -126,8 +114,8 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                                       : AppColors.neutralRefix,
                                   borderRadius:
                                       BorderRadius.circular(AppRadii.lg)),
-                              child: const Text(
-                                "Closed",
+                              child: Text(
+                                context.tr.closed,
                                 style: TextStyle(color: AppColors.white),
                               ),
                             ),
@@ -147,8 +135,8 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                                       : AppColors.neutralRefix,
                                   borderRadius:
                                       BorderRadius.circular(AppRadii.lg)),
-                              child: const Text(
-                                "Canceled",
+                              child: Text(
+                                context.tr.cancelled,
                                 style: TextStyle(color: AppColors.white),
                               ),
                             ),
@@ -157,7 +145,7 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                       ),
                     ),
                     tasksByStatus.isEmpty
-                        ? Center(child: Text("No Tasks"))
+                        ? Center(child: Text(context.tr.noTask))
                         : ListView.builder(
                             itemCount: tasksByStatus.first.services.length,
                             shrinkWrap: true,
@@ -173,11 +161,15 @@ class _TasksScreenState extends ConsumerState<TasksScreen> {
                                     Container(
                                       padding: const EdgeInsets.all(16),
                                       height: 66,
+                                      width: 66,
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(
                                               AppRadii.lg),
-                                          color: AppColors.neutral50),
+                                              image: DecorationImage(
+                                                fit: BoxFit.cover,
+                                                image: NetworkImage("https://api.refixapp.com/${tasksByStatus.first.services[index].image}")),
+                                         ),
                                     ),
                                     const SizedBox(
                                       width: 16,

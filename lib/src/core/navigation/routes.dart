@@ -98,10 +98,11 @@ final routes = GoRouter(
           path: "/booking_done/:cost/:points",
           name: "BookingDone",
           builder: (context, state) => BookingdoneScreen(
-                discount: state.extra as Discount,
+                discount: state.extra as Discount?,
                 pointsPercentage:
-                    int.tryParse(state.pathParameters["points"]!) ?? 0,
-                cost: double.parse(state.pathParameters["cost"]!),
+                    int.tryParse(state.pathParameters["points"] ?? '0.0') ?? 0,
+                cost: double.tryParse(state.pathParameters["cost"] ?? '0.0') ??
+                    0.0,
               )),
       GoRoute(path: "/login", builder: (context, state) => const LoginScreen()),
       GoRoute(

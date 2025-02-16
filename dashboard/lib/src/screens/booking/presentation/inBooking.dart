@@ -16,7 +16,7 @@ class _InbookingScreenState extends ConsumerState<InbookingScreen> {
   @override
   Widget build(BuildContext context) {
     final bookings = ref.watch(getBookingsProvider(page: _page, query: query));
-
+    debugPrint("Bookings: $bookings"); 
     return Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -50,8 +50,7 @@ class _InbookingScreenState extends ConsumerState<InbookingScreen> {
               ),
               bookings.when(
                   data: (data) {
-                    print("Data is :$data");
-                    return Expanded(
+                    return Expanded( 
                       child: PaginatedDataTable(
                         showCheckboxColumn: true,
                         showFirstLastButtons: false,

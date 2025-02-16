@@ -33,16 +33,19 @@ class _PaymentMethodsState extends ConsumerState<PaymentMethods> {
         children: [
           discount.when(
               data: (data) {
-                return Container(
-                  color: AppColors.primary100,
-                  height: 40,
-                  width: MediaQuery.sizeOf(context).width,
-                  child: Center(
-                      child: Text(
-                    data?.heading?.localized ?? "",
-                    style: const TextStyle(color: AppColors.primaryRefix),
-                  )),
-                );
+                if (data != null && data.active != false) {
+                  return Container(
+                    color: AppColors.primary100,
+                    height: 40,
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Center(
+                        child: Text(
+                      data.heading?.localized ?? "",
+                      style: const TextStyle(color: AppColors.primaryRefix),
+                    )),
+                  );
+                }
+                return const SizedBox.shrink();
               },
               error: (e, s) => const Text("Error"),
               loading: () => const SizedBox.shrink()),
@@ -130,7 +133,6 @@ class _PaymentMethodsState extends ConsumerState<PaymentMethods> {
                   setState(() {
                     loading = true;
                   });
-
                   final bookingID = ref.read(bookingIDProvider);
                   final result = await ref.read(updateBookingMethodProvider(
                           bookingID: bookingID!, method: method)

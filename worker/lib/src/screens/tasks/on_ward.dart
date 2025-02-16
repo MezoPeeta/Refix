@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:worker/src/core/localization/domain.dart';
 
 import '../../core/theme/colors.dart';
 import '../../core/theme/radii.dart';
@@ -61,7 +62,7 @@ class _OnWardScreenState extends State<OnWardScreen> {
                 ),
               ),
               Text(
-                "Press the call button to contact the client directly",
+                context.tr.pressCallButton,
                 style: TextStyle(
                     color: AppColors.neutral300, fontSize: AppTextSize.two),
               ),
@@ -84,7 +85,7 @@ class _OnWardScreenState extends State<OnWardScreen> {
                 initialValue: service.details?.localized,
                 validator: (v) {
                   if (v!.isEmpty) {
-                    return "Please enter details in english";
+                    return context.tr.pleaseEnterDetails;
                   }
                   return null;
                 },
@@ -121,10 +122,16 @@ class _OnWardScreenState extends State<OnWardScreen> {
                 ),
               ),
               Consumer(builder: (context, ref, child) {
+                final isRequested = ref.watch(taskRequestedProvider(taskID: task.id));
                 return PrimaryButton(
-                    text: "Start The Inspection Process",
+                    text: context.tr.startInspectionProcess,
                     loading: loading,
                     onPressed: () async {
+                      if (isRequested) {
+                        context.push("/inspection",
+                            extra: {"service": service, "task": task});
+                        return;
+                      }
                       setState(() {
                         loading = true;
                       });

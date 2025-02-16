@@ -89,8 +89,6 @@ class AuthDomain {
   }
 
   Future<void> logout() async {
-    await revokeRefreshToken();
-
     await storage.delete(key: 'access_token');
     await storage.delete(key: 'refresh_token');
     ref.read(goRouterProvider).go("/login");

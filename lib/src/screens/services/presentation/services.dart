@@ -212,6 +212,7 @@ class ServiceContainer extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: CachedNetworkImageProvider(
+                        
                           "https://api.refixapp.com/${service.image}")),
                   borderRadius: BorderRadius.circular(AppRadii.lg),
                   color: isSelected

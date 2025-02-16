@@ -22,8 +22,7 @@ class NotificationDataSource extends DataTableSource {
     if (index >= data.length) return null;
     return DataRow.byIndex(index: index, cells: [
       DataCell(SelectableText(data[index].title)),
-      DataCell(SelectableText(data[index].data ?? "")),
-     
+      DataCell(SelectableText(data[index].body ?? "")),
     ]);
   }
 
@@ -42,7 +41,7 @@ class Notifications with _$Notifications {
   const factory Notifications({
     @JsonKey(name: "_id") required String id,
     required String title,
-    String? data,
+    @JsonKey(name: "body") String? body,
   }) = _Notifications;
 
   factory Notifications.fromJson(Map<String, dynamic> json) =>
@@ -58,6 +57,7 @@ class NotificationsNotifier extends _$NotificationsNotifier {
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
+      debugPrint("Data: $data");
       return data.map<Notifications>((e) => Notifications.fromJson(e)).toList();
     }
 

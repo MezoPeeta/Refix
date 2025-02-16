@@ -13,7 +13,7 @@ class BookingdoneScreen extends StatelessWidget {
       required this.discount,
       required this.cost,
       required this.pointsPercentage});
-  final Discount discount;
+  final Discount? discount;
   final double cost;
   final int pointsPercentage;
 
@@ -21,8 +21,9 @@ class BookingdoneScreen extends StatelessWidget {
     if (pointsPercentage != 0) {
       return "${cost * (pointsPercentage / 100)}";
     }
-    if (discount.discount != null) {
-      return "${cost * (discount.discount! / 100)}";
+    if (discount?.discount != null) {
+      final dis = discount?.discount ?? 0.0;
+      return "${cost * (dis / 100)}";
     }
 
     return "$cost";
@@ -47,12 +48,12 @@ class BookingdoneScreen extends StatelessWidget {
             height: 48,
           ),
           Text(
-            discount.heading?.localized ?? "",
+            discount?.heading?.localized ?? "",
             style: const TextStyle(
                 fontSize: AppTextSize.six, fontWeight: FontWeight.w700),
           ),
           Text(
-            discount.details?.localized ?? "",
+            discount?.details?.localized ?? "",
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: AppTextSize.one.toDouble()),
           ),
@@ -96,9 +97,24 @@ class BookingdoneScreen extends StatelessWidget {
                             )
                           ],
                         )
-                      : Text(
-                          context.tr.cost(calculateCost()),
-                          style: const TextStyle(fontSize: AppTextSize.two),
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              context.tr.cost(cost.toString()),
+                              style: const TextStyle(
+                                  fontSize: AppTextSize.one,
+                                  color: AppColors.neutralRefix,
+                                  decoration: TextDecoration.lineThrough),
+                            ),
+                            Text(
+                              context.tr.cost(calculateCost()),
+                              style: const TextStyle(
+                                  fontSize: AppTextSize.two,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
                         ),
                 ],
               ),

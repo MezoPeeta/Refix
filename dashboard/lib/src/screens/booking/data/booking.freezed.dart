@@ -226,6 +226,8 @@ mixin _$BookingElement {
   int get cost => throw _privateConstructorUsedError;
   @JsonKey(name: "createdAt")
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: "problem_not_resolved")
+  String? get problemNotResolved => throw _privateConstructorUsedError;
   bool get resolved => throw _privateConstructorUsedError;
 
   /// Serializes this BookingElement to a JSON map.
@@ -258,6 +260,7 @@ abstract class $BookingElementCopyWith<$Res> {
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost", defaultValue: 0) int cost,
       @JsonKey(name: "createdAt") DateTime createdAt,
+      @JsonKey(name: "problem_not_resolved") String? problemNotResolved,
       bool resolved});
 
   $UserCopyWith<$Res> get customer;
@@ -291,6 +294,7 @@ class _$BookingElementCopyWithImpl<$Res, $Val extends BookingElement>
     Object? status = null,
     Object? cost = null,
     Object? createdAt = null,
+    Object? problemNotResolved = freezed,
     Object? resolved = null,
   }) {
     return _then(_value.copyWith(
@@ -342,6 +346,10 @@ class _$BookingElementCopyWithImpl<$Res, $Val extends BookingElement>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      problemNotResolved: freezed == problemNotResolved
+          ? _value.problemNotResolved
+          : problemNotResolved // ignore: cast_nullable_to_non_nullable
+              as String?,
       resolved: null == resolved
           ? _value.resolved
           : resolved // ignore: cast_nullable_to_non_nullable
@@ -396,6 +404,7 @@ abstract class _$$BookingElementImplCopyWith<$Res>
       @JsonKey(name: "status") String status,
       @JsonKey(name: "cost", defaultValue: 0) int cost,
       @JsonKey(name: "createdAt") DateTime createdAt,
+      @JsonKey(name: "problem_not_resolved") String? problemNotResolved,
       bool resolved});
 
   @override
@@ -429,6 +438,7 @@ class __$$BookingElementImplCopyWithImpl<$Res>
     Object? status = null,
     Object? cost = null,
     Object? createdAt = null,
+    Object? problemNotResolved = freezed,
     Object? resolved = null,
   }) {
     return _then(_$BookingElementImpl(
@@ -480,6 +490,10 @@ class __$$BookingElementImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      problemNotResolved: freezed == problemNotResolved
+          ? _value.problemNotResolved
+          : problemNotResolved // ignore: cast_nullable_to_non_nullable
+              as String?,
       resolved: null == resolved
           ? _value.resolved
           : resolved // ignore: cast_nullable_to_non_nullable
@@ -506,6 +520,7 @@ class _$BookingElementImpl implements _BookingElement {
       @JsonKey(name: "status") required this.status,
       @JsonKey(name: "cost", defaultValue: 0) required this.cost,
       @JsonKey(name: "createdAt") required this.createdAt,
+      @JsonKey(name: "problem_not_resolved") required this.problemNotResolved,
       this.resolved = false})
       : _services = services,
         _imagesBeforeReaper = imagesBeforeReaper,
@@ -570,12 +585,15 @@ class _$BookingElementImpl implements _BookingElement {
   @JsonKey(name: "createdAt")
   final DateTime createdAt;
   @override
+  @JsonKey(name: "problem_not_resolved")
+  final String? problemNotResolved;
+  @override
   @JsonKey()
   final bool resolved;
 
   @override
   String toString() {
-    return 'BookingElement(id: $id, services: $services, customer: $customer, worker: $worker, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, resolved: $resolved)';
+    return 'BookingElement(id: $id, services: $services, customer: $customer, worker: $worker, appointmentDate: $appointmentDate, note: $note, imagesBeforeReaper: $imagesBeforeReaper, imagesAfterReaper: $imagesAfterReaper, descriptionProblem: $descriptionProblem, status: $status, cost: $cost, createdAt: $createdAt, problemNotResolved: $problemNotResolved, resolved: $resolved)';
   }
 
   @override
@@ -601,6 +619,8 @@ class _$BookingElementImpl implements _BookingElement {
             (identical(other.cost, cost) || other.cost == cost) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.problemNotResolved, problemNotResolved) ||
+                other.problemNotResolved == problemNotResolved) &&
             (identical(other.resolved, resolved) ||
                 other.resolved == resolved));
   }
@@ -621,6 +641,7 @@ class _$BookingElementImpl implements _BookingElement {
       status,
       cost,
       createdAt,
+      problemNotResolved,
       resolved);
 
   /// Create a copy of BookingElement
@@ -657,6 +678,8 @@ abstract class _BookingElement implements BookingElement {
       @JsonKey(name: "status") required final String status,
       @JsonKey(name: "cost", defaultValue: 0) required final int cost,
       @JsonKey(name: "createdAt") required final DateTime createdAt,
+      @JsonKey(name: "problem_not_resolved")
+      required final String? problemNotResolved,
       final bool resolved}) = _$BookingElementImpl;
 
   factory _BookingElement.fromJson(Map<String, dynamic> json) =
@@ -697,6 +720,9 @@ abstract class _BookingElement implements BookingElement {
   @override
   @JsonKey(name: "createdAt")
   DateTime get createdAt;
+  @override
+  @JsonKey(name: "problem_not_resolved")
+  String? get problemNotResolved;
   @override
   bool get resolved;
 

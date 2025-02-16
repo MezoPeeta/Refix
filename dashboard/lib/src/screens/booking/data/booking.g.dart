@@ -43,6 +43,7 @@ _$BookingElementImpl _$$BookingElementImplFromJson(Map<String, dynamic> json) =>
       status: json['status'] as String,
       cost: (json['cost'] as num?)?.toInt() ?? 0,
       createdAt: DateTime.parse(json['createdAt'] as String),
+      problemNotResolved: json['problem_not_resolved'] as String?,
       resolved: json['resolved'] as bool? ?? false,
     );
 
@@ -61,6 +62,7 @@ Map<String, dynamic> _$$BookingElementImplToJson(
       'status': instance.status,
       'cost': instance.cost,
       'createdAt': instance.createdAt.toIso8601String(),
+      'problem_not_resolved': instance.problemNotResolved,
       'resolved': instance.resolved,
     };
 

@@ -25,6 +25,7 @@ class OnetimeScreen extends ConsumerWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     itemCount: data.length,
+                    
                     separatorBuilder: (context, index) => const SizedBox(
                           width: 48,
                         ),
