@@ -20,9 +20,7 @@ class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.neutral50,
-        systemNavigationBarIconBrightness: Brightness.light));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(systemNavigationBarColor: AppColors.neutral50, systemNavigationBarIconBrightness: Brightness.light));
     return MaterialApp.router(
         scaffoldMessengerKey: ref.read(scaffoldMessengerKeyPod),
         localizationsDelegates: const [
@@ -35,6 +33,7 @@ class MyApp extends ConsumerWidget {
         routerConfig: ref.watch(goRouterProvider),
         locale: ref.watch(localeNotifierProvider),
         title: 'Refix',
+        debugShowCheckedModeBanner: false,
         theme: AppTheme.customTheme);
   }
 }

@@ -14,9 +14,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.neutral50,
-        systemNavigationBarIconBrightness: Brightness.light));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(systemNavigationBarColor: AppColors.neutral50, systemNavigationBarIconBrightness: Brightness.light));
 
     return MaterialApp.router(
         scaffoldMessengerKey: ref.read(scaffoldMessengerKeyPod),
@@ -29,6 +27,8 @@ class MyApp extends ConsumerWidget {
         ],
         locale: ref.watch(localeNotifierProvider),
         supportedLocales: TranslationRepo.supportedLocales,
+        debugShowCheckedModeBanner: false,
+        title: 'Worker',
         theme: AppTheme.customTheme);
   }
 }
