@@ -55,5 +55,13 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to your photo library to let share the problem with us</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs access to your location while using in making new booking</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app may use your location even when the app is in the background for new booking</string>
+
+
 </dict>
 </plist>
