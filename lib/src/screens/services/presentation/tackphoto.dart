@@ -59,11 +59,6 @@ class TackphotoScreen extends ConsumerWidget {
             context.tr.appTrackPhotoIssue,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
           ),
-          Text(
-            context.tr.substituteTextExplanation,
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: AppTextSize.one.toDouble()),
-          ),
         ],
       ),
       bottomNavigationBar: Padding(

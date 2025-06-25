@@ -27,7 +27,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>We need to access your camera to take photos</string>
+	<string>We need access to your camera so you can take photos of issues like leaks, installation errors, or malfunctions. These photos help our support team better understand and resolve your issue.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -56,12 +56,11 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>This app requires access to your photo library to let share the problem with us</string>
+	<string>We need access to your photo library so you can select and share images of issues like leaks or installation problems with our support team to help resolve them faster.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to your location while using in making new booking</string>
+	<string>We use your location to identify your current address or nearby service areas, so we can send help or assign a technician to your location more accurately</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app may use your location even when the app is in the background for new booking</string>
-
+	<string>We use your location to identify your current address or nearby service areas, so we can send help or assign a technician to your location more accurately</string>
 
 </dict>
 </plist>
